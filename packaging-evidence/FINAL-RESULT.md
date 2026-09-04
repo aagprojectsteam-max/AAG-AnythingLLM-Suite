@@ -6,7 +6,7 @@ The sanitized local repository is reconstructed and rollback-tested, with produc
 REPOSITORY_NAME=aag-anythingllm-suite
 VISIBILITY=PRIVATE_INTENDED
 REMOTE_URL=UNCREATED
-COMMIT=7dbbff5a111cdc7f9a37a4cf6399f1572360c19a (initial package; final evidence amendment follows)
+COMMIT=RESOLVE_TAG_v0.1.0-private-package (exact local hash is reported in the external handoff)
 TAG=v0.1.0-private-package
 PUSH_STATUS=BLOCKED_INVALID_GITHUB_AUTH
 SANITIZATION_STATUS=PASS
