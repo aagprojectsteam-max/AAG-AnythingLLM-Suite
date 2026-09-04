@@ -18,8 +18,9 @@ import time
 
 from PIL import Image
 
-OUTPUT = pathlib.Path(os.environ.get("AAG_OUTPUT_ROOT", "/mnt/data/AI/Outputs")).absolute()
-SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state/scheduler")).absolute()
+DATA_HOME = pathlib.Path(os.environ.get("XDG_DATA_HOME", pathlib.Path.home() / ".local/share"))
+OUTPUT = pathlib.Path(os.environ.get("AAG_OUTPUT_ROOT", DATA_HOME / "aag-anythingllm-suite/outputs")).absolute()
+SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", DATA_HOME / "aag-anythingllm-suite/state/image-agent/scheduler")).absolute()
 STALE_SECONDS = int(os.environ.get("AAG_XPU_STALE_SECONDS", "120"))
 HOST = os.environ.get("AAG_IMAGE_HUB_HOST", "127.0.0.1")
 PORT = int(os.environ.get("AAG_IMAGE_HUB_PORT", "18190"))

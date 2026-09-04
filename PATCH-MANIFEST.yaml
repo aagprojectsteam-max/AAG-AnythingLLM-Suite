@@ -1,9 +1,11 @@
 schema_version: 1
+suite_version: 1.0.0-rc1
 upstream:
   project: Mintplex-Labs/anything-llm
   revision: 07bd65f80b3d9ba3031ed7afb8786627326bd134
   container_tag_observed: mintplexlabs/anythingllm:latest
   immutable_container_digest: unresolved
+  compatibility_gate: config/compatibility.json
 patches:
   - target: server/utils/chats/commands/aagIdentity.js
     source: patches/anythingllm/aagIdentity.js
@@ -62,4 +64,3 @@ frontend_overlay:
   source_capture: incomplete
   compiled_public_tree_included: false
   reason: upstream-derived compiled tree excluded pending license/provenance review
-

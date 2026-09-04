@@ -12,6 +12,12 @@ models:
     revision: unresolved
     license: unresolved
     sha256: unresolved
+    size_bytes: unresolved
+    mmproj_relationship: not-applicable
+    mtp_relationship: not-applicable
+    comfyui_role: diffusion-model
+    vision_role: image-generation
+    local_llm_role: none
     backend: ComfyUI
   - id: qwen3-text-encoder
     name: Qwen 3 4B text encoder
@@ -24,6 +30,12 @@ models:
     revision: unresolved
     license: unresolved
     sha256: unresolved
+    size_bytes: unresolved
+    mmproj_relationship: not-applicable
+    mtp_relationship: not-applicable
+    comfyui_role: text-encoder
+    vision_role: prompt-encoding
+    local_llm_role: none
     backend: ComfyUI
   - id: flux2-vae
     name: FLUX.2 VAE
@@ -36,6 +48,12 @@ models:
     revision: unresolved
     license: unresolved
     sha256: unresolved
+    size_bytes: unresolved
+    mmproj_relationship: not-applicable
+    mtp_relationship: not-applicable
+    comfyui_role: latent-decoder
+    vision_role: image-decoding
+    local_llm_role: none
     backend: ComfyUI
   - id: pulid-v1.1
     name: PuLID v1.1 assets
@@ -48,6 +66,12 @@ models:
     revision: unresolved
     license: unresolved
     sha256: unresolved
+    size_bytes: unresolved
+    mmproj_relationship: not-applicable
+    mtp_relationship: not-applicable
+    comfyui_role: identity-adapter
+    vision_role: identity-preservation
+    local_llm_role: none
     backend: ComfyUI
   - id: juggernaut-xl-v9
     name: Juggernaut XL V9
@@ -60,6 +84,12 @@ models:
     revision: unresolved
     license: unresolved
     sha256: unresolved
+    size_bytes: unresolved
+    mmproj_relationship: not-applicable
+    mtp_relationship: not-applicable
+    comfyui_role: identity-base-checkpoint
+    vision_role: portrait-and-scene-generation
+    local_llm_role: none
     backend: ComfyUI
   - id: local-llm
     name: User-selected GGUF and optional mmproj/MTP sidecars
@@ -72,5 +102,10 @@ models:
     revision: user-supplied
     license: user-responsibility
     sha256: user-supplied
+    size_bytes: user-supplied
+    mmproj_relationship: optional-and-must-match-selected-base-model
+    mtp_relationship: approved-pair-only-never-cross-model
+    comfyui_role: none
+    vision_role: optional-with-matching-mmproj
+    local_llm_role: chat-and-agent-inference
     backend: llama.cpp
-

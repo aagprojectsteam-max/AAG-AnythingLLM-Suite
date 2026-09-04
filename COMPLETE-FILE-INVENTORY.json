@@ -1,10 +1,106 @@
 {
-  "file_count": 464,
+  "file_count": 503,
   "files": [
     {
+      "repository_path": ".aag-atlas-product-test-8TzS74/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-WkfGLq/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-axEqIV/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-k4mdHQ/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
+    {
       "repository_path": ".env.example",
-      "sha256": "b90c0c050a36a3d475c2c3b350e00afb6149e4219844701472d24e9711627db3",
-      "size": 502,
+      "sha256": "c4ee498c32715e09e6163c765ef1441ffae17b39f8b7bc5c5ebb9aff4c476dc6",
+      "size": 776,
       "type": "file"
     },
     {
@@ -20,9 +116,27 @@
       "type": "file"
     },
     {
+      "repository_path": "ANYTHINGLLM-COMPATIBILITY.md",
+      "sha256": "d93daf0b6e91d334b444418e17fcf351e48c2cd7fb0dd25a655c7004478dad8d",
+      "size": 531,
+      "type": "file"
+    },
+    {
+      "repository_path": "ATLAS-ASSET-DISTRIBUTION.md",
+      "sha256": "b49d6130424897504dc9b1bb82e0f3e9c08467a65c0b44c05afbc992018d2f9a",
+      "size": 660,
+      "type": "file"
+    },
+    {
       "repository_path": "CHANGELOG.md",
-      "sha256": "12c3927ced791390b1715d68a4705b98995cb5fea90e81e8e76429692ab89741",
-      "size": 281,
+      "sha256": "b433f84114d9469125c80fc21b17325a9fe331753c7e063e5a246a99105eded0",
+      "size": 792,
+      "type": "file"
+    },
+    {
+      "repository_path": "CLEAN-INSTALL-ACCEPTANCE.md",
+      "sha256": "1ca3160f582e18e312ca4268e3ec625f9557ac8d238437778dcf899cb5a0beeb",
+      "size": 1342,
       "type": "file"
     },
     {
@@ -32,15 +146,69 @@
       "type": "file"
     },
     {
+      "repository_path": "DISTRIBUTION-ARCHITECTURE.md",
+      "sha256": "da45420b574ce8655771625c36ffba948c7aa3d77049a815931bc349a5455b38",
+      "size": 809,
+      "type": "file"
+    },
+    {
+      "repository_path": "DOCTOR.md",
+      "sha256": "473cda0dcaf42e4a24b99768049833eecd168c7d10d32eb59c7753be80c4bbc0",
+      "size": 485,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-DISTRIBUTION-RESULT.md",
+      "sha256": "d6c3641a217bf32fc9047e0dcc3e59aa8044ccba5b061ef63767b3e41bc353fc",
+      "size": 1849,
+      "type": "file"
+    },
+    {
+      "repository_path": "FRESH-INSTALL.md",
+      "sha256": "4dc0faa95bf8a725ab151566724c3e9c83e26dd58a56dbc76e50d41bc7e3db80",
+      "size": 685,
+      "type": "file"
+    },
+    {
+      "repository_path": "HARDWARE-DETECTION.md",
+      "sha256": "8131512a03b552a28f2cb402673a50c164b39360cfa7e9441777275874a6e2bc",
+      "size": 469,
+      "type": "file"
+    },
+    {
+      "repository_path": "LIVE-NONREGRESSION.md",
+      "sha256": "d9e67aba160fa26d0752d5c1c5f3a829c2f2260c2f7cb659e134888ff847545f",
+      "size": 955,
+      "type": "file"
+    },
+    {
+      "repository_path": "MODEL-ASSET-SETUP.md",
+      "sha256": "0db49e217f27d8d75e8c84f5409df4db98d20ede2d96cc9752388213742f5f14",
+      "size": 670,
+      "type": "file"
+    },
+    {
       "repository_path": "PATCH-MANIFEST.yaml",
-      "sha256": "f0bd7e4f33169ad300aea5f60e23b588ccb55b8b961dc463ed9af2b94a33634c",
-      "size": 2682,
+      "sha256": "d4c63ab0fe613fd18340fafdb1a9818248ac75915716babfe695345e143c8362",
+      "size": 2754,
       "type": "file"
     },
     {
       "repository_path": "README.md",
-      "sha256": "76ad6ed3aa791d273cf3d525a782cb7cbea181717e23e47bb3a1eef725ae2a98",
-      "size": 1724,
+      "sha256": "391f3d7e8a40d17c55d45f4a3adf2d0fde98321ac8baf5a8c51ba7f607e813fa",
+      "size": 4869,
+      "type": "file"
+    },
+    {
+      "repository_path": "RELEASE-NOTES-v1.0.0-rc1.md",
+      "sha256": "e14f8e3501ebe8076e755500fb569c59910a09bbda4de3478302ced3c91882ee",
+      "size": 1713,
+      "type": "file"
+    },
+    {
+      "repository_path": "RELEASE-READINESS.md",
+      "sha256": "e29e5a9a67c924dbd1b6f9fb9755bfc424f3d7e9b64a42da2d541c1774924c19",
+      "size": 864,
       "type": "file"
     },
     {
@@ -59,6 +227,24 @@
       "repository_path": "THIRD_PARTY_NOTICES.md",
       "sha256": "659994e2b1118ce48b5f2b9022bb1ea6f5f6057fef5a63ced043ebf162d861db",
       "size": 590,
+      "type": "file"
+    },
+    {
+      "repository_path": "UNINSTALL.md",
+      "sha256": "8d5c4903cab761ace10c44e1dfb6c9e71760d0b0e457c747a9591ab35a26327a",
+      "size": 380,
+      "type": "file"
+    },
+    {
+      "repository_path": "UPDATE.md",
+      "sha256": "df1dd2101675aa7897864cbd52424201a3fc52350f7c853f88405d8af9ca2bef",
+      "size": 364,
+      "type": "file"
+    },
+    {
+      "repository_path": "atlas-assets-manifest.json",
+      "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
+      "size": 242887,
       "type": "file"
     },
     {
@@ -320,9 +506,21 @@
       "type": "file"
     },
     {
+      "repository_path": "config/compatibility.json",
+      "sha256": "df5a8956d2961e875248124deec4c6c66b8e677d7e3bbcc230f6fa5795996880",
+      "size": 1065,
+      "type": "file"
+    },
+    {
+      "repository_path": "config/defaults.env",
+      "sha256": "c1a2a98b923852a253ef317f634fdb38d5c722fb036887d95a5147f57bfa0f15",
+      "size": 1343,
+      "type": "file"
+    },
+    {
       "repository_path": "config/models.yaml",
-      "sha256": "cfd1e39128e50e55068d0e4815744f470a4b31dc7f34f435c38ee7accebad84f",
-      "size": 2238,
+      "sha256": "a8487142ee321e36003efbf8e03374b03ffb062d4bd8b3f48a41de9cadc994e7",
+      "size": 3516,
       "type": "file"
     },
     {
@@ -483,8 +681,8 @@
     },
     {
       "repository_path": "doctor.sh",
-      "sha256": "692c961ccee3dd30af167e21b717c5a01d0aaa76b239856ef546202f56d4a3aa",
-      "size": 1037,
+      "sha256": "85eeebaa5408d1ba198971d8be69556992f08948c2fb4efcd16cb498546685e4",
+      "size": 6060,
       "type": "file"
     },
     {
@@ -634,8 +832,8 @@
     },
     {
       "repository_path": "image-system/human-identity/bin/process_inbox.py",
-      "sha256": "d06068a911998b4f4f5b22072b7ef280ce2a9ec1a6bcaf972dd8ca9e80f30137",
-      "size": 36487,
+      "sha256": "8cd000239be47c3af3a8e893dcc1afe8cd770049a34490b294c8112d56bd8df0",
+      "size": 36508,
       "type": "file"
     },
     {
@@ -700,8 +898,8 @@
     },
     {
       "repository_path": "image-system/human-identity-scene/bin/process_inbox.py",
-      "sha256": "6a4cc72f5b16b0916fd205e28e5a6944661e67233c6c9d46633bb68bd81abee4",
-      "size": 37706,
+      "sha256": "a2a0557d78d9f1ede1f9ed948e961d30b7362b75a71a1f0392b6c95222aa2bed",
+      "size": 37806,
       "type": "file"
     },
     {
@@ -1421,14 +1619,14 @@
     },
     {
       "repository_path": "image-system/upscale-engine/image-hub.py",
-      "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0",
-      "size": 11818,
+      "sha256": "724dfb3b26c59b21e05304bcabeb18790b4a47d075d109b1012bb84dd3613265",
+      "size": 11927,
       "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/run-docker-bridge.sh",
-      "sha256": "d89ead1924a70412183c1bad8598df9b06bd559e0916ff347f662afa49b11a00",
-      "size": 868,
+      "sha256": "7172f89062864aa7e33fa0052679a24962264204db7867e3edbc91638222817f",
+      "size": 882,
       "type": "file"
     },
     {
@@ -1439,14 +1637,14 @@
     },
     {
       "repository_path": "image-system/upscale-engine/upscale-server.py",
-      "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b",
-      "size": 19681,
+      "sha256": "9a07d57a94eb6f50f76d379c594f50b43ae924e0cd5bacba2c21465ca0a99be9",
+      "size": 19779,
       "type": "file"
     },
     {
       "repository_path": "install.sh",
-      "sha256": "2463ad3a8621cdb9b02c86c19f40122e622aa2d53f494283ae15d3cc828a0334",
-      "size": 4493,
+      "sha256": "375f4c19c7939659962f9e5f26290bc47e1982518cca88483dbd6c96e80ee7ed",
+      "size": 6791,
       "type": "file"
     },
     {
@@ -1553,14 +1751,14 @@
     },
     {
       "repository_path": "integrations/comfyui/bridge/proxy.py",
-      "sha256": "55bc6f9e4a17a28c9ff24b2657b0aa145ae0a1863a825dd00b53cc342af60c87",
-      "size": 35050,
+      "sha256": "1aaf4e3f77fe7461a9fc439c0bac38e3480d0739ffab6d1f26bfcd5c2513c481",
+      "size": 35065,
       "type": "file"
     },
     {
       "repository_path": "integrations/llamacpp/aag-llama-control",
-      "sha256": "a0bb9f6478aeed67fd939ef9036c4569e36906549197a10d4663dc77e7b1d728",
-      "size": 35592,
+      "sha256": "517f0e00cbcc32c18886f8d68809ad89983c241c30692de0308df65e54c72109",
+      "size": 35807,
       "type": "file"
     },
     {
@@ -2734,9 +2932,39 @@
       "type": "file"
     },
     {
+      "repository_path": "tools/atlas-assets.py",
+      "sha256": "d37f977d1288cf5a4d2226136ee062125e25fbb3c071514a1fdcb6423a104136",
+      "size": 1765,
+      "type": "file"
+    },
+    {
       "repository_path": "tools/build-inventory.py",
       "sha256": "593b6ee1a4934c2edd6fc06291c06defb41b9c7a76f18f5a83aee232ec330b18",
       "size": 1123,
+      "type": "file"
+    },
+    {
+      "repository_path": "tools/config.sh",
+      "sha256": "1c1b8e729139a4ffdbde9e5c4cf28c943471bfcc4c3e2bfdcbc1b706df4f6f2c",
+      "size": 1222,
+      "type": "file"
+    },
+    {
+      "repository_path": "tools/hardware-detect.sh",
+      "sha256": "04accd1851cf59a87adbbaaa72d2566cb1917a75bc414ba04a8944d66098b24a",
+      "size": 974,
+      "type": "file"
+    },
+    {
+      "repository_path": "tools/model-check.py",
+      "sha256": "fef60703d59bfcf9eb35b9422aecabb1cf6ebebb83215d04f76062edd63f294d",
+      "size": 1013,
+      "type": "file"
+    },
+    {
+      "repository_path": "tools/render-units.py",
+      "sha256": "fefb201c1d18bb9dfe90b18926907c8b26113841cfd1ad185a99434c232ddc2b",
+      "size": 3029,
       "type": "file"
     },
     {
@@ -2746,15 +2974,21 @@
       "type": "file"
     },
     {
+      "repository_path": "tools/verify-upstream.py",
+      "sha256": "dcab0014438fecfa236275d5046e8cf9c33f8049efb81c3b389b5f0a1b42f8e2",
+      "size": 504,
+      "type": "file"
+    },
+    {
       "repository_path": "uninstall.sh",
-      "sha256": "3adec67e94af4595b112508b42c569b589cbb25ca8a96d99f002d3901293dce4",
-      "size": 390,
+      "sha256": "a1e0249bb5ea8749eed503b96ce8fc9f88c2185228e2a92f4dbd4c8361e3b10b",
+      "size": 731,
       "type": "file"
     },
     {
       "repository_path": "update.sh",
-      "sha256": "9e1f7710321718b984b811c55396adcc382c92d43534943c2b613b355b47ee2f",
-      "size": 276,
+      "sha256": "1f4db8401232cb53b0a61edfab97b9380d38205ba06fe9054bc913b5ae63b80d",
+      "size": 797,
       "type": "file"
     },
     {

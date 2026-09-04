@@ -32,8 +32,9 @@ done
     exit 1
 }
 
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 exec /usr/bin/python3 \
-  /mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/docker-bridge.py \
+  "$SCRIPT_DIR/docker-bridge.py" \
   --listen-host "$GATEWAY" \
   --listen-port "$PORT" \
   --target-host 127.0.0.1 \

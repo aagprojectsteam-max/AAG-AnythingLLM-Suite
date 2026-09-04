@@ -1,0 +1,21 @@
+{
+  "schema": "aag.anythingllm.compatibility.v1",
+  "suite_version": "1.0.0-rc1",
+  "supported": [
+    {
+      "anythingllm_commit": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "patch_compatibility": "exact",
+      "tested": true,
+      "targets": {
+        "server/utils/chats/index.js": "8e8ed83cf0d973741a68aabf6b95fd19a36d8e728d8cc86ed8e98f5792f5730d",
+        "server/utils/chats/apiChatHandler.js": "5619135426da32277649d243c01d4342a5928b944b59184579308f8124740290",
+        "server/utils/AiProviders/modelMap/index.js": "0a71b72b9372bc264b9d3e61f519aefb4d33ac350c2aa6c42d25e96629bfece8",
+        "server/utils/agents/index.js": "b7c4505960fcfc3cbc0b75783fee707b0c73a3c827bd282f190f3d78d9d379be",
+        "server/utils/agents/ephemeral.js": "bf48912bfc5824ce821de3142b3edd23976a6d8c2454c8fe7a6752fe1dcc351d",
+        "server/utils/agents/aibitat/utils/toolReranker.js": "1da7838cdd37a90712af438950c3482e3353e2d38e972e64d8530c7ae355da49",
+        "server/index.js": "c2702c28e4b3a1b1084e45dac21ea4fa029759f7eb270ace97bb8facd9be3bf8"
+      }
+    }
+  ]
+}
+

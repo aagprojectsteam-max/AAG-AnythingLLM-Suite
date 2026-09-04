@@ -22,7 +22,7 @@ except ImportError:  # Fail closed to history/queue observation if unavailable.
     websocket_client = None
 
 MAX_BODY = 16 * 1024 * 1024
-SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state/scheduler")).absolute()
+SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", pathlib.Path.home() / ".local/share/aag-anythingllm-suite/state/image-agent/scheduler")).absolute()
 QUEUE_TIMEOUT = int(os.environ.get("AAG_XPU_QUEUE_TIMEOUT_SECONDS", "1800"))
 STALE_SECONDS = int(os.environ.get("AAG_XPU_STALE_SECONDS", "120"))
 MAX_QUEUE = int(os.environ.get("AAG_XPU_MAX_QUEUE", "8"))

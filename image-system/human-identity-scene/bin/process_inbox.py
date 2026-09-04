@@ -20,18 +20,19 @@ import urllib.request
 import uuid
 from pathlib import Path
 
-PROJECT = Path("/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System")
+PROJECT = Path(os.environ.get("AAG_IMAGE_PROJECT_ROOT", Path(__file__).resolve().parents[2]))
 RELEASE = "0.9.0-preview.5"
 CONTRACT_SHA = "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6"
-DEFAULT_RUNTIME = PROJECT / "image-agent/human-identity-scene"
+DEFAULT_RUNTIME = PROJECT / "human-identity-scene"
 RUNTIME = Path(os.environ.get("AAG_HUMAN_IDENTITY_RUNTIME", DEFAULT_RUNTIME))
 CONFIG_PATH = RUNTIME / "config/PRODUCTION-CONFIG.json"
 CONTRACT_PATH = RUNTIME / "config/SCENE-CONTRACT.json"
-STATE = Path(os.environ.get("AAG_HUMAN_IDENTITY_STATE_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-human-identity-scene-state"))
-AGENT_STATE = Path(os.environ.get("AAG_IMAGE_AGENT_STATE_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state"))
-PRIVATE_OUTPUT = Path(os.environ.get("AAG_HUMAN_IDENTITY_PRIVATE_OUTPUT", "/mnt/data/AI/Outputs/.aag-human-identity-scene-private"))
-OUTPUT = Path(os.environ.get("AAG_OUTPUT_ROOT", "/mnt/data/AI/Outputs"))
-PYTHON = "/mnt/data/AI/ComfyUI/venv/bin/python"
+DATA_HOME = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+STATE = Path(os.environ.get("AAG_HUMAN_IDENTITY_STATE_ROOT", DATA_HOME / "aag-anythingllm-suite/state/human-identity-scene"))
+AGENT_STATE = Path(os.environ.get("AAG_IMAGE_AGENT_STATE_ROOT", DATA_HOME / "aag-anythingllm-suite/state/image-agent"))
+OUTPUT = Path(os.environ.get("AAG_OUTPUT_ROOT", DATA_HOME / "aag-anythingllm-suite/outputs"))
+PRIVATE_OUTPUT = Path(os.environ.get("AAG_HUMAN_IDENTITY_PRIVATE_OUTPUT", OUTPUT / ".human-identity-scene-private"))
+PYTHON = os.environ.get("AAG_COMFYUI_PYTHON", sys.executable)
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", re.I)
 JOB_RE = re.compile(r"^aag-[0-9a-f-]{36}$", re.I)
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")

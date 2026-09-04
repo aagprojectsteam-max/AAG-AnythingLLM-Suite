@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-MODEL_ROOT="/mnt/data/AI/Models"
-LLAMA_ROOT="/mnt/data/AI/Apps/llama.cpp"
-BUILD_DIR="$LLAMA_ROOT/build-sycl"
+MODEL_ROOT="${AAG_MODEL_ROOT:-${XDG_DATA_HOME:-$HOME/.local/share}/aag-models}"
+LLAMA_ROOT="${LLAMACPP_ROOT:-${XDG_DATA_HOME:-$HOME/.local/share}/llama.cpp}"
+BUILD_DIR="${AAG_LLAMA_BUILD_DIR:-$LLAMA_ROOT/build-sycl}"
 LLAMA_CLI="$BUILD_DIR/bin/llama-cli"
 LLAMA_SERVER="$BUILD_DIR/bin/llama-server"
-APPROVED_MTP_TARGET="/mnt/data/AI/Models/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/Gemma4-12B-QAT-Uncensored-HauhauCS-Balanced-Q4_K_M.gguf"
+APPROVED_MTP_TARGET="${AAG_APPROVED_MTP_TARGET:-$MODEL_ROOT/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/Gemma4-12B-QAT-Uncensored-HauhauCS-Balanced-Q4_K_M.gguf}"
 APPROVED_MTP_TARGET_SHA256="59656d7494d6376ca97e9e20b64ea2e16cd97f12ec6d47bfccba91cb785b5134"
-APPROVED_MTP_DRAFT="/mnt/data/AI/Models/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/mtp-gemma-4-12B-it.gguf"
+APPROVED_MTP_DRAFT="${AAG_APPROVED_MTP_DRAFT:-$MODEL_ROOT/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/mtp-gemma-4-12B-it.gguf}"
 APPROVED_MTP_DRAFT_SHA256="c50c91c35f04903815b2e8930cbb8c8c5bee0e1aa00748c30a7b8ff05d2310b4"
 ONEAPI_ENV="/opt/intel/oneapi/setvars.sh"
 HOST="0.0.0.0"
@@ -20,7 +20,7 @@ COMPATIBILITY_SERVICE="aag-model-compatibility.service"
 COMPATIBILITY_PORT="18080"
 COMPATIBILITY_HEALTH="http://127.0.0.1:${COMPATIBILITY_PORT}/health"
 COMPATIBILITY_PREFLIGHT="http://127.0.0.1:${COMPATIBILITY_PORT}/aag/preflight"
-COMPATIBILITY_TOKEN_FILE="/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility/proxy.token"
+COMPATIBILITY_TOKEN_FILE="${AAG_COMPATIBILITY_TOKEN_FILE:-${ANYTHINGLLM_STORAGE:-${XDG_DATA_HOME:-$HOME/.local/share}/anythingllm}/aag-model-neutral-compatibility/proxy.token}"
 
 COMMAND_NAME="${0##*/}"
 RUNTIME_BASE="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"

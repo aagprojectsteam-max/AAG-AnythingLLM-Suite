@@ -21,13 +21,14 @@ import warnings
 
 from PIL import Image
 
-ROOT = pathlib.Path(os.environ.get("AAG_UPSCALE_ROOT", "/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine")).absolute()
+DATA_HOME = pathlib.Path(os.environ.get("XDG_DATA_HOME", pathlib.Path.home() / ".local/share"))
+ROOT = pathlib.Path(os.environ.get("AAG_UPSCALE_ROOT", pathlib.Path(__file__).resolve().parent)).absolute()
 BIN = pathlib.Path(os.environ.get("AAG_UPSCALE_BIN", str(ROOT / "bin" / "upscayl-bin"))).absolute()
 MODELS = pathlib.Path(os.environ.get("AAG_UPSCALE_MODELS", str(ROOT / "models"))).absolute()
 TMP = pathlib.Path(os.environ.get("AAG_UPSCALE_TMP", str(ROOT / "tmp"))).absolute()
 LOGS = pathlib.Path(os.environ.get("AAG_UPSCALE_LOGS", str(ROOT / "logs"))).absolute()
-OUTPUT = pathlib.Path(os.environ.get("AAG_OUTPUT_ROOT", "/mnt/data/AI/Outputs")).absolute()
-SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state/scheduler")).absolute()
+OUTPUT = pathlib.Path(os.environ.get("AAG_OUTPUT_ROOT", DATA_HOME / "aag-anythingllm-suite/outputs")).absolute()
+SCHEDULER = pathlib.Path(os.environ.get("AAG_XPU_SCHEDULER_ROOT", DATA_HOME / "aag-anythingllm-suite/state/image-agent/scheduler")).absolute()
 COMFY_QUEUE_URL = os.environ.get("AAG_COMFYUI_QUEUE_URL", "http://127.0.0.1:8188/queue")
 HOST = os.environ.get("AAG_UPSCALE_HOST", "127.0.0.1")
 PORT = int(os.environ.get("AAG_UPSCALE_PORT", "18191"))

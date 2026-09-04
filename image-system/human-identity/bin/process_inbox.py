@@ -20,19 +20,20 @@ import urllib.request
 import uuid
 from pathlib import Path
 
-PROJECT = Path("/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System")
+PROJECT = Path(os.environ.get("AAG_IMAGE_PROJECT_ROOT", Path(__file__).resolve().parents[2]))
 RELEASE = "0.9.0-preview.3"
 CONTRACT_SHA = "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4"
-DEFAULT_RUNTIME = PROJECT / "image-agent/releases/0.9.0-preview.3/human-identity"
+DEFAULT_RUNTIME = PROJECT / "human-identity"
 RUNTIME = Path(os.environ.get("AAG_HUMAN_IDENTITY_RUNTIME", DEFAULT_RUNTIME))
 CONFIG_PATH = RUNTIME / "config/PRODUCTION-CONFIG.json"
 CONTRACT_PATH = RUNTIME / "config/CONTRACT-B-FREEZE.json"
 SEALED_CONTRACT = PROJECT / "image-agent/phase-7r3/acceptance/CONTRACT-B-FREEZE.json"
-STATE = Path(os.environ.get("AAG_HUMAN_IDENTITY_STATE_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-human-identity-state"))
-AGENT_STATE = Path(os.environ.get("AAG_IMAGE_AGENT_STATE_ROOT", "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state"))
-PRIVATE_OUTPUT = Path(os.environ.get("AAG_HUMAN_IDENTITY_PRIVATE_OUTPUT", "/mnt/data/AI/Outputs/.aag-human-identity-private"))
-OUTPUT = Path(os.environ.get("AAG_OUTPUT_ROOT", "/mnt/data/AI/Outputs"))
-PYTHON = "/mnt/data/AI/ComfyUI/venv/bin/python"
+DATA_HOME = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+STATE = Path(os.environ.get("AAG_HUMAN_IDENTITY_STATE_ROOT", DATA_HOME / "aag-anythingllm-suite/state/human-identity"))
+AGENT_STATE = Path(os.environ.get("AAG_IMAGE_AGENT_STATE_ROOT", DATA_HOME / "aag-anythingllm-suite/state/image-agent"))
+OUTPUT = Path(os.environ.get("AAG_OUTPUT_ROOT", DATA_HOME / "aag-anythingllm-suite/outputs"))
+PRIVATE_OUTPUT = Path(os.environ.get("AAG_HUMAN_IDENTITY_PRIVATE_OUTPUT", OUTPUT / ".human-identity-private"))
+PYTHON = os.environ.get("AAG_COMFYUI_PYTHON", sys.executable)
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", re.I)
 JOB_RE = re.compile(r"^aag-[0-9a-f-]{36}$", re.I)
 NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
@@ -467,7 +468,7 @@ def publisher(private: Path):
     try:
         if not health(local_url):
             env = {**os.environ, "AAG_IMAGE_HUB_HOST": "127.0.0.1", "AAG_IMAGE_HUB_PORT": "18190", "AAG_OUTPUT_ROOT": str(OUTPUT), "AAG_XPU_SCHEDULER_ROOT": str(AGENT_STATE / "scheduler")}
-            owned.append(subprocess.Popen([sys.executable, "/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/image-hub.py"], env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True))
+            owned.append(subprocess.Popen([sys.executable, str(PROJECT / "upscale-engine/image-hub.py")], env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True))
             for _ in range(60):
                 if health(local_url):
                     break
@@ -478,7 +479,7 @@ def publisher(private: Path):
                 raise BridgeFailure("ENGINE_UNAVAILABLE", "The local trusted image publisher failed readiness.", True)
         if not health(bridge_url):
             owned.append(subprocess.Popen([
-                sys.executable, "/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/docker-bridge.py",
+                sys.executable, str(PROJECT / "upscale-engine/docker-bridge.py"),
                 "--listen-host", gateway, "--listen-port", "18190", "--target-host", "127.0.0.1", "--target-port", "18190",
             ], stdout=log, stderr=subprocess.STDOUT, start_new_session=True))
             for _ in range(60):
