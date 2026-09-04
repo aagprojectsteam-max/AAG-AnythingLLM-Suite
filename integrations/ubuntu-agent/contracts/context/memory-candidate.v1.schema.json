@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aag-memory-candidate-v1",
+  "type": "object",
+  "required": ["candidate_id","entity_id","fact_key","value","origin","evidence_ids","status"],
+  "properties": {
+    "candidate_id": {"type":"string","pattern":"^memory-candidate:"},
+    "entity_id": {"type":"string"},
+    "fact_key": {"type":"string"},
+    "value": {},
+    "origin": {"enum":["LLM_OUTPUT","COMPLETED_TASK","USER_STATEMENT","TOOL_RESULT"]},
+    "evidence_ids": {"type":"array","items":{"type":"string"},"minItems":1},
+    "status": {"enum":["PENDING","REJECTED","CONFLICTED","PROMOTED"]}
+  },
+  "additionalProperties": false
+}

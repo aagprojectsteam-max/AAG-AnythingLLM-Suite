@@ -1,0 +1,23 @@
+[
+  {"name":"hebrew_slow","turns":["למה המחשב איטי?"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"hebrew_crawling","turns":["המחשב זוחל"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"hebrew_ram","turns":["מה אוכל לי את הזיכרון?"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"hebrew_cpu","turns":["המעבד שלי עמוס?"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"english_slow","turns":["Why is my computer slow?"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"english_ram","turns":["What is eating all my RAM?"],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"english_cpu","turns":["Something is hammering the CPU."],"requests":[{"profile":"performance","inputs":{}}]},
+  {"name":"vague","turns":["המחשב לא עובד טוב"],"requests":[{"profile":"general_system","inputs":{}}]},
+  {"name":"hebrew_network","turns":["אני מחובר ל-WiFi אבל כלום לא עולה"],"requests":[{"profile":"network","inputs":{}}]},
+  {"name":"english_network","turns":["Why can't I get online?"],"requests":[{"profile":"network","inputs":{}}]},
+  {"name":"hebrew_storage","turns":["איפה הכונן שלי?"],"requests":[{"profile":"storage_mount","inputs":{"path":"/mnt/data"}}]},
+  {"name":"english_storage","turns":["Why isn't this filesystem mounted?"],"requests":[{"profile":"storage_mount","inputs":{"path":"/mnt/data"}}]},
+  {"name":"hebrew_docker","turns":["הקונטיינר נפל?"],"requests":[{"profile":"docker","inputs":{}}]},
+  {"name":"english_docker","turns":["Why is my container unhealthy?"],"requests":[{"profile":"docker","inputs":{}}]},
+  {"name":"hebrew_application","turns":["למה האפליקציה לא עולה?"],"requests":[{"profile":"application_start","inputs":{"service":"demo.service","manager":"user"}}]},
+  {"name":"english_service","turns":["This daemon stopped responding."],"requests":[{"profile":"service","inputs":{"service":"demo.service","manager":"system"}}]},
+  {"name":"hebrew_boot","turns":["משהו נכשל בעלייה?"],"requests":[{"profile":"boot_health","inputs":{}}]},
+  {"name":"english_boot","turns":["What failed during boot?"],"requests":[{"profile":"boot_health","inputs":{}}]},
+  {"name":"multi_domain","turns":["האינטרנט איטי וכל המחשב נתקע"],"requests":[{"profile":"network","inputs":{}},{"profile":"performance","inputs":{}}]},
+  {"name":"context_docker","turns":["למה המחשב איטי?","ומה עם Docker?"],"requests":[{"profile":"docker","inputs":{}}]},
+  {"name":"context_service","turns":["תבדוק את השירות של ה-Bridge","למה הוא נתקע?"],"requests":[{"profile":"service","inputs":{"service":"aag-ubuntu-agent-bridge.service","manager":"user"}}]}
+]

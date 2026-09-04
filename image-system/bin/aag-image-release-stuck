@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+
+ROOT='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System'
+START="$ROOT/bin/aag-ai-start"
+HOST='http://127.0.0.1:8188'
+OUT='/mnt/data/AI/Outputs'
+
+WAIT_INTERRUPT=12
+WAIT_TERM=20
+WAIT_READY=120
+
+section() {
+    echo
+    echo "============================================================"
+    echo " $*"
+    echo "============================================================"
+}
+
+comfy_pid() {
+    pgrep -n -f 'python main.py.*--port 8188' 2>/dev/null || true
+}
+
+queue_counts() {
+    curl -fsS --max-time 5 "$HOST/queue" 2>/dev/null |
+    python3 -c '
+import json,sys
+try:
+    q=json.load(sys.stdin)
+    print(
+        len(q.get("queue_running", [])),
+        len(q.get("queue_pending", []))
+    )
+except Exception:
+    print("-1 -1")
+' 2>/dev/null || echo "-1 -1"
+}
+
+show_queue() {
+    curl -fsS --max-time 5 "$HOST/queue" 2>/dev/null |
+    python3 -m json.tool 2>/dev/null || true
+}
+
+section "AAG — RELEASE STUCK IMAGE JOB"
+
+echo "This command:"
+echo "  1. tries ComfyUI interrupt"
+echo "  2. waits for the running job to release"
+echo "  3. if still stuck, clears stale queue entries"
+echo "  4. stops ComfyUI"
+echo "  5. restarts it through canonical AAG lifecycle"
+echo
+echo "Images already saved in $OUT are NOT deleted."
+
+PID="$(comfy_pid)"
+
+if [[ -z "$PID" ]]; then
+    section "COMFYUI IS NOT RUNNING"
+
+    echo "Starting cleanly..."
+
+    nohup "$START" \
+        >"$HOME/Downloads/AAG-ComfyUI-Recovery-$(date +%Y%m%d-%H%M%S).log" \
+        2>&1 &
+
+else
+    section "1. CURRENT STATE"
+
+    echo "ComfyUI PID=$PID"
+
+    ps -p "$PID" \
+        -o pid,etime,time,%cpu,%mem,state,nlwp,args \
+        2>/dev/null || true
+
+    echo
+    echo "Queue:"
+    show_queue
+
+    section "2. SOFT INTERRUPT"
+
+    curl -sS \
+        --max-time 5 \
+        -X POST \
+        "$HOST/interrupt" \
+        >/dev/null 2>&1 || true
+
+    echo "Interrupt sent."
+
+    RELEASED=0
+
+    for ((I=1; I<=WAIT_INTERRUPT; I++)); do
+        read -r RUNNING PENDING < <(queue_counts)
+
+        echo "wait=${I}s running=$RUNNING pending=$PENDING"
+
+        if [[ "$RUNNING" == "0" ]]; then
+            RELEASED=1
+            break
+        fi
+
+        sleep 1
+    done
+
+    if [[ "$RELEASED" == "1" ]]; then
+        section "SOFT RELEASE SUCCEEDED"
+
+        echo "Running job released without restart."
+        echo
+        echo "Current queue:"
+        show_queue
+
+        exit 0
+    fi
+
+    section "3. HARD RECOVERY REQUIRED"
+
+    echo "Running job did not release after ${WAIT_INTERRUPT}s."
+    echo "Clearing stale queue before restart..."
+
+    curl -sS \
+        --max-time 5 \
+        -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"clear":true}' \
+        "$HOST/queue" \
+        >/dev/null 2>&1 || true
+
+    curl -sS \
+        --max-time 5 \
+        -X POST \
+        "$HOST/interrupt" \
+        >/dev/null 2>&1 || true
+
+    sleep 1
+
+    PID="$(comfy_pid)"
+
+    if [[ -n "$PID" ]]; then
+        echo "Sending SIGTERM to ComfyUI PID=$PID"
+        kill -TERM "$PID" 2>/dev/null || true
+
+        STOPPED=0
+
+        for ((I=1; I<=WAIT_TERM; I++)); do
+            if ! kill -0 "$PID" 2>/dev/null; then
+                STOPPED=1
+                break
+            fi
+
+            sleep 1
+        done
+
+        if [[ "$STOPPED" != "1" ]] &&
+           kill -0 "$PID" 2>/dev/null; then
+
+            echo "WARNING: SIGTERM did not stop ComfyUI."
+            echo "Using SIGKILL as last resort."
+
+            kill -KILL "$PID" 2>/dev/null || true
+
+            for I in {1..10}; do
+                kill -0 "$PID" 2>/dev/null || break
+                sleep 1
+            done
+        fi
+    fi
+
+    if ss -lnt 2>/dev/null | grep -q ':8188 '; then
+        echo "ERROR: port 8188 is still occupied."
+        ss -lntp 2>/dev/null | grep ':8188' || true
+        exit 1
+    fi
+
+    echo "ComfyUI stopped."
+
+    section "4. CLEAN RESTART"
+
+    LOG="$HOME/Downloads/AAG-ComfyUI-Recovery-$(date +%Y%m%d-%H%M%S).log"
+
+    nohup "$START" >"$LOG" 2>&1 &
+
+    echo "Recovery log:"
+    echo "$LOG"
+fi
+
+section "5. WAIT FOR HEALTH"
+
+READY=0
+
+for ((I=1; I<=WAIT_READY; I++)); do
+    if curl -fsS \
+        --max-time 3 \
+        "$HOST/system_stats" \
+        >/dev/null 2>&1
+    then
+        READY=1
+        break
+    fi
+
+    sleep 1
+done
+
+if [[ "$READY" != "1" ]]; then
+    echo "ERROR: ComfyUI did not become ready after ${WAIT_READY}s."
+    exit 1
+fi
+
+echo "COMFY_READY=YES"
+
+section "6. VERIFY CLEAN QUEUE"
+
+show_queue
+
+read -r RUNNING PENDING < <(queue_counts)
+
+echo
+echo "running=$RUNNING"
+echo "pending=$PENDING"
+
+if [[ "$RUNNING" != "0" || "$PENDING" != "0" ]]; then
+    echo "WARNING: queue is not empty after recovery."
+else
+    echo "QUEUE=CLEAN"
+fi
+
+section "7. SUPPORT SERVICES"
+
+for S in \
+    aag-comfyui-docker-bridge.service \
+    aag-comfyui-image-proxy.service
+do
+    printf '%-42s ' "$S"
+    systemctl --user is-active "$S" 2>/dev/null || true
+done
+
+for S in \
+    aag-image-hub.service \
+    aag-image-hub-docker-bridge.service \
+    aag-upscale-engine.service \
+    aag-upscale-docker-bridge.service
+do
+    printf '%-42s ' "$S"
+    systemctl is-active "$S" 2>/dev/null || true
+done
+
+section "8. FINAL"
+
+PID="$(comfy_pid)"
+
+echo "ComfyUI PID=${PID:-NOT_FOUND}"
+echo "Output root=$OUT"
+
+if [[ -d "$OUT" ]]; then
+    printf 'Output files='
+    find "$OUT" -maxdepth 1 -type f | wc -l
+fi
+
+echo
+echo "RECOVERY=PASS"
+echo
+echo "You can resend the image request now."

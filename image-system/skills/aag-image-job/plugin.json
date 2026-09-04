@@ -1,0 +1,34 @@
+{
+  "active": true,
+  "hubId": "aag-image-job",
+  "name": "AAG Image Job",
+  "version": "0.9.0-preview.13",
+  "same_turn_retry": "forbidden",
+  "description": "Read status, request safe targeted cancellation, or explicitly resume only the incomplete children of one governed multi-image parent owned by the current conversation. Resume is a new-user-turn action and never an automatic retry. It cannot clear queues, restart services, browse files, or run arbitrary recovery.",
+  "public_schema": "provider-job.schema.json",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "action": {
+        "type": "string",
+        "description": "Required exact value: status, cancel, or resume. Resume is batch-parent-only and requires new user input."
+      },
+      "job_id": {
+        "type": "string",
+        "description": "Required AAG image job ID returned by AAG Image Task."
+      }
+    }
+  },
+  "setup_args": {},
+  "routing": {
+    "action": "inspect resume or cancel an existing AAG image job",
+    "domain": "image generation job lifecycle",
+    "operation": "get status, resume, or cancel by job identifier",
+    "aliases": [
+      "בדוק סטטוס משימת תמונה",
+      "המשך משימת תמונה",
+      "בטל משימת תמונה"
+    ],
+    "excludes": "starting ordinary new image generation"
+  }
+}

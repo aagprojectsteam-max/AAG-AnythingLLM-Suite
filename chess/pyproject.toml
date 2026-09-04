@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aag-chess-puzzle-agent"
+version = "1.6.0"
+description = "Deterministically verified local chess puzzle generator"
+requires-python = ">=3.12"
+dependencies = [
+  "chess==1.11.2",
+  "Pillow==11.3.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest==8.4.1",
+  "pytest-timeout==2.4.0",
+]
+
+[project.scripts]
+aag-chess = "aag_chess.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+timeout = 30
+markers = [
+  "stockfish_real: uses the detected local Stockfish binary",
+]

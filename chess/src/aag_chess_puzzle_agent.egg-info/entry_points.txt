@@ -1,0 +1,2 @@
+[console_scripts]
+aag-chess = aag_chess.cli:main

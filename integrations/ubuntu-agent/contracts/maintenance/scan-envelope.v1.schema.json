@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aag://contracts/maintenance/scan-envelope.v1",
+  "title": "AAG Maintenance Scan Envelope V1",
+  "type": "object",
+  "required": [
+    "schema", "schema_version", "tool", "scan_id", "started_at",
+    "finished_at", "duration_ms", "scope", "policy_fingerprint",
+    "completeness", "observations", "inferences", "findings",
+    "recommendations", "errors", "result", "read_only", "mutated"
+  ],
+  "properties": {
+    "schema": {"const": "aag-maintenance-scan-envelope-v1"},
+    "schema_version": {"const": "1.0"},
+    "tool": {"type": "string", "minLength": 1},
+    "scan_id": {"type": "string", "format": "uuid"},
+    "started_at": {"type": "string"},
+    "finished_at": {"type": "string"},
+    "duration_ms": {"type": "number", "minimum": 0},
+    "scope": {"type": "object"},
+    "policy_fingerprint": {"type": "string"},
+    "completeness": {
+      "type": "object",
+      "required": ["status", "entries_examined", "errors", "truncated", "limits_reached"],
+      "properties": {
+        "status": {"enum": ["complete", "partial", "failed"]},
+        "entries_examined": {"type": "integer", "minimum": 0},
+        "errors": {"type": "integer", "minimum": 0},
+        "truncated": {"type": "boolean"},
+        "limits_reached": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "observations": {"type": "array", "items": {"type": "object"}},
+    "inferences": {"type": "array", "items": {"type": "object"}},
+    "findings": {"type": "array", "items": {"type": "object"}},
+    "recommendations": {"type": "array", "items": {"type": "object"}},
+    "errors": {"type": "array", "items": {"type": "object"}},
+    "result": {"type": "object"},
+    "read_only": {"const": true},
+    "mutated": {"const": false}
+  },
+  "additionalProperties": true
+}

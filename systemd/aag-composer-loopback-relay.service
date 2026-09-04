@@ -1,0 +1,26 @@
+[Unit]
+Description=AAG Composer private loopback relay for AnythingLLM
+Requires=aag-model-compatibility.service
+After=aag-model-compatibility.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/mkdir -p /mnt/data/AI/Apps/AnythingLLM/storage/aag-composer-relay
+ExecStartPre=/usr/bin/rm -f /mnt/data/AI/Apps/AnythingLLM/storage/aag-composer-relay/composer.sock
+ExecStart=/usr/bin/socat UNIX-LISTEN:/mnt/data/AI/Apps/AnythingLLM/storage/aag-composer-relay/composer.sock,mode=0600,fork TCP:127.0.0.1:18080
+Restart=on-failure
+RestartSec=2
+SuccessExitStatus=143
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/mnt/data/AI/Apps/AnythingLLM/storage/aag-composer-relay
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+UMask=0077
+
+[Install]
+WantedBy=default.target

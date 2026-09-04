@@ -1,0 +1,25 @@
+{
+  "schema": "aag-remediation-contract-v1",
+  "contract_id": "bridge.readiness_failure",
+  "version": 1,
+  "status": "ACCEPTED",
+  "domain": "bridge",
+  "failure_detector": "bridge_readiness_failure_v1",
+  "supported_failure_class": "systemd_active_running_but_health_endpoint_unready",
+  "evidence": {
+    "required_fields": ["schema", "observed_at", "target", "load_state", "active_state", "sub_state", "health_ready", "health_error", "classification", "supported_failure_class", "provenance"],
+    "max_age_seconds": 30
+  },
+  "preconditions": ["exact unit loaded", "unit active/running", "health endpoint unready"],
+  "invariants": ["exact target only", "no sudo", "no unit or source modification"],
+  "executor": {
+    "primitive": "restart_exact_bridge_user_service",
+    "target": "aag-ubuntu-agent-bridge.service"
+  },
+  "risk": "LOW",
+  "approval_policy": "EXPLICIT_USER_APPROVAL",
+  "post_verifier": "bridge_readiness_v1",
+  "success_criteria": ["active/running", "MainPID changed", "health HTTP 200 status=ok"],
+  "rollback": "NONE_SAFE",
+  "audit_policy": "MUTATION_FULL_V1"
+}

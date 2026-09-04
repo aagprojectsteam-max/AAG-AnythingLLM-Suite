@@ -1,0 +1,20 @@
+[Unit]
+Description=AAG Human Identity cold local Contract B worker
+After=local-fs.target docker.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+WorkingDirectory=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System
+Environment=AAG_HUMAN_IDENTITY_RUNTIME=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity
+ExecStart=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity/bin/process_inbox.py
+TimeoutStartSec=50min
+TimeoutStopSec=90
+KillMode=control-group
+SendSIGKILL=yes
+NoNewPrivileges=yes
+# The inner bubblewrap process already provides a private tmpfs /tmp. A
+# systemd PrivateTmp mount namespace prevents this unprivileged bubblewrap
+# from creating its own user/mount/network namespaces on this host.
+PrivateTmp=no
+UMask=0077

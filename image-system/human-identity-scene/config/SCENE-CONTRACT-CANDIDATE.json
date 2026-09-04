@@ -1,0 +1,53 @@
+{
+  "schema_version": "aag.human-identity.scene-contract.v1",
+  "status": "CANDIDATE_NOT_FROZEN",
+  "contract_id": "structured-scene-c",
+  "workflow_id": "transform.human.identity.scene.v1",
+  "adapter_id": "local-pulid-v1.1-contract-c-v1",
+  "release": "0.9.0-preview.5",
+  "contract_b_control_sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4",
+  "supported_profiles": {
+    "scene-c-landscape": {"width": 1152, "height": 896, "orientation": "landscape"},
+    "scene-c-portrait": {"width": 896, "height": 1152, "orientation": "portrait"}
+  },
+  "prompt_policy": {
+    "mode": "preserve-user-scene-with-bounded-identity-instructions",
+    "minimum_characters": 20,
+    "maximum_characters": 700,
+    "maximum_whitespace_tokens": 70,
+    "required_preservation": ["requested action", "environment", "important interacting object", "spatial relationship", "orientation when supplied"],
+    "forbidden": ["replace with Contract B portrait prompt", "identity-to-subject fallback", "caller-selected model or graph"]
+  },
+  "recipe": {
+    "model": "Juggernaut XL V9",
+    "model_sha256": "c9e3e68f89b8e38689e1097d4be4573cf308de4e3fd044c64ca697bdb4aa8bca",
+    "pulid": "PuLID v1.1",
+    "pulid_sha256": "4cb8ceec1078e0165399b88332ab3c5971619111b8e1730e6bae64144aabae41",
+    "id_scale": 1.2,
+    "num_zero": 20,
+    "orthogonalization": "ORTHO_v2",
+    "steps": 25,
+    "cfg": 7.0,
+    "sampler": "sample_dpmpp_2m",
+    "scheduler": "Karras rho 7",
+    "seed_policy": "caller seed preserved; otherwise one cryptographically random seed"
+  },
+  "identity_gate_candidate": {
+    "cosine_floor": 0.55,
+    "negative_margin": "strictly greater than zero",
+    "face_count": 1,
+    "face_occupancy_percent": {"minimum": 0.5, "maximum": 20.0},
+    "face_blur_variance_minimum": 15.0,
+    "face_detection_confidence_minimum": 0.5,
+    "manual_visual_veto_required": true
+  },
+  "scene_gate": {
+    "automatic_scope": "one evaluable output face, dimensions, prompt integrity and artifact structure",
+    "manual_visual_veto_required": true,
+    "camel_case": ["one girl", "one camel", "camel clearly visible", "girl riding or sitting on camel", "not portrait-only", "desert present", "coherent physical contact", "face evaluable"]
+  },
+  "supported_envelope": ["one reference person", "one reference face", "one primary generated person", "one scene/action", "one important interacting object or animal", "moderate seated, standing, walking or riding pose", "realistic photography", "portrait or landscape profile"],
+  "unsupported_envelope": ["multiple identity references", "multiple primary people", "crowds", "extreme back-facing pose", "severe face occlusion", "distant unevaluable face", "arbitrary stylized identity transfer", "square or unrestricted dimensions"],
+  "offline": true,
+  "runtime_fallback": false
+}

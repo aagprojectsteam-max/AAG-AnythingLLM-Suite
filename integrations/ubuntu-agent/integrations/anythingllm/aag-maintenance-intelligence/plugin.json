@@ -1,0 +1,38 @@
+{
+  "active": true,
+  "hubId": "aag-maintenance-intelligence-v1",
+  "name": "AAG Maintenance Intelligence V1",
+  "schema": "skill-1.0.0",
+  "version": "1.0.2",
+  "description": "Read-only Ubuntu maintenance intelligence for Hebrew or English health, performance, storage, and dry-run plan requests. For a general maintenance or cleanup plan with no user path, call maintenance_plan and omit path; the trusted handler deterministically selects /mnt/data/AI. A plan is valid only when the tool returns a successful aag-maintenance-scan-envelope-v1 containing an aag-maintenance-plan-v1 result. For a successful plan, follow result.presentation_policy and present recommendations only from result.grounded_recommendations. If that list is empty, state that no evidence-backed cleanup candidate was found; report other item sizes only as observations and never recommend their deletion. Never convert logical or allocated size into reclaimable space. Never provide commands or execution steps. On any error or clarification response, never invent a plan, estimates, candidates, or commands; ask for clarification or report that no grounded plan is available. This skill never cleans, deletes, restarts, mounts, installs, or accepts commands.",
+  "author": "AAG",
+  "license": "Private",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "operation": {
+        "description": "Required trusted operation: system_health, performance_snapshot, storage_overview, storage_top, storage_inspect, storage_largest_files, storage_snapshot, storage_growth, storage_duplicate_candidates, storage_duplicate_verify, storage_space_discrepancy, maintenance_plan, or maintenance_explain.",
+        "type": "string"
+      },
+      "path": {
+        "description": "Absolute path inside the trusted Maintenance scope. Optional only for maintenance_plan: omit it to use the deterministic trusted default /mnt/data/AI. Required for other path-scoped operations. Leave empty for system_health, performance_snapshot, and storage_overview. Never invent a path outside the user request or trusted default.",
+        "type": "string"
+      },
+      "profile": {
+        "description": "Bounded profile: quick, standard, or deep. Deep must be explicit for duplicates and discrepancy analysis.",
+        "type": "string"
+      },
+      "item_id": {
+        "description": "Stable maint-v1 item ID required only for maintenance_explain.",
+        "type": "string"
+      }
+    }
+  },
+  "imported": true,
+  "routing": {
+    "action": "plan governed Ubuntu host maintenance from observed system state",
+    "domain": "AAG Ubuntu host-system maintenance",
+    "operation": "produce maintenance recommendations or plans",
+    "excludes": "ordinary content creation or images depicting computers"
+  }
+}

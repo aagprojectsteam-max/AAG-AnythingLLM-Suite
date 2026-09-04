@@ -1,0 +1,1271 @@
+{
+  "schema_version": 2,
+  "version": "0.9.0-preview.13",
+  "maturity": "Preview",
+  "built_at": "2026-09-04T07:21:19.533Z",
+  "active": true,
+  "human_identity": "active-portrait-b-and-bounded-scene-c",
+  "contract_b_sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4",
+  "scene_contract_sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6",
+  "modules": [
+    "runtime.js",
+    "batch.js",
+    "errors.js",
+    "util.js",
+    "image.js",
+    "store.js",
+    "scheduler.js",
+    "identity.js",
+    "human-identity.js",
+    "identity-routing.js",
+    "scene-identity.js",
+    "ordinary-policy.js",
+    "prompt-quality.js",
+    "visual-atlas.js",
+    "selective-knowledge.js",
+    "comfy.js",
+    "adapters.js",
+    "recovery.js"
+  ],
+  "human_identity_files": [
+    {
+      "path": "human-identity/runtime/composition_contract.py",
+      "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872"
+    },
+    {
+      "path": "human-identity/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "human-identity/runtime/pulid_worker.py",
+      "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f"
+    },
+    {
+      "path": "human-identity/runtime/quality_gate.py",
+      "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52"
+    },
+    {
+      "path": "human-identity/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "human-identity/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "human-identity/bin/process_inbox.py",
+      "sha256": "d06068a911998b4f4f5b22072b7ef280ce2a9ec1a6bcaf972dd8ca9e80f30137"
+    },
+    {
+      "path": "human-identity/config/CONTRACT-B-FREEZE.json",
+      "sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4"
+    },
+    {
+      "path": "human-identity/config/CANDIDATE-ASSET-MANIFEST.json",
+      "sha256": "c58d0e0cf336814c481475ec8e15b91d01b7425417cf77ccbb68b1645fa458a5"
+    },
+    {
+      "path": "human-identity/config/CANDIDATE-SBOM.json",
+      "sha256": "aff54a0ae53323ff61a57a5b96349c723a6abda4a8fd57be777b1359590f59ca"
+    },
+    {
+      "path": "human-identity/config/PRODUCTION-CONFIG.json",
+      "sha256": "a36d9a695b3ef13648945d4ff420fea71fdfa67a10493e21c98ef2d4d7e07ff2"
+    }
+  ],
+  "scene_identity_files": [
+    {
+      "path": "human-identity-scene/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "human-identity-scene/runtime/quality_gate.py",
+      "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6"
+    },
+    {
+      "path": "human-identity-scene/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "human-identity-scene/runtime/scene_worker.py",
+      "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5"
+    },
+    {
+      "path": "human-identity-scene/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "human-identity-scene/bin/process_inbox.py",
+      "sha256": "6a4cc72f5b16b0916fd205e28e5a6944661e67233c6c9d46633bb68bd81abee4"
+    },
+    {
+      "path": "human-identity-scene/config/SCENE-CONTRACT.json",
+      "sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6"
+    },
+    {
+      "path": "human-identity-scene/config/PRODUCTION-CONFIG.json",
+      "sha256": "fdc5b1cd5dde0c51687dac82d71e7f548f7b46dd0e32f880ff3be906262b03ce"
+    }
+  ],
+  "visual_atlas": {
+    "version": "1.0.0",
+    "mandatory": true,
+    "packaging": "canonical-product-root-or-versioned-asset-bundle",
+    "canonical_root": "../../visual-atlas",
+    "product_manifest": "../../visual-atlas/manifest/product-assets.json",
+    "product_manifest_sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
+    "families": 28,
+    "styles": 493,
+    "references_valid": "493/493",
+    "thumbnails_valid": "493/493",
+    "reference_set_sha256": "9a56d6c003b1aea76d3bac431fd17c2d1b54bd87b8ecc7fb97a98a6bfbd3270f",
+    "thumbnail_set_sha256": "de6300d11d986adb2c8d40e099d9df915d43b5738dd57b2b8926470f672c09e8"
+  },
+  "provider_files": [
+    {
+      "path": "aag-image-task/plugin.json",
+      "source": "skills/aag-image-task/plugin.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/plugin.json",
+      "mode": "0600",
+      "sha256": "48b73bb1cb0e2f7982872a6cd2d014dc9b66b0f34e50dd8b60f882d55b53e24e"
+    },
+    {
+      "path": "aag-image-task/handler.js",
+      "source": "skills/aag-image-task/handler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/handler.js",
+      "mode": "0600",
+      "sha256": "a4d55b30caf3ace2042a703e511d3a85da5293c3040df491e0ae53aaccdc165e"
+    },
+    {
+      "path": "aag-image-task/visual-taxonomy.json",
+      "source": "integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/visual-taxonomy.json",
+      "mode": "0600",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d"
+    },
+    {
+      "path": "aag-image-task/provider-task.schema.json",
+      "source": "schemas/provider-task.schema.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/provider-task.schema.json",
+      "mode": "0600",
+      "sha256": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755"
+    },
+    {
+      "path": "aag-image-task/runtime.js",
+      "source": "src/runtime.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/runtime.js",
+      "mode": "0600",
+      "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182"
+    },
+    {
+      "path": "aag-image-task/batch.js",
+      "source": "src/batch.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/batch.js",
+      "mode": "0600",
+      "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e"
+    },
+    {
+      "path": "aag-image-task/errors.js",
+      "source": "src/errors.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/errors.js",
+      "mode": "0600",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9"
+    },
+    {
+      "path": "aag-image-task/util.js",
+      "source": "src/util.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/util.js",
+      "mode": "0600",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93"
+    },
+    {
+      "path": "aag-image-task/image.js",
+      "source": "src/image.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/image.js",
+      "mode": "0600",
+      "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9"
+    },
+    {
+      "path": "aag-image-task/store.js",
+      "source": "src/store.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/store.js",
+      "mode": "0600",
+      "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f"
+    },
+    {
+      "path": "aag-image-task/scheduler.js",
+      "source": "src/scheduler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/scheduler.js",
+      "mode": "0600",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d"
+    },
+    {
+      "path": "aag-image-task/identity.js",
+      "source": "src/identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/identity.js",
+      "mode": "0600",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003"
+    },
+    {
+      "path": "aag-image-task/human-identity.js",
+      "source": "src/human-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/human-identity.js",
+      "mode": "0600",
+      "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b"
+    },
+    {
+      "path": "aag-image-task/identity-routing.js",
+      "source": "src/identity-routing.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/identity-routing.js",
+      "mode": "0600",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b"
+    },
+    {
+      "path": "aag-image-task/scene-identity.js",
+      "source": "src/scene-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/scene-identity.js",
+      "mode": "0600",
+      "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a"
+    },
+    {
+      "path": "aag-image-task/ordinary-policy.js",
+      "source": "src/ordinary-policy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/ordinary-policy.js",
+      "mode": "0600",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356"
+    },
+    {
+      "path": "aag-image-task/prompt-quality.js",
+      "source": "src/prompt-quality.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/prompt-quality.js",
+      "mode": "0600",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f"
+    },
+    {
+      "path": "aag-image-task/visual-atlas.js",
+      "source": "src/visual-atlas.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/visual-atlas.js",
+      "mode": "0600",
+      "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829"
+    },
+    {
+      "path": "aag-image-task/selective-knowledge.js",
+      "source": "src/selective-knowledge.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/selective-knowledge.js",
+      "mode": "0600",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943"
+    },
+    {
+      "path": "aag-image-task/comfy.js",
+      "source": "src/comfy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/comfy.js",
+      "mode": "0600",
+      "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37"
+    },
+    {
+      "path": "aag-image-task/adapters.js",
+      "source": "src/adapters.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/adapters.js",
+      "mode": "0600",
+      "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442"
+    },
+    {
+      "path": "aag-image-task/recovery.js",
+      "source": "src/recovery.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-task/recovery.js",
+      "mode": "0600",
+      "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798"
+    },
+    {
+      "path": "aag-image-batch/plugin.json",
+      "source": "skills/aag-image-batch/plugin.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/plugin.json",
+      "mode": "0600",
+      "sha256": "e5c70514bae3e1a4ceb8db43cf4406478d794ec5c3d10708ee234af5f9b5f90f"
+    },
+    {
+      "path": "aag-image-batch/handler.js",
+      "source": "skills/aag-image-batch/handler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/handler.js",
+      "mode": "0600",
+      "sha256": "cdcf5278d319965c8cc23069f2f2ba1c63df0b69f2f7b0835ccde9e222eb7ac7"
+    },
+    {
+      "path": "aag-image-batch/visual-taxonomy.json",
+      "source": "integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/visual-taxonomy.json",
+      "mode": "0600",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d"
+    },
+    {
+      "path": "aag-image-batch/provider-batch.schema.json",
+      "source": "schemas/provider-batch.schema.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/provider-batch.schema.json",
+      "mode": "0600",
+      "sha256": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c"
+    },
+    {
+      "path": "aag-image-batch/runtime.js",
+      "source": "src/runtime.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/runtime.js",
+      "mode": "0600",
+      "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182"
+    },
+    {
+      "path": "aag-image-batch/batch.js",
+      "source": "src/batch.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/batch.js",
+      "mode": "0600",
+      "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e"
+    },
+    {
+      "path": "aag-image-batch/errors.js",
+      "source": "src/errors.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/errors.js",
+      "mode": "0600",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9"
+    },
+    {
+      "path": "aag-image-batch/util.js",
+      "source": "src/util.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/util.js",
+      "mode": "0600",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93"
+    },
+    {
+      "path": "aag-image-batch/image.js",
+      "source": "src/image.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/image.js",
+      "mode": "0600",
+      "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9"
+    },
+    {
+      "path": "aag-image-batch/store.js",
+      "source": "src/store.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/store.js",
+      "mode": "0600",
+      "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f"
+    },
+    {
+      "path": "aag-image-batch/scheduler.js",
+      "source": "src/scheduler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/scheduler.js",
+      "mode": "0600",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d"
+    },
+    {
+      "path": "aag-image-batch/identity.js",
+      "source": "src/identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/identity.js",
+      "mode": "0600",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003"
+    },
+    {
+      "path": "aag-image-batch/human-identity.js",
+      "source": "src/human-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/human-identity.js",
+      "mode": "0600",
+      "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b"
+    },
+    {
+      "path": "aag-image-batch/identity-routing.js",
+      "source": "src/identity-routing.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/identity-routing.js",
+      "mode": "0600",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b"
+    },
+    {
+      "path": "aag-image-batch/scene-identity.js",
+      "source": "src/scene-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/scene-identity.js",
+      "mode": "0600",
+      "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a"
+    },
+    {
+      "path": "aag-image-batch/ordinary-policy.js",
+      "source": "src/ordinary-policy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/ordinary-policy.js",
+      "mode": "0600",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356"
+    },
+    {
+      "path": "aag-image-batch/prompt-quality.js",
+      "source": "src/prompt-quality.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/prompt-quality.js",
+      "mode": "0600",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f"
+    },
+    {
+      "path": "aag-image-batch/visual-atlas.js",
+      "source": "src/visual-atlas.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/visual-atlas.js",
+      "mode": "0600",
+      "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829"
+    },
+    {
+      "path": "aag-image-batch/selective-knowledge.js",
+      "source": "src/selective-knowledge.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/selective-knowledge.js",
+      "mode": "0600",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943"
+    },
+    {
+      "path": "aag-image-batch/comfy.js",
+      "source": "src/comfy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/comfy.js",
+      "mode": "0600",
+      "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37"
+    },
+    {
+      "path": "aag-image-batch/adapters.js",
+      "source": "src/adapters.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/adapters.js",
+      "mode": "0600",
+      "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442"
+    },
+    {
+      "path": "aag-image-batch/recovery.js",
+      "source": "src/recovery.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-batch/recovery.js",
+      "mode": "0600",
+      "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798"
+    },
+    {
+      "path": "aag-image-job/plugin.json",
+      "source": "skills/aag-image-job/plugin.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/plugin.json",
+      "mode": "0600",
+      "sha256": "6f8b87054f63e4ac66545dc9f6bfbda7c817aef22cee99754b19387a4926f0d3"
+    },
+    {
+      "path": "aag-image-job/handler.js",
+      "source": "skills/aag-image-job/handler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/handler.js",
+      "mode": "0600",
+      "sha256": "c48b17718626a68e69abaf24e87aa5eb02610836a67cfa8034755d01decbc9d4"
+    },
+    {
+      "path": "aag-image-job/visual-taxonomy.json",
+      "source": "integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/visual-taxonomy.json",
+      "mode": "0600",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d"
+    },
+    {
+      "path": "aag-image-job/provider-job.schema.json",
+      "source": "schemas/provider-job.schema.json",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/provider-job.schema.json",
+      "mode": "0600",
+      "sha256": "7ea608f456abcf5731599e71c67560196a47698582ac7d5112dca5d4d27666c2"
+    },
+    {
+      "path": "aag-image-job/runtime.js",
+      "source": "src/runtime.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/runtime.js",
+      "mode": "0600",
+      "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182"
+    },
+    {
+      "path": "aag-image-job/batch.js",
+      "source": "src/batch.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/batch.js",
+      "mode": "0600",
+      "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e"
+    },
+    {
+      "path": "aag-image-job/errors.js",
+      "source": "src/errors.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/errors.js",
+      "mode": "0600",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9"
+    },
+    {
+      "path": "aag-image-job/util.js",
+      "source": "src/util.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/util.js",
+      "mode": "0600",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93"
+    },
+    {
+      "path": "aag-image-job/image.js",
+      "source": "src/image.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/image.js",
+      "mode": "0600",
+      "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9"
+    },
+    {
+      "path": "aag-image-job/store.js",
+      "source": "src/store.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/store.js",
+      "mode": "0600",
+      "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f"
+    },
+    {
+      "path": "aag-image-job/scheduler.js",
+      "source": "src/scheduler.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/scheduler.js",
+      "mode": "0600",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d"
+    },
+    {
+      "path": "aag-image-job/identity.js",
+      "source": "src/identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/identity.js",
+      "mode": "0600",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003"
+    },
+    {
+      "path": "aag-image-job/human-identity.js",
+      "source": "src/human-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/human-identity.js",
+      "mode": "0600",
+      "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b"
+    },
+    {
+      "path": "aag-image-job/identity-routing.js",
+      "source": "src/identity-routing.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/identity-routing.js",
+      "mode": "0600",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b"
+    },
+    {
+      "path": "aag-image-job/scene-identity.js",
+      "source": "src/scene-identity.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/scene-identity.js",
+      "mode": "0600",
+      "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a"
+    },
+    {
+      "path": "aag-image-job/ordinary-policy.js",
+      "source": "src/ordinary-policy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/ordinary-policy.js",
+      "mode": "0600",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356"
+    },
+    {
+      "path": "aag-image-job/prompt-quality.js",
+      "source": "src/prompt-quality.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/prompt-quality.js",
+      "mode": "0600",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f"
+    },
+    {
+      "path": "aag-image-job/visual-atlas.js",
+      "source": "src/visual-atlas.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/visual-atlas.js",
+      "mode": "0600",
+      "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829"
+    },
+    {
+      "path": "aag-image-job/selective-knowledge.js",
+      "source": "src/selective-knowledge.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/selective-knowledge.js",
+      "mode": "0600",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943"
+    },
+    {
+      "path": "aag-image-job/comfy.js",
+      "source": "src/comfy.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/comfy.js",
+      "mode": "0600",
+      "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37"
+    },
+    {
+      "path": "aag-image-job/adapters.js",
+      "source": "src/adapters.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/adapters.js",
+      "mode": "0600",
+      "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442"
+    },
+    {
+      "path": "aag-image-job/recovery.js",
+      "source": "src/recovery.js",
+      "deploy_target": "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills/aag-image-job/recovery.js",
+      "mode": "0600",
+      "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798"
+    }
+  ],
+  "integration_files": [
+    {
+      "source": "integrations/anythingllm/aagArtifactPresentation.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactPresentation.js"
+      ],
+      "mode": "0755",
+      "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870"
+    },
+    {
+      "source": "integrations/anythingllm/aagComposerHistory.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagComposerHistory.js"
+      ],
+      "mode": "0755",
+      "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604"
+    },
+    {
+      "source": "integrations/anythingllm/aagComposerProxy.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/aagComposerProxy.js"
+      ],
+      "mode": "0755",
+      "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3"
+    },
+    {
+      "source": "integrations/anythingllm/aagImageProgress.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/aagImageProgress.js"
+      ],
+      "mode": "0755",
+      "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640"
+    },
+    {
+      "source": "integrations/anythingllm/aagPublicToolSchema.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagPublicToolSchema.js"
+      ],
+      "mode": "0755",
+      "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad"
+    },
+    {
+      "source": "integrations/anythingllm/aagPdfAssembler.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/aagPdfAssembler.js"
+      ],
+      "mode": "0755",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca"
+    },
+    {
+      "source": "integrations/anythingllm/aagArtifactExport.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/aagArtifactExport.js"
+      ],
+      "mode": "0755",
+      "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc"
+    },
+    {
+      "source": "integrations/anythingllm/server-index.js",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/index.js"
+      ],
+      "mode": "0755",
+      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad"
+    },
+    {
+      "source": "integrations/upscale-engine/upscale-server.py",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/upscale-server.py"
+      ],
+      "mode": "0755",
+      "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b"
+    },
+    {
+      "source": "integrations/upscale-engine/image-hub.py",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/image-hub.py"
+      ],
+      "mode": "0755",
+      "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0"
+    },
+    {
+      "source": "integrations/comfyui-bridge/proxy.py",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bridges/comfyui-docker-bridge/proxy.py",
+        "/mnt/data/AI/Apps/AnythingLLM/storage/comfyui-docker-bridge/proxy.py"
+      ],
+      "mode": "0755",
+      "sha256": "55bc6f9e4a17a28c9ff24b2657b0aa145ae0a1863a825dd00b53cc342af60c87"
+    },
+    {
+      "source": "integrations/launchers/aag-ai-start",
+      "targets": [
+        "/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-ai-start"
+      ],
+      "mode": "0755",
+      "sha256": "26866bc20d59a48a1bcfb8f9bcf9087c95e3001df08306db66c69e2028e74772"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "VERSION",
+      "sha256": "f333d757bb34185be8102ae734861105e4deb612d584829d3f23f17f9d5f0ef8"
+    },
+    {
+      "path": "package.json",
+      "sha256": "4ad6f48602ca740e2b484a75325b4f4104fac652966f87662c17c95d959efb72"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b8504f09788449c2cc1826f607acd48a17dd0a0b4e3e8b676831ac937c63b8c8"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "6c92ad57e5cd2778be78b2d22ac4f1726a79021dac31953e31a1c669f29dfc93"
+    },
+    {
+      "path": "docs/MIGRATION.md",
+      "sha256": "fa7e6cc994d9cee5180461db74036c17d4654d51cb230a8fa9be19eda9e83bdf"
+    },
+    {
+      "path": "docs/ROLLBACK.md",
+      "sha256": "f2343e4422a9aab8a42466a7fb72c6427f7b31f8a1786f2530be1e1cdd8107d1"
+    },
+    {
+      "path": "docs/SECURITY.md",
+      "sha256": "56f4be1c2f9519a7296fe9690449e9f9a050c33b524d22f23d70b7a1ab85be8b"
+    },
+    {
+      "path": "docs/PROMPT-QUALITY-ARCHITECTURE.md",
+      "sha256": "eb7b918009e2898e47ab1caa2ceeaefca3b59a5495573d3cdae9aaab8ed17a2c"
+    },
+    {
+      "path": "docs/PROVIDER-NEUTRAL-BOUNDARY.md",
+      "sha256": "384f28deb943a6f827c3b291fbb36cfe0daabd0ffad726ac568a53138f646bad"
+    },
+    {
+      "path": "docs/AAG-ARTIFACT-EXPORT.md",
+      "sha256": "795870b0c6e60f04a61dea4d676551629211b59df94d59204fddb1fde5883ba0"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS-COMPOSER.md",
+      "sha256": "958c1e3f065aae2a1a6cdd0c596f0b507242a45f1d6bd132855a0e94b16a6de5"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS-PACKAGING.md",
+      "sha256": "409d9ed5dcba52a4af1931bd1a62edec3344aed8c2b8a01350ee9e8e77dcc93c"
+    },
+    {
+      "path": "registry/workflows.json",
+      "sha256": "94ae85e1a42a9263a8363f54e6633dc7b215783a85cfda3415f266eecba9ca17"
+    },
+    {
+      "path": "schemas/provider-task.schema.json",
+      "sha256": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755"
+    },
+    {
+      "path": "schemas/provider-batch.schema.json",
+      "sha256": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c"
+    },
+    {
+      "path": "schemas/provider-job.schema.json",
+      "sha256": "7ea608f456abcf5731599e71c67560196a47698582ac7d5112dca5d4d27666c2"
+    },
+    {
+      "path": "skills/aag-image-task/plugin.json",
+      "sha256": "48b73bb1cb0e2f7982872a6cd2d014dc9b66b0f34e50dd8b60f882d55b53e24e"
+    },
+    {
+      "path": "skills/aag-image-task/handler.js",
+      "sha256": "a4d55b30caf3ace2042a703e511d3a85da5293c3040df491e0ae53aaccdc165e"
+    },
+    {
+      "path": "skills/aag-image-batch/plugin.json",
+      "sha256": "e5c70514bae3e1a4ceb8db43cf4406478d794ec5c3d10708ee234af5f9b5f90f"
+    },
+    {
+      "path": "skills/aag-image-batch/handler.js",
+      "sha256": "cdcf5278d319965c8cc23069f2f2ba1c63df0b69f2f7b0835ccde9e222eb7ac7"
+    },
+    {
+      "path": "skills/aag-image-job/plugin.json",
+      "sha256": "6f8b87054f63e4ac66545dc9f6bfbda7c817aef22cee99754b19387a4926f0d3"
+    },
+    {
+      "path": "skills/aag-image-job/handler.js",
+      "sha256": "c48b17718626a68e69abaf24e87aa5eb02610836a67cfa8034755d01decbc9d4"
+    },
+    {
+      "path": "src/runtime.js",
+      "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182"
+    },
+    {
+      "path": "src/batch.js",
+      "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e"
+    },
+    {
+      "path": "src/errors.js",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9"
+    },
+    {
+      "path": "src/util.js",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93"
+    },
+    {
+      "path": "src/image.js",
+      "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9"
+    },
+    {
+      "path": "src/store.js",
+      "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f"
+    },
+    {
+      "path": "src/scheduler.js",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d"
+    },
+    {
+      "path": "src/identity.js",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003"
+    },
+    {
+      "path": "src/human-identity.js",
+      "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b"
+    },
+    {
+      "path": "src/identity-routing.js",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b"
+    },
+    {
+      "path": "src/scene-identity.js",
+      "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a"
+    },
+    {
+      "path": "src/ordinary-policy.js",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356"
+    },
+    {
+      "path": "src/prompt-quality.js",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f"
+    },
+    {
+      "path": "src/visual-atlas.js",
+      "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829"
+    },
+    {
+      "path": "src/selective-knowledge.js",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943"
+    },
+    {
+      "path": "src/comfy.js",
+      "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37"
+    },
+    {
+      "path": "src/adapters.js",
+      "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442"
+    },
+    {
+      "path": "src/recovery.js",
+      "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798"
+    },
+    {
+      "path": "tests/runtime.test.js",
+      "sha256": "aec84c5542dc5b382ccbeddba7863ffd5014cdcec2d6ebc08913748a8d99babe"
+    },
+    {
+      "path": "tests/scheduler.test.js",
+      "sha256": "79f0b81e95c3fef28f16fd4b18e9b55480601df7da0e73f28c8f09ad5faa4fa4"
+    },
+    {
+      "path": "tests/security.test.js",
+      "sha256": "1a27a2a3ca05f5f5cb769484b26e95978237433187d41dd23fd905bf11f2fb90"
+    },
+    {
+      "path": "tests/prompt-quality.test.js",
+      "sha256": "3bea95216b088dc2f251d77d7fadca3f5c9eaea505a20831e401c8d89824f9e3"
+    },
+    {
+      "path": "tests/public-tool-schema.test.js",
+      "sha256": "bbd914168d970c37659e3bc3a577239804be88b52dfe73624763b1b03ff1b563"
+    },
+    {
+      "path": "tests/integration_security_test.py",
+      "sha256": "8bdffda1f8d6bf3f9149539f55685939f38c9afd7ded1f8c3c9096eabc77127f"
+    },
+    {
+      "path": "tests/composer-native-chat.test.js",
+      "sha256": "76758338b0749879143f63e3606ca2d48c56895b01cbbb4ca9106eebac48d22a"
+    },
+    {
+      "path": "tests/inline-composer-integration.test.js",
+      "sha256": "0485bffec44bbb02fc7c23b20509f33859ac50f55f2c877e3ae5a4368dc8084d"
+    },
+    {
+      "path": "tests/progress-persistence.test.js",
+      "sha256": "94083efb4d325a6a7aa59e597df1696005d51a458c765be479d2863a2cf939cd"
+    },
+    {
+      "path": "tests/stall-recovery.test.js",
+      "sha256": "07e1238790cd63fd4fdbb778a2fda2341963083ccb2d3ce2aa90c55ce8e1ecd6"
+    },
+    {
+      "path": "tests/visual-atlas.test.js",
+      "sha256": "a2da3b0a4c5a055fd3d4fd3db8bd7e12bc8564fc236d145197a636760e8f9946"
+    },
+    {
+      "path": "tests/governed-update.test.js",
+      "sha256": "c882c8efe3b42010ddb08eb5d0a0b2064ed0566e46fca6f013e029f97a00868f"
+    },
+    {
+      "path": "tests/test_human_identity_bridge.py",
+      "sha256": "cdde41609f749508a09b6d10a9e16768dbb8db6bdb306ffcfed49e280499f950"
+    },
+    {
+      "path": "tests/test_scene_identity_bridge.py",
+      "sha256": "5640e702a86d687b613480b0790d4454635c91de9e2120f586eedd3a67253a5d"
+    },
+    {
+      "path": "tests/ordinary-policy.test.js",
+      "sha256": "eb2f4d1b47122d2e58f769078d710eb9d0cd2fd7633ff18340186a0fb3b78a71"
+    },
+    {
+      "path": "tests/artifact-presentation.test.js",
+      "sha256": "9d4164a1dbf26c0e1932ed04e941c87cc0e8779e64d6c9e5532fa1b801ae648f"
+    },
+    {
+      "path": "tests/batch.test.js",
+      "sha256": "59412f3137401d04858586711f8348af119b1a66d3baeff39c1d2d32072b9823"
+    },
+    {
+      "path": "tests/artifact-export.test.js",
+      "sha256": "f54d0ed0593798ad5d7bd78766c4bf0c71f2d5d9b3a910e65d572d3de3b51751"
+    },
+    {
+      "path": "tests/frontend-export-contract.test.js",
+      "sha256": "9680ce7fef16732575d8c70450731c8f36db01e8616d3d51c76c5b21fa64f496"
+    },
+    {
+      "path": "tools/build.js",
+      "sha256": "4587ee302c61987d83acce43bee7ab1152780533d82634444c016d872733ae64"
+    },
+    {
+      "path": "tools/governed-update.js",
+      "sha256": "6bd9e8843ebac021e00354e48a087af03829946416a2585269c37eb08c84bd1c"
+    },
+    {
+      "path": "tools/build-anythingllm-frontend.js",
+      "sha256": "4ed7d68456281ec8b5918b8b6183576959dca817f0a804e794f0ea1bca4e99b9"
+    },
+    {
+      "path": "tools/doctor.js",
+      "sha256": "1cecd658b52692e1f5ac2f5e9223f059d4474211cedb4fd460ff9b01aa975214"
+    },
+    {
+      "path": "tools/atlas-token-accounting.js",
+      "sha256": "b7f0b888cadd76521ecaa49c22867319659fb6e7a227766fdd79dc388ada9699"
+    },
+    {
+      "path": "tools/atlas-integrity-evidence.js",
+      "sha256": "51c55a6fd08a752e450a8299bc15263411a4f1372f88b59e8043ce6d3c2204b5"
+    },
+    {
+      "path": "tools/atlas-final-evidence.js",
+      "sha256": "55750a6ba78db8c77c79de344afe93b29125b8ac1e12f66a9d32536988924184"
+    },
+    {
+      "path": "tools/atlas-browser-acceptance.py",
+      "sha256": "3de4146818205057e123af741b24ecc18b06fd0f660e5ecb4bc5dc22d3a7f6dc"
+    },
+    {
+      "path": "tools/atlas-endpoint-regression.js",
+      "sha256": "a45e1f797b927acf122c2e4c86640998a06ad74efe0b1ed28a12a5ba90793e2f"
+    },
+    {
+      "path": "tools/visual-atlas-product.js",
+      "sha256": "f02ce6b3c12b8a261daaa9172d5ee557f4a956670fdfbf9d3f5c361a85455eb9"
+    },
+    {
+      "path": "tools/atlas-live-acceptance.js",
+      "sha256": "e97a00792390035fa540285e753f4c589de7a8f8a4f19cad98c6290a501e5790"
+    },
+    {
+      "path": "tools/candidate-e2e.js",
+      "sha256": "bd15dc1d3b2093a947387f7c4a1e08feb35bba3bd1c9efbae6929b23a1acc6d2"
+    },
+    {
+      "path": "tools/dynamic-identity-live-acceptance.js",
+      "sha256": "5048e8ef162400442c68c0f4a053d98f1dbab90a7cb754e7c0ebbf52522a34f9"
+    },
+    {
+      "path": "tools/scene-identity-live-acceptance.js",
+      "sha256": "989adfa381c40fb51de3e8a30f98f3768bdacdf35da35918d73b47758dca47e1"
+    },
+    {
+      "path": "tools/quality-semantics-live.js",
+      "sha256": "f74aa9a66dde5b42007cc573b28fda785f27f44df618bffcb531eb7dabe5a7f2"
+    },
+    {
+      "path": "tools/multi-image-registration-audit.js",
+      "sha256": "96b1eb7e73dcd1af338c94a307b4a55a2e55f044548cc33bd4535f5310d4a465"
+    },
+    {
+      "path": "tools/multi-image-provider-validation.js",
+      "sha256": "4251901dd6ad32aa1ace6bda81bb6e607b56a702ea11332c929ee12e2bdb8c0c"
+    },
+    {
+      "path": "ordinary-generation/config/ORDINARY-RECIPE.json",
+      "sha256": "5e8163e7f143c627e1e9ea9b20ab5527dc1ba39fa575a61780a5638d8762ea24"
+    },
+    {
+      "path": "integrations/launchers/aag-image-start",
+      "sha256": "31f31ffe5ab808d24174d221f461f78e3bac9a0fe3a980b80d8b6ffa700a627b"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
+      "sha256": "9d3e6c91e986fd4e26e6f9120cd70e0796e7b2cced9d41dd77183ec73c89a931"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
+      "sha256": "453d393a509a0d2357dbaf3c48b5d3547d3fc9c99218ae24541588e0a4fc99b1"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageCollection.jsx",
+      "sha256": "e7d5244f4b8d7a04a37b4a206d6bd7c911916cf538ce533c8db8ba94abfb5f4c"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/aagArtifactExport.js",
+      "sha256": "aa3071b3207076007f13991ce989b5485265b8c3e736c7c74cedd13d0da354d8"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
+      "sha256": "1fb8d1e49802ddf52f290d5fe71732f11f431710a7ce99d5d82641fa04c8fbcc"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
+      "sha256": "c8caf16a77365def2f8761173f0adc8d0920656d8dc24038d6f4e05549a2136a"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
+      "sha256": "1f85910d6d5aa8494a960e7e3ae12968fb724624792f4d17c41909031c1b876f"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageComposerPanel/heTaxonomyLabels.js",
+      "sha256": "4f8ebe301a4b0cce695484511fc07a3dea502b7eec4c86cfe770f2106d325060"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageProgress/index.jsx",
+      "sha256": "be29569fc1a5ba3f17701fff4d55aa6b33f63762ebedfd5a15c7353c2b1d3f28"
+    },
+    {
+      "path": "integrations/anythingllm/frontend/AagImageProgress/styles.css",
+      "sha256": "48cd6b1690d9c8faf43a957de71b97f564beda32f0070cf0d48d69df54413a91"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/compatibility.py",
+      "sha256": "51a8cf6f890d470ea420575db189422cd21216af90005ccfb824ec57fc155bd0"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/composer_canonical.py",
+      "sha256": "20807a4a1bd29b749f9cc659f51e1847c615bee63379fecd4992c9be1c8461e3"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/visual_atlas.py",
+      "sha256": "4bf721763bdf56b6511eebbafeb7106da021e3ac810806f2adf84d562f544b19"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/server.py",
+      "sha256": "9550a7727e7722c7d9fc8cccfefcdcf292edfff33ce937b69fb12018680b647a"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/test_compatibility.py",
+      "sha256": "dd4f6a66218c8decf5a235e46cb272a149f7accfe668a681ed99207ab95ad90c"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/test_composer_canonical.py",
+      "sha256": "22d60b3ac4e16f20035bea70630c9d02e3a5b6ad5d18a178d0ce26d2e335527f"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/test_http_boundary.py",
+      "sha256": "f3514e65e07adc704984480222fc1c56dfa68a340a1bbdeccd3df9594b96dfcf"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/test_visual_atlas.py",
+      "sha256": "ce821794769cd4c60fffb9a08ec3282d7dec8e516fe742e9961fe1cf0fadb23e"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/aag-model-compatibility.service",
+      "sha256": "509054c215ecbb5cf171e989c97e9d7c198cd94b4134c11c1138566472592693"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/composer/index.html",
+      "sha256": "cda9acec89089a6e0de20ba17e5b527db6cb6dfaed670cfaf84178293638ced5"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/composer/app.css",
+      "sha256": "1d2b856a4b5021333028d1923622399475a45ed3d58c4f5d973e8b40bfc9dd9d"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/composer/app.js",
+      "sha256": "e7194949a7e7db439e79ec14e3c1a9c5cd7b289d3ec2df95e4157992540b33a0"
+    },
+    {
+      "path": "integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d"
+    },
+    {
+      "path": "human-identity/runtime/composition_contract.py",
+      "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872"
+    },
+    {
+      "path": "human-identity/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "human-identity/runtime/pulid_worker.py",
+      "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f"
+    },
+    {
+      "path": "human-identity/runtime/quality_gate.py",
+      "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52"
+    },
+    {
+      "path": "human-identity/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "human-identity/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "human-identity/bin/process_inbox.py",
+      "sha256": "d06068a911998b4f4f5b22072b7ef280ce2a9ec1a6bcaf972dd8ca9e80f30137"
+    },
+    {
+      "path": "human-identity/config/CONTRACT-B-FREEZE.json",
+      "sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4"
+    },
+    {
+      "path": "human-identity/config/CANDIDATE-ASSET-MANIFEST.json",
+      "sha256": "c58d0e0cf336814c481475ec8e15b91d01b7425417cf77ccbb68b1645fa458a5"
+    },
+    {
+      "path": "human-identity/config/CANDIDATE-SBOM.json",
+      "sha256": "aff54a0ae53323ff61a57a5b96349c723a6abda4a8fd57be777b1359590f59ca"
+    },
+    {
+      "path": "human-identity/config/PRODUCTION-CONFIG.json",
+      "sha256": "a36d9a695b3ef13648945d4ff420fea71fdfa67a10493e21c98ef2d4d7e07ff2"
+    },
+    {
+      "path": "human-identity-scene/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "human-identity-scene/runtime/quality_gate.py",
+      "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6"
+    },
+    {
+      "path": "human-identity-scene/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "human-identity-scene/runtime/scene_worker.py",
+      "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5"
+    },
+    {
+      "path": "human-identity-scene/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "human-identity-scene/bin/process_inbox.py",
+      "sha256": "6a4cc72f5b16b0916fd205e28e5a6944661e67233c6c9d46633bb68bd81abee4"
+    },
+    {
+      "path": "human-identity-scene/config/SCENE-CONTRACT.json",
+      "sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6"
+    },
+    {
+      "path": "human-identity-scene/config/PRODUCTION-CONFIG.json",
+      "sha256": "fdc5b1cd5dde0c51687dac82d71e7f548f7b46dd0e32f880ff3be906262b03ce"
+    },
+    {
+      "path": "scene-identity-v1/DEPLOYED-ACCEPTANCE-EVIDENCE.json",
+      "sha256": "7644697f84078398953d39a42756790deb7ec18ff3fd6d9074772f0b2be9f39a"
+    },
+    {
+      "path": "../docs/AAG-IMAGE-SYSTEM-CANONICAL-MAP.md",
+      "sha256": "d2d08b580a735a226f254a7c2a83b517feda4942bae9ee1ba5c5873646d7517d"
+    },
+    {
+      "path": "../visual-atlas/README.md",
+      "sha256": "3ad66b2e82e0db40143335ad414c376c17f3876a674f39d44438fd891d444de6"
+    },
+    {
+      "path": "../visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e"
+    },
+    {
+      "path": "../visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c"
+    },
+    {
+      "path": "../visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d"
+    },
+    {
+      "path": "../visual-atlas/manifest/product-assets.json",
+      "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee"
+    },
+    {
+      "path": "../visual-atlas/state/atlas-state.json",
+      "sha256": "8641b93f6e127349db1a9cfd0a4e615144a0a2c933df2e689e1da146d29faaba"
+    },
+    {
+      "path": "../visual-atlas/reports/completeness-audit.json",
+      "sha256": "207e95e550d5755e30144e6fa7646de31800f6670835e6c0d1019caefd078761"
+    },
+    {
+      "path": "../visual-atlas/test/atlas.test.js",
+      "sha256": "da5d92d8f2c8d34ba037bcad4f1d5b3bf81ba624d1480f6f5aa4747e0cda3a69"
+    },
+    {
+      "path": "../systemd/user/aag-human-identity-scene-bridge.path",
+      "sha256": "992c48ee586f5dfec08900089e275796ba7fa24221d88ddf7cfaa204ed658e1e"
+    },
+    {
+      "path": "../systemd/user/aag-human-identity-scene-bridge.service",
+      "sha256": "00bd62d4a2f4b1f9afa4b9950f10a9614d2ff928aa843584faf519629440c4d1"
+    },
+    {
+      "path": "integrations/anythingllm/aagArtifactPresentation.js",
+      "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870"
+    },
+    {
+      "path": "integrations/anythingllm/aagComposerHistory.js",
+      "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604"
+    },
+    {
+      "path": "integrations/anythingllm/aagComposerProxy.js",
+      "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3"
+    },
+    {
+      "path": "integrations/anythingllm/aagImageProgress.js",
+      "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640"
+    },
+    {
+      "path": "integrations/anythingllm/aagPublicToolSchema.js",
+      "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad"
+    },
+    {
+      "path": "integrations/anythingllm/aagPdfAssembler.js",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca"
+    },
+    {
+      "path": "integrations/anythingllm/aagArtifactExport.js",
+      "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc"
+    },
+    {
+      "path": "integrations/anythingllm/server-index.js",
+      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad"
+    },
+    {
+      "path": "integrations/upscale-engine/upscale-server.py",
+      "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b"
+    },
+    {
+      "path": "integrations/upscale-engine/image-hub.py",
+      "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0"
+    },
+    {
+      "path": "integrations/comfyui-bridge/proxy.py",
+      "sha256": "55bc6f9e4a17a28c9ff24b2657b0aa145ae0a1863a825dd00b53cc342af60c87"
+    },
+    {
+      "path": "integrations/launchers/aag-ai-start",
+      "sha256": "26866bc20d59a48a1bcfb8f9bcf9087c95e3001df08306db66c69e2028e74772"
+    }
+  ],
+  "workflow_registry_sha256": "94ae85e1a42a9263a8363f54e6633dc7b215783a85cfda3415f266eecba9ca17",
+  "provider_schema_sha256": {
+    "task": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755",
+    "batch": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c",
+    "job": "7ea608f456abcf5731599e71c67560196a47698582ac7d5112dca5d4d27666c2"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schema_version": "aag.phase7r3.contract-b-freeze.v1",
+  "status": "FROZEN_BEFORE_GENERATION",
+  "selected_by": "sealed Phase 7R2 Contract B 8/8 cohort; no Phase 7R3 output observed",
+  "contract_id": "structured-close-b",
+  "positive_prompts": {
+    "adult": "a still mid shot portrait photograph of an adult man, full head, both shoulders, and upper torso visible in frame, camera at eye level, centered with natural background space, face clearly visible, looking at the camera",
+    "baby": "a still mid shot portrait photograph of a baby, full head, both shoulders, and upper torso visible in frame, camera at eye level, centered with natural background space, face clearly visible, looking at the camera"
+  },
+  "framing_semantics": "still mid shot; full head, both shoulders and upper torso visible; eye-level camera; centered; natural background space; clearly visible face; looking at camera",
+  "negative_prompt": "flaws in the eyes, flaws in the face, flaws, lowres, non-HDRi, low quality, worst quality,artifacts noise, text, watermark, glitch, deformed, mutated, ugly, disfigured, hands, low resolution, partially rendered objects,  deformed or partially rendered eyes, deformed, deformed eyeballs, cross-eyed,blurry",
+  "reference_contract": {
+    "count": 1,
+    "mode": "single-original",
+    "long_side_resize": 1024,
+    "orientation": "EXIF transpose before RGB conversion",
+    "face_policy": "exactly-one-or-fail",
+    "detector": "InsightFace AntelopeV2/facexlib official preprocessing with unchanged Phase 7R fail-closed remediation",
+    "auxiliary_references": false,
+    "authorized_roots": [
+      "/mnt/data/AI/Outputs",
+      "/mnt/data/AI/Apps/AnythingLLM/storage/reference-images"
+    ]
+  },
+  "identity_recipe": {
+    "recipe_id": "pulid-v1.1-juggernaut-xl-v9-single-original-phase6-winner",
+    "pulid_source_commit": "1aa2fc7df4bf51080df39f355f9abdc1cbfefbaa",
+    "pulid_checkpoint_revision": "d58b3ba191be1280c37ace0656a2e65cd9b8c8d8",
+    "pulid_checkpoint_sha256": "4cb8ceec1078e0165399b88332ab3c5971619111b8e1730e6bae64144aabae41",
+    "pulid_checkpoint_bytes": 984405232,
+    "base_model": "RunDiffusion/Juggernaut-XL-v9",
+    "base_revision": "cf419233522daa0b9ea36c3aff98fa2cab1fb0fb",
+    "base_checkpoint_sha256": "c9e3e68f89b8e38689e1097d4be4573cf308de4e3fd044c64ca697bdb4aa8bca",
+    "base_checkpoint_bytes": 7105348188,
+    "id_scale": 0.8,
+    "num_zero": 20,
+    "orthogonalization": "ORTHO_v2",
+    "scheduler": "sample_dpmpp_2m with Karras rho 7",
+    "steps": 25,
+    "cfg": 7.0,
+    "width": 896,
+    "height": 1152,
+    "device": "xpu:0",
+    "dtype_policy": {
+      "eva_clip": "float32",
+      "idformer": "bfloat16",
+      "unet": "bfloat16",
+      "vae": "bfloat16",
+      "text_encoders": "bfloat16",
+      "latent": "bfloat16",
+      "generator": "cpu"
+    }
+  },
+  "evaluator": {
+    "algorithm": "Phase 4 evaluator-v1 with unchanged Phase 7R confirmed padded-scale detector recovery",
+    "calibration_sha256": "294abdf4c67a13d8ac7680c442574cbc70eb9e78a765e961dce6b52a92298544",
+    "identity_cosine_floor": 0.5026416499167681,
+    "negative_margin_requirement": "minimum intended-minus-other cosine strictly greater than 0",
+    "expected_face_count": 1,
+    "detector_model": "InsightFace buffalo_l det_10g.onnx",
+    "detector_sha256": "5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91",
+    "recognizer_model": "InsightFace buffalo_l w600k_r50.onnx",
+    "recognizer_sha256": "4c06341c33c2ca1f86781dab0e829f88ad5b64be9fba56e56bc9ebdefc619e43",
+    "evaluator_core_phase7r2_sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
+    "detector_or_recognizer_change_allowed": false
+  },
+  "composition_and_artifact_gate": {
+    "dimensions": [896, 1152],
+    "face_count": 1,
+    "face_detection_confidence_minimum": 0.5,
+    "landmark_geometry_valid": true,
+    "bbox_must_be_strictly_inside_image": true,
+    "face_blur_variance_minimum": 15.0,
+    "face_occupancy_percent": {"minimum": 8.0, "maximum": 50.0},
+    "face_width_percent_maximum": 75.0,
+    "left_clearance_percent_minimum": 8.0,
+    "right_clearance_percent_minimum": 8.0,
+    "top_clearance_percent_minimum": 8.0,
+    "bottom_clearance_percent_minimum": 8.0,
+    "absolute_face_center_offset_x_percent_maximum": 12.0,
+    "absolute_face_center_offset_y_percent_maximum": 18.0,
+    "manual_requirement": "full head, both shoulders, upper torso, and natural background space visibly present; no extreme crop; no severe visual artifact"
+  },
+  "universal": {
+    "dimensions": [896, 1152],
+    "face_blur_variance_minimum": 15.0,
+    "face_detection_confidence_minimum": 0.5,
+    "landmark_geometry_valid": true,
+    "bbox_must_be_strictly_inside_image": true
+  },
+  "prompt_families": {
+    "structured-close-b": {
+      "face_occupancy_percent": {"minimum": 8.0, "maximum": 50.0},
+      "face_width_percent_maximum": 75.0,
+      "left_clearance_percent_minimum": 8.0,
+      "right_clearance_percent_minimum": 8.0,
+      "top_clearance_percent_minimum": 8.0,
+      "bottom_clearance_percent_minimum": 8.0,
+      "absolute_face_center_offset_x_percent_maximum": 12.0,
+      "absolute_face_center_offset_y_percent_maximum": 18.0,
+      "manual_requirement": "full head, both shoulders, upper torso, and natural background space visibly present; no extreme crop"
+    }
+  },
+  "offline_policy": {
+    "network_namespace": "bwrap --unshare-net",
+    "network_trace": "strace trace=network per worker",
+    "external_events_required": 0,
+    "hf_hub_offline": true,
+    "transformers_offline": true,
+    "telemetry": false,
+    "runtime_fetch": false,
+    "remote_cache_fallback": false
+  },
+  "cleanup_policy": {
+    "one_worker_per_observation": true,
+    "global_xpu_lease": true,
+    "lease_release_required": true,
+    "private_intermediate_removal_required": true,
+    "failed_artifact_policy": "append-only evidence quarantine",
+    "post_matrix_workers": 0,
+    "post_matrix_leases": 0,
+    "post_matrix_waiters": 0,
+    "post_matrix_private_intermediates": 0
+  },
+  "immutability_trigger": "first Phase 7R3 observation reaches GENERATING",
+  "prohibited_after_freeze": [
+    "prompt change",
+    "negative prompt change",
+    "identity recipe change",
+    "seed replacement",
+    "quality retry",
+    "threshold or evaluator weakening"
+  ],
+  "provenance_hashes": {
+    "phase7_winning_recipe_sha256": "1994adca4272f7b5d73346b056c89d9b2298f5e1ee4d6887d32919330243a46f",
+    "phase7r2_quality_contract_sha256": "f403097141d5f732b76fa45739f5f21b939b3405e14e7125cda18cb92bb07dfc",
+    "phase7r2_matrix_sha256": "a0ea046c4c729af80d48219c97a3dc3494bfb0a16e46a8d297b7e3b0d33e3dc8",
+    "phase7r2_composition_implementation_sha256": "2d7de6162f83a607613f85ce3fb9292ad11d065a8b88542045aba16f7efef560",
+    "phase7r2_quality_gate_sha256": "48f7dcbbb63c549df05f0ca2ce769ad3e3d17571c4e5583a160f464e515ba16a",
+    "phase7r2_worker_sha256": "da2557936f31b10272203b4075fd637f071310771fa2da6dfcde02e7ce5115e9"
+  }
+}

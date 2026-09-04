@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+
+C="anythingllm"
+REFRESH="/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/libexec/refresh-network.sh"
+PORT="18188"
+
+log()
+{
+    printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"
+}
+
+# Docker not ready yet -> harmless.
+docker info >/dev/null 2>&1 || {
+    log "Docker not ready yet."
+    exit 0
+}
+
+docker inspect "$C" >/dev/null 2>&1 || {
+    log "AnythingLLM does not exist yet."
+    exit 0
+}
+
+RUNNING="$(
+    docker inspect "$C" --format '{{.State.Running}}' 2>/dev/null || true
+)"
+
+[[ "$RUNNING" == "true" ]] || {
+    log "AnythingLLM is not running yet."
+    exit 0
+}
+
+GW="$(
+    docker inspect "$C" \
+      --format '{{range .NetworkSettings.Networks}}{{if .Gateway}}{{.Gateway}}{{println}}{{end}}{{end}}' |
+    awk 'NF {print; exit}'
+)"
+
+[[ -n "$GW" ]] || {
+    log "Could not determine AnythingLLM Docker gateway."
+    exit 0
+}
+
+log "Current Docker gateway: $GW"
+
+NEED=0
+
+# ----------------------------------------------------------
+# Check 1: bridge process must use CURRENT gateway
+# ----------------------------------------------------------
+
+if ! pgrep -af 'comfyui-docker-bridge/proxy.py' |
+     grep -F -- "--listen-host $GW" |
+     grep -Fq -- "--listen-port $PORT"; then
+
+    log "Bridge is not bound to current gateway."
+    NEED=1
+fi
+
+# ----------------------------------------------------------
+# Check 2: socket must actually be reachable from container
+# ----------------------------------------------------------
+
+if [[ "$NEED" -eq 0 ]]; then
+
+    if ! docker exec "$C" node -e "
+const c = new AbortController();
+const t = setTimeout(() => c.abort(), 3000);
+
+fetch('http://${GW}:${PORT}/system_stats',{signal:c.signal})
+.then(r => {
+    clearTimeout(t);
+    process.exit(r.ok ? 0 : 1);
+})
+.catch(() => process.exit(1));
+" >/dev/null 2>&1; then
+
+        log "AnythingLLM cannot reach current bridge."
+        NEED=1
+    fi
+fi
+
+if [[ "$NEED" -eq 0 ]]; then
+    log "Bridge OK. Connectivity OK."
+    exit 0
+fi
+
+# ----------------------------------------------------------
+# Repair
+# ----------------------------------------------------------
+
+log "Repair required."
+log "Running refresh-network.sh..."
+
+"$REFRESH"
+
+sleep 2
+
+# Docker could theoretically have changed while refreshing.
+GW="$(
+    docker inspect "$C" \
+      --format '{{range .NetworkSettings.Networks}}{{if .Gateway}}{{.Gateway}}{{println}}{{end}}{{end}}' |
+    awk 'NF {print; exit}'
+)"
+
+log "Gateway after refresh: $GW"
+
+# ----------------------------------------------------------
+# Verify process
+# ----------------------------------------------------------
+
+if ! pgrep -af 'comfyui-docker-bridge/proxy.py' |
+     grep -F -- "--listen-host $GW" |
+     grep -Fq -- "--listen-port $PORT"; then
+
+    log "ERROR: refreshed bridge is not bound to $GW."
+    exit 1
+fi
+
+# ----------------------------------------------------------
+# Verify actual end-to-end connectivity
+# ----------------------------------------------------------
+
+if ! docker exec "$C" node -e "
+const c = new AbortController();
+const t = setTimeout(() => c.abort(), 5000);
+
+fetch('http://${GW}:${PORT}/system_stats',{signal:c.signal})
+.then(r => {
+    clearTimeout(t);
+    process.exit(r.ok ? 0 : 1);
+})
+.catch(() => process.exit(1));
+"; then
+
+    log "ERROR: end-to-end connectivity failed after repair."
+    exit 1
+fi
+
+log "AUTOMATIC REPAIR SUCCESSFUL."
+log "AnythingLLM -> $GW:$PORT -> ComfyUI = OK."

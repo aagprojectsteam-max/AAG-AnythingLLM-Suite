@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aag://contracts/maintenance/maintenance-plan.v1",
+  "title": "AAG Maintenance Plan V1",
+  "type": "object",
+  "required": [
+    "schema", "mode", "execution_authority", "execution_status", "root",
+    "mount_identity", "items", "estimated_reclaimable_bytes",
+    "estimate_dimension", "estimate_policy", "zero_mutations"
+  ],
+  "properties": {
+    "schema": {"const": "aag-maintenance-plan-v1"},
+    "mode": {"const": "dry_run_only"},
+    "execution_authority": {"const": "NONE"},
+    "execution_status": {"const": "not_executed"},
+    "root": {"type": "string"},
+    "mount_identity": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id", "category", "classification", "target", "reason",
+          "evidence_refs", "logical_bytes", "allocated_bytes",
+          "estimated_reclaimable_bytes", "estimate_dimension", "confidence",
+          "risk", "dependency_status", "required_approval_level",
+          "required_backup_or_rollback", "dry_run_description",
+          "proposed_verification", "rollback_concept", "why_not_executed",
+          "execution_status"
+        ],
+        "properties": {
+          "item_id": {"type": "string", "pattern": "^maint-v1-[0-9a-f]{20}$"},
+          "classification": {"enum": ["LOW_RISK_CANDIDATE", "REVIEW_REQUIRED", "PROTECTED", "NOT_RECLAIMABLE", "UNKNOWN"]},
+          "risk": {"enum": ["R0", "R1", "R2", "R3", "R4"]},
+          "execution_status": {"const": "not_executed"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "estimated_reclaimable_bytes": {"type": "integer", "minimum": 0},
+    "estimate_dimension": {"enum": ["logical", "allocated"]},
+    "estimate_policy": {"type": "string"},
+    "zero_mutations": {"const": true}
+  },
+  "additionalProperties": true
+}

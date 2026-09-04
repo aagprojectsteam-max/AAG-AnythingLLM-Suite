@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec node /mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/visual-atlas/bin/atlas-runner.js stop

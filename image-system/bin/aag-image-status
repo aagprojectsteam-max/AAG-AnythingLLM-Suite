@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -u
+export LC_ALL=C
+
+# Required for systemctl --user when these lifecycle commands are
+# launched from terminals, sudo-mediated helpers or other wrappers.
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+
+echo "============================================================"
+echo " AAG IMAGE SYSTEM — STATUS"
+echo "============================================================"
+
+printf 'AnythingLLM       : '
+docker inspect anythingllm \
+  -f '{{.State.Status}} / {{if .State.Health}}{{.State.Health.Status}}{{else}}no-healthcheck{{end}}' \
+  2>/dev/null || echo UNKNOWN
+
+printf 'Image Hub         : '
+curl -fsS \
+  --max-time 2 \
+  http://127.0.0.1:18190/health \
+  >/dev/null 2>&1 &&
+  echo RUNNING ||
+  echo OFF
+
+printf 'Hub Docker Bridge : '
+systemctl is-active \
+  aag-image-hub-docker-bridge.service \
+  2>/dev/null || true
+
+printf 'ComfyUI           : '
+curl -fsS \
+  --max-time 2 \
+  http://127.0.0.1:8188/system_stats \
+  >/dev/null 2>&1 &&
+  echo RUNNING ||
+  echo OFF
+
+printf 'Comfy Docker Bridge: '
+systemctl --user is-active \
+  aag-comfyui-docker-bridge.service \
+  2>/dev/null || true
+
+printf 'Image Proxy       : '
+systemctl --user is-active \
+  aag-comfyui-image-proxy.service \
+  2>/dev/null || true
+
+printf 'Reference         : '
+
+if curl -fsS \
+  --max-time 2 \
+  http://127.0.0.1:8188/object_info \
+  >/dev/null 2>&1
+then
+    echo AVAILABLE
+else
+    echo OFF
+fi
+
+printf 'Upscale Engine    : '
+systemctl is-active \
+  aag-upscale-engine.service \
+  2>/dev/null || true
+
+printf 'Upscale Bridge    : '
+systemctl is-active \
+  aag-upscale-docker-bridge.service \
+  2>/dev/null || true
+
+printf 'Upscale Health    : '
+curl -fsS \
+  --max-time 2 \
+  http://127.0.0.1:18191/health \
+  >/dev/null 2>&1 &&
+  echo PASS ||
+  echo OFF
+
+echo
+echo "Ports:"
+
+for P in 8188 18188 18189 18190 18191; do
+    if ss -lnt |
+       grep -qE ":${P}\b"
+    then
+        echo "  $P : OPEN"
+    else
+        echo "  $P : CLOSED"
+    fi
+done
+
+echo
+echo "Boot policy:"
+
+for U in \
+  aag-image-hub.service \
+  aag-image-hub-docker-bridge.service \
+  aag-upscale-engine.service \
+  aag-upscale-docker-bridge.service
+do
+    printf '  %-43s ' "$U"
+    systemctl is-enabled "$U" 2>/dev/null || true
+done
+
+printf '  %-43s ' \
+  'aag-anythingllm-comfyui-network-watch.timer'
+systemctl is-enabled \
+  aag-anythingllm-comfyui-network-watch.timer \
+  2>/dev/null || true
+
+echo "============================================================"

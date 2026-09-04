@@ -1,0 +1,15 @@
+[Unit]
+Description=AAG Chess Puzzle AnythingLLM bridge
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/mnt/data/AI/Agents/AAG-Chess-Puzzle-Agent
+ExecStart=/mnt/data/AI/Agents/AAG-Chess-Puzzle-Agent/.venv/bin/python -m aag_chess.anythingllm_bridge --socket /mnt/data/AI/Apps/AnythingLLM/storage/aag-chess-puzzle/bridge.sock --output-root /mnt/data/AI/Apps/AnythingLLM/storage/aag-chess-puzzle/outputs --private-root /mnt/data/AI/Apps/AnythingLLM/storage/aag-chess-puzzle/private-solutions --timeout-seconds 240
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

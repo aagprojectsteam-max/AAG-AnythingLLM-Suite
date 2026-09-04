@@ -1,0 +1,19 @@
+[Unit]
+Description=AAG Scene Identity cold local Contract C worker
+After=local-fs.target docker.service
+RequiresMountsFor=/mnt/data
+
+[Service]
+Type=oneshot
+WorkingDirectory=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System
+Environment=AAG_HUMAN_IDENTITY_RUNTIME=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity-scene
+Environment=AAG_HUMAN_IDENTITY_STATE_ROOT=/mnt/data/AI/Apps/AnythingLLM/storage/aag-human-identity-scene-state
+Environment=AAG_HUMAN_IDENTITY_PRIVATE_OUTPUT=/mnt/data/AI/Outputs/.aag-human-identity-scene-private
+ExecStart=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity-scene/bin/process_inbox.py
+TimeoutStartSec=50min
+TimeoutStopSec=90
+KillMode=control-group
+SendSIGKILL=yes
+NoNewPrivileges=yes
+PrivateTmp=no
+UMask=0077

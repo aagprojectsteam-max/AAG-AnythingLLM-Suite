@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: aag-chess-puzzle-agent
+Version: 1.6.0
+Summary: Deterministically verified local chess puzzle generator
+Requires-Python: >=3.12
+Requires-Dist: chess==1.11.2
+Requires-Dist: Pillow==11.3.0
+Provides-Extra: test
+Requires-Dist: pytest==8.4.1; extra == "test"
+Requires-Dist: pytest-timeout==2.4.0; extra == "test"

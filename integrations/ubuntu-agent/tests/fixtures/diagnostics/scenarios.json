@@ -1,0 +1,23 @@
+[
+  {"name":"healthy_system_service","profile":"service","inputs":{"service":"cron.service","manager":"system"},"statuses":{"systemd":"completed","journal":"completed"}},
+  {"name":"failed_system_service","profile":"service","inputs":{"service":"broken.service","manager":"system"},"statuses":{"systemd":"completed","journal":"completed"}},
+  {"name":"healthy_user_service","profile":"service","inputs":{"service":"demo.service","manager":"user"},"statuses":{"systemd":"completed","journal":"completed"}},
+  {"name":"inactive_successful_oneshot","profile":"service","inputs":{"service":"seed.service","manager":"system"},"statuses":{"systemd":"completed","journal":"completed"}},
+  {"name":"active_application_health_unknown","profile":"application_start","inputs":{"service":"demo.service","manager":"user"},"statuses":{"systemd":"completed","journal":"completed"}},
+  {"name":"high_cpu_process","profile":"performance","inputs":{},"statuses":{"uptime":"completed","memory":"completed","processes":"completed","filesystem":"completed","failed_units":"completed"}},
+  {"name":"memory_pressure","profile":"performance","inputs":{},"statuses":{"uptime":"completed","memory":"completed","processes":"completed","filesystem":"completed","failed_units":"completed"}},
+  {"name":"full_filesystem","profile":"storage_mount","inputs":{"path":"/mnt/data"},"statuses":{"block_devices":"completed","mount":"completed","filesystem":"completed"}},
+  {"name":"expected_mount_present","profile":"storage_mount","inputs":{"path":"/mnt/data"},"statuses":{"block_devices":"completed","mount":"completed","filesystem":"completed"}},
+  {"name":"mount_absent","profile":"storage_mount","inputs":{"path":"/mnt/data/missing"},"statuses":{"block_devices":"completed","mount":"command_failed","filesystem":"command_failed"}},
+  {"name":"device_absent","profile":"storage_mount","inputs":{"path":"/mnt/data"},"statuses":{"block_devices":"completed","mount":"command_failed","filesystem":"command_failed"}},
+  {"name":"wrong_source_at_mountpoint","profile":"storage_mount","inputs":{"path":"/mnt/data"},"statuses":{"block_devices":"completed","mount":"completed","filesystem":"completed"}},
+  {"name":"docker_healthy","profile":"docker","inputs":{"container":"demo"},"statuses":{"docker_overview":"completed","docker":"completed"}},
+  {"name":"docker_unhealthy","profile":"docker","inputs":{"container":"demo"},"statuses":{"docker_overview":"completed","docker":"completed"}},
+  {"name":"docker_missing","profile":"docker","inputs":{"container":"missing"},"statuses":{"docker_overview":"completed","docker":"command_failed"}},
+  {"name":"network_interface_up","profile":"network","inputs":{"interface":"eth0"},"statuses":{"network_overview":"completed","routes":"completed","network":"completed"}},
+  {"name":"network_interface_unavailable","profile":"network","inputs":{"interface":"eth9"},"statuses":{"network_overview":"completed","routes":"completed","network":"command_failed"}},
+  {"name":"package_installed","profile":"package","inputs":{"package":"python3"},"statuses":{"package":"completed"}},
+  {"name":"package_missing","profile":"package","inputs":{"package":"not-installed"},"statuses":{"package":"command_failed"}},
+  {"name":"partial_observation_failure","profile":"general_system","inputs":{},"statuses":{"kernel":"completed","uptime":"completed","memory":"permission_denied","filesystem":"completed","failed_units":"completed","boot_events":"timeout"}},
+  {"name":"sandbox_unobservable_host","profile":"general_system","inputs":{},"statuses":{"kernel":"permission_denied","uptime":"permission_denied","memory":"permission_denied","filesystem":"permission_denied","failed_units":"permission_denied","boot_events":"permission_denied"}}
+]

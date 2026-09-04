@@ -1,0 +1,14 @@
+{
+  "schema": "aag.visual-atlas.release-requirement.v1",
+  "mandatory": true,
+  "atlas_version": "1.0.0",
+  "families": 28,
+  "styles": 493,
+  "canonical_product_path": "../../visual-atlas",
+  "product_manifest_path": "../../visual-atlas/manifest/product-assets.json",
+  "product_manifest_sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
+  "reference_set_sha256": "9a56d6c003b1aea76d3bac431fd17c2d1b54bd87b8ecc7fb97a98a6bfbd3270f",
+  "thumbnail_set_sha256": "de6300d11d986adb2c8d40e099d9df915d43b5738dd57b2b8926470f672c09e8",
+  "install_gate": "node image-agent/tools/visual-atlas-product.js",
+  "separated_bundle_restore": "node image-agent/tools/visual-atlas-product.js --install-from <bundle-root>"
+}

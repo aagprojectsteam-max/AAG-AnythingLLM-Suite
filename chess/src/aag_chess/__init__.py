@@ -1,0 +1,10 @@
+"""AAG Chess Puzzle Agent."""
+
+__version__ = "1.6.0"
+VERIFIER_VERSION = "aag-bounded-mate-v1"
+RENDERER_VERSION = "aag-card-v2"
+GENERATOR_VERSION = "aag-deterministic-generator-v1.2"
+STOCKFISH_DISCOVERY_VERSION = "aag-stockfish-discovery-v3"
+DENSITY_VERSION = "aag-density-v1"
+SCORER_VERSION = "aag-difficulty-v1"
+DIVERSITY_VERSION = "aag-position-diversity-v1"

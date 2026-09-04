@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+
+HUB='/usr/local/libexec/aag-image-hub-control'
+AI_START='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-ai-start'
+COMFY_UNIT='aag-comfyui-session.service'
+UPS_START='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-upscale-start'
+REFERENCE_STATUS="$HOME/.local/bin/aag-reference-status"
+DOCTOR='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/tools/doctor.js'
+COMPOSER_RELAY='aag-composer-loopback-relay.service'
+
+fail() {
+    echo
+    echo "============================================================"
+    echo " START FAILED"
+    echo " $*"
+    echo "============================================================"
+    exit 1
+}
+
+echo "============================================================"
+echo " AAG IMAGE SYSTEM — START"
+echo "============================================================"
+
+# AAG_IMAGE_DOCTOR_GATE_V1
+echo
+echo "[0/6] Canonical integration gate..."
+systemctl --user start "$COMPOSER_RELAY" || fail "Composer loopback relay failed"
+[[ -S /mnt/data/AI/Apps/AnythingLLM/storage/aag-composer-relay/composer.sock ]] || fail "Composer loopback relay socket is unavailable"
+node "$DOCTOR" --deployed >/dev/null || fail "Canonical skill discovery or runtime bridge verification failed"
+echo "Canonical gate : PASS"
+
+echo
+echo "[1/6] Central Image Hub..."
+sudo -n "$HUB" start || fail "Image Hub failed"
+
+echo
+echo "[2/6] ComfyUI + support services..."
+if curl -fsS --max-time 2 http://127.0.0.1:8188/system_stats >/dev/null 2>&1; then
+    echo "ComfyUI : already RUNNING"
+elif systemctl --user is-active --quiet "$COMFY_UNIT"; then
+    echo "ComfyUI transient unit : already starting"
+else
+    systemd-run --user \
+        --unit="${COMFY_UNIT%.service}" \
+        --collect \
+        --property=Type=exec \
+        --property=TimeoutStopSec=45 \
+        --working-directory=/mnt/data/AI/ComfyUI \
+        "$AI_START" >/dev/null || fail "Unable to create the on-demand ComfyUI transient unit"
+    echo "ComfyUI transient unit : $COMFY_UNIT"
+    echo "Logs : journalctl --user -u $COMFY_UNIT"
+fi
+
+echo
+echo "[3/6] Wait for ComfyUI readiness..."
+COMFY_OK=0
+for I in {1..120}; do
+    if curl -fsS --max-time 2 http://127.0.0.1:8188/system_stats >/dev/null 2>&1; then
+        COMFY_OK=1
+        echo "ComfyUI : RUNNING"
+        break
+    fi
+    if systemctl --user is-failed --quiet "$COMFY_UNIT"; then
+        systemctl --user --no-pager --full status "$COMFY_UNIT" || true
+        fail "ComfyUI transient unit failed"
+    fi
+    printf '[%03d/120] loading...\n' "$I"
+    sleep 2
+done
+[[ "$COMFY_OK" -eq 1 ]] || fail "ComfyUI did not become ready"
+
+echo
+echo "[4/6] Docker bridge / AnythingLLM path..."
+BRIDGE_OK=0
+for I in {1..30}; do
+    if curl -fsS --max-time 2 http://172.18.0.1:18188/system_stats >/dev/null 2>&1; then BRIDGE_OK=1; break; fi
+    sleep 1
+done
+if [[ "$BRIDGE_OK" -ne 1 ]]; then
+    REFRESH='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/libexec/refresh-network.sh'
+    [[ -x "$REFRESH" ]] && "$REFRESH"
+    for I in {1..20}; do
+        if curl -fsS --max-time 2 http://172.18.0.1:18188/system_stats >/dev/null 2>&1; then BRIDGE_OK=1; break; fi
+        sleep 1
+    done
+fi
+[[ "$BRIDGE_OK" -eq 1 ]] || fail "AnythingLLM -> ComfyUI bridge is unavailable"
+echo "Comfy Bridge : RUNNING"
+
+echo
+echo "[5/6] Reference Identity readiness..."
+if [[ -x "$REFERENCE_STATUS" ]]; then
+    "$REFERENCE_STATUS" || fail "Reference Identity preflight failed"
+    echo "Reference : PASS"
+else
+    echo "Reference : basic ComfyUI health is PASS"
+fi
+
+echo
+echo "[6/6] Upscale subsystem..."
+"$UPS_START" || fail "Upscale subsystem failed"
+
+echo
+echo "========== FINAL READINESS =========="
+curl -fsS --max-time 3 http://127.0.0.1:18190/health >/dev/null || fail "Image Hub health failed"
+curl -fsS --max-time 3 http://127.0.0.1:8188/system_stats >/dev/null || fail "ComfyUI health failed"
+curl -fsS --max-time 3 http://127.0.0.1:18191/health >/dev/null || fail "Upscale health failed"
+systemctl --user is-active --quiet "$COMFY_UNIT" || fail "ComfyUI transient unit is not active"
+echo "Image Hub      : PASS"
+echo "ComfyUI        : PASS (transient user unit)"
+echo "Comfy Bridge   : PASS"
+echo "Reference      : PASS"
+echo "Upscale        : PASS"
+echo "============================================================"
+echo " AAG IMAGE SYSTEM — READY"
+echo "============================================================"

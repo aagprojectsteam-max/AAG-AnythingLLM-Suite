@@ -1,0 +1,48 @@
+{
+  "schema_version": "aag.human-identity.production-config.v1",
+  "release": "0.9.0-preview.3",
+  "candidate_release": "0.9.0-preview.3-candidate.4-contract-b-confirmation",
+  "capability": "transform.human.identity.v1",
+  "route": "pulid-v1.1-juggernaut-xl-v9-single-original-structured-composition",
+  "contract_id": "structured-close-b",
+  "contract_b_sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4",
+  "state_root": "/mnt/data/AI/Apps/AnythingLLM/storage/aag-human-identity-state",
+  "shared_agent_root": "/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-state",
+  "private_output_root": "/mnt/data/AI/Outputs/.aag-human-identity-private",
+  "managed_output_root": "/mnt/data/AI/Outputs",
+  "python": "/mnt/data/AI/ComfyUI/venv/bin/python",
+  "authorized_reference_roots": [
+    "/mnt/data/AI/Outputs",
+    "/mnt/data/AI/Apps/AnythingLLM/storage/reference-images",
+    "/mnt/data/AI/Apps/AnythingLLM/storage/aag-human-identity-state/references"
+  ],
+  "historical_validation_fixtures": {
+    "authorized-adult-01": {
+      "domain": "adult",
+      "path": "/mnt/data/AI/Outputs/2026-08-18T17-58-50-771Z-6967568841574511_00001_.png",
+      "sha256": "8b131e3030a094173004ae17df02b9fa94d523cb273398b027ea6bb31e1f2c61"
+    },
+    "authorized-baby-01": {
+      "domain": "baby",
+      "path": "/mnt/data/AI/Apps/AnythingLLM/storage/reference-images/20260819-004001-IMG_9101.jpg",
+      "sha256": "93665635711952c6a5da892bea90cc892b7c0a4a6748416e13a69ffd124eced6"
+    }
+  },
+  "trusted_runtime_reference": {
+    "enabled": true,
+    "source_policy": "current_attachment",
+    "staging_contract": "request-id-derived-private-state-path-v1",
+    "caller_path_allowed": false,
+    "owner_scope_required": ["workspace_id", "thread_id", "user_id", "invocation_id"],
+    "contract_prompt_domains": ["adult", "baby"]
+  },
+  "prompts": {
+    "adult": "a still mid shot portrait photograph of an adult man, full head, both shoulders, and upper torso visible in frame, camera at eye level, centered with natural background space, face clearly visible, looking at the camera",
+    "baby": "a still mid shot portrait photograph of a baby, full head, both shoulders, and upper torso visible in frame, camera at eye level, centered with natural background space, face clearly visible, looking at the camera"
+  },
+  "offline": true,
+  "telemetry": false,
+  "runtime_fallback": false,
+  "public_api": false,
+  "paid_api": false
+}

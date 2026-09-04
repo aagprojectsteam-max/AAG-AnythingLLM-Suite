@@ -1,0 +1,70 @@
+{
+  "active": true,
+  "hubId": "aag-ubuntu-live-audit",
+  "name": "AAG Ubuntu Diagnostics",
+  "schema": "skill-1.0.0",
+  "version": "2.0.1",
+  "description": "Diagnoses the current Ubuntu host from natural-language troubleshooting goals. Semantically choose one trusted profile; for genuinely combined incidents choose one optional secondary profile. Start vague whole-system incidents with general_system and refine from evidence. Preserve conversational targets only when they validate against the structured fields. This tool is read-only and never accepts commands, binaries, shell, systemctl actions, or mutation requests.",
+  "author": "AAG",
+  "license": "Private",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "profile": {
+        "description": "Required trusted profile: general_system, performance, service, application_start, network, storage_mount, docker, package, or boot_health. Select by semantic troubleshooting intent, never by literal phrase matching.",
+        "type": "string"
+      },
+      "secondary_profile": {
+        "description": "Optional second trusted profile for a genuinely multi-domain request. Must differ from profile. Leave empty for one domain.",
+        "type": "string"
+      },
+      "service": {
+        "description": "Optional validated .service target for service/application_start.",
+        "type": "string"
+      },
+      "manager": {
+        "description": "Optional manager, exactly system or user.",
+        "type": "string"
+      },
+      "pid": {
+        "description": "Optional positive PID for application_start.",
+        "type": "number"
+      },
+      "interface": {
+        "description": "Optional validated interface for network.",
+        "type": "string"
+      },
+      "path": {
+        "description": "Required safe diagnostic path for storage_mount.",
+        "type": "string"
+      },
+      "container": {
+        "description": "Optional validated container name for docker.",
+        "type": "string"
+      },
+      "package": {
+        "description": "Required validated Debian package name for package.",
+        "type": "string"
+      }
+    }
+  },
+  "imported": true,
+  "routing": {
+    "action": "inspect current live Ubuntu system state and diagnose host resource problems",
+    "domain": "AAG Ubuntu host diagnostics",
+    "operation": "audit CPU memory disk processes services logs or devices",
+    "aliases": [
+      "diagnose Ubuntu",
+      "audit Ubuntu system",
+      "inspect system state",
+      "check why computer is slow",
+      "diagnose terminal problem",
+      "בדוק למה המחשב איטי",
+      "תבדוק למה המחשב איטי",
+      "אבחן את אובונטו",
+      "בדוק מצב מערכת",
+      "חקור עומס מעבד זיכרון או דיסק"
+    ],
+    "excludes": "ordinary content creation or an image that merely depicts Ubuntu, a terminal, laptop, or computer"
+  }
+}

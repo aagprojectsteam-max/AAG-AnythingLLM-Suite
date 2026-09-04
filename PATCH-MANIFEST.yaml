@@ -1,0 +1,65 @@
+schema_version: 1
+upstream:
+  project: Mintplex-Labs/anything-llm
+  revision: 07bd65f80b3d9ba3031ed7afb8786627326bd134
+  container_tag_observed: mintplexlabs/anythingllm:latest
+  immutable_container_digest: unresolved
+patches:
+  - target: server/utils/chats/commands/aagIdentity.js
+    source: patches/anythingllm/aagIdentity.js
+    purpose: identity and job slash commands
+    mode: add
+  - target: server/utils/chats/commands/aagOrdinary.js
+    source: patches/anythingllm/aagOrdinary.js
+    purpose: direct ordinary image intents
+    mode: add
+  - target: server/utils/chats/index.js
+    source: patches/anythingllm/chats-index.js
+    purpose: register AAG chat interceptors
+    mode: replace-with-version-guard
+  - target: server/utils/chats/apiChatHandler.js
+    source: patches/anythingllm/chat-apiChatHandler.js
+    purpose: request context and image interception
+    mode: replace-with-version-guard
+  - target: server/utils/AiProviders/modelMap/index.js
+    source: patches/anythingllm/context-window-finder.offline.js
+    purpose: offline model context map
+    mode: replace-with-version-guard
+  - target: server/utils/agents/index.js
+    source: patches/anythingllm/agents-index.js
+    purpose: persistent runtime context and artifact adapters
+    mode: replace-with-version-guard
+  - target: server/utils/agents/ephemeral.js
+    source: patches/anythingllm/agents-ephemeral.js
+    purpose: ephemeral runtime context and artifact adapters
+    mode: replace-with-version-guard
+  - target: server/utils/agents/aibitat/utils/toolReranker.js
+    source: patches/anythingllm/toolReranker.js
+    purpose: AAG routing correction
+    mode: replace-with-version-guard
+  - target: server/index.js
+    source: patches/anythingllm/server-index.js
+    purpose: register artifact, PDF, Composer and progress endpoints
+    mode: replace-with-version-guard
+  - target: server/endpoints/aagArtifactExport.js
+    source: patches/anythingllm/aagArtifactExport.js
+    purpose: safe artifact export
+    mode: add
+  - target: server/endpoints/aagPdfAssembler.js
+    source: patches/anythingllm/aagPdfAssembler.js
+    purpose: PDF assembly
+    mode: add
+  - target: server/endpoints/aagComposerProxy.js
+    source: patches/anythingllm/aagComposerProxy.js
+    purpose: Composer and Atlas proxy
+    mode: add
+  - target: server/endpoints/aagImageProgress.js
+    source: patches/anythingllm/aagImageProgress.js
+    purpose: owner-scoped progress and cancel
+    mode: add
+frontend_overlay:
+  provenance_file: manifests/AAG-BUILD-PROVENANCE.json
+  source_capture: incomplete
+  compiled_public_tree_included: false
+  reason: upstream-derived compiled tree excluded pending license/provenance review
+

@@ -1,0 +1,13 @@
+live_source,repository_destination,class,status
+/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/src,image-system/src,AAG-owned,ACTIVE
+/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/skills,image-system/skills,AAG-owned,ACTIVE
+/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity,image-system/human-identity,AAG-owned,ACTIVE
+/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/human-identity-scene,image-system/human-identity-scene,AAG-owned,ACTIVE
+/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration,patches/anythingllm,AAG/upstream-derived,ACTIVE_SELECTED_FILES
+/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service,image-system/upscale-engine,AAG-owned,ACTIVE_SOURCE_ONLY
+/mnt/data/AI/Agents/AAG-Chess-Puzzle-Agent,chess,AAG-owned,ACTIVE_SOURCE_ONLY
+/mnt/data/AI/Agents/AAG-Ubuntu-Agent,integrations/ubuntu-agent,AAG-owned,OPTIONAL_SOURCE_ONLY
+/mnt/data/AI/Scripts/aag-llama-control,integrations/llamacpp/aag-llama-control,AAG-owned,ACTIVE
+/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/visual-atlas/manifest,visual-atlas/manifest,AAG-metadata,ACTIVE_METADATA_ONLY
+/home/aag-linux/.config/systemd/user/aag-*.service,systemd,AAG-owned,SELECTED
+

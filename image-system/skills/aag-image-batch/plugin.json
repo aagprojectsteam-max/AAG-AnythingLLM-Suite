@@ -1,0 +1,56 @@
+{
+  "active": true,
+  "hubId": "aag-image-batch",
+  "name": "AAG Image Batch",
+  "version": "0.9.0-preview.13",
+  "same_turn_retry": "forbidden",
+  "description": "Create one governed general collection of exactly 2..10 new images. Author the complete ordered collection plan and every item prompt before calling. AAG never creates missing prompts. Supports distinct images, variants, coherent series, and sequential scenes. Creative style remains text, never a structured style field. Use quality=fast only for explicit speed intent, quality only for explicit maximum-quality-over-speed intent, balanced only for an explicit compromise, and auto otherwise. This is generate-only; use the unchanged single-image tool for transform, upscale, or identity. Call at most once per user request and never retry or rewrite after failure in the same turn.",
+  "public_schema": "provider-batch.schema.json",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "operation": {
+        "type": "string",
+        "description": "Required exact value: multi_generate."
+      },
+      "collection_brief": {
+        "type": "string",
+        "description": "Required workspace-model-authored collection relationship and consistency brief."
+      },
+      "count": {
+        "type": "number",
+        "description": "Required exact intended count, 2..10."
+      },
+      "quality": {
+        "type": "string",
+        "description": "Required exact value: auto, fast, balanced, or quality, selected only from explicit technical intent."
+      },
+      "final_output_quality": {
+        "type": "string",
+        "description": "Optional exact delivery-stage value: standard or enhanced_2x. The latter applies the governed 2x postprocess after each verified base artifact. Use exactly one listed value; do not invent additional values."
+      },
+      "items": {
+        "type": "array",
+        "description": "Required ordered array with exactly count self-contained intended image objects."
+      }
+    }
+  },
+  "setup_args": {},
+  "routing": {
+    "action": "generate multiple distinct visual images pictures illustrations drawings renders artworks or paintings in one request",
+    "domain": "image generation",
+    "operation": "create an exact batch of two through ten images",
+    "aliases": [
+      "create multiple images",
+      "generate multiple images",
+      "create different images",
+      "generate image batch",
+      "create image series",
+      "צור מספר תמונות",
+      "תעשה לי תמונות שונות",
+      "תיצור כמה איורים",
+      "צור סדרת תמונות"
+    ],
+    "excludes": "a request for one image, an actual document file, chess reasoning, or Ubuntu diagnosis"
+  }
+}

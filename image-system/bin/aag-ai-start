@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+DATA_ROOT="/mnt/data/AI"
+COMFY_DIR="$DATA_ROOT/ComfyUI"
+
+BRIDGE="aag-comfyui-docker-bridge.service"
+PROXY="aag-comfyui-image-proxy.service"
+
+# The ordinary-generation research found ONNX Runtime telemetry initialization
+# unless this variable is present at process birth. All model/runtime guards are
+# explicit here so the generation process cannot fetch or report remotely.
+export ORT_DISABLE_TELEMETRY=1
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
+export HF_HUB_DISABLE_TELEMETRY=1
+export DO_NOT_TRACK=1
+export TOKENIZERS_PARALLELISM=false
+
+cleanup() {
+    local rc=$?
+
+    trap - EXIT INT TERM
+
+    echo
+    echo "Stopping ComfyUI support services..."
+
+    systemctl --user stop "$PROXY" 2>/dev/null || true
+    systemctl --user stop "$BRIDGE" 2>/dev/null || true
+
+    echo
+    echo "Support services after shutdown:"
+    printf 'Docker bridge: '
+    systemctl --user is-active "$BRIDGE" 2>/dev/null || true
+
+    printf 'Image proxy:   '
+    systemctl --user is-active "$PROXY" 2>/dev/null || true
+
+    exit "$rc"
+}
+
+trap cleanup EXIT INT TERM
+
+if ! mountpoint -q /mnt/data; then
+    echo "ERROR: /mnt/data is not mounted."
+    exit 1
+fi
+
+echo "Starting ComfyUI support services..."
+
+systemctl --user start "$BRIDGE"
+systemctl --user start "$PROXY"
+
+echo
+echo "Support services:"
+printf 'Docker bridge: '
+systemctl --user is-active "$BRIDGE"
+
+printf 'Image proxy:   '
+systemctl --user is-active "$PROXY"
+
+echo
+echo "Starting ComfyUI..."
+echo "Closing ComfyUI will also stop its support services."
+echo
+
+cd "$COMFY_DIR"
+source venv/bin/activate
+
+python main.py \
+    --listen 127.0.0.1 \
+    --port 8188 \
+    --preview-method auto \
+    --enable-manager \
+    --input-directory "$DATA_ROOT/Input" \
+    --output-directory "$DATA_ROOT/Outputs"

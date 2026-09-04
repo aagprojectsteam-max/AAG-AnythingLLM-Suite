@@ -1,0 +1,30 @@
+[Unit]
+Description=AAG model-neutral ordinary-chat and tool compatibility boundary
+After=network.target docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/integrations/model-neutral-compatibility/server.py
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+UMask=0077
+Environment=AAG_COMPAT_BIND=127.0.0.1,172.17.0.1
+Environment=AAG_COMPAT_PORT=18080
+Environment=AAG_COMPAT_UPSTREAM=http://127.0.0.1:8080
+Environment=AAG_COMPAT_EXPECTED_EXECUTABLE=/mnt/data/AI/Apps/llama.cpp/build-sycl/bin/llama-server
+Environment=AAG_COMPAT_STORAGE=/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility
+Environment=AAG_COMPAT_TOKEN_FILE=/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility/proxy.token
+Environment=AAG_ANYTHINGLLM_DB=/mnt/data/AI/Apps/AnythingLLM/storage/anythingllm.db
+Environment=AAG_ANYTHINGLLM_API=http://127.0.0.1:3000/api
+
+[Install]
+WantedBy=default.target

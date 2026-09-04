@@ -1,0 +1,28 @@
+{
+  "schema": "aag-maintenance-tool-catalog-v1",
+  "schema_version": "1.0",
+  "runtime_mode": "READ_ONLY_MAINTENANCE_INTELLIGENCE",
+  "execution_authority": "NONE",
+  "tools": [
+    {"tool": "system.health", "risk": "R0", "side_effect": "durable_summary_history_write", "required": [], "optional": []},
+    {"tool": "performance.snapshot", "risk": "R0", "side_effect": "durable_summary_history_write", "required": [], "optional": []},
+    {"tool": "storage.overview", "risk": "R0", "side_effect": "none", "required": [], "optional": []},
+    {"tool": "storage.top", "risk": "R0", "side_effect": "none", "required": ["path"], "optional": ["profile", "limits"]},
+    {"tool": "storage.inspect", "risk": "R0", "side_effect": "none", "required": ["path"], "optional": ["profile", "limits"]},
+    {"tool": "storage.largest_files", "risk": "R0", "side_effect": "none", "required": ["path"], "optional": ["profile", "limits"]},
+    {"tool": "storage.snapshot", "risk": "R0", "side_effect": "durable_summary_history_write", "required": ["path"], "optional": ["profile", "limits"]},
+    {"tool": "storage.growth", "risk": "R0", "side_effect": "none", "required": ["path"], "optional": []},
+    {"tool": "storage.duplicate_candidates", "risk": "R0", "side_effect": "content_read_within_policy", "required": ["path", "profile=deep"], "optional": ["limits"]},
+    {"tool": "storage.duplicate_verify", "risk": "R0", "side_effect": "bounded_full_content_hash_within_policy", "required": ["path", "profile=deep"], "optional": ["limits"]},
+    {"tool": "storage.space_discrepancy", "risk": "R0", "side_effect": "none", "required": ["path", "profile=deep"], "optional": ["limits"]},
+    {"tool": "maintenance.plan", "risk": "R0", "side_effect": "none", "required": ["path"], "optional": ["profile", "limits"]},
+    {"tool": "maintenance.explain", "risk": "R0", "side_effect": "none", "required": ["path", "item_id"], "optional": []}
+  ],
+  "invariants": [
+    "no arbitrary executable or argv input",
+    "no shell execution",
+    "no sudo",
+    "no cleanup execution",
+    "all maintenance-plan items remain not_executed"
+  ]
+}

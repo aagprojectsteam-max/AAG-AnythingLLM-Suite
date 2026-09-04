@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aag-remediation-plan-v1",
+  "type": "object",
+  "required": ["schema","plan_id","diagnosis","target_entities","evidence_ids","operation_types","risk","required_approval","backup_requirement","rollback_plan","verification_plan","success_criteria","failure_criteria","execution_authority","execution_status","read_only","mutated","zero_mutations"],
+  "properties": {
+    "schema": {"const":"aag-remediation-plan-v1"},
+    "plan_id": {"type":"string"},
+    "diagnosis": {"type":"object"},
+    "target_entities": {"type":"array","items":{"type":"string"}},
+    "evidence_ids": {"type":"array","items":{"type":"string"},"minItems":1},
+    "operation_types": {"type":"array","items":{"enum":["OBSERVE_ONLY","RESTART_EXACT_BRIDGE_USER_SERVICE","MANUAL_GOVERNED_CHANGE"]}},
+    "risk": {"enum":["R0","R1","R2","R3"]},
+    "required_approval": {"enum":["NONE_READ_ONLY","EXPLICIT_OPERATOR_APPROVAL","SEPARATE_GOVERNED_STAGE"]},
+    "backup_requirement": {"type":"object"},
+    "rollback_plan": {"type":"object"},
+    "verification_plan": {"type":"object"},
+    "success_criteria": {"type":"array"},
+    "failure_criteria": {"type":"array"},
+    "execution_authority": {"const":"NONE"},
+    "execution_status": {"const":"not_executed"},
+    "read_only": {"const":true},
+    "mutated": {"const":false},
+    "zero_mutations": {"const":true}
+  },
+  "additionalProperties": false
+}

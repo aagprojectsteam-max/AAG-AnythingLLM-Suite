@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+
+ENGINE='aag-upscale-engine.service'
+BRIDGE='aag-upscale-docker-bridge.service'
+
+HUB='aag-image-hub.service'
+HUB_BRIDGE='aag-image-hub-docker-bridge.service'
+
+ROOT='/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine'
+MODELS="$ROOT/models"
+BIN="$ROOT/bin/upscayl-bin"
+
+die() {
+    echo "ERROR: $*" >&2
+    exit 1
+}
+
+wait_host_health() {
+    local port="$1"
+
+    for I in {1..30}; do
+        if curl -fsS \
+          --max-time 2 \
+          "http://127.0.0.1:${port}/health" \
+          >/dev/null 2>&1
+        then
+            return 0
+        fi
+
+        sleep 1
+    done
+
+    return 1
+}
+
+gateway() {
+    docker inspect anythingllm \
+      -f '{{range .NetworkSettings.Networks}}{{println .Gateway}}{{end}}' \
+      2>/dev/null |
+    awk 'NF {print; exit}'
+}
+
+docker_health() {
+    local port="$1"
+    local gw
+
+    gw="$(gateway)"
+
+    [[ -n "$gw" ]] || return 1
+
+    docker exec anythingllm \
+      node -e "
+fetch('http://${gw}:${port}/health',{
+  signal:AbortSignal.timeout(3000)
+})
+.then(r=>{
+  if(!r.ok) process.exit(1);
+  return r.text();
+})
+.then(t=>{
+  console.log(t);
+})
+.catch(()=>{
+  process.exit(1);
+});
+" >/dev/null 2>&1
+}
+
+status_print() {
+    local engine bridge
+    local health='FAIL'
+    local ports='CLOSED'
+
+    engine="$(
+        systemctl is-active "$ENGINE" \
+          2>/dev/null || true
+    )"
+
+    bridge="$(
+        systemctl is-active "$BRIDGE" \
+          2>/dev/null || true
+    )"
+
+    if wait_host_health 18191 &&
+       docker_health 18191
+    then
+        health='PASS'
+    fi
+
+    if ss -lnt |
+       grep -qE ':18191\b'
+    then
+        ports='OPEN'
+    fi
+
+    echo "============================================================"
+    echo " AAG UPSCALE — STATUS"
+    echo "============================================================"
+    printf ' Engine : %s\n' "${engine^^}"
+    printf ' Bridge : %s\n' "${bridge^^}"
+    printf ' Health : %s\n' "$health"
+    printf ' Ports  : %s\n' "$ports"
+    echo "============================================================"
+}
+
+do_start() {
+    echo "============================================================"
+    echo " AAG UPSCALE — START"
+    echo "============================================================"
+
+    mountpoint -q /mnt/data ||
+        die "/mnt/data is not mounted"
+
+    test -x "$BIN" ||
+        die "Upscale binary missing"
+
+    test -d "$MODELS" ||
+        die "Models directory missing"
+
+    for P in "$MODELS"/*.param; do
+        N="${P%.param}"
+        test -f "$N.bin" ||
+            die "Missing model pair: $N.bin"
+    done
+
+    systemctl is-active --quiet docker.service ||
+        die "Docker is not running"
+
+    docker inspect anythingllm \
+      >/dev/null 2>&1 ||
+        die "AnythingLLM container not found"
+
+    [[ "$(
+        docker inspect \
+          -f '{{.State.Running}}' \
+          anythingllm
+    )" == "true" ]] ||
+        die "AnythingLLM container is not running"
+
+    systemctl is-active --quiet "$HUB" ||
+        die "Central Image Hub is not running"
+
+    systemctl is-active --quiet "$HUB_BRIDGE" ||
+        die "Central Image Hub bridge is not running"
+
+    wait_host_health 18190 ||
+        die "Central Image Hub health failed"
+
+    docker_health 18190 ||
+        die "Central Image Hub Docker health failed"
+
+    if ! systemctl is-active --quiet "$ENGINE"; then
+        systemctl start "$ENGINE"
+    fi
+
+    wait_host_health 18191 ||
+        die "Upscale Engine readiness failed"
+
+    if ! systemctl is-active --quiet "$BRIDGE"; then
+        systemctl start "$BRIDGE"
+    fi
+
+    for I in {1..30}; do
+        if docker_health 18191; then
+            break
+        fi
+        sleep 1
+    done
+
+    docker_health 18191 ||
+        die "Upscale Docker bridge readiness failed"
+
+    echo " Engine : RUNNING"
+    echo " Bridge : RUNNING"
+    echo " Health : PASS"
+    echo "============================================================"
+    echo " READY"
+    echo "============================================================"
+}
+
+do_stop() {
+    echo "============================================================"
+    echo " AAG UPSCALE — CONTROLLED SHUTDOWN"
+    echo "============================================================"
+
+    if systemctl is-active --quiet "$BRIDGE"; then
+        systemctl stop "$BRIDGE"
+    fi
+
+    if systemctl is-active --quiet "$ENGINE"; then
+        systemctl stop "$ENGINE"
+    fi
+
+    for I in {1..30}; do
+        if ! systemctl is-active --quiet "$BRIDGE" &&
+           ! systemctl is-active --quiet "$ENGINE"
+        then
+            break
+        fi
+
+        sleep 1
+    done
+
+    if systemctl is-active --quiet "$BRIDGE"; then
+        die "Bridge did not stop cleanly"
+    fi
+
+    if systemctl is-active --quiet "$ENGINE"; then
+        die "Engine did not stop cleanly"
+    fi
+
+    if ss -lnt |
+       grep -qE ':18191\b'
+    then
+        echo
+        echo "WARNING: port 18191 still has a listener:"
+        ss -lntp |
+          grep -E ':18191\b' || true
+        die "Port 18191 remained open"
+    fi
+
+    # The Central Image Hub is now a shared ON-DEMAND component.
+    # Upscale shutdown must therefore succeed whether the Hub is
+    # currently RUNNING or already intentionally OFF.
+    if systemctl is-active --quiet "$HUB"; then
+        wait_host_health 18190 ||
+            die "Central Image Hub is active but health check failed"
+
+        hub_state="RUNNING"
+    else
+        hub_state="OFF"
+    fi
+
+    echo " Bridge : OFF"
+    echo " Engine : OFF"
+    echo " Ports  : CLOSED"
+    echo " Hub    : $hub_state"
+    echo "============================================================"
+    echo " SAFE SHUTDOWN COMPLETE"
+    echo "============================================================"
+}
+
+[[ "$(id -u)" -eq 0 ]] ||
+    die "control helper must run as root"
+
+case "${1:-}" in
+    start)
+        do_start
+        ;;
+    stop)
+        do_stop
+        ;;
+    status)
+        status_print
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status}"
+        exit 2
+        ;;
+esac

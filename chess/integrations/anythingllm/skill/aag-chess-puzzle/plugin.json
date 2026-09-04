@@ -1,0 +1,124 @@
+{
+  "active": true,
+  "hubId": "aag-chess-puzzle",
+  "name": "AAG Chess Puzzle",
+  "schema": "skill-1.0.0",
+  "version": "1.4.0",
+  "description": "Use this tool for natural-language chess-puzzle generation and for hint or solution follow-ups. Infer mate length, side, count, level, formats, and density from the request. Defaults: side=white, count=1, difficulty=medium, engine=auto, formats=png, density=auto. Omit seed for automatic variety across repeated conversation requests; pass seed only when the user explicitly requests reproducibility. Never ask for omitted technical parameters. Normal generation is UNSOLVED. Relay message_he as the short visible introduction. For each non-null inline_images browser_url, include exactly ![חידת שחמט](browser_url), copying the URL exactly. Native inline and download cards are already registered. Never mention tool JSON, schemas, hashes, internal IDs, context, versions, diagnostics, manifest metadata, storage filenames, or implementation policy in a normal answer. Never invoke another image tool. For Hebrew hint requests call action=hint; for Hebrew solution requests call action=solution. Pass puzzle_number when a numbered puzzle is requested; otherwise omit it to use the last puzzle. Continuity is private: never ask for or print a token, marker, hash, ID, or context capsule. Relay answer_he verbatim, preserving newlines and direction-isolation characters; never flatten it or solve the board independently. AAG MateVerifier is the final authority. Explicit user choices override defaults.",
+  "author": "AAG",
+  "license": "MIT",
+  "imported": true,
+  "setup_args": {},
+  "examples": [
+    {
+      "prompt": "תעשה לי חידה מט ב-3 לשחור",
+      "call": "{\"mate\":3,\"side\":\"black\"}"
+    },
+    {
+      "prompt": "תכין לי 5 חידות מט בשניים ברמה בינונית",
+      "call": "{\"mate\":2,\"count\":5,\"difficulty\":\"medium\"}"
+    },
+    {
+      "prompt": "תייצר לי 10 חידות מט ב-2 ללבן עם תמונות PNG ו-SVG ותשתמש ב-Stockfish",
+      "call": "{\"mate\":2,\"side\":\"white\",\"count\":10,\"engine\":\"stockfish\",\"formats\":\"svg+png\"}"
+    },
+    {
+      "prompt": "Create one easy Mate-in-1 puzzle using the builtin generator",
+      "call": "{\"action\":\"generate\",\"mate\":1,\"difficulty\":\"easy\",\"engine\":\"builtin\"}"
+    },
+    {
+      "prompt": "תעשה לי חידה מט בשניים עם לוח מלא יותר",
+      "call": "{\"action\":\"generate\",\"mate\":2,\"density\":\"rich\"}"
+    },
+    {
+      "prompt": "תן לי רמז",
+      "call": "{\"action\":\"hint\"}"
+    },
+    {
+      "prompt": "מה הפתרון?",
+      "call": "{\"action\":\"solution\"}"
+    },
+    {
+      "prompt": "מה הפתרון לחידה 2?",
+      "call": "{\"action\":\"solution\",\"puzzle_number\":2}"
+    }
+  ],
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "action": {
+        "description": "Intent: generate, hint, or solution. Default generate. Use hint for רמז and solution for מה הפתרון. Do not ask for generation parameters on follow-ups.",
+        "type": "string"
+      },
+      "mate": {
+        "description": "Required for generation: exact mate length 1, 2, or 3, inferred from natural language.",
+        "type": "number"
+      },
+      "side": {
+        "description": "Optional white or black. Default white. Infer שחור as black and לבן as white.",
+        "type": "string"
+      },
+      "difficulty": {
+        "description": "Optional easy, medium, or hard. Default medium; do not ask when omitted.",
+        "type": "string"
+      },
+      "count": {
+        "description": "Optional unique puzzle count from 1 to 10. Default 1.",
+        "type": "number"
+      },
+      "engine": {
+        "description": "Optional auto, stockfish, or builtin. Default auto.",
+        "type": "string"
+      },
+      "formats": {
+        "description": "Optional png, svg, or svg+png. Default png.",
+        "type": "string"
+      },
+      "seed": {
+        "description": "Advanced optional deterministic non-negative integer. Omit for automatic conversation diversity; provide it for reproducible output.",
+        "type": "number"
+      },
+      "max_attempts": {
+        "description": "Advanced optional bounded candidate budget from 1 to 2000. Default 1000.",
+        "type": "number"
+      },
+      "stockfish_nodes": {
+        "description": "Advanced optional Stockfish node budget from 100 to 200000. Default 20000.",
+        "type": "number"
+      },
+      "density": {
+        "description": "Optional auto, sparse, normal, or rich. Default auto. Infer הרבה כלים or לוח מלא יותר as rich and מעט כלים as sparse.",
+        "type": "string"
+      },
+      "puzzle_number": {
+        "description": "Follow-up only: optional 1-based number from the latest batch. Omit to select its last puzzle.",
+        "type": "number"
+      },
+      "public_id": {
+        "description": "Follow-up only: optional exact public puzzle ID. Prefer puzzle_number and never invent an ID.",
+        "type": "string"
+      }
+    }
+  },
+  "routing": {
+    "action": "create or analyze an actual chess puzzle position exercise or solution",
+    "domain": "chess tactics and chess-position reasoning",
+    "operation": "generate puzzle, inspect FEN, find best move, give hint, or reveal solution",
+    "aliases": [
+      "create chess puzzle",
+      "generate chess puzzle",
+      "analyze chess position",
+      "find best chess move",
+      "mate in moves",
+      "inspect FEN",
+      "צור חידת שחמט",
+      "תיצור חידת שחמט",
+      "תיצור לי חידת שחמט",
+      "חידת שחמט טקטית",
+      "נתח עמדת שחמט",
+      "מצא מהלך מיטבי",
+      "מט במספר מהלכים"
+    ],
+    "excludes": "creating a visual image whose scene merely contains chess pieces, a chess board, or a chess puzzle"
+  }
+}

@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+
+HUB='aag-image-hub.service'
+BRIDGE='aag-image-hub-docker-bridge.service'
+
+die() {
+    echo "ERROR: $*" >&2
+    exit 1
+}
+
+wait_health() {
+    for I in {1..30}; do
+        if curl -fsS \
+          --max-time 2 \
+          http://127.0.0.1:18190/health \
+          >/dev/null 2>&1
+        then
+            return 0
+        fi
+
+        sleep 1
+    done
+
+    return 1
+}
+
+start_all() {
+    systemctl reset-failed \
+        "$HUB" "$BRIDGE" \
+        >/dev/null 2>&1 || true
+
+    if ! systemctl is-active --quiet "$HUB"; then
+        systemctl start "$HUB"
+    fi
+
+    wait_health ||
+        die "Image Hub failed readiness on 127.0.0.1:18190"
+
+    if ! systemctl is-active --quiet "$BRIDGE"; then
+        systemctl start "$BRIDGE"
+    fi
+
+    for I in {1..20}; do
+        if systemctl is-active --quiet "$BRIDGE"; then
+            break
+        fi
+        sleep 1
+    done
+
+    systemctl is-active --quiet "$BRIDGE" ||
+        die "Image Hub Docker Bridge failed"
+
+    echo "Hub        : RUNNING"
+    echo "Hub Bridge : RUNNING"
+    echo "Hub Health : PASS"
+}
+
+stop_all() {
+    # Bridge first: stop new Docker-side requests.
+    if systemctl is-active --quiet "$BRIDGE"; then
+        systemctl stop "$BRIDGE"
+    fi
+
+    # Then the local publishing server.
+    if systemctl is-active --quiet "$HUB"; then
+        systemctl stop "$HUB"
+    fi
+
+    for I in {1..20}; do
+        if ! systemctl is-active --quiet "$BRIDGE" &&
+           ! systemctl is-active --quiet "$HUB"
+        then
+            break
+        fi
+        sleep 1
+    done
+
+    if systemctl is-active --quiet "$BRIDGE"; then
+        die "Hub Docker Bridge did not stop cleanly"
+    fi
+
+    if systemctl is-active --quiet "$HUB"; then
+        die "Image Hub did not stop cleanly"
+    fi
+
+    if ss -lnt |
+       grep -qE ':(18190)\b'
+    then
+        die "port 18190 remains open"
+    fi
+
+    echo "Hub Bridge : OFF"
+    echo "Hub        : OFF"
+    echo "Port 18190 : CLOSED"
+}
+
+status_all() {
+    printf 'Hub        : '
+    systemctl is-active "$HUB" 2>/dev/null || true
+
+    printf 'Hub Bridge : '
+    systemctl is-active "$BRIDGE" 2>/dev/null || true
+
+    printf 'Boot Hub   : '
+    systemctl is-enabled "$HUB" 2>/dev/null || true
+
+    printf 'Boot Bridge: '
+    systemctl is-enabled "$BRIDGE" 2>/dev/null || true
+
+    printf 'Health     : '
+
+    if curl -fsS \
+      --max-time 2 \
+      http://127.0.0.1:18190/health \
+      >/dev/null 2>&1
+    then
+        echo PASS
+    else
+        echo OFF
+    fi
+}
+
+[[ "$(id -u)" -eq 0 ]] ||
+    die "must run as root"
+
+case "${1:-}" in
+    start)
+        start_all
+        ;;
+    stop)
+        stop_all
+        ;;
+    status)
+        status_all
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status}"
+        exit 2
+        ;;
+esac

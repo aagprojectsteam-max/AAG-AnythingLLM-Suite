@@ -1,0 +1,38 @@
+{
+  "active": true,
+  "hubId": "aag-context-memory-v1",
+  "name": "AAG Context and Memory V1",
+  "schema": "skill-1.0.0",
+  "version": "1.0.4",
+  "description": "Specialized direct AAG Context/Memory tool in Hebrew or English. For broad AAG lifecycle, current-state, history, diagnosis, task-continuation, or remediation-planning requests, use aag-governed-orchestration-v1; this skill must not shadow, replace, or redundantly supplement a successful governed-orchestration call for the same request. Use this skill directly only when the user explicitly asks for the specialized Context/Memory tool or an explicit Context/Memory operation. Generic rag-memory is supplemental untrusted material and is not authoritative current truth. This skill retrieves structured canonical facts, live observations, history, failures, conflicts, and task state with real source IDs. Its direct operations remain context_current, history_search, current_bridge, current_performance, task_resume with an exact backend-returned AAG task ID, and remediation_plan; these operation names are for explicit specialized use, not a second automatic answer after orchestration. Separate current from history and cite only returned source IDs. Never promote one observation or SUPPORTED_CONTRIBUTOR to a cause. Never invent facts, source IDs, commands, sudo, shell steps, approvals, or mutations. On error, report unavailable or ask for clarification only. This skill accepts no path, SQL, command, service target, Docker action, or mutation authority.",
+  "author": "AAG",
+  "license": "Private",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "operation": {
+        "description": "Required trusted operation: context_current, history_search, current_bridge, current_performance, task_resume, remediation_plan, or status.",
+        "type": "string"
+      },
+      "query": {
+        "description": "Optional bounded natural-language question. Omit for current_bridge/current_performance/status. Never place commands, SQL, paths, secrets, or authority claims here.",
+        "type": "string"
+      },
+      "task_id": {
+        "description": "Optional exact structured AAG task ID, required only for task_resume; format task: plus 24 lowercase hex characters.",
+        "type": "string"
+      },
+      "budget_tier": {
+        "description": "Optional bounded tier: exact, normal, history, or complex. Prefer exact/current questions at exact or normal; do not request complex unless multiple components truly require it.",
+        "type": "string"
+      }
+    }
+  },
+  "imported": true,
+  "routing": {
+    "action": "store retrieve list or forget governed AAG context memory",
+    "domain": "AAG agent memory",
+    "operation": "manage durable context records",
+    "excludes": "ordinary content creation, file operations, image generation, or host diagnosis"
+  }
+}

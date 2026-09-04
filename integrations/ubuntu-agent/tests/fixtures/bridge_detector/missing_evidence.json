@@ -1,0 +1,1 @@
+{"schema":"aag-bridge-detector-evidence-v1","observed_at":1000.0,"target":"aag-ubuntu-agent-bridge.service","classification":"MISSING","supported_failure_class":null,"provenance":{"read_only":true}}

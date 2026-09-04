@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" dir="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>AAG Image Composer</title>
+    <link rel="stylesheet" href="/composer/app.css" />
+    <script src="/composer/app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">AAG IMAGE SYSTEM · COMPOSER UI V1.2</p>
+          <h1>Image Composer</h1>
+          <p class="intro">Describe the result naturally, or open Advanced settings to lock production choices while the model handles composition, lighting, materials, atmosphere, and the full professional image prompt.</p>
+        </div>
+        <a class="workspace-link" href="http://127.0.0.1:3000/workspace/image-generator" target="_blank" rel="noreferrer">Open Image Generator</a>
+      </header>
+
+      <section class="panel" aria-labelledby="composer-heading">
+        <h2 id="composer-heading" class="sr-only">Compose an image request</h2>
+        <div class="mode-switch" role="radiogroup" aria-label="Composer mode">
+          <label><input type="radio" name="mode" value="auto" checked /><span><strong>Auto</strong><small>Free text only</small></span></label>
+          <label><input type="radio" name="mode" value="advanced" /><span><strong>Advanced</strong><small>Settings + free text</small></span></label>
+        </div>
+
+        <form id="composer-form" novalidate>
+          <label class="field prompt-field">
+            <span>Description</span>
+            <textarea id="free-text" maxlength="12000" required dir="auto" placeholder="Describe the subject, scene, mood, action, composition, lighting, materials, typography wishes, and anything that must or must not appear."></textarea>
+            <small><span id="char-count">0</span> / 12,000</small>
+          </label>
+
+          <div id="advanced-fields" class="advanced" hidden>
+            <div class="section-heading">
+              <div><p class="eyebrow">ADVANCED SETTINGS</p><h3>Shape the production request</h3></div>
+              <p>Your explicit production choices win over conflicting description text. Settings marked “model guidance” direct the prompt but are not exact engine guarantees.</p>
+            </div>
+
+            <details class="control-group" id="create-group" open>
+              <summary>What to create</summary>
+              <div class="field-grid">
+                <label class="field"><span>Operation</span><select id="operation"><option value="create">Create one image</option><option value="batch">Batch / series</option><option value="transform">Edit / transform</option><option value="upscale">Upscale / enhance</option></select></label>
+                <label class="field" id="output-purpose-field"><span>Intended use <em>model guidance</em></span><select id="output-purpose"><option value="auto">Auto</option><option value="general">General</option><option value="wallpaper">Wallpaper</option><option value="social">Social graphic</option><option value="poster">Poster</option><option value="product_commercial">Product / commercial</option><option value="presentation">Presentation</option><option value="print">Print</option><option value="thumbnail">Thumbnail</option><option value="banner">Banner</option></select></label>
+                <label class="field" id="batch-relationship-field" hidden><span>Series relationship <em>model guidance</em></span><select id="batch-relationship"><option value="independent">Independent images</option><option value="same_concept_different_compositions">Same concept, different compositions</option><option value="coordinated_series">Coordinated series</option><option value="variations">Variations</option></select></label>
+              </div>
+            </details>
+
+            <details class="control-group" id="appearance-group" open>
+              <summary>Style and appearance</summary>
+              <p class="group-note">Style choices guide the model-authored prompt. The generated artifact remains raster, including vector-, logo-, map-, infographic-, and pattern-like choices.</p>
+              <div class="field-grid style-grid">
+                <label class="field"><span>Find a visual family</span><input id="family-search" type="search" autocomplete="off" placeholder="Type to filter 28 families" aria-controls="visual-family" /></label>
+                <label class="field"><span>Visual family <em>model guidance</em></span><select id="visual-family"></select><small id="family-results" aria-live="polite"></small></label>
+                <label class="field"><span>Find a subfamily</span><input id="subfamily-search" type="search" autocomplete="off" placeholder="Type to filter this family" aria-controls="visual-subfamily" /></label>
+                <label class="field"><span>Visual subfamily <em>model guidance</em></span><select id="visual-subfamily"></select><small id="subfamily-results" aria-live="polite"></small></label>
+                <label class="field" id="background-field"><span>Background <em>model guidance</em></span><select id="background"><option value="auto">Auto</option><option value="solid_plain">Solid / plain</option><option value="scene_background">Scene background</option><option value="isolated_no_background">Isolated look / no visible background</option></select><small>Transparent pixels are not guaranteed by the current image engine.</small></label>
+                <label class="field" id="visible-text-field"><span>Visible text <em>model guidance</em></span><select id="visible-text"><option value="auto">Auto</option><option value="none">Avoid visible text</option><option value="model_decides">Model decides</option></select><small>Controls text intended to appear inside the image. Exact rendered spelling is not guaranteed by the current image engine.</small></label>
+              </div>
+              <div id="recent-styles" class="recent-styles" hidden><span>Recent styles</span><div id="recent-style-buttons" class="chip-row"></div></div>
+            </details>
+
+            <details class="control-group" id="size-group" open>
+              <summary>Size and quantity</summary>
+              <div class="field-grid">
+                <label class="field" id="aspect-ratio-field"><span>Aspect ratio</span><select id="aspect-ratio"><option value="auto">Auto</option><option value="1:1">1:1 Square</option><option value="4:3">4:3 Landscape classic</option><option value="3:2">3:2 Photography landscape</option><option value="16:9">16:9 Widescreen</option><option value="9:16">9:16 Vertical / phone</option><option value="landscape">Automatic landscape</option><option value="portrait">Automatic portrait</option></select><small>3:4, 2:3, 21:9, and custom dimensions are not exposed because the live engine does not honor them exactly.</small></label>
+                <label class="field" id="count-field" hidden><span>Image count</span><select id="count-preset"><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option><option value="10">10</option><option value="custom">Custom 2–10</option></select></label>
+                <label class="field" id="custom-count-field" hidden><span>Custom count</span><input id="custom-count" type="number" min="2" max="10" step="1" value="6" inputmode="numeric" /></label>
+              </div>
+            </details>
+
+            <details class="control-group" id="source-group" hidden>
+              <summary>Source and changes</summary>
+              <div class="field-grid source-grid">
+                <label class="field"><span>Source</span><select id="source-policy"><option value="current_attachment">Current upload</option><option id="previous-artifact-option" value="previous_artifact" disabled>Most recent Composer image</option></select><small id="source-help">Upload one or more images, then choose the one to use.</small></label>
+                <label class="field" id="source-upload-field"><span>Source images</span><input id="source-image" type="file" accept="image/png,image/jpeg,image/webp" multiple /><small>Up to 8 PNG, JPEG, or WebP images; 15 MB each and 22 MB encoded total.</small></label>
+                <label class="field" id="source-index-field"><span>Use this upload</span><select id="source-index"></select><small>Only the selected numbered upload is used as the production source.</small></label>
+                <label class="field" id="preservation-field"><span>Preservation</span><select id="preservation"><option value="subject">Preserve subject / content</option><option value="identity">Preserve the same recognizable person</option></select><small>Person identity requires exactly one current human source image.</small></label>
+              </div>
+              <div id="source-thumbnails" class="source-thumbnails" aria-live="polite"></div>
+              <label class="field source-instruction-field" id="source-instruction-field"><span>What may change? <em>model guidance</em></span><textarea id="source-instruction" maxlength="1000" dir="auto" placeholder="Describe what to preserve and what may change."></textarea></label>
+            </details>
+
+            <details class="control-group" id="processing-group" open>
+              <summary>Quality and processing</summary>
+              <div class="field-grid">
+                <label class="field" id="quality-field"><span>Technical quality</span><select id="quality"><option value="auto" selected>Auto — accepted V5.2 behavior</option><option value="fast">Fast</option><option value="balanced">Balanced</option><option value="quality">Maximum technical quality</option></select><small>This controls the technical route, not artistic detail or beauty.</small></label>
+                <label class="field" id="scale-field" hidden><span>Upscale factor</span><select id="scale"><option value="auto">Auto — backend default</option><option value="2">2×</option><option value="3">3×</option><option value="4">4×</option></select></label>
+                <label class="field" id="seed-field"><span>Seed</span><input id="seed" type="number" min="0" max="2147483647" step="1" inputmode="numeric" placeholder="Auto" /><small>Optional exact seed for one create or edit. Leave blank for Auto.</small></label>
+              </div>
+            </details>
+
+            <details class="control-group" id="special-group">
+              <summary>Special requirements</summary>
+              <div class="capability-notes"><p><strong>The model still directs:</strong> composition, camera and framing choices beyond the selected ratio, lighting design, materials, textures, atmosphere, depth, visual hierarchy, and professional prompt wording.</p><p><strong>Current image-engine limits:</strong> no true SVG/vector export; transparent pixels, exact rendered text, verified seamless tiling, GIS/geographic precision, and deterministic infographic or diagram geometry are not guaranteed.</p></div>
+            </details>
+          </div>
+
+          <div class="actions"><button id="preview-button" class="secondary" type="button">Preview request</button><button id="submit-button" class="primary" type="submit">Create through AAG Image</button></div>
+        </form>
+      </section>
+
+      <section id="status-panel" class="panel result-panel" aria-live="polite" hidden>
+        <div class="result-heading"><div><p id="status-kicker" class="eyebrow">STATUS</p><h2 id="status-title">Ready</h2></div><span id="status-badge" class="badge">IDLE</span></div>
+        <div id="result-output" class="summary-output" dir="auto"></div>
+        <a id="result-workspace-link" class="result-workspace-link" href="#" target="_blank" rel="noreferrer" hidden>View this conversation in Image Generator</a>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+schema_version: 1
+policy: detect-and-report-never-auto-download
+models:
+  - id: flux2-klein-4b
+    name: FLUX.2 Klein 4B FP8
+    purpose: ordinary image generation
+    requirement: required-for-image
+    family: diffusion
+    expected_filename: flux-2-klein-4b-fp8.safetensors
+    default_path: ${MODEL_ROOT}/Diffusion_Models
+    source: unresolved
+    revision: unresolved
+    license: unresolved
+    sha256: unresolved
+    backend: ComfyUI
+  - id: qwen3-text-encoder
+    name: Qwen 3 4B text encoder
+    purpose: image prompt encoding
+    requirement: required-for-image
+    family: text-encoder
+    expected_filename: qwen_3_4b.safetensors
+    default_path: ${MODEL_ROOT}/Text_Encoders
+    source: unresolved
+    revision: unresolved
+    license: unresolved
+    sha256: unresolved
+    backend: ComfyUI
+  - id: flux2-vae
+    name: FLUX.2 VAE
+    purpose: image latent decoding
+    requirement: required-for-image
+    family: vae
+    expected_filename: flux2-vae.safetensors
+    default_path: ${MODEL_ROOT}/VAE
+    source: unresolved
+    revision: unresolved
+    license: unresolved
+    sha256: unresolved
+    backend: ComfyUI
+  - id: pulid-v1.1
+    name: PuLID v1.1 assets
+    purpose: identity preservation
+    requirement: optional-identity
+    family: identity-adapter
+    expected_filename: unresolved
+    default_path: ${COMFYUI_ROOT}/models
+    source: unresolved
+    revision: unresolved
+    license: unresolved
+    sha256: unresolved
+    backend: ComfyUI
+  - id: juggernaut-xl-v9
+    name: Juggernaut XL V9
+    purpose: identity portrait and scene generation
+    requirement: optional-identity
+    family: diffusion-checkpoint
+    expected_filename: unresolved
+    default_path: ${MODEL_ROOT}/Diffusion_Models
+    source: unresolved
+    revision: unresolved
+    license: unresolved
+    sha256: unresolved
+    backend: ComfyUI
+  - id: local-llm
+    name: User-selected GGUF and optional mmproj/MTP sidecars
+    purpose: local AnythingLLM inference and vision
+    requirement: optional-local-llm
+    family: llama.cpp-compatible
+    expected_filename: '*.gguf'
+    default_path: ${MODEL_ROOT}
+    source: user-supplied
+    revision: user-supplied
+    license: user-responsibility
+    sha256: user-supplied
+    backend: llama.cpp
+

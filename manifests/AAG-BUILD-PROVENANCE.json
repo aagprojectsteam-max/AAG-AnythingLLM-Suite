@@ -1,0 +1,23 @@
+{
+  "schema": "aag.anythingllm-frontend-build.v1",
+  "aagRelease": "0.9.0-preview.13",
+  "anythingllmSource": "https://github.com/Mintplex-Labs/anything-llm.git",
+  "anythingllmRevision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "overlayFiles": [
+    "ImageGenerationCard/index.jsx",
+    "HistoricalOutputs/index.jsx",
+    "AagImageCollection.jsx",
+    "aagArtifactExport.js",
+    "AagImageComposerPanel/index.jsx",
+    "AagImageComposerPanel/styles.css",
+    "AagImageComposerPanel/localization.js",
+    "AagImageComposerPanel/heTaxonomyLabels.js",
+    "AagImageProgress/index.jsx",
+    "AagImageProgress/styles.css",
+    "PromptInput/index.jsx (deterministic inline patch)",
+    "ChatContainer/index.jsx (deterministic native-message augmentation patch)"
+  ],
+  "publicFiles": 254,
+  "publicTreeSha256": "9d32257081a513d18a5d147ecc24d0a69aa321ab46f0a722eefda22b814ca5b9",
+  "builtAt": "2026-09-03T16:08:54.572Z"
+}

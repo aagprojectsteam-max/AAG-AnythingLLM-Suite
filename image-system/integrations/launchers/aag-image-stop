@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -u
+export LC_ALL=C
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+
+HUB='/usr/local/libexec/aag-image-hub-control'
+AI_STOP='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-ai-stop'
+COMFY_UNIT='aag-comfyui-session.service'
+UPS_STOP='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-upscale-stop'
+WATCH_TIMER='aag-anythingllm-comfyui-network-watch.timer'
+FAILED=0
+
+echo "============================================================"
+echo " AAG IMAGE SYSTEM — CONTROLLED SHUTDOWN"
+echo "============================================================"
+
+echo
+echo "[1/4] Upscale..."
+"$UPS_STOP" || FAILED=1
+
+echo
+echo "[2/4] ComfyUI / Reference / bridges..."
+if curl -fsS --max-time 2 http://127.0.0.1:8188/system_stats >/dev/null 2>&1; then
+    "$AI_STOP" || FAILED=1
+fi
+systemctl --user stop "$COMFY_UNIT" >/dev/null 2>&1 || true
+systemctl --user stop "$WATCH_TIMER" >/dev/null 2>&1 || true
+
+echo
+echo "[3/4] Central Image Hub..."
+sudo -n "$HUB" stop || FAILED=1
+
+echo
+echo "[4/4] Final verification..."
+LEFT=0
+for P in 8188 18188 18189 18190 18191 18192; do
+    if ss -lnt | grep -qE ":${P}\b"; then echo "Port $P : OPEN"; LEFT=1; else echo "Port $P : CLOSED"; fi
+done
+systemctl --user is-active --quiet "$COMFY_UNIT" && LEFT=1
+docker inspect anythingllm -f 'AnythingLLM={{.State.Status}}/{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' 2>/dev/null || true
+[[ "$LEFT" -eq 0 ]] || FAILED=1
+if [[ "$FAILED" -eq 0 ]]; then echo "SAFE SHUTDOWN COMPLETE"; else echo "SHUTDOWN COMPLETED WITH WARNINGS"; fi
+exit "$FAILED"

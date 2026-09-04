@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -u
+export LC_ALL=C
+
+# Required for systemctl --user when these lifecycle commands are
+# launched from terminals, sudo-mediated helpers or other wrappers.
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+
+HUB='/usr/local/libexec/aag-image-hub-control'
+AI_STOP="$HOME/.local/bin/aag-ai-stop"
+UPS_STOP='/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-upscale-stop'
+WATCH_TIMER='aag-anythingllm-comfyui-network-watch.timer'
+
+FAILED=0
+
+echo "============================================================"
+echo " AAG IMAGE SYSTEM — CONTROLLED SHUTDOWN"
+echo "============================================================"
+
+echo
+echo "[1/4] Upscale..."
+
+if "$UPS_STOP"; then
+    echo "Upscale : OFF"
+else
+    echo "WARNING: Upscale shutdown reported an error"
+    FAILED=1
+fi
+
+echo
+echo "[2/4] ComfyUI / Reference / bridges..."
+
+# The Reference system has no independent daemon.
+# It becomes offline when ComfyUI is shut down.
+
+if "$AI_STOP"; then
+    echo "ComfyUI / Reference : OFF"
+else
+    echo "WARNING: ComfyUI shutdown reported an error"
+    FAILED=1
+fi
+
+# Ensure the dynamic watchdog itself is not left running
+# after the complete image system has been intentionally stopped.
+systemctl stop "$WATCH_TIMER" \
+  >/dev/null 2>&1 || true
+
+echo
+echo "[3/4] Central Image Hub..."
+
+if sudo -n "$HUB" stop; then
+    echo "Image Hub : OFF"
+else
+    echo "WARNING: Image Hub shutdown reported an error"
+    FAILED=1
+fi
+
+echo
+echo "[4/4] Final verification..."
+
+LEFT=0
+
+for P in 8188 18188 18189 18190 18191; do
+    if ss -lnt |
+       grep -qE ":${P}\b"
+    then
+        echo "Port $P : OPEN"
+        LEFT=1
+    else
+        echo "Port $P : CLOSED"
+    fi
+done
+
+echo
+echo "AnythingLLM:"
+docker inspect anythingllm \
+  -f 'State={{.State.Status}} Health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' \
+  2>/dev/null || true
+
+if [[ "$LEFT" -ne 0 ]]; then
+    FAILED=1
+fi
+
+echo
+echo "============================================================"
+
+if [[ "$FAILED" -eq 0 ]]; then
+    echo " SAFE SHUTDOWN COMPLETE"
+else
+    echo " SHUTDOWN COMPLETED WITH WARNINGS"
+fi
+
+echo "============================================================"
+
+exit "$FAILED"

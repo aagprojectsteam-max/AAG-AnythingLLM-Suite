@@ -1,0 +1,1080 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+MODEL_ROOT="/mnt/data/AI/Models"
+LLAMA_ROOT="/mnt/data/AI/Apps/llama.cpp"
+BUILD_DIR="$LLAMA_ROOT/build-sycl"
+LLAMA_CLI="$BUILD_DIR/bin/llama-cli"
+LLAMA_SERVER="$BUILD_DIR/bin/llama-server"
+APPROVED_MTP_TARGET="/mnt/data/AI/Models/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/Gemma4-12B-QAT-Uncensored-HauhauCS-Balanced-Q4_K_M.gguf"
+APPROVED_MTP_TARGET_SHA256="59656d7494d6376ca97e9e20b64ea2e16cd97f12ec6d47bfccba91cb785b5134"
+APPROVED_MTP_DRAFT="/mnt/data/AI/Models/Gemma4-12B/HauhauCS-Balanced-Q4_K_M/mtp-gemma-4-12B-it.gguf"
+APPROVED_MTP_DRAFT_SHA256="c50c91c35f04903815b2e8930cbb8c8c5bee0e1aa00748c30a7b8ff05d2310b4"
+ONEAPI_ENV="/opt/intel/oneapi/setvars.sh"
+HOST="0.0.0.0"
+PORT="8080"
+STOP_WAIT_SECONDS=20
+KILL_WAIT_SECONDS=5
+HEALTH_WAIT_SECONDS="${AAG_LLAMA_HEALTH_TIMEOUT:-300}"
+COMPATIBILITY_SERVICE="aag-model-compatibility.service"
+COMPATIBILITY_PORT="18080"
+COMPATIBILITY_HEALTH="http://127.0.0.1:${COMPATIBILITY_PORT}/health"
+COMPATIBILITY_PREFLIGHT="http://127.0.0.1:${COMPATIBILITY_PORT}/aag/preflight"
+COMPATIBILITY_TOKEN_FILE="/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility/proxy.token"
+
+COMMAND_NAME="${0##*/}"
+RUNTIME_BASE="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+if [[ ! -d "$RUNTIME_BASE" || ! -O "$RUNTIME_BASE" ]]; then
+    RUNTIME_BASE="/tmp/aag-llama-$(id -u)"
+fi
+RUNTIME_ROOT="$RUNTIME_BASE/aag-llama"
+STATE_ROOT="${XDG_STATE_HOME:-$HOME/.local/state}/aag-llama"
+LOG_FILE="$STATE_ROOT/server.log"
+
+MODE=""
+ACTION=""
+EXPECTED_BIN=""
+STATE_DIR=""
+LOCK_FILE=""
+
+fail() {
+    printf 'ERROR: %s\n' "$*" >&2
+    exit 1
+}
+
+clear_screen() {
+    if [[ -t 1 && "${TERM:-dumb}" != "dumb" ]]; then
+        clear
+    fi
+}
+
+set_mode() {
+    case "$COMMAND_NAME" in
+        aag-llama-cli-start)
+            MODE="cli"
+            ACTION="start"
+            EXPECTED_BIN="$LLAMA_CLI"
+            ;;
+        aag-llama-cli-stop)
+            MODE="cli"
+            ACTION="stop"
+            EXPECTED_BIN="$LLAMA_CLI"
+            ;;
+        aag-llama-cli-status)
+            MODE="cli"
+            ACTION="status"
+            EXPECTED_BIN="$LLAMA_CLI"
+            ;;
+        aag-llama-server-start)
+            MODE="server"
+            ACTION="start"
+            EXPECTED_BIN="$LLAMA_SERVER"
+            ;;
+        aag-llama-server-stop)
+            MODE="server"
+            ACTION="stop"
+            EXPECTED_BIN="$LLAMA_SERVER"
+            ;;
+        aag-llama-server-status)
+            MODE="server"
+            ACTION="status"
+            EXPECTED_BIN="$LLAMA_SERVER"
+            ;;
+        *)
+            fail "Run this script through one of the six aag-llama-* command names."
+            ;;
+    esac
+
+    STATE_DIR="$RUNTIME_ROOT/$MODE"
+    LOCK_FILE="$RUNTIME_ROOT/$MODE.lock"
+}
+
+initialize_writable_state() {
+    install -d -m 700 "$RUNTIME_BASE"
+    [[ -O "$RUNTIME_BASE" && ! -L "$RUNTIME_BASE" ]] || fail "Unsafe runtime directory: $RUNTIME_BASE"
+    install -d -m 700 "$RUNTIME_ROOT"
+    [[ -O "$RUNTIME_ROOT" && ! -L "$RUNTIME_ROOT" ]] || fail "Unsafe runtime directory: $RUNTIME_ROOT"
+}
+
+lock_mode() {
+    exec 9>"$LOCK_FILE"
+    flock -x -w 5 9 || fail "Another $MODE management operation is in progress."
+}
+
+unlock_mode() {
+    flock -u 9
+    exec 9>&-
+}
+
+read_state_value() {
+    local name="$1"
+    local value=""
+
+    [[ -f "$STATE_DIR/$name" && ! -L "$STATE_DIR/$name" ]] || return 1
+    IFS= read -r value < "$STATE_DIR/$name" || [[ -n "$value" ]] || return 1
+    printf '%s' "$value"
+}
+
+clear_state() {
+    [[ "$STATE_DIR" == "$RUNTIME_ROOT/cli" || "$STATE_DIR" == "$RUNTIME_ROOT/server" ]] || fail "Refusing unsafe state cleanup."
+
+    if [[ -d "$STATE_DIR" && ! -L "$STATE_DIR" ]]; then
+        rm -f -- "$STATE_DIR/pid" "$STATE_DIR/starttime" "$STATE_DIR/executable" "$STATE_DIR/model" "$STATE_DIR/started_epoch" "$STATE_DIR/context" "$STATE_DIR/profile" "$STATE_DIR/mmproj" "$STATE_DIR/mtp" "$STATE_DIR/chat_template" "$STATE_DIR/unit" "$STATE_DIR/invocation_id"
+        rmdir -- "$STATE_DIR" 2>/dev/null || fail "Unexpected file in state directory: $STATE_DIR"
+    elif [[ -e "$STATE_DIR" || -L "$STATE_DIR" ]]; then
+        fail "Unsafe state path: $STATE_DIR"
+    fi
+}
+
+process_starttime() {
+    local pid="$1"
+    local stat_line
+    local remainder
+
+    IFS= read -r stat_line < "/proc/$pid/stat" || return 1
+    remainder="${stat_line##*) }"
+    awk '{print $20}' <<< "$remainder"
+}
+
+process_uid() {
+    local pid="$1"
+    awk '/^Uid:/ {print $2; exit}' "/proc/$pid/status" 2>/dev/null
+}
+
+process_has_model() {
+    local pid="$1"
+    local expected_model="$2"
+    local index
+    local -a args=()
+
+    mapfile -d '' args < "/proc/$pid/cmdline" 2>/dev/null || return 1
+    for index in "${!args[@]}"; do
+        if [[ "${args[$index]}" == "-m" || "${args[$index]}" == "--model" ]]; then
+            if (( index + 1 < ${#args[@]} )) && [[ "${args[$((index + 1))]}" == "$expected_model" ]]; then
+                return 0
+            fi
+        fi
+    done
+    return 1
+}
+
+STATE_PID=""
+STATE_MODEL=""
+STATE_STARTED_EPOCH=""
+STATE_UNIT=""
+STATE_INVOCATION_ID=""
+
+unit_value() {
+    local unit="$1"
+    local property="$2"
+    systemctl --user show "$unit" --property="$property" --value 2>/dev/null
+}
+
+server_unit_is_owned_running() {
+    local pid="$1"
+    local unit="$2"
+    local invocation_id="$3"
+    local model="$4"
+    local exec_start
+    local control_group
+
+    [[ "$unit" =~ ^aag-llama-server-runtime-[0-9]+-[0-9]+\.service$ ]] || return 1
+    [[ "$invocation_id" =~ ^[0-9a-f]{32}$ ]] || return 1
+    [[ "$(unit_value "$unit" Id)" == "$unit" ]] || return 1
+    [[ "$(unit_value "$unit" LoadState)" == "loaded" ]] || return 1
+    [[ "$(unit_value "$unit" ActiveState)" == "active" ]] || return 1
+    [[ "$(unit_value "$unit" MainPID)" == "$pid" ]] || return 1
+    [[ "$(unit_value "$unit" InvocationID)" == "$invocation_id" ]] || return 1
+    [[ "$(unit_value "$unit" Transient)" == "yes" ]] || return 1
+
+    control_group="$(unit_value "$unit" ControlGroup)" || return 1
+    [[ "$control_group" == */"$unit" ]] || return 1
+    exec_start="$(unit_value "$unit" ExecStart)" || return 1
+    [[ "$exec_start" == *"path=$LLAMA_SERVER ; argv[]=$LLAMA_SERVER "* ]] || return 1
+    [[ "$exec_start" == *" --model $model "* ]] || return 1
+}
+
+state_is_owned_running() {
+    local stored_starttime
+    local stored_executable
+    local actual_executable
+    local actual_starttime
+
+    STATE_PID="$(read_state_value pid)" || return 1
+    stored_starttime="$(read_state_value starttime)" || return 1
+    stored_executable="$(read_state_value executable)" || return 1
+    STATE_MODEL="$(read_state_value model)" || return 1
+    STATE_STARTED_EPOCH="$(read_state_value started_epoch)" || return 1
+
+    [[ "$STATE_PID" =~ ^[0-9]+$ && "$STATE_STARTED_EPOCH" =~ ^[0-9]+$ ]] || return 1
+    [[ "$stored_executable" == "$EXPECTED_BIN" ]] || return 1
+
+    [[ "$stored_starttime" =~ ^[0-9]+$ ]] || return 1
+    [[ -d "/proc/$STATE_PID" ]] || return 1
+    [[ "$(process_uid "$STATE_PID")" == "$(id -u)" ]] || return 1
+
+    actual_starttime="$(process_starttime "$STATE_PID")" || return 1
+    [[ "$actual_starttime" == "$stored_starttime" ]] || return 1
+
+    actual_executable="$(readlink -f "/proc/$STATE_PID/exe" 2>/dev/null)" || return 1
+    [[ "$actual_executable" == "$EXPECTED_BIN" ]] || return 1
+    process_has_model "$STATE_PID" "$STATE_MODEL" || return 1
+
+    if [[ "$MODE" == "server" ]]; then
+        STATE_UNIT="$(read_state_value unit)" || return 1
+        STATE_INVOCATION_ID="$(read_state_value invocation_id)" || return 1
+        server_unit_is_owned_running "$STATE_PID" "$STATE_UNIT" "$STATE_INVOCATION_ID" "$STATE_MODEL"
+    fi
+}
+
+find_exact_processes() {
+    local proc
+    local pid
+    local executable
+
+    for proc in /proc/[0-9]*; do
+        pid="${proc##*/}"
+        [[ "$(process_uid "$pid")" == "$(id -u)" ]] || continue
+        executable="$(readlink -f "$proc/exe" 2>/dev/null)" || continue
+        if [[ "$executable" == "$EXPECTED_BIN" ]]; then
+            printf '%s\n' "$pid"
+        fi
+    done
+}
+
+process_model() {
+    local pid="$1"
+    local index
+    local -a args=()
+
+    mapfile -d '' args < "/proc/$pid/cmdline" 2>/dev/null || return 1
+    for index in "${!args[@]}"; do
+        if [[ "${args[$index]}" == "-m" || "${args[$index]}" == "--model" ]]; then
+            if (( index + 1 < ${#args[@]} )); then
+                printf '%s' "${args[$((index + 1))]}"
+                return 0
+            fi
+        fi
+    done
+    return 1
+}
+
+write_state() {
+    local pid="$1"
+    local model="$2"
+    local started_epoch="$3"
+    local context="${4:-}"
+    local profile="${5:-}"
+    local mmproj="${6:-}"
+    local mtp="${7:-}"
+    local chat_template="${8:-}"
+    local unit="${9:-}"
+    local invocation_id="${10:-}"
+    local starttime
+    local temp_dir
+
+    # Canonical process-start identity is Linux /proc/<pid>/stat field 22:
+    # decimal clock ticks since boot.  systemd InvocationID is a separate,
+    # complementary server-generation attestation and must never overload it.
+    starttime="$(process_starttime "$pid")" || fail "Could not read process start time for PID $pid."
+    temp_dir="$(mktemp -d "$RUNTIME_ROOT/.${MODE}.XXXXXX")"
+    chmod 700 "$temp_dir"
+    printf '%s\n' "$pid" > "$temp_dir/pid"
+    printf '%s\n' "$starttime" > "$temp_dir/starttime"
+    printf '%s\n' "$EXPECTED_BIN" > "$temp_dir/executable"
+    printf '%s\n' "$model" > "$temp_dir/model"
+    printf '%s\n' "$started_epoch" > "$temp_dir/started_epoch"
+    printf '%s\n' "$context" > "$temp_dir/context"
+    printf '%s\n' "$profile" > "$temp_dir/profile"
+    printf '%s\n' "$mmproj" > "$temp_dir/mmproj"
+    printf '%s\n' "$mtp" > "$temp_dir/mtp"
+    printf '%s\n' "$chat_template" > "$temp_dir/chat_template"
+    printf '%s\n' "$unit" > "$temp_dir/unit"
+    printf '%s\n' "$invocation_id" > "$temp_dir/invocation_id"
+    chmod 600 "$temp_dir"/*
+    sync -f "$temp_dir"/* "$temp_dir"
+    mv -- "$temp_dir" "$STATE_DIR"
+    sync -f "$RUNTIME_ROOT"
+}
+
+load_oneapi() {
+    [[ -f "$ONEAPI_ENV" ]] || fail "Intel oneAPI environment was not found: $ONEAPI_ENV"
+
+    set +u
+    source "$ONEAPI_ENV" >/dev/null 2>&1 || true
+    set -u
+
+    export LD_LIBRARY_PATH="$BUILD_DIR/bin${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"
+
+    command -v sycl-ls >/dev/null 2>&1 || fail "Intel oneAPI did not provide sycl-ls."
+    sycl-ls 2>/dev/null | grep -qi 'level_zero:gpu.*Intel(R) Arc' || fail "Intel Arc was not detected through SYCL Level Zero."
+}
+
+validate_common_paths() {
+    [[ -x "$EXPECTED_BIN" ]] || fail "Executable was not found: $EXPECTED_BIN"
+    [[ -d "$MODEL_ROOT" ]] || fail "Model directory was not found: $MODEL_ROOT"
+}
+
+normalize_name() {
+    local value="$1"
+
+    value="$(basename "$value" .gguf)"
+    value="${value,,}"
+
+    printf '%s' "$value" | sed -E '
+        s/^(mmproj|mtp|dflash)[-_.]*//;
+        s/(q[0-9]+([_.]k[_.]?[msl])?|iq[0-9]+([_.][a-z0-9]+)?|f16|fp16|bf16)//g;
+        s/(instruct|uncensored|aggressive|hauhaucs|gguf)//g;
+        s/[^a-z0-9]+/ /g;
+        s/^ +| +$//g
+    '
+}
+
+select_sidecar() {
+    local model="$1"
+    local prefix="$2"
+    local model_dir
+    local model_norm
+    local candidate
+    local candidate_norm
+    local word
+    local score
+    local best_score=-1
+    local best=""
+    local tie=0
+    local -a candidates=()
+
+    model_dir="$(dirname "$model")"
+    mapfile -d '' candidates < <(
+        find -L "$model_dir" -maxdepth 1 -type f \( -iname "${prefix}*.gguf" -o -iname "*-${prefix}.gguf" -o -iname "*_${prefix}.gguf" \) -print0 2>/dev/null | sort -z
+    )
+
+    if [[ "${#candidates[@]}" -eq 0 ]]; then
+        return 1
+    fi
+    if [[ "${#candidates[@]}" -eq 1 ]]; then
+        printf '%s\n' "${candidates[0]}"
+        return 0
+    fi
+
+    model_norm="$(normalize_name "$model")"
+    for candidate in "${candidates[@]}"; do
+        candidate_norm="$(normalize_name "$candidate")"
+        score=0
+        for word in $model_norm; do
+            [[ "${#word}" -ge 2 ]] || continue
+            if grep -qwF "$word" <<< "$candidate_norm"; then
+                score=$((score + 1))
+            fi
+        done
+
+        if [[ "$score" -gt "$best_score" ]]; then
+            best_score="$score"
+            best="$candidate"
+            tie=0
+        elif [[ "$score" -eq "$best_score" ]]; then
+            tie=1
+        fi
+    done
+
+    if [[ "$best_score" -le 0 || "$tie" -eq 1 ]]; then
+        return 2
+    fi
+    printf '%s\n' "$best"
+}
+
+approved_mtp_for_model() {
+    local model="$1"
+    local canonical
+
+    canonical="$(readlink -f "$model" 2>/dev/null)" || return 1
+    [[ "$canonical" == "$APPROVED_MTP_TARGET" ]] || return 1
+    [[ -f "$APPROVED_MTP_DRAFT" && ! -L "$APPROVED_MTP_DRAFT" ]] || return 1
+    [[ "$(sha256sum "$canonical" | awk '{print $1}')" == "$APPROVED_MTP_TARGET_SHA256" ]] || return 1
+    [[ "$(sha256sum "$APPROVED_MTP_DRAFT" | awk '{print $1}')" == "$APPROVED_MTP_DRAFT_SHA256" ]] || return 1
+    printf '%s\n' "$APPROVED_MTP_DRAFT"
+}
+
+list_cli_models() {
+    find -L "$MODEL_ROOT" -type f -iname '*.gguf' \
+        ! -iname 'mmproj*.gguf' \
+        ! -iname '*-mmproj.gguf' \
+        ! -iname '*_mmproj.gguf' \
+        ! -iname 'mtp*.gguf' \
+        ! -iname '*-mtp.gguf' \
+        ! -iname '*_mtp.gguf' \
+        ! -iname 'dflash*.gguf' \
+        ! -iname '*-dflash.gguf' \
+        ! -iname '*_dflash.gguf' \
+        -print0 2>/dev/null | sort -z
+}
+
+list_server_models() {
+    find -L "$MODEL_ROOT" -type f -iname '*.gguf' ! -iname 'mmproj*.gguf' ! -iname '*-mmproj.gguf' ! -iname '*_mmproj.gguf' ! -iname 'mtp*.gguf' ! -iname '*-mtp.gguf' ! -iname '*_mtp.gguf' ! -iname 'dflash*.gguf' ! -iname '*-dflash.gguf' ! -iname '*_dflash.gguf' -print0 2>/dev/null | sort -z
+}
+
+choose_model() {
+    local requested_model="$1"
+    local list_kind="$2"
+    local choice
+    local index
+    local model
+    local model_canonical
+    local size
+    local vision_mark
+    local mtp_mark
+    local -a models=()
+
+    if [[ "$list_kind" == "cli" ]]; then
+        mapfile -d '' models < <(list_cli_models)
+    else
+        mapfile -d '' models < <(list_server_models)
+    fi
+    [[ "${#models[@]}" -gt 0 ]] || fail "No selectable GGUF model was found under $MODEL_ROOT."
+
+    if [[ -n "$requested_model" ]]; then
+        requested_model="$(readlink -f "$requested_model" 2>/dev/null)" || fail "Model does not exist: $requested_model"
+        for model in "${models[@]}"; do
+            model_canonical="$(readlink -f "$model" 2>/dev/null || true)"
+            if [[ "$model_canonical" == "$requested_model" ]]; then
+                printf '%s' "$model"
+                return 0
+            fi
+        done
+        fail "Model is not selectable in $list_kind mode: $requested_model"
+    fi
+
+    clear_screen >&2
+    printf 'AAG llama.cpp %s models\n\n' "$list_kind" >&2
+    for index in "${!models[@]}"; do
+        model="${models[$index]}"
+        size="$(du -h "$model" 2>/dev/null | awk '{print $1}')"
+        if [[ "$list_kind" == "server" ]]; then
+            vision_mark="-"
+            mtp_mark="-"
+            if select_sidecar "$model" "mmproj" >/dev/null 2>&1; then
+                vision_mark="V"
+            fi
+            if select_sidecar "$model" "mtp" >/dev/null 2>&1; then
+                mtp_mark="M"
+            fi
+            printf '%3d) [%s%s] %-62s %8s\n' "$((index + 1))" "$vision_mark" "$mtp_mark" "$(basename "$model")" "${size:-?}" >&2
+        else
+            printf '%3d) %-67s %8s\n' "$((index + 1))" "$(basename "$model")" "${size:-?}" >&2
+        fi
+    done
+    if [[ "$list_kind" == "server" ]]; then
+        printf '\n[V-] has a matching mmproj; [-M] has a matching MTP file.\n' >&2
+    fi
+    printf '\n' >&2
+    read -r -p "Select model number: " choice
+    [[ "$choice" =~ ^[0-9]+$ ]] || fail "Model selection must be a number."
+    index=$((choice - 1))
+    [[ "$index" -ge 0 && "$index" -lt "${#models[@]}" ]] || fail "Selected model number does not exist."
+    printf '%s' "${models[$index]}"
+}
+
+port_listener_details() {
+    ss -H -ltnp "sport = :$PORT" 2>/dev/null || true
+}
+
+port_is_listening() {
+    [[ -n "$(port_listener_details)" ]]
+}
+
+port_is_owned_by() {
+    local pid="$1"
+    port_listener_details | grep -q "pid=$pid,"
+}
+
+server_is_healthy() {
+    curl --silent --show-error --fail --max-time 2 "http://127.0.0.1:$PORT/health" >/dev/null 2>&1
+}
+
+compatibility_token() {
+    local mode
+    local owner
+    local token
+
+    [[ -f "$COMPATIBILITY_TOKEN_FILE" && ! -L "$COMPATIBILITY_TOKEN_FILE" ]] || return 1
+    mode="$(stat -c '%a' "$COMPATIBILITY_TOKEN_FILE" 2>/dev/null)" || return 1
+    owner="$(stat -c '%u' "$COMPATIBILITY_TOKEN_FILE" 2>/dev/null)" || return 1
+    [[ "$mode" == "600" && "$owner" == "$(id -u)" ]] || return 1
+    IFS= read -r token < "$COMPATIBILITY_TOKEN_FILE" || return 1
+    [[ "$token" =~ ^[A-Za-z0-9_-]{32,}$ ]] || return 1
+    printf '%s' "$token"
+}
+
+compatibility_is_healthy() {
+    systemctl --user is-active --quiet "$COMPATIBILITY_SERVICE" 2>/dev/null &&
+        curl --silent --show-error --fail --max-time 2 "$COMPATIBILITY_HEALTH" >/dev/null 2>&1
+}
+
+start_compatibility_boundary() {
+    local model_alias="$1"
+    local token
+    local payload
+    local attempt
+
+    token="$(compatibility_token)" || return 1
+    command -v jq >/dev/null 2>&1 || return 1
+    systemctl --user restart "$COMPATIBILITY_SERVICE" >/dev/null 2>&1 || return 1
+    for attempt in {1..50}; do
+        compatibility_is_healthy && break
+        sleep 0.1
+    done
+    compatibility_is_healthy || return 1
+    payload="$(jq -nc --arg model "$model_alias" '{model:$model}')" || return 1
+    curl --silent --show-error --fail --max-time 180 \
+        -H "Authorization: Bearer $token" \
+        -H 'Content-Type: application/json' \
+        --data-binary "$payload" \
+        "$COMPATIBILITY_PREFLIGHT" >/dev/null
+}
+
+stop_compatibility_boundary() {
+    systemctl --user stop "$COMPATIBILITY_SERVICE" >/dev/null 2>&1 || true
+}
+
+print_process_stats() {
+    local pid="$1"
+    local stats
+    local elapsed
+    local cpu
+    local memory_percent
+    local rss
+
+    stats="$(ps -p "$pid" -o etime=,%cpu=,%mem=,rss= 2>/dev/null)" || return 0
+    read -r elapsed cpu memory_percent rss <<< "$stats"
+    printf 'ELAPSED: %s\n' "$elapsed"
+    printf 'CPU: %s%%\n' "$cpu"
+    printf 'MEMORY: %s%% (%s KiB RSS)\n' "$memory_percent" "$rss"
+}
+
+status_mode() {
+    local label="${MODE^^}"
+    local conflict_pid
+    local conflict_model
+    local context
+    local profile
+
+    if state_is_owned_running; then
+        printf '%s STATUS: RUNNING\n' "$label"
+        printf 'PID: %s\n' "$STATE_PID"
+        printf 'MODEL: %s\n' "$STATE_MODEL"
+        print_process_stats "$STATE_PID"
+
+        if [[ "$MODE" == "server" ]]; then
+            context="$(read_state_value context 2>/dev/null || true)"
+            profile="$(read_state_value profile 2>/dev/null || true)"
+            printf 'CONTEXT: %s\n' "${context:-unknown}"
+            printf 'PROFILE: %s\n' "${profile:-unknown}"
+            printf 'CHAT TEMPLATE: MODEL EMBEDDED\n'
+            if port_is_owned_by "$STATE_PID"; then
+                printf 'PORT %s: LISTENING (PID %s)\n' "$PORT" "$STATE_PID"
+            elif port_is_listening; then
+                printf 'PORT %s: CONFLICTING LISTENER\n' "$PORT"
+            else
+                printf 'PORT %s: NOT LISTENING\n' "$PORT"
+            fi
+            if server_is_healthy; then
+                printf 'HEALTH: HEALTHY\n'
+            else
+                printf 'HEALTH: NOT READY\n'
+            fi
+            if compatibility_is_healthy; then
+                printf 'COMPATIBILITY BOUNDARY: HEALTHY (behavioral preflight cached per server session)\n'
+            else
+                printf 'COMPATIBILITY BOUNDARY: UNAVAILABLE\n'
+            fi
+        fi
+        return 0
+    fi
+
+    printf '%s STATUS: STOPPED\n' "$label"
+    if [[ -d "$STATE_DIR" || -L "$STATE_DIR" ]]; then
+        printf 'STATE: STALE OR INVALID (status made no changes)\n'
+    else
+        printf 'STATE: NONE\n'
+    fi
+
+    while IFS= read -r conflict_pid; do
+        [[ -n "$conflict_pid" ]] || continue
+        conflict_model="$(process_model "$conflict_pid" 2>/dev/null || true)"
+        printf 'CONFLICT: unmanaged exact executable PID %s\n' "$conflict_pid"
+        printf 'CONFLICT_MODEL: %s\n' "${conflict_model:-unknown}"
+    done < <(find_exact_processes)
+
+    if [[ "$MODE" == "server" ]]; then
+        if port_is_listening; then
+            printf 'PORT %s: LISTENING (not owned by AAG server mode)\n' "$PORT"
+        else
+            printf 'PORT %s: RELEASED\n' "$PORT"
+        fi
+        printf 'HEALTH: UNAVAILABLE\n'
+        if compatibility_is_healthy; then
+            printf 'COMPATIBILITY BOUNDARY: STALE OR UNEXPECTEDLY RUNNING\n'
+        else
+            printf 'COMPATIBILITY BOUNDARY: UNAVAILABLE\n'
+        fi
+    fi
+}
+
+prepare_start() {
+    local conflict_pid
+    local conflict_model
+
+    initialize_writable_state
+    lock_mode
+    if state_is_owned_running; then
+        printf '%s START: ALREADY RUNNING\n' "${MODE^^}"
+        printf 'PID: %s\n' "$STATE_PID"
+        printf 'MODEL: %s\n' "$STATE_MODEL"
+        unlock_mode
+        exit 0
+    fi
+
+    if [[ -d "$STATE_DIR" || -L "$STATE_DIR" ]]; then
+        clear_state
+    fi
+
+    while IFS= read -r conflict_pid; do
+        [[ -n "$conflict_pid" ]] || continue
+        conflict_model="$(process_model "$conflict_pid" 2>/dev/null || true)"
+        unlock_mode
+        fail "Refusing duplicate $MODE process. Exact executable is already running outside managed state: PID $conflict_pid, model ${conflict_model:-unknown}"
+    done < <(find_exact_processes)
+
+    if [[ "$MODE" == "server" ]] && port_is_listening; then
+        port_listener_details
+        unlock_mode
+        fail "Port $PORT already has a listener."
+    fi
+}
+
+start_cli() {
+    local requested_model=""
+    local cli_mode=""
+    local prompt=""
+    local model
+    local choice
+    local started_epoch
+    local -a cli_args=()
+
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --model)
+                [[ "$#" -ge 2 ]] || fail "--model requires a path."
+                requested_model="$2"
+                shift 2
+                ;;
+            --mode)
+                [[ "$#" -ge 2 ]] || fail "--mode requires interactive or prompt."
+                cli_mode="$2"
+                shift 2
+                ;;
+            --prompt)
+                [[ "$#" -ge 2 ]] || fail "--prompt requires text."
+                prompt="$2"
+                shift 2
+                ;;
+            *)
+                fail "Unknown CLI start option: $1"
+                ;;
+        esac
+    done
+
+    validate_common_paths
+    prepare_start
+    load_oneapi
+    model="$(choose_model "$requested_model" "cli")"
+
+    if [[ -z "$cli_mode" ]]; then
+        printf '\n1) Interactive conversation\n2) One-shot prompt\n'
+        read -r -p "Select mode [1-2]: " choice
+        case "$choice" in
+            1) cli_mode="interactive" ;;
+            2) cli_mode="prompt" ;;
+            *) unlock_mode; fail "Invalid CLI mode." ;;
+        esac
+    fi
+
+    case "$cli_mode" in
+        interactive)
+            cli_args=(-m "$model" -ngl 999 -c 8192 --flash-attn on --reasoning off -cnv)
+            ;;
+        prompt)
+            if [[ -z "$prompt" ]]; then
+                read -r -p "Prompt: " prompt
+            fi
+            cli_args=(-m "$model" -ngl 999 -c 8192 -n 512 --flash-attn on --reasoning off -p "$prompt")
+            ;;
+        *)
+            unlock_mode
+            fail "--mode must be interactive or prompt."
+            ;;
+    esac
+
+    started_epoch="$(date +%s)"
+    write_state "$$" "$model" "$started_epoch" "8192" "$cli_mode"
+    printf 'CLI START: STARTING\n'
+    printf 'PID: %s\n' "$$"
+    printf 'MODEL: %s\n' "$model"
+    printf 'MODE: %s\n' "$cli_mode"
+    printf 'SYCL: Intel Arc through Level Zero\n'
+    unlock_mode
+    exec env ONEAPI_DEVICE_SELECTOR=level_zero:gpu "$LLAMA_CLI" "${cli_args[@]}"
+}
+
+start_server() {
+    local requested_model=""
+    local requested_profile=""
+    local requested_mtp="auto"
+    local model
+    local alias
+    local profile_choice
+    local profile_name
+    local context
+    local mmproj=""
+    local mtp=""
+    local mmproj_status
+    local mtp_status
+    local vision_enabled=0
+    local mtp_enabled=0
+    local mtp_choice
+    local surya2=0
+    local pid
+    local started_epoch
+    local unit_name
+    local unit_result
+    local invocation_id
+    local attempt
+    local -a server_args=()
+
+    [[ "$HEALTH_WAIT_SECONDS" =~ ^[0-9]+$ ]] || fail "AAG_LLAMA_HEALTH_TIMEOUT must be a non-negative integer."
+
+    while [[ "$#" -gt 0 ]]; do
+        case "$1" in
+            --model)
+                [[ "$#" -ge 2 ]] || fail "--model requires a path."
+                requested_model="$2"
+                shift 2
+                ;;
+            --profile)
+                [[ "$#" -ge 2 ]] || fail "--profile requires fast, normal, or long."
+                requested_profile="$2"
+                shift 2
+                ;;
+            --mtp)
+                [[ "$#" -ge 2 ]] || fail "--mtp requires auto, ask, on, or off."
+                requested_mtp="$2"
+                shift 2
+                ;;
+            *)
+                fail "Unknown server start option: $1"
+                ;;
+        esac
+    done
+
+    validate_common_paths
+    prepare_start
+    load_oneapi
+    model="$(choose_model "$requested_model" "server")"
+    alias="$(basename "$model" .gguf)"
+
+    set +e
+    mmproj="$(select_sidecar "$model" "mmproj")"
+    mmproj_status=$?
+    mtp="$(approved_mtp_for_model "$model")"
+    mtp_status=$?
+    set -e
+
+    case "$mmproj_status" in
+        0) vision_enabled=1 ;;
+        1) mmproj="" ;;
+        2)
+            mmproj=""
+            printf 'WARNING: Multiple mmproj files had no safe match. Vision is disabled.\n'
+            ;;
+    esac
+    case "$mtp_status" in
+        0) : ;;
+        1) mtp="" ;;
+        2)
+            mtp=""
+            printf 'WARNING: Multiple MTP files had no safe match. MTP is disabled.\n'
+            ;;
+    esac
+
+    if [[ -z "$requested_profile" ]]; then
+        # The live canonical AAG Image workspace prompt plus its three allowed
+        # schemas exceeds an 8K context before generation. Provision the
+        # accepted long context automatically for every model so the normal
+        # user workflow never depends on a model/profile compatibility choice.
+        context=32768
+        profile_name="automatic"
+    else
+        profile_choice="$requested_profile"
+        case "$profile_choice" in
+            1|fast) context=4096; profile_name="fast" ;;
+            2|normal) context=8192; profile_name="normal" ;;
+            3|long) context=32768; profile_name="long" ;;
+            *) unlock_mode; fail "Invalid server profile." ;;
+        esac
+    fi
+
+    if [[ -n "$mtp" ]]; then
+        if [[ "$requested_mtp" == "auto" ]]; then
+            mtp_choice="on"
+        elif [[ "$requested_mtp" == "ask" ]]; then
+            printf '\nMTP file: %s\n1) MTP off (recommended)\n2) MTP on (experimental, 2 draft tokens)\n' "$mtp"
+            read -r -p "Select MTP mode [1]: " mtp_choice
+            mtp_choice="${mtp_choice:-1}"
+        else
+            mtp_choice="$requested_mtp"
+        fi
+        case "$mtp_choice" in
+            1|off) mtp_enabled=0 ;;
+            2|on) mtp_enabled=1 ;;
+            *) unlock_mode; fail "Invalid MTP selection." ;;
+        esac
+    elif [[ "$requested_mtp" == "on" ]]; then
+        printf 'WARNING: No approved MTP pair exists for this model. Using normal SYCL inference.\n'
+    elif [[ "$requested_mtp" != "auto" && "$requested_mtp" != "ask" && "$requested_mtp" != "off" ]]; then
+        unlock_mode
+        fail "Invalid MTP selection."
+    fi
+
+    if [[ "$(basename "$model")" == "surya-2.gguf" ]]; then
+        surya2=1
+    fi
+
+    server_args=(
+        --model "$model"
+        --alias "$alias"
+        --ctx-size "$context"
+        --parallel 1
+        --flash-attn on
+        --jinja
+        --reasoning off
+        --host "$HOST"
+        --port "$PORT"
+    )
+    if [[ "$vision_enabled" -eq 1 ]]; then
+        server_args+=(--mmproj "$mmproj" --mmproj-offload)
+    fi
+    if [[ "$surya2" -eq 1 ]]; then
+        server_args+=(--image-min-tokens 1024 --image-max-tokens 2048)
+    fi
+    if [[ "$mtp_enabled" -eq 1 ]]; then
+        server_args+=(--spec-draft-model "$mtp" --spec-type draft-mtp --spec-draft-n-max 2)
+    fi
+
+    install -d -m 700 "$STATE_ROOT"
+    printf '\n[%s] Starting server model=%s context=%s profile=%s\n' "$(date --iso-8601=seconds)" "$model" "$context" "$profile_name" >> "$LOG_FILE"
+    chmod 600 "$LOG_FILE"
+    started_epoch="$(date +%s)"
+    unit_name="aag-llama-server-runtime-${started_epoch}-$$.service"
+
+    if ! unit_result="$(systemd-run --user --unit="$unit_name" --collect --property=Type=exec --property="StandardOutput=append:$LOG_FILE" --property="StandardError=append:$LOG_FILE" --setenv="ONEAPI_DEVICE_SELECTOR=level_zero:gpu" --setenv="LD_LIBRARY_PATH=$LD_LIBRARY_PATH" "$LLAMA_SERVER" "${server_args[@]}" 2>&1)"; then
+        printf '%s\n' "$unit_result" >&2
+        unlock_mode
+        fail "Could not create the transient user service for llama-server."
+    fi
+
+    pid=""
+    for attempt in {1..50}; do
+        pid="$(systemctl --user show "$unit_name" --property=MainPID --value 2>/dev/null || true)"
+        if [[ "$pid" =~ ^[1-9][0-9]*$ ]]; then
+            break
+        fi
+        sleep 0.1
+    done
+    if [[ ! "$pid" =~ ^[1-9][0-9]*$ ]]; then
+        systemctl --user stop "$unit_name" 2>/dev/null || true
+        unlock_mode
+        fail "Could not obtain the llama-server PID from its transient user service."
+    fi
+
+    invocation_id=""
+    for attempt in {1..50}; do
+        invocation_id="$(unit_value "$unit_name" InvocationID 2>/dev/null || true)"
+        if server_unit_is_owned_running "$pid" "$unit_name" "$invocation_id" "$model"; then
+            break
+        fi
+        if [[ "$(unit_value "$unit_name" ActiveState 2>/dev/null || true)" == "failed" ]]; then
+            unlock_mode
+            tail -n 30 "$LOG_FILE" >&2 || true
+            fail "llama-server exited during startup."
+        fi
+        sleep 0.1
+    done
+    server_unit_is_owned_running "$pid" "$unit_name" "$invocation_id" "$model" || {
+        systemctl --user stop "$unit_name" 2>/dev/null || true
+        unlock_mode
+        fail "Could not verify the llama-server transient unit and executable after launch."
+    }
+
+    write_state "$pid" "$model" "$started_epoch" "$context" "$profile_name" "$mmproj" "$mtp" "" "$unit_name" "$invocation_id"
+    printf 'SERVER START: STARTING\n'
+    printf 'PID: %s\n' "$pid"
+    printf 'MODEL: %s\n' "$model"
+    printf 'CONTEXT: %s\n' "$context"
+    printf 'PARALLEL SLOTS: 1\n'
+    printf 'JINJA TOOL CALLING: ENABLED\n'
+    printf 'CHAT TEMPLATE: MODEL EMBEDDED\n'
+    printf 'COMPATIBILITY ROUTING: BEHAVIORAL (MODEL NAME/PATH INDEPENDENT)\n'
+    printf 'SYCL: Intel Arc through Level Zero\n'
+    if [[ "$vision_enabled" -eq 1 ]]; then
+        printf 'MMPROJ: %s\n' "$mmproj"
+    else
+        printf 'MMPROJ: DISABLED\n'
+    fi
+    if [[ "$mtp_enabled" -eq 1 ]]; then
+        printf 'MTP: %s\n' "$mtp"
+    else
+        printf 'MTP: DISABLED\n'
+    fi
+    printf 'LOG: %s\n' "$LOG_FILE"
+    unlock_mode
+
+    for ((attempt = 0; attempt < HEALTH_WAIT_SECONDS; attempt++)); do
+        if ! state_is_owned_running; then
+            tail -n 30 "$LOG_FILE" >&2 || true
+            fail "llama-server exited before becoming healthy."
+        fi
+        if server_is_healthy && port_is_owned_by "$pid"; then
+            if ! start_compatibility_boundary "$alias"; then
+                printf 'MODEL RUNTIME PREFLIGHT: FAIL\n' >&2
+                printf 'The compatibility boundary rejected or could not validate the managed server session. Rolling back this start.\n' >&2
+                stop_mode
+                fail "Managed model did not pass the basic model/text sanity and ordinary-chat compatibility gates."
+            fi
+            printf 'SERVER START: RUNNING\n'
+            printf 'PID: %s\n' "$pid"
+            printf 'MODEL: %s\n' "$model"
+            printf 'PORT %s: LISTENING\n' "$PORT"
+            printf 'HEALTH: HEALTHY\n'
+            printf 'MODEL RUNTIME PREFLIGHT: PASS\n'
+            printf 'COMPATIBILITY BOUNDARY: HEALTHY\n'
+            printf 'ANYTHINGLLM URL: http://host.docker.internal:%s/v1\n' "$COMPATIBILITY_PORT"
+            return 0
+        fi
+        sleep 1
+    done
+
+    fail "Server did not become healthy within $HEALTH_WAIT_SECONDS seconds. It remains managed; inspect with aag-llama-server-status or stop it with aag-llama-server-stop."
+}
+
+stop_mode() {
+    local label="${MODE^^}"
+    local pid
+    local attempt
+    local escalated=0
+
+    [[ "$#" -eq 0 ]] || fail "$COMMAND_NAME does not accept arguments."
+    initialize_writable_state
+    lock_mode
+
+    if ! state_is_owned_running; then
+        if [[ "$MODE" == "server" ]]; then
+            stop_compatibility_boundary
+        fi
+        if [[ -d "$STATE_DIR" || -L "$STATE_DIR" ]]; then
+            clear_state
+            printf '%s STOP: ALREADY STOPPED (stale state removed)\n' "$label"
+        else
+            printf '%s STOP: ALREADY STOPPED\n' "$label"
+        fi
+        unlock_mode
+        return 0
+    fi
+
+    pid="$STATE_PID"
+    printf '%s STOP: TERMINATING\n' "$label"
+    printf 'PID: %s\n' "$pid"
+    printf 'MODEL: %s\n' "$STATE_MODEL"
+    if [[ "$MODE" == "server" ]]; then
+        systemctl --user kill --signal=TERM --kill-whom=main "$STATE_UNIT"
+    else
+        kill -TERM "$pid"
+    fi
+
+    for ((attempt = 0; attempt < STOP_WAIT_SECONDS * 4; attempt++)); do
+        if ! state_is_owned_running; then
+            break
+        fi
+        sleep 0.25
+    done
+
+    if state_is_owned_running; then
+        escalated=1
+        printf '%s STOP: graceful timeout, sending SIGKILL to verified PID %s\n' "$label" "$pid"
+        if [[ "$MODE" == "server" ]]; then
+            systemctl --user kill --signal=KILL --kill-whom=all "$STATE_UNIT"
+        else
+            kill -KILL "$pid"
+        fi
+        for ((attempt = 0; attempt < KILL_WAIT_SECONDS * 4; attempt++)); do
+            if ! state_is_owned_running; then
+                break
+            fi
+            sleep 0.25
+        done
+    fi
+
+    if state_is_owned_running; then
+        unlock_mode
+        fail "Verified PID $pid did not stop. State was retained."
+    fi
+    clear_state
+
+    if [[ "$MODE" == "server" ]]; then
+        stop_compatibility_boundary
+        for ((attempt = 0; attempt < 40; attempt++)); do
+            port_is_listening || break
+            sleep 0.25
+        done
+        if port_is_listening; then
+            port_listener_details
+            unlock_mode
+            fail "Managed server stopped, but port $PORT still has an unrelated listener."
+        fi
+    fi
+
+    printf '%s STOP: STOPPED\n' "$label"
+    printf 'PID: %s\n' "$pid"
+    if [[ "$escalated" -eq 1 ]]; then
+        printf 'SIGNAL: SIGKILL after bounded graceful wait\n'
+    else
+        printf 'SIGNAL: SIGTERM\n'
+    fi
+    if [[ "$MODE" == "server" ]]; then
+        printf 'PORT %s: RELEASED\n' "$PORT"
+        printf 'HEALTH: UNAVAILABLE\n'
+    fi
+    unlock_mode
+}
+
+main() {
+    set_mode
+    case "$ACTION" in
+        status)
+            [[ "$#" -eq 0 ]] || fail "$COMMAND_NAME does not accept arguments."
+            status_mode
+            ;;
+        stop)
+            stop_mode "$@"
+            ;;
+        start)
+            if [[ "$MODE" == "cli" ]]; then
+                start_cli "$@"
+            else
+                start_server "$@"
+            fi
+            ;;
+    esac
+}
+
+main "$@"

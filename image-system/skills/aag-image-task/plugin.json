@@ -1,0 +1,99 @@
+{
+  "active": true,
+  "hubId": "aag-image-task",
+  "name": "AAG Image Task",
+  "version": "0.9.0-preview.13",
+  "same_turn_retry": "forbidden",
+  "description": "Create exactly one governed AAG image task. COMPLETE THE JSON BEFORE CALLING: always include exact documented operation, prompt, source_policy, and preservation values; for generate use operation=generate, source_policy=auto, preservation=none, and author a rich production prompt. For transform, author a rich prompt and include the explicit approved source/preservation choice. For upscale, include a concise faithful prompt to upscale without creative alteration. Then apply the user's TECHNICAL speed-versus-generation-quality preference: explicit speed, quick output, low latency, or fastest intent MUST include quality=fast; explicit maximum/best/highest generation quality or quality over speed MUST include quality=quality; an explicit compromise MUST include quality=balanced; no technical preference uses quality=auto or omission. Creative words such as 3D, cinematic, detailed, polished, professional, realistic, storybook, watercolor, beautiful, or highly detailed stay only in prompt and never select quality. There is no structured style field; all art direction belongs in prompt. current_attachment is only a current-turn attachment; previous_artifact is the most recently returned AAG image; do not invent an older-thread selector. identity is only for same-person preservation of one recognizable human from one trusted current human attachment; ordinary content uses subject. AAG's provider-neutral validator authoritatively rejects unknown, missing, invalid, or unsafe arguments before execution; provider grammar is optional defense in depth. AAG never authors or retries prompt text. Return artifact_N_url values and never report success without the artifact URL; call this task at most once per user request, including after failure.",
+  "public_schema": "provider-task.schema.json",
+  "entrypoint": {
+    "file": "handler.js",
+    "params": {
+      "operation": {
+        "type": "string",
+        "description": "REQUIRED closed enum: generate, transform, or upscale. Use one exact value; do not invent values."
+      },
+      "request": {
+        "type": "string",
+        "description": "Optional faithful summary of the user's request. If omitted, the trusted server-injected current invocation prompt is used."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "NON-NEGOTIABLE REQUIRED JSON argument on every call. For generate/transform, author the rich free-form creative prompt yourself before calling; AAG never fills it in. For identity transform explicitly describe the same recognizable person and requested portrait/scene. For upscale, provide a concise faithful instruction to upscale without creative alteration. All creative art direction belongs here and is preserved unchanged."
+      },
+      "source_policy": {
+        "type": "string",
+        "description": "REQUIRED closed enum on every call: auto, current_attachment, or previous_artifact. current_attachment means only a current-turn attached image. previous_artifact means the most recently returned AAG image in this conversation. auto is only for an unspecified source and is required for generate. Specific older thread artifacts are not publicly selectable; never invent thread_reference."
+      },
+      "source_index": {
+        "type": "number",
+        "description": "Optional one-based index into current-turn image attachments only. Valid only with current_attachment; required to disambiguate multiple current images and otherwise omit."
+      },
+      "preservation": {
+        "type": "string",
+        "description": "REQUIRED closed enum on every call: auto, identity, subject, or none. Transform must explicitly use identity only for the same recognizable human person from one trusted current attachment, or subject for ordinary non-human/content preservation. Never use identity as generic same-image preservation; generate/upscale must use none."
+      },
+      "quality": {
+        "type": "string",
+        "description": "Optional closed technical preference enum. Default decision is auto when no explicit technical speed/quality preference exists; omission is equivalent. Never treat balanced as the default or quality as a creative craftsmanship label. fast, quality, and balanced each require the corresponding explicit user preference. Creative detail/style wording alone never selects a non-auto mode. Use only an exact listed value."
+      },
+      "final_output_quality": {
+        "type": "string",
+        "description": "Optional closed delivery-stage enum: standard or enhanced_2x. This is a postprocess after governed generation and does not change the creative prompt, generation route, or identity recipe. Use standard for dedicated upscale operations. Use exactly one listed value; do not invent additional values."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "description": "Optional closed framing enum: auto, 1:1, 16:9, 9:16, 4:3, 3:2, landscape, or portrait. Use only an exact value."
+      },
+      "width": {
+        "type": "number",
+        "description": "Optional semantic width hint; identity dimensions are selected internally."
+      },
+      "height": {
+        "type": "number",
+        "description": "Optional semantic height hint; identity dimensions are selected internally."
+      },
+      "scale": {
+        "type": "number",
+        "description": "Optional upscale factor: 2, 3, or 4."
+      },
+      "count": {
+        "type": "number",
+        "description": "Optional output count: 1 or 2; children run sequentially."
+      },
+      "seed": {
+        "type": "number",
+        "description": "Optional non-negative deterministic seed."
+      }
+    }
+  },
+  "setup_args": {},
+  "routing": {
+    "action": "generate create edit transform or upscale one visual image picture illustration drawing render artwork painting or cartoon",
+    "domain": "image generation and image editing",
+    "operation": "create exactly one new image or modify one source image",
+    "aliases": [
+      "create image",
+      "generate image",
+      "make image",
+      "create picture",
+      "generate picture",
+      "create illustration",
+      "generate illustration",
+      "create drawing",
+      "make drawing",
+      "edit image",
+      "transform image",
+      "upscale image",
+      "צור תמונה",
+      "תעשה לי תמונה",
+      "תיצור איור",
+      "תעשה לי ציור",
+      "ערוך תמונה",
+      "שנה תמונה",
+      "הגדל תמונה",
+      "חדד תמונה"
+    ],
+    "excludes": "creating an actual PDF Excel PowerPoint or text file, chess-position reasoning, or Ubuntu diagnosis; subject nouns inside the requested image are scene content"
+  }
+}

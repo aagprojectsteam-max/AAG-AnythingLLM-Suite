@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aag-context-package-v1",
+  "type": "object",
+  "required": ["schema","context_package_id","request","intent","entities","current_facts","live_observations","relevant_history","verified_prior_fixes","failed_or_rejected_approaches","known_conflicts","unknowns","required_live_checks","active_task","source_catalog","retrieval_diagnostics","budget","security_notice"],
+  "properties": {
+    "schema": {"const":"aag-context-package-v1"},
+    "context_package_id": {"type":"string","pattern":"^context-package:"},
+    "request": {"type":"object"},
+    "intent": {"type":"object"},
+    "entities": {"type":"array"},
+    "current_facts": {"type":"array"},
+    "live_observations": {"type":"array"},
+    "relevant_history": {"type":"array"},
+    "verified_prior_fixes": {"type":"array"},
+    "failed_or_rejected_approaches": {"type":"array"},
+    "known_conflicts": {"type":"array"},
+    "unknowns": {"type":"array"},
+    "required_live_checks": {"type":"array"},
+    "active_task": {"type":["object","null"]},
+    "source_catalog": {"type":"array"},
+    "retrieval_diagnostics": {"type":"object"},
+    "budget": {"type":"object"},
+    "security_notice": {"type":"object"}
+  },
+  "additionalProperties": false
+}

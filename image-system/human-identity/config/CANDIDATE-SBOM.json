@@ -1,0 +1,16 @@
+{
+  "bomFormat":"CycloneDX",
+  "specVersion":"1.5",
+  "version":1,
+  "metadata":{"component":{"type":"application","name":"aag-image-human-identity-candidate","version":"0.9.0-preview.3-candidate.1"}},
+  "components":[
+    {"type":"library","name":"PuLID","version":"1aa2fc7df4bf51080df39f355f9abdc1cbfefbaa","licenses":[{"license":{"id":"Apache-2.0"}}]},
+    {"type":"machine-learning-model","name":"pulid_v1.1","version":"d58b3ba191be1280c37ace0656a2e65cd9b8c8d8","hashes":[{"alg":"SHA-256","content":"4cb8ceec1078e0165399b88332ab3c5971619111b8e1730e6bae64144aabae41"}]},
+    {"type":"machine-learning-model","name":"Juggernaut XL V9","version":"cf419233522daa0b9ea36c3aff98fa2cab1fb0fb","hashes":[{"alg":"SHA-256","content":"c9e3e68f89b8e38689e1097d4be4573cf308de4e3fd044c64ca697bdb4aa8bca"}]},
+    {"type":"framework","name":"torch","version":"2.13.0+xpu"},
+    {"type":"library","name":"diffusers","version":"0.29.1"},
+    {"type":"library","name":"transformers","version":"4.57.6"},
+    {"type":"library","name":"insightface","version":"1.0.1"},
+    {"type":"library","name":"onnxruntime","version":"1.29.0"}
+  ]
+}

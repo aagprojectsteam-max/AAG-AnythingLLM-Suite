@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+export LC_ALL=C
+
+C='/mnt/data/AI/ComfyUI'
+STORAGE='/mnt/data/AI/Apps/AnythingLLM/storage'
+
+TASK="$STORAGE/plugins/agent-skills/aag-image-task"
+JOB="$STORAGE/plugins/agent-skills/aag-image-job"
+
+fail() {
+    echo "$1=FAIL"
+    exit 1
+}
+
+echo "============================================================"
+echo " AAG Reference / Human Identity — Status"
+echo "============================================================"
+
+# Current provider architecture.
+for D in "$TASK" "$JOB"; do
+    test -f "$D/plugin.json" || fail "ImageSkillFiles"
+    test -f "$D/handler.js" || fail "ImageSkillFiles"
+    test -f "$D/human-identity.js" || fail "ImageSkillFiles"
+    test -f "$D/scene-identity.js" || fail "ImageSkillFiles"
+    test -f "$D/identity-routing.js" || fail "ImageSkillFiles"
+done
+
+echo "ImageSkillFiles=PASS"
+
+# Verify the deployed manifests are the current image providers
+# and are explicitly active.
+python3 - "$TASK/plugin.json" "$JOB/plugin.json" <<'PY'
+import json
+import sys
+
+expected = {
+    "aag-image-task": sys.argv[1],
+    "aag-image-job": sys.argv[2],
+}
+
+for hub, path in expected.items():
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data.get("hubId") == hub, (hub, data.get("hubId"))
+    assert data.get("active") is True, (hub, data.get("active"))
+    assert data.get("entrypoint", {}).get("file") == "handler.js"
+
+print("ImageSkillManifests=PASS")
+PY
+
+docker inspect anythingllm >/dev/null 2>&1 ||
+    fail "AnythingLLMContainer"
+
+echo "AnythingLLMContainer=FOUND"
+
+# ComfyUI must be live.
+curl -fsS \
+    --max-time 5 \
+    http://127.0.0.1:8188/object_info \
+    > /tmp/aag-reference-status-nodes.json ||
+    fail "ComfyUIObjectInfo"
+
+echo "ComfyUIObjectInfo=PASS"
+
+# Validate the nodes required by the current PuLID identity routes
+# and the known-good local XPU runtime.
+"$C/venv/bin/python" - <<'PY'
+import json
+import torch
+import numpy
+
+with open("/tmp/aag-reference-status-nodes.json", "r", encoding="utf-8") as f:
+    nodes = json.load(f)
+
+required = [
+    "PuLIDInsightFaceLoader",
+    "PuLIDEVACLIPLoader",
+    "PuLIDModelLoader",
+    "ApplyPuLIDFlux2",
+    "ReferenceLatent",
+]
+
+missing = [name for name in required if name not in nodes]
+assert not missing, f"Missing ComfyUI nodes: {missing}"
+
+print("PuLIDNodes=PASS")
+print("Torch=" + torch.__version__)
+print("NumPy=" + numpy.__version__)
+print("XPU=" + str(torch.xpu.is_available()))
+
+assert torch.__version__ == "2.13.0+xpu"
+assert numpy.__version__ == "2.5.2"
+assert torch.xpu.is_available()
+
+print("ComfyUICore=PASS")
+PY
+
+# Verify AnythingLLM can discover and load the CURRENT image providers.
+docker exec -i anythingllm node - <<'JS'
+const ImportedPlugin = require('/app/server/utils/agents/imported');
+
+for (const hub of ['aag-image-task', 'aag-image-job']) {
+    const cfg = ImportedPlugin
+        .listImportedPlugins()
+        .find(x => x.hubId === hub);
+
+    if (!cfg) {
+        throw new Error(`${hub}: not discovered`);
+    }
+
+    if (cfg.active !== true) {
+        throw new Error(`${hub}: not active`);
+    }
+
+    const loaded = ImportedPlugin.loadPluginByHubId(hub);
+
+    if (!loaded?.handler?.runtime?.handler) {
+        throw new Error(`${hub}: runtime handler did not load`);
+    }
+
+    console.log(`${hub}=PASS`);
+}
+
+console.log('AnythingLLMImageProviders=PASS');
+JS
+
+echo "IdentityProviderArchitecture=CURRENT"
+echo "ReferenceInbox=$STORAGE/reference-images"
+echo "STATUS=PASS"

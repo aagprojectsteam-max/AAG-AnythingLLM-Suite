@@ -1,0 +1,17 @@
+[Unit]
+Description=AAG Ubuntu Agent AnythingLLM Host Bridge v2
+After=default.target
+ConditionPathIsMountPoint=/mnt/data
+
+[Service]
+Type=simple
+ExecStart=/mnt/data/AI/Agents/AAG-Ubuntu-Agent/venv/bin/python /mnt/data/AI/Agents/AAG-Ubuntu-Agent/app/host_bridge_v2.py
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=10
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=default.target
