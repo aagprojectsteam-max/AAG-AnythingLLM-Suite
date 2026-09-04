@@ -2,10 +2,10 @@
 
 Authoritative upstream license files establish AnythingLLM as MIT, llama.cpp as MIT, ComfyUI as GPLv3, and Stockfish as GPLv3. Their binaries and complete source trees are not bundled; Stockfish is optional and separately installed.
 
-Public distribution does not pass because no owner-approved top-level AAG license grant exists, exact AnythingLLM-derived per-file provenance is incomplete, and the production frontend overlay capture is incomplete. Choosing a license or declaring ownership cannot be performed safely by release engineering.
+The owner approved MIT distribution of AAG-owned code on 2026-09-04. The top-level `LICENSE`, file-level ownership map, eleven upstream stock hashes, and 21-target overlay manifest implement the grant while preserving AnythingLLM's MIT notice. Atlas pixels remain excluded, and Ubuntu Agent is not installed.
 
 `ANYTHINGLLM_LICENSE=MIT_NOTICE_REQUIRED`
 
-`THIRD_PARTY_NOTICES=UPDATED_PRIVATE_GATE`
+`THIRD_PARTY_NOTICES=PASS`
 
-`LICENSING_PUBLICATION_GATE=FAIL_OWNER_GRANT_AND_PROVENANCE_REQUIRED`
+`LICENSING_PUBLICATION_GATE=PASS`

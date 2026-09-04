@@ -6,4 +6,6 @@ Mandatory public gates fail on: missing AAG owner license grant; incomplete Anyt
 
 `README_NEW_USER_TEST=PASS_FOR_PRIVATE_RC_WITH_DOCUMENTED_LIMITATIONS`
 
-`PUBLIC_READY=NO`
+The owner subsequently approved the MIT license, and the three technical blockers were closed as recorded in `FINAL-PUBLICATION-BLOCKER-CLOSURE.md`.
+
+`PUBLIC_READY=YES`

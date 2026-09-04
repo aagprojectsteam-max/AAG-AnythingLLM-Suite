@@ -1,5 +1,7 @@
 # Final v1 Release
 
-No `v1.0.0` tag or normal GitHub Release was created. Creating one would falsely assert that mandatory license, reconstruction, fresh-functional, and anonymous-public-clone gates passed. The accepted deliverable remains the private `v1.0.0-rc1` prerelease.
+`v1.0.0` is an annotated tag resolving to `6c3133036afb1658fac807469a0ac46598a3d2ec`. Its GitHub Release is normal, non-draft, non-prerelease, and marked latest. Attached assets are only `atlas-assets-manifest.json` and `SHA256SUMS`; Atlas pixels, models, binaries, credentials, and private data are absent.
 
-`V1_RELEASE=NOT_CREATED_PUBLICATION_BLOCKED`
+Release URL: https://github.com/aagprojectsteam-max/AAG-AnythingLLM-Suite/releases/tag/v1.0.0
+
+`V1_RELEASE=PASS`

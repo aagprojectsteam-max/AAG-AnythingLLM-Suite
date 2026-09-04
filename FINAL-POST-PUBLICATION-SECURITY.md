@@ -1,7 +1,13 @@
 # Final Post-Publication Security
 
-Publication did not occur. The equivalent final private-remote security recheck covers full history, remote refs, release assets, secret patterns, model/blob extensions, and large objects. The RC release contains one JSON manifest and no pixels, weights, binaries, or secrets.
+The anonymous public clone was scanned across all eight release-history commits. Gitleaks produced the same 19 reviewed false positives: compatibility SHA-256 data and Atlas taxonomy fields named `key`. Independent credential-pattern scanning found no credentials. Git object names contain no weights, databases, user data, tokens, uploads, sessions, or environment secrets. No blob exceeds 10 MiB.
 
-`POST_PUBLICATION_SECURITY=NOT_APPLICABLE_PRIVATE`
+The public release contains only `atlas-assets-manifest.json` and `SHA256SUMS`; checksum verification passed and neither asset contains pixel data, models, binaries, or secrets.
 
-`FINAL_PRIVATE_REMOTE_SECURITY=PASS`
+`POST_PUBLICATION_SECRET_SCAN=PASS`
+
+`POST_PUBLICATION_HISTORY_SCAN=PASS`
+
+`POST_PUBLICATION_MODEL_SCAN=PASS`
+
+`RELEASE_ASSET_SCAN=PASS`
