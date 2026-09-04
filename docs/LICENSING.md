@@ -1,6 +1,6 @@
 # Licensing
 
-No top-level AAG copyright-owner license grant was found during discovery. This package is therefore private/source-available to its owner and is not approved for public redistribution. Selecting a public license is an owner/legal decision and is not inferred from repository ownership or a publication request.
+On 2026-09-04, the owner explicitly authorized AAG-owned code in this repository for distribution under the MIT License. The top-level `LICENSE` implements that grant. `FILE-OWNERSHIP-MAP.json` defines the audited file-level scope; separate upstream or asset terms continue to apply where identified.
 
 The pinned AnythingLLM baseline is MIT-licensed and its copyright and permission notice must accompany substantial copied or modified portions. llama.cpp is MIT-licensed. ComfyUI is GPLv3. Stockfish is GPLv3; this suite does not bundle its executable, network, or source. The installer integrates with these separately obtained projects and does not relicense them.
 

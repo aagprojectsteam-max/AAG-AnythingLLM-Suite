@@ -3,14 +3,14 @@
 Date: 2026-09-04. All work and validation used the distribution repository, clean upstream clones, or temporary isolated roots. Live production was not changed.
 
 ```text
-BLOCKER_1_AAG_LICENSE=OWNER_APPROVAL_REQUIRED;TECHNICAL_SCOPE_AND_RECOMMENDATION_COMPLETE
+BLOCKER_1_AAG_LICENSE=PASS_OWNER_APPROVED_MIT
 BLOCKER_2_ANYTHINGLLM_OVERLAY=PASS
 BLOCKER_3_ATLAS_RIGHTS=PASS_VIA_METADATA_ONLY_PUBLIC_STRATEGY;PIXELS_EXCLUDED
 BLOCKER_4_UBUNTU_AGENT=PASS_OPTIONALIZED_AND_EXCLUDED_FROM_ALL_PROFILES
 
 TECHNICAL_BLOCKERS_REMAINING=NONE
 
-OWNER_DECISION_REQUIRED=YES
+OWNER_DECISION_REQUIRED=COMPLETE
 
 RECOMMENDED_AAG_LICENSE=MIT
 
@@ -28,7 +28,7 @@ DOCTOR=PASS
 
 ROLLBACK=PASS
 
-PUBLICATION_READY_AFTER_OWNER_LICENSE=YES
+PUBLICATION_READY_AFTER_OWNER_LICENSE=YES;OWNER_LICENSE_RECEIVED
 ```
 
 Validation evidence:
@@ -42,8 +42,8 @@ Validation evidence:
 - doctor reported `PASS metadata-only; pixels optional` and Ubuntu Agent `OPTIONAL/NOT INSTALLED`;
 - local-LLM remained optional and model-neutral; missing weights were reported without copying production models.
 
-The exact remaining owner approval is:
+The owner supplied the exact approval:
 
 > I authorize AAG-owned code in this repository to be distributed under the MIT License.
 
-After that approval, release engineering can add the canonical MIT text with the owner-approved copyright line, prepare/tag `v1.0.0`, publish the repository and release, and perform anonymous-clone/post-publication verification.
+The canonical MIT text is now present. All four publication blockers are closed.

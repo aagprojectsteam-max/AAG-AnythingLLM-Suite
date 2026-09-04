@@ -173,6 +173,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "LICENSE",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "LIVE-NONREGRESSION.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -199,6 +204,11 @@
     },
     {
       "path": "RELEASE-NOTES-v1.0.0-rc1.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "RELEASE-NOTES-v1.0.0.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },

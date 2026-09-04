@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "suite_version": "1.0.0-publication-candidate",
+  "suite_version": "1.0.0",
   "upstream": {
     "project": "Mintplex-Labs/anything-llm",
     "revision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",

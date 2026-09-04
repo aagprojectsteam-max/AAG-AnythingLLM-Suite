@@ -16,8 +16,10 @@ The file-level scope is recorded in `FILE-OWNERSHIP-MAP.json`. AAG-authored inst
 
 `FILES_NOT_COVERED=UPSTREAM_ANYTHINGLLM portions and notices; external ComfyUI, llama.cpp, Stockfish, models and custom nodes; Atlas pixels; GENERATED_ASSET or UNKNOWN items unless the owner separately grants rights.`
 
-`OWNER_ACTION_REQUIRED=Approve the exact sentence below. Release engineering will then add the canonical MIT LICENSE and copyright line supplied/approved by the owner.`
+`OWNER_ACTION_REQUIRED=COMPLETE — the owner approved the exact sentence below on 2026-09-04 and the canonical MIT LICENSE was added.`
 
 > I authorize AAG-owned code in this repository to be distributed under the MIT License.
+
+`OWNER_APPROVAL=RECORDED`
 
 This document is a technical compatibility recommendation, not legal advice.

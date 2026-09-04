@@ -1,6 +1,6 @@
 {
   "schema": "aag.anythingllm.compatibility.v1",
-  "suite_version": "1.0.0-rc1",
+  "suite_version": "1.0.0",
   "supported": [
     {
       "anythingllm_commit": "07bd65f80b3d9ba3031ed7afb8786627326bd134",

@@ -1,6 +1,6 @@
 # AAG AnythingLLM Suite
 
-AAG AnythingLLM Suite is a private-first distribution that adds governed image generation, native Composer controls, Visual Atlas style selection, safe artifacts/PDFs, verified chess puzzles, and optional local-LLM and Ubuntu operations to a compatible AnythingLLM source installation.
+AAG AnythingLLM Suite is an MIT-licensed distribution that adds governed image generation, native Composer controls, Visual Atlas style selection, safe artifacts/PDFs, verified chess puzzles, and optional local-LLM operations to a compatible AnythingLLM source installation.
 
 It is an installer-driven distribution—not a backup of one workstation. Original-machine paths, usernames, models, conversations and secrets are not required or included.
 
@@ -70,6 +70,10 @@ Defaults live in `config/defaults.env`; user overrides live in `~/.config/aag-an
 
 ## Security and limitations
 
-The installer checks the exact upstream Git commit and eleven stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. The backend and frontend overlay is deterministically reconstructable from source. Atlas pixels remain optional and external, and the historical Ubuntu Agent capture is excluded from install profiles. This repository remains private only until the copyright owner approves the AAG code license described in `PUBLIC-LICENSE-OWNER-DECISION.md`.
+The installer checks the exact upstream Git commit and eleven stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. The backend and frontend overlay is deterministically reconstructable from source. Atlas pixels remain optional and external, and the historical Ubuntu Agent capture is excluded from install profiles.
+
+## License
+
+AAG-owned code is available under the [MIT License](LICENSE). AnythingLLM-derived portions retain the upstream MIT notice. External engines, models, custom nodes, and assets retain their own terms; see `THIRD_PARTY_NOTICES.md` and `docs/LICENSING.md`.
 
 See `FRESH-INSTALL.md`, `DOCTOR.md`, `ATLAS-ASSET-DISTRIBUTION.md`, `RELEASE-READINESS.md`, `SECURITY.md`, and `THIRD_PARTY_NOTICES.md`.

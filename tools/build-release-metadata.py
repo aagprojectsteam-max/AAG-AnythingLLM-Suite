@@ -99,7 +99,7 @@ for target, source, mode, purpose in patches:
     })
 (ROOT / "PATCH-MANIFEST.yaml").write_text(json.dumps({
     "schema_version": 2,
-    "suite_version": "1.0.0-publication-candidate",
+    "suite_version": "1.0.0",
     "upstream": {"project": "Mintplex-Labs/anything-llm", "revision": UPSTREAM, "license": "MIT", "compatibility_gate": "config/compatibility.json"},
     "patches": records,
     "frontend_reconstruction": {"generator": "image-system/tools/build-anythingllm-frontend.js", "compiled_tree_included": False, "source_overlay_complete": True, "status": "PASS"},

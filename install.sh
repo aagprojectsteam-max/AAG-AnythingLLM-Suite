@@ -45,7 +45,7 @@ for e in "${maps[@]}"; do src=${e%%|*}; dst=${e#*|}; mkdir -p "$(dirname "$dst")
 if [[ -n ${AAG_ATLAS_SOURCE:-} && ($profile == image || $profile == full) ]]; then "$ROOT/tools/atlas-assets.py" install --source "$AAG_ATLAS_SOURCE" --target "$AAG_ATLAS_ROOT"; fi
 [[ -f $AAG_USER_CONFIG ]] || { mkdir -p "$(dirname "$AAG_USER_CONFIG")"; cp "$ROOT/config/defaults.env" "$AAG_USER_CONFIG"; }
 cat > "$AAG_STATE_ROOT/install.env" <<EOF
-AAG_SUITE_VERSION=1.0.0-rc1
+AAG_SUITE_VERSION=1.0.0
 AAG_PROFILE=$profile
 ANYTHINGLLM_ROOT=$ANYTHINGLLM_ROOT
 ANYTHINGLLM_STORAGE=$ANYTHINGLLM_STORAGE
