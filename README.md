@@ -14,7 +14,7 @@ It is an installer-driven distribution—not a backup of one workstation. Origin
 ## Quick start
 
 ```bash
-git clone <private-repository-url> aag-anythingllm-suite
+git clone https://github.com/aagprojectsteam-max/AAG-AnythingLLM-Suite.git aag-anythingllm-suite
 cd aag-anythingllm-suite
 ./install.sh --anythingllm-root /path/to/anything-llm \
   --storage /path/to/anythingllm/storage
@@ -70,6 +70,6 @@ Defaults live in `config/defaults.env`; user overrides live in `~/.config/aag-an
 
 ## Security and limitations
 
-The installer checks the exact upstream Git commit and stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. Keep the repository private: a top-level AAG public license grant and Atlas redistribution grant are still unresolved, and the production frontend requires building the captured source overlays against the pinned AnythingLLM revision.
+The installer checks the exact upstream Git commit and stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. This repository is intentionally private: a top-level AAG public license grant and Atlas redistribution grant are still unresolved, the precise production frontend overlay is not completely reconstructed, and the bundled Ubuntu Agent integration omits private operational configuration required by its complete test suite.
 
 See `FRESH-INSTALL.md`, `DOCTOR.md`, `ATLAS-ASSET-DISTRIBUTION.md`, `RELEASE-READINESS.md`, `SECURITY.md`, and `THIRD_PARTY_NOTICES.md`.
