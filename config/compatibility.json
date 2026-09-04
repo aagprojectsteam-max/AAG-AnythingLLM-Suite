@@ -13,9 +13,12 @@
         "server/utils/agents/index.js": "b7c4505960fcfc3cbc0b75783fee707b0c73a3c827bd282f190f3d78d9d379be",
         "server/utils/agents/ephemeral.js": "bf48912bfc5824ce821de3142b3edd23976a6d8c2454c8fe7a6752fe1dcc351d",
         "server/utils/agents/aibitat/utils/toolReranker.js": "1da7838cdd37a90712af438950c3482e3353e2d38e972e64d8530c7ae355da49",
-        "server/index.js": "c2702c28e4b3a1b1084e45dac21ea4fa029759f7eb270ace97bb8facd9be3bf8"
+        "server/index.js": "c2702c28e4b3a1b1084e45dac21ea4fa029759f7eb270ace97bb8facd9be3bf8",
+        "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx": "d8c2fe47668aafa8c34f808503bfec088bedcfb25e2536ab97b0347b33b30fd0",
+        "frontend/src/components/WorkspaceChat/ChatContainer/index.jsx": "312f4f88c47a7e0ef76dae7b5d43eca1cc7b8a7a1f66ffcbf933eb89baaefe0e",
+        "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ImageGenerationCard/index.jsx": "8cef26d5c6dfa32ce1feb7bdebeaffd24846f91d9b5ff73f804aca7204c5161f",
+        "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/HistoricalOutputs/index.jsx": "a1d1325dcc8109f5bf5f6ad939d4c85fa35d8beb3be95ef09bcf9922efa73114"
       }
     }
   ]
 }
-

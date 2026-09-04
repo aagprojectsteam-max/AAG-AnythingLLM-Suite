@@ -44,13 +44,18 @@ class VisualAtlasTests(unittest.TestCase):
         self.assertNotIn(str(PROJECT), encoded)
 
     def test_assets_resolve_only_by_canonical_ids_and_role(self):
-        thumb, thumb_type = self.atlas.asset("photography", "cinematic", "thumbnail")
-        preview, preview_type = self.atlas.asset("photography", "cinematic", "preview")
-        self.assertTrue(thumb.is_file())
-        self.assertTrue(preview.is_file())
-        self.assertEqual(thumb_type, "image/webp")
-        self.assertEqual(preview_type, "image/png")
-        self.assertLess(thumb.stat().st_size, preview.stat().st_size)
+        available = self.atlas.entry("photography", "cinematic")["assets_available"]
+        if available:
+            thumb, thumb_type = self.atlas.asset("photography", "cinematic", "thumbnail")
+            preview, preview_type = self.atlas.asset("photography", "cinematic", "preview")
+            self.assertTrue(thumb.is_file())
+            self.assertTrue(preview.is_file())
+            self.assertEqual(thumb_type, "image/webp")
+            self.assertEqual(preview_type, "image/png")
+            self.assertLess(thumb.stat().st_size, preview.stat().st_size)
+        else:
+            with self.assertRaisesRegex(AtlasError, "metadata-only"):
+                self.atlas.asset("photography", "cinematic", "thumbnail")
         with self.assertRaises(AtlasError):
             self.atlas.asset("..", "cinematic", "thumbnail")
 

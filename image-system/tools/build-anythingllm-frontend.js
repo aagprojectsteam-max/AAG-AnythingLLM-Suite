@@ -246,6 +246,25 @@ try {
   patchPromptInput(checkout);
   patchChatContainer(checkout);
 
+  // Release engineering can materialize the two deterministic stock-file
+  // transformations without installing frontend dependencies or building a
+  // compiled tree. The resulting files are committed under patches/ and are
+  // hash-gated by the installer like every backend replacement.
+  if (process.env.AAG_FRONTEND_PATCH_OUTPUT) {
+    const patchOutput = path.resolve(process.env.AAG_FRONTEND_PATCH_OUTPUT);
+    fs.mkdirSync(patchOutput, { recursive: true });
+    copy(
+      path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "PromptInput", "index.jsx"),
+      path.join(patchOutput, "PromptInput-index.jsx")
+    );
+    copy(
+      path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "index.jsx"),
+      path.join(patchOutput, "ChatContainer-index.jsx")
+    );
+    console.log(`FRONTEND_PATCH_RECONSTRUCTION=PASS output=${patchOutput}`);
+    return;
+  }
+
   run("corepack", ["yarn", "install", "--frozen-lockfile", "--network-timeout", "100000"], path.join(checkout, "frontend"));
   run("corepack", ["yarn", "build"], path.join(checkout, "frontend"));
   fs.rmSync(output, { recursive: true, force: true });

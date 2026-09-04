@@ -33,14 +33,15 @@ else
  unit_dir=${SYSTEMD_USER_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user}; unit_count=0
  for unit in aag-chess-anythingllm-bridge.service aag-model-compatibility.service aag-human-identity-bridge.service aag-human-identity-scene-bridge.service; do [[ -f $unit_dir/$unit ]] && ((unit_count+=1)); done
  if [[ $unit_count -gt 0 ]]; then line 'systemd user units' "PASS installed $unit_count/4 (profile-dependent)"; else line 'systemd user units' 'OPTIONAL/NOT INSTALLED'; fi
- if [[ -d $AAG_ATLAS_ROOT/images && -d $AAG_ATLAS_ROOT/thumbs ]]; then "$ROOT/tools/atlas-assets.py" verify --source "$AAG_ATLAS_ROOT" >/dev/null && line 'Visual Atlas' PASS || line 'Visual Atlas' FAIL; else line 'Visual Atlas' 'MISSING — run tools/atlas-assets.py install'; fi
+ if [[ -d $AAG_ATLAS_ROOT/images && -d $AAG_ATLAS_ROOT/thumbs ]]; then "$ROOT/tools/atlas-assets.py" verify --source "$AAG_ATLAS_ROOT" >/dev/null && line 'Visual Atlas' 'PASS pixels+metadata' || line 'Visual Atlas' FAIL; elif [[ -f $AAG_INSTALL_ROOT/visual-atlas/manifest/atlas-manifest.json ]]; then line 'Visual Atlas' 'PASS metadata-only; pixels optional'; else line 'Visual Atlas' 'OPTIONAL/MISSING — metadata unavailable'; fi
+ line 'Ubuntu Agent' 'OPTIONAL/NOT INSTALLED — historical private capture excluded from public profiles'
  [[ -n ${COMFYUI_ROOT:-} && -f $COMFYUI_ROOT/main.py ]] && line ComfyUI PASS || line ComfyUI 'NOT INSTALLED/CONFIGURED'
  [[ -n ${LLAMACPP_ROOT:-} && -x $LLAMACPP_ROOT/build/bin/llama-server ]] && line 'Local LLM' PASS || line 'Local LLM' OPTIONAL
  [[ -n ${STOCKFISH_BIN:-} && -x $STOCKFISH_BIN ]] || command -v stockfish >/dev/null && line Stockfish PASS || line Stockfish 'OPTIONAL/MISSING'
  [[ -f $AAG_STATE_ROOT/installed.sha256 ]] && (cd / && sha256sum -c "$AAG_STATE_ROOT/installed.sha256" >/dev/null 2>&1) && line 'Canonical hashes' PASS || line 'Canonical hashes' 'WARN check installed manifest'
  patch_status=PASS
  patch_pairs=("patches/anythingllm/server-index.js|server/index.js")
- if [[ $profile == image || $profile == full ]]; then patch_pairs+=("patches/anythingllm/chats-index.js|server/utils/chats/index.js" "patches/anythingllm/chat-apiChatHandler.js|server/utils/chats/apiChatHandler.js"); fi
+ if [[ $profile == image || $profile == full ]]; then patch_pairs+=("patches/anythingllm/chats-index.js|server/utils/chats/index.js" "patches/anythingllm/chat-apiChatHandler.js|server/utils/chats/apiChatHandler.js" "patches/anythingllm/frontend/PromptInput-index.jsx|frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx" "patches/anythingllm/frontend/ChatContainer-index.jsx|frontend/src/components/WorkspaceChat/ChatContainer/index.jsx"); fi
  for pair in "${patch_pairs[@]}"; do
   src=${pair%%|*}; dst=${pair#*|}; [[ -f $ANYTHINGLLM_ROOT/$dst ]] || continue
   cmp -s "$ROOT/$src" "$ANYTHINGLLM_ROOT/$dst" || patch_status=FAIL

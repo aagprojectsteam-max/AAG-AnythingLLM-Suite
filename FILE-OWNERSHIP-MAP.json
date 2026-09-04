@@ -1,0 +1,2521 @@
+{
+  "schema": "aag.file-ownership-map.v1",
+  "upstream_commit": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "classifications": [
+    "AAG_OWNED",
+    "UPSTREAM_ANYTHINGLLM",
+    "UPSTREAM_COMFYUI",
+    "UPSTREAM_LLAMA_CPP",
+    "UPSTREAM_STOCKFISH",
+    "THIRD_PARTY_OTHER",
+    "GENERATED_ASSET",
+    "UNKNOWN"
+  ],
+  "entries": [
+    {
+      "path": ".env.example",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": ".gitignore",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ANYTHINGLLM-COMPATIBILITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ATLAS-ASSET-DISTRIBUTION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ATLAS-ASSET-PROVENANCE.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ATLAS-ASSET-PUBLICATION-DECISION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "CLEAN-INSTALL-ACCEPTANCE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "COMPLETE-FEATURE-INVENTORY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "COMPLETE-FILE-INVENTORY.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "DISTRIBUTION-ARCHITECTURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "DOCTOR.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FILE-OWNERSHIP-MAP.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-ANONYMOUS-CLONE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-ATLAS-DISTRIBUTION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-DISTRIBUTION-RESULT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-FRESH-USER-TEST.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-LICENSE-PUBLICATION-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-LIVE-NONREGRESSION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-POST-PUBLICATION-SECURITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-PROJECT-CLOSURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-PUBLIC-READINESS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-PUBLICATION-BLOCKER-CLOSURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-PUBLICATION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-RC-RELEASE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-REMOTE-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-REMOTE-CLONE-TEST.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-SECURITY-HISTORY-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FINAL-V1-RELEASE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "FRESH-INSTALL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "HARDWARE-DETECTION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "LIVE-NONREGRESSION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "MODEL-ASSET-SETUP.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "PATCH-MANIFEST.yaml",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "PUBLIC-LICENSE-OWNER-DECISION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "RELEASE-NOTES-v1.0.0-rc1.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "RELEASE-READINESS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "SANITIZATION-REPORT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "SECURITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "UNINSTALL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "UPDATE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "atlas-assets-manifest.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    },
+    {
+      "path": "chess/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/AAG-CODEX-CHESS-PUZZLE-AGENT-V1-PROMPT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/ANYTHINGLLM-INTEGRATION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/ANYTHINGLLM-SKILL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/ARCHITECTURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/MASTER-HANDOFF.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/OPERATIONS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/docs/VERIFICATION-CONTRACT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/integrations/anythingllm/systemd/aag-chess-anythingllm-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/integrations/anythingllm/tests/test-handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/pyproject.toml",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/anythingllm_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/anythingllm_solution.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/application.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/cli.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/density.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/difficulty.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/diversity.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/generator.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/position.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/renderer.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/stockfish.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess/verifier.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/PKG-INFO",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/SOURCES.txt",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/dependency_links.txt",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/entry_points.txt",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/requires.txt",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/src/aag_chess_puzzle_agent.egg-info/top_level.txt",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_anythingllm_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_application.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_density.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_difficulty.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_diversity.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_generator.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_presentation.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_renderer.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_stockfish.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "chess/tests/test_verifier.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "config/compatibility.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "config/defaults.env",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "config/models.yaml",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "config/ubuntu-agent.example.env",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/AAG-ARTIFACT-EXPORT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/AGENT-SKILLS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/ANYTHINGLLM-PATCHES.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/CHESS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/COMFYUI.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/COMPOSER.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/CONFIGURATION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/FEATURES.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/INSTALL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/LICENSING.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/LOCAL-LLM.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/MIGRATION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/MODELS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/PDF-ARTIFACTS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/PROGRESS-STATUS-CANCEL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/PROMPT-QUALITY-ARCHITECTURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/PROVIDER-NEUTRAL-BOUNDARY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/ROLLBACK.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/SECURITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/TROUBLESHOOTING.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/UBUNTU-AGENT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/UPDATE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/UPSTREAM-COMPATIBILITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS-COMPOSER.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS-PACKAGING.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "doctor.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-agent",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/VERSION",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-ai-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-ai-stop",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-atlas-pause",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-atlas-resume",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-atlas-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-atlas-status",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-atlas-stop",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-image-release-stuck",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-image-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-image-status",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-image-stop",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-reference-status",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-upscale-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-upscale-status",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/bin/aag-upscale-stop",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/AAG-ARTIFACT-EXPORT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/MIGRATION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/PROMPT-QUALITY-ARCHITECTURE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/PROVIDER-NEUTRAL-BOUNDARY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/ROLLBACK.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/SECURITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/VISUAL-ATLAS-COMPOSER.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/VISUAL-ATLAS-PACKAGING.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity-scene/bin/process_inbox.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity-scene/config/PRODUCTION-CONFIG.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity-scene/config/SCENE-CONTRACT-CANDIDATE.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity-scene/config/SCENE-CONTRACT.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity/bin/process_inbox.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity/config/CANDIDATE-ASSET-MANIFEST.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity/config/CANDIDATE-SBOM.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity/config/CONTRACT-B-FREEZE.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/human-identity/config/PRODUCTION-CONFIG.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagArtifactExport.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagArtifactPresentation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagComposerHistory.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagComposerProxy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagImageProgress.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagOrdinary.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagPdfAssembler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/aagPublicToolSchema.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/apiChatHandler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/heTaxonomyLabels.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageProgress/index.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/AagImageProgress/styles.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagArtifactExport.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/server-index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/launchers/aag-ai-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/launchers/aag-image-start",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/launchers/aag-image-stop",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/model-neutral-compatibility",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/libexec/aag-anythingllm-comfyui-network-watch",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/libexec/aag-image-hub-control",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/libexec/aag-upscale-control",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/libexec/refresh-network.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/package.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/routing/acceptance-queries.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/routing/tool-routing-metadata.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/routing/toolReranker.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/schemas/provider-batch.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/schemas/provider-job.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/schemas/provider-task.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-batch/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-batch/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-job/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-job/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-task/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/skills/aag-image-task/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/adapters.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/batch.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/comfy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/errors.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/human-identity.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/identity-routing.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/identity.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/image.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/ordinary-policy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/prompt-quality.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/recovery.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/runtime.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/scene-identity.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/scheduler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/selective-knowledge.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/store.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/util.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/visual-atlas.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/artifact-export.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/artifact-presentation.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/batch.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/composer-native-chat.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/frontend-export-contract.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/governed-update.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/inline-composer-integration.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/integration_security_test.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/ordinary-policy.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/progress-persistence.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/prompt-quality.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/public-tool-schema.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/runtime.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/scheduler.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/security.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/stall-recovery.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/test_human_identity_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/test_scene_identity_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/visual-atlas-product.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/visual-atlas.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/account-model-input.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/apply-routing-metadata.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/atlas-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/atlas-endpoint-regression.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/atlas-final-evidence.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/atlas-integrity-evidence.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/atlas-live-acceptance.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/build-anythingllm-frontend.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/build.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/candidate-e2e.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/capture-routing-model-input.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/compile-routing-report.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/doctor.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/dynamic-identity-live-acceptance.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/face-similarity.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/gemini-routing-validation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/governed-update.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/identity-candidate.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/live-agent-routing-acceptance.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/live-routing-audit.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/multi-image-provider-validation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/multi-image-registration-audit.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/quality-semantics-live.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/routing-cross-encoder-experiment.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/routing-profile-experiment.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/scene-identity-live-acceptance.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/visual-atlas-product.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/docker-bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/docker-bridge.py.aag-before-graceful-shutdown-20260819-190222",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/docker-bridge.py.aag-before-graceful-v2-20260819-190616",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/image-hub.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/run-docker-bridge.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/server.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/upscale-engine/upscale-server.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "install.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/anythingllm/aagArtifactPresentation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/anythingllm/aagComposerHistory.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/anythingllm/aagPublicToolSchema.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/aag-model-compatibility.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/compatibility.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/composer/app.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/composer/app.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/composer/index.html",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/composer_canonical.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/server.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_compatibility.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_composer_canonical.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_http_boundary.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_runtime_attestation.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/visual_atlas.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/comfyui/bridge/proxy.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/llamacpp/aag-llama-control",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/llamacpp/gemma4-schema-enforced.jinja",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/audit.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/benchmark.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/config.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/context.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/ingestion.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/memory.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/models.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/remediation.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/retrieval.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/service.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/context_memory/tasks.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/contracts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/detectors.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/diagnostics.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/endpoints.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/models.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/registry.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/service.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/investigation/store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/adapters.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/command.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/config.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/duplicates.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/filesystem.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/health.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/history.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/models.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/mounts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/orchestrator.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/performance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/policy.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/recommendations.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/render.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maintenance/storage.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/maturity.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/observations.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/onboarding.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/contracts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/idempotency.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/intent.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/practical.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/orchestration/service.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/policy.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/__init__.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/context_link.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/models.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/registry.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/service.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/aag_agent/remediation/store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/app/agent.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/app/host_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/app/host_bridge_v2.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/app/test_openai.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/bridge.readiness_failure.v1.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/context/context-package.v1.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/context/memory-candidate.v1.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/context/remediation-plan.v1.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/maintenance/maintenance-plan.v1.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/maintenance/scan-envelope.v1.schema.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/contracts/maintenance/tool-catalog.v1.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/README.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/handler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/plugin.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/integrations/systemd/aag-ubuntu-agent-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/context_memory_helpers.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/healthy_bridge.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/inactive_service.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/indeterminate_health.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/missing_evidence.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/stale_evidence.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/supported_readiness_failure.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/unobservable_health.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/wrong_target.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/context_memory/golden_queries.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/diagnostics/scenarios.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/orchestration/golden_intents.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/orchestration/practical_workflows.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/fixtures/semantic_routing/cases.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/investigation_helpers.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/maintenance_helpers.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/remediation_helpers.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_agent_contract_integration.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_audit.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_context_memory_ingestion.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_context_memory_integration.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_context_memory_retrieval.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_context_memory_security.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_context_memory_store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_contracts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_deployed_diagnostics.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_detectors.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_diagnostics.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_governed_orchestration_engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_governed_orchestration_intent.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_governed_orchestration_security.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_investigation_engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_investigation_registry_store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_investigation_security.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_live_audit_security.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_command.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_duplicates.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_filesystem.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_health.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_history.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_integration.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_mounts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_policy.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_skill.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maintenance_storage.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_maturity_verifier.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_observations.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_benchmark.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_contracts.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_practical.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_operational_orchestration_skill.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_release_integrity.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_safe_remediation_engine.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_safe_remediation_registry_store.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_safe_remediation_security.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tests/test_winboat_knowledge_ingestion.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tools/context_memory.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tools/diagnose.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tools/live_audit.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tools/maintenance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/ubuntu-agent/tools/maturity_check.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/AAG-BUILD-PROVENANCE.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/LIVE-TO-REPOSITORY-MAP.csv",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/ORPHAN-UNKNOWN.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/RELEASE-STATE.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/STAGED-MANIFEST.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "manifests/VISUAL-ATLAS-ASSET-REQUIREMENT.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/00-DISCOVERY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/01-COMPLETE-FEATURE-INVENTORY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/02-STOCK-VS-AAG.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/03-PATCH-INVENTORY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/04-SECRETS-PRIVACY-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/05-LICENSE-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/06-MODEL-EXCLUSION-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/07-REPOSITORY-DESIGN.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/08-INSTALLER.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/09-RECONSTRUCTION-TEST.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/10-TESTS-CI.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/11-LIVE-NONREGRESSION.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/12-GITHUB-PRE-PUSH-AUDIT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/13-GITHUB-PUSH.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "packaging-evidence/FINAL-RESULT.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagArtifactExport.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagArtifactPresentation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagComposerHistory.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagComposerProxy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagIdentity.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagImageProgress.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagOrdinary.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagPdfAssembler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/aagPublicToolSchema.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "patches/anythingllm/agents-ephemeral.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/agents-index.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/apiChatHandler.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/chat-apiChatHandler.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/chats-index.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/context-window-finder.offline.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/ChatContainer-index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/PromptInput-index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/index.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/server-index.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/toolReranker.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "rollback.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-chess-anythingllm-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-comfyui-docker-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-comfyui-image-proxy.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-composer-loopback-relay.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-human-identity-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-human-identity-scene-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-model-compatibility.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "systemd/aag-ubuntu-agent-bridge.service",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/atlas-assets.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/build-inventory.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/build-release-metadata.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/config.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/hardware-detect.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/model-check.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/render-units.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/sanitize.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "tools/verify-upstream.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "uninstall.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "update.sh",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "visual-atlas/manifest/atlas-manifest.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    },
+    {
+      "path": "visual-atlas/manifest/preview-index.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    },
+    {
+      "path": "visual-atlas/manifest/product-assets.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    },
+    {
+      "path": "visual-atlas/manifest/retrieval-aliases.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    },
+    {
+      "path": "visual-atlas/manifest/visual-taxonomy.json",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
+    }
+  ]
+}

@@ -92,6 +92,8 @@ class VisualAtlas:
         self.manifest = _json(self.paths.manifest)
         self.alias_config = _json(self.paths.aliases)
         self.atlas_root = self.paths.manifest.parent.parent.resolve()
+        product = _json(self.atlas_root / "manifest" / "product-assets.json")
+        self.product_assets = {item.get("key"): item for item in product.get("entries", [])}
         self._validate(verify_assets=verify_assets)
 
     def _validate(self, *, verify_assets: bool) -> None:
@@ -132,19 +134,27 @@ class VisualAtlas:
                 raise AtlasError("Visual Atlas contains an entry that is not completed.")
             output = self._asset_path(entry.get("output_path"), ".png")
             thumbnail = self._asset_path(entry.get("thumbnail_path"), ".webp")
-            if not output.is_file() or not thumbnail.is_file():
-                raise AtlasError("Visual Atlas contains a missing preview or thumbnail.")
-            if output.stat().st_size < 128 or thumbnail.stat().st_size < 128:
+            output_present = output.is_file()
+            thumbnail_present = thumbnail.is_file()
+            if output_present != thumbnail_present:
+                raise AtlasError("Visual Atlas contains a partial preview/thumbnail pair.")
+            if verify_assets and not output_present:
+                raise AtlasError("Visual Atlas pixel verification was requested but assets are missing.")
+            if output_present and (output.stat().st_size < 128 or thumbnail.stat().st_size < 128):
                 raise AtlasError("Visual Atlas contains an empty preview or thumbnail.")
-            if thumbnail.read_bytes()[:4] != b"RIFF":
+            if output_present and thumbnail.read_bytes()[:4] != b"RIFF":
                 raise AtlasError("Visual Atlas contains an invalid thumbnail header.")
             if verify_assets and _sha256(output) != entry.get("sha256"):
                 raise AtlasError("Visual Atlas preview hash validation failed.")
-            self.entries[pair] = entry
+            self.entries[pair] = {**entry, "assets_available": output_present}
             # Thumbnail derivatives have their own immutable browser cache
             # identity. Tying their URL to the reference PNG hash leaves a
             # repaired derivative trapped behind its previous cached bytes.
-            self.thumbnail_sha256[pair] = _sha256(thumbnail)
+            product_entry = self.product_assets.get(f"{pair[0]}/{pair[1]}", {})
+            recorded_thumbnail = product_entry.get("thumbnail", {}).get("sha256")
+            if not thumbnail_present and not isinstance(recorded_thumbnail, str):
+                raise AtlasError("Visual Atlas metadata lacks the thumbnail integrity record.")
+            self.thumbnail_sha256[pair] = _sha256(thumbnail) if thumbnail_present else recorded_thumbnail
         if set(pairs) != set(self.entries):
             raise AtlasError("Visual Atlas manifest and taxonomy style sets differ.")
 
@@ -181,6 +191,8 @@ class VisualAtlas:
 
     def asset(self, family_id: str, subfamily_id: str, kind: str) -> tuple[Path, str]:
         entry = self.entry(family_id, subfamily_id)
+        if not entry.get("assets_available"):
+            raise AtlasError("Visual Atlas pixels are not installed; metadata-only mode is active.")
         if kind == "thumbnail":
             return self._asset_path(entry["thumbnail_path"], ".webp"), "image/webp"
         if kind == "preview":
@@ -203,7 +215,7 @@ class VisualAtlas:
             "description": entry["style_descriptor"],
             "aliases": self.aliases.get(pair, []),
             "atlas": {
-                "available": True,
+                "available": bool(entry.get("assets_available")),
                 "sha256": entry["sha256"],
                 "thumbnail_sha256": self.thumbnail_sha256[pair],
                 "width": entry["width"],

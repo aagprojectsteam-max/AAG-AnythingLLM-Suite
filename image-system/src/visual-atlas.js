@@ -91,9 +91,11 @@ function load() {
     if (!subfamilyLabels.has(key) || entries.has(key) || entry.status !== "COMPLETED") throw new AagError("ATLAS_INVALID", "The Visual Atlas manifest does not map one-to-one to completed taxonomy entries.");
     const preview = safeAsset(root, entry.output_path, ".png");
     const thumbnail = safeAsset(root, entry.thumbnail_path, ".webp");
-    if (!fs.statSync(preview).isFile() || !fs.statSync(thumbnail).isFile()) throw new AagError("ATLAS_INVALID", "The Visual Atlas contains a missing asset.");
-    if (fs.statSync(preview).size < 128 || fs.statSync(thumbnail).size < 128 || fs.readFileSync(thumbnail).subarray(0, 4).toString("ascii") !== "RIFF") throw new AagError("ATLAS_INVALID", "The Visual Atlas contains an empty or invalid asset.");
-    entries.set(key, entry);
+    const previewPresent = fs.existsSync(preview);
+    const thumbnailPresent = fs.existsSync(thumbnail);
+    if (previewPresent !== thumbnailPresent) throw new AagError("ATLAS_INVALID", "The Visual Atlas contains a partial asset pair.");
+    if (previewPresent && (!fs.statSync(preview).isFile() || !fs.statSync(thumbnail).isFile() || fs.statSync(preview).size < 128 || fs.statSync(thumbnail).size < 128 || fs.readFileSync(thumbnail).subarray(0, 4).toString("ascii") !== "RIFF")) throw new AagError("ATLAS_INVALID", "The Visual Atlas contains an empty or invalid asset.");
+    entries.set(key, { ...entry, assets_available: previewPresent });
   }
   if (canonicalPairs.some(key => !entries.has(key))) throw new AagError("ATLAS_INVALID", "The Visual Atlas taxonomy and manifest style sets differ.");
 

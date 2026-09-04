@@ -21,7 +21,7 @@ function selected(request) {
   );
 }
 
-test("completed Atlas remains an exact 493-entry taxonomy/manifest/asset bijection", () => {
+test("Atlas metadata remains an exact 493-entry taxonomy/manifest bijection", () => {
   const data = atlas.load();
   assert.equal(data.taxonomy.families.length, 28);
   assert.equal(data.entries.size, 493);
@@ -37,9 +37,13 @@ test("completed Atlas remains an exact 493-entry taxonomy/manifest/asset bijecti
     const preview = path.join(atlasRoot, entry.output_path);
     const thumbnail = path.join(atlasRoot, entry.thumbnail_path);
     assert.equal(entry.status, "COMPLETED");
-    assert.equal(sha256(preview), entry.sha256);
-    assert.ok(fs.statSync(thumbnail).size > 0);
-    assert.ok(fs.statSync(thumbnail).size < fs.statSync(preview).size);
+    if (fs.existsSync(preview)) {
+      assert.equal(sha256(preview), entry.sha256);
+      assert.ok(fs.statSync(thumbnail).size > 0);
+      assert.ok(fs.statSync(thumbnail).size < fs.statSync(preview).size);
+    } else {
+      assert.equal(data.entries.get(`${entry.family_id}/${entry.subfamily_id}`).assets_available, false);
+    }
   }
 });
 

@@ -438,7 +438,7 @@ class BoundaryHttpTests(unittest.TestCase):
         self.assertEqual(taxonomy["schema"], "aag.visual-style-atlas.catalog.v1")
         self.assertEqual(taxonomy["total_entries"], 493)
         first = taxonomy["families"][0]["subfamilies"][0]
-        self.assertTrue(first["atlas"]["available"])
+        self.assertIsInstance(first["atlas"]["available"], bool)
         self.assertIn("description", first)
         self.assertNotIn("thumbnail_path", json.dumps(taxonomy))
 
@@ -447,6 +447,11 @@ class BoundaryHttpTests(unittest.TestCase):
             "/composer/atlas/thumbnail/fine-art-traditional-media/watercolor",
             token=False,
         )
+        pixels_available = boundary.get_visual_atlas().catalog()["families"][0]["subfamilies"][0]["atlas"]["available"]
+        if not pixels_available:
+            self.assertEqual(status, 404)
+            self.assertEqual(json.loads(thumbnail)["error"]["code"], "ATLAS_ASSET_NOT_FOUND")
+            return
         self.assertEqual(status, 200)
         self.assertEqual(headers["Content-Type"], "image/webp")
         self.assertIn("immutable", headers["Cache-Control"])

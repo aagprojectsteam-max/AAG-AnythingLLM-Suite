@@ -1,66 +1,249 @@
-schema_version: 1
-suite_version: 1.0.0-rc1
-upstream:
-  project: Mintplex-Labs/anything-llm
-  revision: 07bd65f80b3d9ba3031ed7afb8786627326bd134
-  container_tag_observed: mintplexlabs/anythingllm:latest
-  immutable_container_digest: unresolved
-  compatibility_gate: config/compatibility.json
-patches:
-  - target: server/utils/chats/commands/aagIdentity.js
-    source: patches/anythingllm/aagIdentity.js
-    purpose: identity and job slash commands
-    mode: add
-  - target: server/utils/chats/commands/aagOrdinary.js
-    source: patches/anythingllm/aagOrdinary.js
-    purpose: direct ordinary image intents
-    mode: add
-  - target: server/utils/chats/index.js
-    source: patches/anythingllm/chats-index.js
-    purpose: register AAG chat interceptors
-    mode: replace-with-version-guard
-  - target: server/utils/chats/apiChatHandler.js
-    source: patches/anythingllm/chat-apiChatHandler.js
-    purpose: request context and image interception
-    mode: replace-with-version-guard
-  - target: server/utils/AiProviders/modelMap/index.js
-    source: patches/anythingllm/context-window-finder.offline.js
-    purpose: offline model context map
-    mode: replace-with-version-guard
-  - target: server/utils/agents/index.js
-    source: patches/anythingllm/agents-index.js
-    purpose: persistent runtime context and artifact adapters
-    mode: replace-with-version-guard
-  - target: server/utils/agents/ephemeral.js
-    source: patches/anythingllm/agents-ephemeral.js
-    purpose: ephemeral runtime context and artifact adapters
-    mode: replace-with-version-guard
-  - target: server/utils/agents/aibitat/utils/toolReranker.js
-    source: patches/anythingllm/toolReranker.js
-    purpose: AAG routing correction
-    mode: replace-with-version-guard
-  - target: server/index.js
-    source: patches/anythingllm/server-index.js
-    purpose: register artifact, PDF, Composer and progress endpoints
-    mode: replace-with-version-guard
-  - target: server/endpoints/aagArtifactExport.js
-    source: patches/anythingllm/aagArtifactExport.js
-    purpose: safe artifact export
-    mode: add
-  - target: server/endpoints/aagPdfAssembler.js
-    source: patches/anythingllm/aagPdfAssembler.js
-    purpose: PDF assembly
-    mode: add
-  - target: server/endpoints/aagComposerProxy.js
-    source: patches/anythingllm/aagComposerProxy.js
-    purpose: Composer and Atlas proxy
-    mode: add
-  - target: server/endpoints/aagImageProgress.js
-    source: patches/anythingllm/aagImageProgress.js
-    purpose: owner-scoped progress and cancel
-    mode: add
-frontend_overlay:
-  provenance_file: manifests/AAG-BUILD-PROVENANCE.json
-  source_capture: incomplete
-  compiled_public_tree_included: false
-  reason: upstream-derived compiled tree excluded pending license/provenance review
+{
+  "schema_version": 2,
+  "suite_version": "1.0.0-publication-candidate",
+  "upstream": {
+    "project": "Mintplex-Labs/anything-llm",
+    "revision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+    "license": "MIT",
+    "compatibility_gate": "config/compatibility.json"
+  },
+  "patches": [
+    {
+      "UPSTREAM_PATH": "server/utils/chats/commands/aagIdentity.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagIdentity.js",
+      "PATCH_SHA256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a",
+      "PURPOSE": "identity chat command",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/chats/commands/aagOrdinary.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagOrdinary.js",
+      "PATCH_SHA256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2",
+      "PURPOSE": "ordinary image intent command",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/chats/index.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "8e8ed83cf0d973741a68aabf6b95fd19a36d8e728d8cc86ed8e98f5792f5730d",
+      "AAG_PATCH": "patches/anythingllm/chats-index.js",
+      "PATCH_SHA256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
+      "PURPOSE": "register AAG chat interceptors",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/chats/apiChatHandler.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "5619135426da32277649d243c01d4342a5928b944b59184579308f8124740290",
+      "AAG_PATCH": "patches/anythingllm/chat-apiChatHandler.js",
+      "PATCH_SHA256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
+      "PURPOSE": "request context and image interception",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/AiProviders/modelMap/index.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "0a71b72b9372bc264b9d3e61f519aefb4d33ac350c2aa6c42d25e96629bfece8",
+      "AAG_PATCH": "patches/anythingllm/context-window-finder.offline.js",
+      "PATCH_SHA256": "a746cdd5b09d86404af6bfb93f10b0c28d41349fc2afbbb6f9d2f987fef0c9f0",
+      "PURPOSE": "offline context lookup",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/agents/index.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "b7c4505960fcfc3cbc0b75783fee707b0c73a3c827bd282f190f3d78d9d379be",
+      "AAG_PATCH": "patches/anythingllm/agents-index.js",
+      "PATCH_SHA256": "c6ad7dec0e65e82c0b0b5862d53771943c8b90df8a9486ad954f71bd49b67231",
+      "PURPOSE": "persistent agent artifact adapters",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/agents/ephemeral.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "bf48912bfc5824ce821de3142b3edd23976a6d8c2454c8fe7a6752fe1dcc351d",
+      "AAG_PATCH": "patches/anythingllm/agents-ephemeral.js",
+      "PATCH_SHA256": "cc1b4ecaf43a21ef3277a25c6965bc6aa605b1b2e65469d7ea38842112b5a8e5",
+      "PURPOSE": "ephemeral agent artifact adapters",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/utils/agents/aibitat/utils/toolReranker.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "1da7838cdd37a90712af438950c3482e3353e2d38e972e64d8530c7ae355da49",
+      "AAG_PATCH": "patches/anythingllm/toolReranker.js",
+      "PATCH_SHA256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
+      "PURPOSE": "AAG routing correction",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/index.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "c2702c28e4b3a1b1084e45dac21ea4fa029759f7eb270ace97bb8facd9be3bf8",
+      "AAG_PATCH": "patches/anythingllm/server-index.js",
+      "PATCH_SHA256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
+      "PURPOSE": "register AAG endpoints",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/endpoints/aagArtifactExport.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagArtifactExport.js",
+      "PATCH_SHA256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc",
+      "PURPOSE": "safe artifact export",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/endpoints/aagPdfAssembler.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagPdfAssembler.js",
+      "PATCH_SHA256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca",
+      "PURPOSE": "safe PDF assembly",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/endpoints/aagComposerProxy.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagComposerProxy.js",
+      "PATCH_SHA256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3",
+      "PURPOSE": "Composer and Atlas proxy",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "server/endpoints/aagImageProgress.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "patches/anythingllm/aagImageProgress.js",
+      "PATCH_SHA256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640",
+      "PURPOSE": "owner-scoped progress and cancellation",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "d8c2fe47668aafa8c34f808503bfec088bedcfb25e2536ab97b0347b33b30fd0",
+      "AAG_PATCH": "patches/anythingllm/frontend/PromptInput-index.jsx",
+      "PATCH_SHA256": "5f74be90b1c218ca61569a2e16c9f7eba78720e7fdae8c831fb0591c0ab8efab",
+      "PURPOSE": "mount Composer and progress controls",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/index.jsx",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "312f4f88c47a7e0ef76dae7b5d43eca1cc7b8a7a1f66ffcbf933eb89baaefe0e",
+      "AAG_PATCH": "patches/anythingllm/frontend/ChatContainer-index.jsx",
+      "PATCH_SHA256": "7df74d00c2ee977d7b54abeae8e364c79cdabc281a625ad9364aa107879a1d16",
+      "PURPOSE": "native Composer message/attachment handoff",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ImageGenerationCard/index.jsx",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "8cef26d5c6dfa32ce1feb7bdebeaffd24846f91d9b5ff73f804aca7204c5161f",
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
+      "PATCH_SHA256": "9d3e6c91e986fd4e26e6f9120cd70e0796e7b2cced9d41dd77183ec73c89a931",
+      "PURPOSE": "AAG image artifact presentation",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/HistoricalOutputs/index.jsx",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": "a1d1325dcc8109f5bf5f6ad939d4c85fa35d8beb3be95ef09bcf9922efa73114",
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
+      "PATCH_SHA256": "453d393a509a0d2357dbaf3c48b5d3547d3fc9c99218ae24541588e0a4fc99b1",
+      "PURPOSE": "historical AAG output presentation",
+      "MODE": "replace",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagImageCollection/index.jsx",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
+      "PATCH_SHA256": "e7d5244f4b8d7a04a37b4a206d6bd7c911916cf538ce533c8db8ba94abfb5f4c",
+      "PURPOSE": "multi-image collection",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/utils/aagArtifactExport.js",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/aagArtifactExport.js",
+      "PATCH_SHA256": "aa3071b3207076007f13991ce989b5485265b8c3e736c7c74cedd13d0da354d8",
+      "PURPOSE": "artifact export client",
+      "MODE": "add",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel",
+      "PATCH_SHA256": "152b1653480a2d3e6d7f0f0a75b405531e406809e242db6de8d0ff3951fbe7db",
+      "PURPOSE": "Composer UI",
+      "MODE": "add-tree",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    },
+    {
+      "UPSTREAM_PATH": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress",
+      "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+      "UPSTREAM_SHA256": null,
+      "AAG_PATCH": "image-system/integrations/anythingllm/frontend/AagImageProgress",
+      "PATCH_SHA256": "390b8b544792faea716c0f0ba62be2d7f4d173db79e63daf561af30c0133bcc2",
+      "PURPOSE": "progress/status/cancel UI",
+      "MODE": "add-tree",
+      "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",
+      "RECONSTRUCTION_STATUS": "PASS"
+    }
+  ],
+  "frontend_reconstruction": {
+    "generator": "image-system/tools/build-anythingllm-frontend.js",
+    "compiled_tree_included": false,
+    "source_overlay_complete": true,
+    "status": "PASS"
+  }
+}

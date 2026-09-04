@@ -19,10 +19,21 @@ if [[ $profile == core || $profile == pdf || $profile == image || $profile == fu
 if [[ $profile == image || $profile == full ]]; then
  for s in task batch job; do add "$ROOT/image-system/skills/aag-image-$s" "$ANYTHINGLLM_STORAGE/plugins/agent-skills/aag-image-$s"; done
  add "$ROOT/patches/anythingllm/aagIdentity.js" "$ANYTHINGLLM_ROOT/server/utils/chats/commands/aagIdentity.js"; add "$ROOT/patches/anythingllm/aagOrdinary.js" "$ANYTHINGLLM_ROOT/server/utils/chats/commands/aagOrdinary.js"; add "$ROOT/patches/anythingllm/chats-index.js" "$ANYTHINGLLM_ROOT/server/utils/chats/index.js"; add "$ROOT/patches/anythingllm/chat-apiChatHandler.js" "$ANYTHINGLLM_ROOT/server/utils/chats/apiChatHandler.js"; add "$ROOT/patches/anythingllm/context-window-finder.offline.js" "$ANYTHINGLLM_ROOT/server/utils/AiProviders/modelMap/index.js"; add "$ROOT/patches/anythingllm/agents-index.js" "$ANYTHINGLLM_ROOT/server/utils/agents/index.js"; add "$ROOT/patches/anythingllm/agents-ephemeral.js" "$ANYTHINGLLM_ROOT/server/utils/agents/ephemeral.js"; add "$ROOT/patches/anythingllm/toolReranker.js" "$ANYTHINGLLM_ROOT/server/utils/agents/aibitat/utils/toolReranker.js"; add "$ROOT/patches/anythingllm/aagComposerProxy.js" "$ANYTHINGLLM_ROOT/server/endpoints/aagComposerProxy.js"; add "$ROOT/patches/anythingllm/aagImageProgress.js" "$ANYTHINGLLM_ROOT/server/endpoints/aagImageProgress.js"; add "$ROOT/image-system" "$AAG_INSTALL_ROOT/image-system"
+ add "$ROOT/patches/anythingllm/frontend/PromptInput-index.jsx" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx"
+ add "$ROOT/patches/anythingllm/frontend/ChatContainer-index.jsx" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/index.jsx"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ImageGenerationCard/index.jsx"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/HistoricalOutputs/index.jsx"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/AagImageCollection.jsx" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagImageCollection/index.jsx"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/aagArtifactExport.js" "$ANYTHINGLLM_ROOT/frontend/src/utils/aagArtifactExport.js"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/AagImageComposerPanel" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel"
+ add "$ROOT/image-system/integrations/anythingllm/frontend/AagImageProgress" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress"
 fi
 if [[ $profile == chess || $profile == full ]]; then add "$ROOT/chess" "$AAG_INSTALL_ROOT/chess"; add "$ROOT/chess/integrations/anythingllm/skill/aag-chess-puzzle" "$ANYTHINGLLM_STORAGE/plugins/agent-skills/aag-chess-puzzle"; fi
 if [[ $profile == local-llm || $profile == full ]]; then add "$ROOT/integrations/llamacpp" "$AAG_INSTALL_ROOT/llamacpp"; add "$ROOT/integrations/anythingllm/model-neutral-compatibility" "$AAG_INSTALL_ROOT/model-neutral-compatibility"; fi
-if [[ $profile == full ]]; then add "$ROOT/integrations/ubuntu-agent" "$AAG_INSTALL_ROOT/ubuntu-agent"; fi
+if [[ $profile == image || $profile == local-llm || $profile == full ]]; then add "$ROOT/visual-atlas" "$AAG_INSTALL_ROOT/visual-atlas"; fi
+# The historical Ubuntu Agent capture intentionally remains outside every
+# public profile until its machine-specific knowledge/configuration is replaced
+# by a separately releasable portable component.
 if (( dry )); then for e in "${maps[@]}"; do echo "WOULD_INSTALL ${e%%|*} -> ${e#*|}"; done; echo "WOULD_RENDER_SYSTEMD -> $SYSTEMD_USER_DIR"; echo 'DRY_RUN=PASS'; exit 0; fi
 python3 "$ROOT/tools/render-units.py" --install-root "$AAG_INSTALL_ROOT" --storage "$ANYTHINGLLM_STORAGE" --output "$unit_stage" --compat-port "$AAG_COMPATIBILITY_PORT"
 if [[ $profile == image || $profile == full ]]; then add "$unit_stage/aag-human-identity-bridge.service" "$SYSTEMD_USER_DIR/aag-human-identity-bridge.service"; add "$unit_stage/aag-human-identity-scene-bridge.service" "$SYSTEMD_USER_DIR/aag-human-identity-scene-bridge.service"; fi

@@ -32,13 +32,13 @@ When AnythingLLM is in `~/anything-llm` or `/opt/anything-llm`, `./install.sh` c
 | `chess` | chess code, skill and rendered user service | Python packages; Stockfish optional/recommended |
 | `image` | image skills, Composer sources, Atlas integration, progress/cancel, identity and bridges | ComfyUI, models, authorized Atlas pack |
 | `local-llm` | model-neutral compatibility and llama.cpp controller | user-built llama.cpp and GGUF; SYCL optional |
-| `full` | all supported code except external weights/assets | union of the above |
+| `full` | all public-ready supported profiles except external weights/assets | union of the above; the historical Ubuntu Agent capture is not installed |
 
 ## Models and assets
 
 Weights are never downloaded silently. Configure `AAG_MODEL_ROOT`; `./doctor.sh` reports each dependency as `FOUND`, `MISSING`, or `OPTIONAL`. See `config/models.yaml` and `MODEL-ASSET-SETUP.md`.
 
-The 493 Atlas references and 493 thumbnails are not in Git because no explicit redistribution grant was found. An authorized owner can install a byte-exact pack:
+The 493 Atlas references and 493 thumbnails are not in Git because no explicit redistribution grant was found. The shipped 493-style metadata supports Composer selection without pixels; previews are optional. An authorized owner can install a byte-exact pack:
 
 ```bash
 ./tools/atlas-assets.py verify --source /path/to/visual-atlas
@@ -46,7 +46,7 @@ The 493 Atlas references and 493 thumbnails are not in Git because no explicit r
   --target "$HOME/.local/share/aag-anythingllm-suite/visual-atlas"
 ```
 
-`atlas-assets-manifest.json` contains every expected path, byte size and SHA-256. This resolves the four asset-dependent tests without weakening them.
+`atlas-assets-manifest.json` contains every expected path, byte size and SHA-256. Doctor reports either `PASS metadata-only` or `PASS pixels+metadata`.
 
 ## ComfyUI and local LLM
 
@@ -70,6 +70,6 @@ Defaults live in `config/defaults.env`; user overrides live in `~/.config/aag-an
 
 ## Security and limitations
 
-The installer checks the exact upstream Git commit and stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. This repository is intentionally private: a top-level AAG public license grant and Atlas redistribution grant are still unresolved, the precise production frontend overlay is not completely reconstructed, and the bundled Ubuntu Agent integration omits private operational configuration required by its complete test suite.
+The installer checks the exact upstream Git commit and eleven stock-file hashes before patching, stages every write, backs up replaced files and rolls back on failure. It never modifies conversations or model directories. The backend and frontend overlay is deterministically reconstructable from source. Atlas pixels remain optional and external, and the historical Ubuntu Agent capture is excluded from install profiles. This repository remains private only until the copyright owner approves the AAG code license described in `PUBLIC-LICENSE-OWNER-DECISION.md`.
 
 See `FRESH-INSTALL.md`, `DOCTOR.md`, `ATLAS-ASSET-DISTRIBUTION.md`, `RELEASE-READINESS.md`, `SECURITY.md`, and `THIRD_PARTY_NOTICES.md`.
