@@ -17,6 +17,7 @@ __pycache__/
 .venv/
 venv/
 node_modules/
+.aag-atlas-product-test-*/
 dist/
 build/
 backups/
@@ -46,4 +47,3 @@ generated-images/
 *.tar
 *.tar.gz
 *.zip
-

@@ -1,54 +1,6 @@
 {
-  "file_count": 472,
+  "file_count": 464,
   "files": [
-    {
-      "repository_path": ".aag-atlas-product-test-H31eV6/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-NutzOH/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
     {
       "repository_path": ".env.example",
       "sha256": "b90c0c050a36a3d475c2c3b350e00afb6149e4219844701472d24e9711627db3",
@@ -63,8 +15,8 @@
     },
     {
       "repository_path": ".gitignore",
-      "sha256": "73d67661e72f8581953cb6eb65e592a3c1e28ed79ace035efec6d9a5e42fa380",
-      "size": 425,
+      "sha256": "ece68ac605593cd84c969f616538e5a6b0b89396c7e9d3105fd05bf0d9a40501",
+      "size": 451,
       "type": "file"
     },
     {
