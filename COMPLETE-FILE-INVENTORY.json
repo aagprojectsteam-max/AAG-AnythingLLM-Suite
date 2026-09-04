@@ -1,2340 +1,2839 @@
 {
-  "file_count": 467,
+  "file_count": 472,
   "files": [
+    {
+      "repository_path": ".aag-atlas-product-test-H31eV6/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-H31eV6/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-NutzOH/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/atlas-manifest.json",
+      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
+      "size": 1678426,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/preview-index.json",
+      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
+      "size": 169651,
+      "type": "file"
+    },
+    {
+      "repository_path": ".aag-atlas-product-test-NutzOH/visual-atlas/manifest/retrieval-aliases.json",
+      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
+      "size": 6863,
+      "type": "file"
+    },
     {
       "repository_path": ".env.example",
       "sha256": "b90c0c050a36a3d475c2c3b350e00afb6149e4219844701472d24e9711627db3",
-      "size": 502
+      "size": 502,
+      "type": "file"
     },
     {
       "repository_path": ".github/workflows/ci.yml",
       "sha256": "b8caf3b86b54857f06f9e4064d192c7e8a15c168b6740617dcad44eb3cfe29e1",
-      "size": 450
+      "size": 450,
+      "type": "file"
     },
     {
       "repository_path": ".gitignore",
       "sha256": "73d67661e72f8581953cb6eb65e592a3c1e28ed79ace035efec6d9a5e42fa380",
-      "size": 425
+      "size": 425,
+      "type": "file"
     },
     {
       "repository_path": "CHANGELOG.md",
       "sha256": "12c3927ced791390b1715d68a4705b98995cb5fea90e81e8e76429692ab89741",
-      "size": 281
+      "size": 281,
+      "type": "file"
     },
     {
       "repository_path": "COMPLETE-FEATURE-INVENTORY.md",
       "sha256": "496682a134b708311fd4ceb7cedee3cb5423c44f05ee5c002dd97f6aa46f401d",
-      "size": 8659
+      "size": 8659,
+      "type": "file"
     },
     {
       "repository_path": "PATCH-MANIFEST.yaml",
       "sha256": "f0bd7e4f33169ad300aea5f60e23b588ccb55b8b961dc463ed9af2b94a33634c",
-      "size": 2682
+      "size": 2682,
+      "type": "file"
     },
     {
       "repository_path": "README.md",
       "sha256": "76ad6ed3aa791d273cf3d525a782cb7cbea181717e23e47bb3a1eef725ae2a98",
-      "size": 1724
+      "size": 1724,
+      "type": "file"
     },
     {
       "repository_path": "SANITIZATION-REPORT.md",
-      "sha256": "0be91f9b53f09dfa636ca6dad3369b72d218399fabf1c3547e80948c5d700557",
-      "size": 717
+      "sha256": "9f15d0dadbddb3dd365ff6971ce9dad1ceefe761d2f27d66659ad0b1a2eb61b5",
+      "size": 917,
+      "type": "file"
     },
     {
       "repository_path": "SECURITY.md",
       "sha256": "6e0912ae1af896a6c01adba09a4de09667de9db11d09eb59bcea9969d66c4b35",
-      "size": 480
+      "size": 480,
+      "type": "file"
     },
     {
       "repository_path": "THIRD_PARTY_NOTICES.md",
       "sha256": "659994e2b1118ce48b5f2b9022bb1ea6f5f6057fef5a63ced043ebf162d861db",
-      "size": 590
+      "size": 590,
+      "type": "file"
     },
     {
       "repository_path": "chess/README.md",
       "sha256": "0d4b16b2f0e0697f157bf7630cefbd492632bc492fa120312ae25566fadb4f45",
-      "size": 9516
+      "size": 9516,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/AAG-CODEX-CHESS-PUZZLE-AGENT-V1-PROMPT.md",
       "sha256": "e4b4dc2d2aab143773609d344c2e075e95b0799572a6631f81194c7042e5f62f",
-      "size": 18525
+      "size": 18525,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/ANYTHINGLLM-INTEGRATION.md",
       "sha256": "09dc206159b1bc28e7a49fb446a0b7dc169e45a89f46a7e49a1ec13e290f7d32",
-      "size": 887
+      "size": 887,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/ANYTHINGLLM-SKILL.md",
       "sha256": "ba64093712af07effa9d18727002ef02bd54e67e4ca3bd9f3491b27e46ea8dc6",
-      "size": 10442
+      "size": 10442,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/ARCHITECTURE.md",
       "sha256": "310aee50955e94aaf57d144d4623c9c3017a0dde4e3514a321e60bdc7e9e1080",
-      "size": 5974
+      "size": 5974,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/MASTER-HANDOFF.md",
       "sha256": "4f5d62d806fbad3f976bcf732e81005bdfa5fd5679b4eafea6bdb49d4faec648",
-      "size": 4488
+      "size": 4488,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/OPERATIONS.md",
       "sha256": "bf5e29f0e0fe7f54cb7fdcf62dd41d894a27815d265edfc533e4898e877abb1d",
-      "size": 3488
+      "size": 3488,
+      "type": "file"
     },
     {
       "repository_path": "chess/docs/VERIFICATION-CONTRACT.md",
       "sha256": "aabdbce0d45a98c00475b2aafad123aba17b0467559090c3af96306a3132b579",
-      "size": 7167
+      "size": 7167,
+      "type": "file"
     },
     {
       "repository_path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/README.md",
       "sha256": "624034d7a12adba98b4453c02933ec5f59737bc61eae809d1602eebf74e62043",
-      "size": 1417
+      "size": 1417,
+      "type": "file"
     },
     {
       "repository_path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/handler.js",
       "sha256": "372e4b3cdedf16d352dd6132306b9db81cad978319a9a34f20a82ad46e1fa3af",
-      "size": 23191
+      "size": 23191,
+      "type": "file"
     },
     {
       "repository_path": "chess/integrations/anythingllm/skill/aag-chess-puzzle/plugin.json",
       "sha256": "d3fbaee74ce405a2b31f66bd4dcca058aa9815822a0fb399830ccde724c6583c",
-      "size": 5982
+      "size": 5982,
+      "type": "file"
     },
     {
       "repository_path": "chess/integrations/anythingllm/systemd/aag-chess-anythingllm-bridge.service",
       "sha256": "03b3e31aba0fe8df4875f6ad28d35bc462ba6a8455ff27c5cd2310c5970253bd",
-      "size": 628
+      "size": 628,
+      "type": "file"
     },
     {
       "repository_path": "chess/integrations/anythingllm/tests/test-handler.js",
       "sha256": "6322ae248bb610420dcffe7c16b6ccc9bfaf7ae1f023c9c93912ff404d911d73",
-      "size": 10371
+      "size": 10371,
+      "type": "file"
     },
     {
       "repository_path": "chess/pyproject.toml",
       "sha256": "2afc3b841288179bb6b9d26420668c5cc5d19cdba1787ce0276c88e53c0d81cc",
-      "size": 732
+      "size": 732,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/__init__.py",
       "sha256": "6b4b5d0be3d5e8021d87f8b2b32287269e91d3bed45c85dbbdd7fea010ab6d23",
-      "size": 361
+      "size": 361,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/anythingllm_bridge.py",
       "sha256": "05fa2eecd2364f769d0aec4ca9dee4b6ddcf6b330d73a08cbf33ea85c3010463",
-      "size": 29944
+      "size": 29944,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/anythingllm_solution.py",
       "sha256": "575de2877ad62dd851895534a89a49c8361beaa9c49293a1bd77826312faee5d",
-      "size": 21396
+      "size": 21396,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/application.py",
       "sha256": "90d3120d41916a510f319eed295b1d71b6155a542420adb2506b92f3cf007d21",
-      "size": 33608
+      "size": 33608,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/cli.py",
       "sha256": "0f16dcb969435d5948ba21007c3105ea0a2aff513b61ff665c859947f384f344",
-      "size": 6358
+      "size": 6358,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/density.py",
       "sha256": "42f94d9c572e2f0ad54fc4510b8eec847de672a19bc1acad6c15c3d7734ca4f3",
-      "size": 5484
+      "size": 5484,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/difficulty.py",
       "sha256": "32e0966abbe9db80789fe7a6d1e73507f6e49fc9bb80f66063db94eda7e5c5ac",
-      "size": 4809
+      "size": 4809,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/diversity.py",
       "sha256": "198b6c37d74c4f9a0b0958af5b178210d015fb3b6c6dfedbfa44bfedaeba5a67",
-      "size": 11490
+      "size": 11490,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/generator.py",
       "sha256": "54fe8fc55b6796c26e5775e7467cfd0ec3b693fe81223dce646f8a18cf5508d7",
-      "size": 17355
+      "size": 17355,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/position.py",
       "sha256": "1ab7060ebe93d93733dda8c90f4afd45cc95a5b24965717fa2455f5690229d93",
-      "size": 2033
+      "size": 2033,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/renderer.py",
       "sha256": "d6ecf740b1ca40645347ab1c5eca311702768771e068a88df75eb69857323cbd",
-      "size": 15430
+      "size": 15430,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/stockfish.py",
       "sha256": "9ee2fa266ee1183208ac1bc4db20bdbddda39108b99afb9378dda7fdcf780b7c",
-      "size": 34548
+      "size": 34548,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess/verifier.py",
       "sha256": "df468bbe017d85783de2d65d13f75d8663032e97916f4b939bc05c441526136e",
-      "size": 12075
+      "size": 12075,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/PKG-INFO",
       "sha256": "31c183003f641c0c1f865c565ece4663b43aca352349b12c61760ea866c36f5e",
-      "size": 335
+      "size": 335,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/SOURCES.txt",
       "sha256": "36f8999d2797bcb7eaed3aa6a70644dada07503b622d9a6a8d309105f2eb45bc",
-      "size": 939
+      "size": 939,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/dependency_links.txt",
       "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "size": 1
+      "size": 1,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/entry_points.txt",
       "sha256": "18d1e92031859bd228bc15ad46e51bc2dfccbb70b50923c8666097a866568600",
-      "size": 49
+      "size": 49,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/requires.txt",
       "sha256": "22a9272b57bf5513b0d44f440711563ac6122773b0bc0dbfc2a3fad1fa3fe272",
-      "size": 73
+      "size": 73,
+      "type": "file"
     },
     {
       "repository_path": "chess/src/aag_chess_puzzle_agent.egg-info/top_level.txt",
       "sha256": "d180a34a592ebdf989e5cf96e20b723005c79fdb66770b0fea406078aea2a743",
-      "size": 10
+      "size": 10,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_anythingllm_bridge.py",
       "sha256": "22b28dc9f843554964b0e819f1a2ef408038b960e03793c8b7b7161c96f62bd4",
-      "size": 14876
+      "size": 14876,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_application.py",
       "sha256": "d970ac4699f3462c5f9717984415df107a6756975d3fa05ef4ee769fe8aacc3a",
-      "size": 15236
+      "size": 15236,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_density.py",
       "sha256": "42d886ffc5cd9847bb6f94f45bbb6f5e82b2e22b4ad33e558b9649372bd7352d",
-      "size": 2369
+      "size": 2369,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_difficulty.py",
       "sha256": "43987872ff4350605a81980b0be177ff9bbfb9e1521ad2f1d6594f4174b3e4f9",
-      "size": 2050
+      "size": 2050,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_diversity.py",
       "sha256": "8e925061bde279dd69ee4dd3bea8b3ddb5cdace406b5fd2ffb0fd008e8fc8075",
-      "size": 2210
+      "size": 2210,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_generator.py",
       "sha256": "f898d0696e842d0cdb89e299d141a6e976dae65c226086921050a38e46a5b011",
-      "size": 12222
+      "size": 12222,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_presentation.py",
       "sha256": "4371bf4d70697fc153cbcddf8d7eaeb99583a5e7bb4447394820ab141b50a705",
-      "size": 3987
+      "size": 3987,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_renderer.py",
       "sha256": "d66187c7534aaaf0ecd6bf7fa0afaaeafe376516485ff956fa324347ada4e0a6",
-      "size": 13138
+      "size": 13138,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_stockfish.py",
       "sha256": "440c6cf8f10d87ebbdd21ce146f8bc8f5847d4925eb2c5ac903a6a8e83ddef2f",
-      "size": 19006
+      "size": 19006,
+      "type": "file"
     },
     {
       "repository_path": "chess/tests/test_verifier.py",
       "sha256": "90fdb1c31e9fb0cf46c11ca415c2c7b7f00bc398131ccf42893c3793c667c37b",
-      "size": 4207
+      "size": 4207,
+      "type": "file"
     },
     {
       "repository_path": "config/models.yaml",
       "sha256": "cfd1e39128e50e55068d0e4815744f470a4b31dc7f34f435c38ee7accebad84f",
-      "size": 2238
+      "size": 2238,
+      "type": "file"
     },
     {
       "repository_path": "docs/AAG-ARTIFACT-EXPORT.md",
       "sha256": "795870b0c6e60f04a61dea4d676551629211b59df94d59204fddb1fde5883ba0",
-      "size": 2665
+      "size": 2665,
+      "type": "file"
     },
     {
       "repository_path": "docs/AGENT-SKILLS.md",
       "sha256": "75d38bb1271f420cb31ec3dd6c1b1a283169b50e86d3e279cb9f027c5a4c36cf",
-      "size": 312
+      "size": 312,
+      "type": "file"
     },
     {
       "repository_path": "docs/ANYTHINGLLM-PATCHES.md",
       "sha256": "394176ed4d2e8923fd238794ba39a4219518a5c8bb1dcc4275ae0bdaa4bbe483",
-      "size": 827
+      "size": 827,
+      "type": "file"
     },
     {
       "repository_path": "docs/ARCHITECTURE.md",
       "sha256": "73f86c11e891a5e756126aa893225abe63591b5f65d50e192edd32e02bf13f4c",
-      "size": 784
+      "size": 784,
+      "type": "file"
     },
     {
       "repository_path": "docs/CHESS.md",
       "sha256": "d0fda37df1530052d753d28e3ba9e2ed2b2d702f5b9f22ebe7d27e5b9cc715ce",
-      "size": 316
+      "size": 316,
+      "type": "file"
     },
     {
       "repository_path": "docs/COMFYUI.md",
       "sha256": "c6e4984a95ed7291453947dc7232a00cb4ae92bd4a96925df245c38e2f095008",
-      "size": 296
+      "size": 296,
+      "type": "file"
     },
     {
       "repository_path": "docs/COMPOSER.md",
       "sha256": "f58366adf78e03ecd5ca3240b2ac408fb0383d266db9ec34b08f88590d4db73f",
-      "size": 338
+      "size": 338,
+      "type": "file"
     },
     {
       "repository_path": "docs/CONFIGURATION.md",
       "sha256": "6794141fbd7c2460de0427734ab50184198c824c82ad82d5589b4d5bf58129ea",
-      "size": 276
+      "size": 276,
+      "type": "file"
     },
     {
       "repository_path": "docs/FEATURES.md",
       "sha256": "237897e0f7064affcebc718fea65726e06bc83110768586de5ab46da35f3b506",
-      "size": 405
+      "size": 405,
+      "type": "file"
     },
     {
       "repository_path": "docs/INSTALL.md",
       "sha256": "6e884d8086109b947d815ea66b68a945201bc45b91e69f7227844123d10c50b5",
-      "size": 685
+      "size": 685,
+      "type": "file"
     },
     {
       "repository_path": "docs/LICENSING.md",
       "sha256": "3668facee0455cf8d207a3d3f91442d07efc4a5e217d69acf3b03ca4ea18e7b4",
-      "size": 371
+      "size": 371,
+      "type": "file"
     },
     {
       "repository_path": "docs/LOCAL-LLM.md",
       "sha256": "bb8c5bc2188162b94e5900a96fe2fad5301172896e9a3f5b23929436ef81a5f6",
-      "size": 364
+      "size": 364,
+      "type": "file"
     },
     {
       "repository_path": "docs/MIGRATION.md",
       "sha256": "fa7e6cc994d9cee5180461db74036c17d4654d51cb230a8fa9be19eda9e83bdf",
-      "size": 3703
+      "size": 3703,
+      "type": "file"
     },
     {
       "repository_path": "docs/MODELS.md",
       "sha256": "b0bad7d22717db892c2ea542d136fb7dc7764fc575ad0002d9918e6707a4389e",
-      "size": 472
+      "size": 472,
+      "type": "file"
     },
     {
       "repository_path": "docs/PDF-ARTIFACTS.md",
       "sha256": "091d9368b2b8ee26852fcbea0024d358fe14aeeeccac2e48f81c0d179de436da",
-      "size": 261
+      "size": 261,
+      "type": "file"
     },
     {
       "repository_path": "docs/PROGRESS-STATUS-CANCEL.md",
       "sha256": "6b72286909ab0f7bdbf3c7bde387640c54218090273f619a298386cd57660346",
-      "size": 274
+      "size": 274,
+      "type": "file"
     },
     {
       "repository_path": "docs/PROMPT-QUALITY-ARCHITECTURE.md",
       "sha256": "eb7b918009e2898e47ab1caa2ceeaefca3b59a5495573d3cdae9aaab8ed17a2c",
-      "size": 1353
+      "size": 1353,
+      "type": "file"
     },
     {
       "repository_path": "docs/PROVIDER-NEUTRAL-BOUNDARY.md",
       "sha256": "384f28deb943a6f827c3b291fbb36cfe0daabd0ffad726ac568a53138f646bad",
-      "size": 6678
+      "size": 6678,
+      "type": "file"
     },
     {
       "repository_path": "docs/ROLLBACK.md",
       "sha256": "4743999a281fcfd6da95a65ea28c4c652617b772963d6b0b313772924c8764db",
-      "size": 247
+      "size": 247,
+      "type": "file"
     },
     {
       "repository_path": "docs/SECURITY.md",
       "sha256": "56f4be1c2f9519a7296fe9690449e9f9a050c33b524d22f23d70b7a1ab85be8b",
-      "size": 6051
+      "size": 6051,
+      "type": "file"
     },
     {
       "repository_path": "docs/TROUBLESHOOTING.md",
       "sha256": "ebb2e5d7f321a4723d401e73a10dcbc7ee0739ea570b83fb45804d8074e17243",
-      "size": 333
+      "size": 333,
+      "type": "file"
     },
     {
       "repository_path": "docs/UPDATE.md",
       "sha256": "584b992c7b60af99132cf313a8ce4c326f620c0ef33621deb2f726077f23b568",
-      "size": 257
+      "size": 257,
+      "type": "file"
     },
     {
       "repository_path": "docs/UPSTREAM-COMPATIBILITY.md",
       "sha256": "f9fa36ef46b6774fb95339f3b21548e3fc58289c714c7a4b39b359794284b9ec",
-      "size": 588
+      "size": 588,
+      "type": "file"
     },
     {
       "repository_path": "docs/VISUAL-ATLAS-COMPOSER.md",
       "sha256": "958c1e3f065aae2a1a6cdd0c596f0b507242a45f1d6bd132855a0e94b16a6de5",
-      "size": 13890
+      "size": 13890,
+      "type": "file"
     },
     {
       "repository_path": "docs/VISUAL-ATLAS-PACKAGING.md",
       "sha256": "409d9ed5dcba52a4af1931bd1a62edec3344aed8c2b8a01350ee9e8e77dcc93c",
-      "size": 5820
+      "size": 5820,
+      "type": "file"
     },
     {
       "repository_path": "docs/VISUAL-ATLAS.md",
       "sha256": "183f2571e2f0f4858199a8d8af06499fe53ae699d84acf969b0bec848c8dff40",
-      "size": 362
+      "size": 362,
+      "type": "file"
     },
     {
       "repository_path": "doctor.sh",
       "sha256": "692c961ccee3dd30af167e21b717c5a01d0aaa76b239856ef546202f56d4a3aa",
-      "size": 1037
+      "size": 1037,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-agent",
+      "sha256": "f40ffc4ea56d8abfccb064a261bbbe48bd864d0021a1fe696b677d85d3816c96",
+      "size": 12,
+      "target": "image-system",
+      "type": "symlink"
     },
     {
       "repository_path": "image-system/bin/aag-ai-start",
       "sha256": "26866bc20d59a48a1bcfb8f9bcf9087c95e3001df08306db66c69e2028e74772",
-      "size": 1826
+      "size": 1826,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-ai-stop",
       "sha256": "9d9f69a2d248d871a7bcc68757fcf341e1c08bf3ae17a6880ff189bede4935f7",
-      "size": 3537
+      "size": 3537,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-atlas-pause",
       "sha256": "4c0ae44efee4f35574b8e35d5a79104ff755b8c20b62a8ce865e3ca7aecde993",
-      "size": 135
+      "size": 135,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-atlas-resume",
       "sha256": "6b18f284b834de610d046ccdb8bd60a8f0129f8f898873b86658ee6ce27aa005",
-      "size": 136
+      "size": 136,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-atlas-start",
       "sha256": "36264cb007b1ec7504c5e096fec79d8a432ff4c5acb5097db07b2de7d90369c3",
-      "size": 135
+      "size": 135,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-atlas-status",
       "sha256": "bc7d2b9dc120e0c0656ec04a57d1428d203b845d6bb3e0f9b2913896dc9bb2ef",
-      "size": 136
+      "size": 136,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-atlas-stop",
       "sha256": "fb24d70c6b6fd30108d7627d301b013a8ccdc56682fa323312642ac7f77add51",
-      "size": 134
+      "size": 134,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-image-release-stuck",
       "sha256": "842a5f898b3ff7afe75559a2ae0fa9b2fe1a34e3b80669fd1e6bd640cd450343",
-      "size": 5406
+      "size": 5406,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-image-start",
       "sha256": "31f31ffe5ab808d24174d221f461f78e3bac9a0fe3a980b80d8b6ffa700a627b",
-      "size": 4528
+      "size": 4528,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-image-status",
       "sha256": "36814c945ae8919d4cd85614a1bf3753a339b9a5cc40d2fd6ff257ee8c9d15af",
-      "size": 2506
+      "size": 2506,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-image-stop",
       "sha256": "d81253473ec542d21f25c324889af3a7d9d295d582fef3735a1032fbc8071675",
-      "size": 2252
+      "size": 2252,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-reference-status",
       "sha256": "ce0ef60b944d91d495ba9de5069382085146c32cf70392ced0081e3dd438c8bf",
-      "size": 3467
+      "size": 3467,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-upscale-start",
       "sha256": "12891aed509d9eda4d35aab4566007cef2da83ed10230dfb4edb22b027edd9d9",
-      "size": 80
+      "size": 80,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-upscale-status",
       "sha256": "c7a684f2d4c582fdcaff87a7b9b4bf4b86936105b7eda9621c29318a0e367cc4",
-      "size": 81
+      "size": 81,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-upscale-stop",
       "sha256": "6c82597b15a6452503e0a390d21447fcd704625d65a3cd1a15b1bc136f720e1a",
-      "size": 79
+      "size": 79,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/AAG-ARTIFACT-EXPORT.md",
       "sha256": "795870b0c6e60f04a61dea4d676551629211b59df94d59204fddb1fde5883ba0",
-      "size": 2665
+      "size": 2665,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/MIGRATION.md",
       "sha256": "fa7e6cc994d9cee5180461db74036c17d4654d51cb230a8fa9be19eda9e83bdf",
-      "size": 3703
+      "size": 3703,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/PROMPT-QUALITY-ARCHITECTURE.md",
       "sha256": "eb7b918009e2898e47ab1caa2ceeaefca3b59a5495573d3cdae9aaab8ed17a2c",
-      "size": 1353
+      "size": 1353,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/PROVIDER-NEUTRAL-BOUNDARY.md",
       "sha256": "384f28deb943a6f827c3b291fbb36cfe0daabd0ffad726ac568a53138f646bad",
-      "size": 6678
+      "size": 6678,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/ROLLBACK.md",
       "sha256": "f2343e4422a9aab8a42466a7fb72c6427f7b31f8a1786f2530be1e1cdd8107d1",
-      "size": 7970
+      "size": 7970,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/SECURITY.md",
       "sha256": "56f4be1c2f9519a7296fe9690449e9f9a050c33b524d22f23d70b7a1ab85be8b",
-      "size": 6051
+      "size": 6051,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/VISUAL-ATLAS-COMPOSER.md",
       "sha256": "958c1e3f065aae2a1a6cdd0c596f0b507242a45f1d6bd132855a0e94b16a6de5",
-      "size": 13890
+      "size": 13890,
+      "type": "file"
     },
     {
       "repository_path": "image-system/docs/VISUAL-ATLAS-PACKAGING.md",
       "sha256": "409d9ed5dcba52a4af1931bd1a62edec3344aed8c2b8a01350ee9e8e77dcc93c",
-      "size": 5820
+      "size": 5820,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/bin/process_inbox.py",
       "sha256": "d06068a911998b4f4f5b22072b7ef280ce2a9ec1a6bcaf972dd8ca9e80f30137",
-      "size": 36487
+      "size": 36487,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/config/CANDIDATE-ASSET-MANIFEST.json",
       "sha256": "c58d0e0cf336814c481475ec8e15b91d01b7425417cf77ccbb68b1645fa458a5",
-      "size": 107435
+      "size": 107435,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/config/CANDIDATE-SBOM.json",
       "sha256": "aff54a0ae53323ff61a57a5b96349c723a6abda4a8fd57be777b1359590f59ca",
-      "size": 1121
+      "size": 1121,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/config/CONTRACT-B-FREEZE.json",
       "sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4",
-      "size": 6974
+      "size": 6974,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/config/PRODUCTION-CONFIG.json",
       "sha256": "a36d9a695b3ef13648945d4ff420fea71fdfa67a10493e21c98ef2d4d7e07ff2",
-      "size": 2447
+      "size": 2447,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/composition_contract.py",
       "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872",
-      "size": 3721
+      "size": 3721,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/evaluator_core.py",
       "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
-      "size": 2295
+      "size": 2295,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/pulid_worker.py",
       "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f",
-      "size": 14379
+      "size": 14379,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/quality_gate.py",
       "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52",
-      "size": 12145
+      "size": 12145,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/reference_validator.py",
       "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
-      "size": 5950
+      "size": 5950,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity/runtime/validate_reference_cli.py",
       "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
-      "size": 2440
+      "size": 2440,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/bin/process_inbox.py",
       "sha256": "6a4cc72f5b16b0916fd205e28e5a6944661e67233c6c9d46633bb68bd81abee4",
-      "size": 37706
+      "size": 37706,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/config/PRODUCTION-CONFIG.json",
       "sha256": "fdc5b1cd5dde0c51687dac82d71e7f548f7b46dd0e32f880ff3be906262b03ce",
-      "size": 2180
+      "size": 2180,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/config/SCENE-CONTRACT-CANDIDATE.json",
       "sha256": "bccc709d00f283f076ca86299be6c73f1fa2dfc93f4970f70638ee5fa6872b66",
-      "size": 2834
+      "size": 2834,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/config/SCENE-CONTRACT.json",
       "sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6",
-      "size": 3372
+      "size": 3372,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/runtime/evaluator_core.py",
       "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
-      "size": 2295
+      "size": 2295,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/runtime/quality_gate.py",
       "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6",
-      "size": 7327
+      "size": 7327,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/runtime/reference_validator.py",
       "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
-      "size": 5950
+      "size": 5950,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/runtime/scene_worker.py",
       "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5",
-      "size": 14854
+      "size": 14854,
+      "type": "file"
     },
     {
       "repository_path": "image-system/human-identity-scene/runtime/validate_reference_cli.py",
       "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
-      "size": 2440
+      "size": 2440,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagArtifactExport.js",
       "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc",
-      "size": 11704
+      "size": 11704,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagArtifactPresentation.js",
       "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870",
-      "size": 15962
+      "size": 15962,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagComposerHistory.js",
       "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604",
-      "size": 12434
+      "size": 12434,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagComposerProxy.js",
       "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3",
-      "size": 9927
+      "size": 9927,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagImageProgress.js",
       "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640",
-      "size": 15213
+      "size": 15213,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagOrdinary.js",
       "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2",
-      "size": 9779
+      "size": 9779,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagPdfAssembler.js",
       "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca",
-      "size": 12612
+      "size": 12612,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagPublicToolSchema.js",
       "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad",
-      "size": 7058
+      "size": 7058,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/apiChatHandler.js",
       "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268
+      "size": 29268,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
       "sha256": "e7d5244f4b8d7a04a37b4a206d6bd7c911916cf538ce533c8db8ba94abfb5f4c",
-      "size": 3278
+      "size": 3278,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/heTaxonomyLabels.js",
       "sha256": "4f8ebe301a4b0cce695484511fc07a3dea502b7eec4c86cfe770f2106d325060",
-      "size": 29066
+      "size": 29066,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
       "sha256": "1fb8d1e49802ddf52f290d5fe71732f11f431710a7ce99d5d82641fa04c8fbcc",
-      "size": 75824
+      "size": 75824,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
       "sha256": "1f85910d6d5aa8494a960e7e3ae12968fb724624792f4d17c41909031c1b876f",
-      "size": 13551
+      "size": 13551,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
       "sha256": "c8caf16a77365def2f8761173f0adc8d0920656d8dc24038d6f4e05549a2136a",
-      "size": 19670
+      "size": 19670,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageProgress/index.jsx",
       "sha256": "be29569fc1a5ba3f17701fff4d55aa6b33f63762ebedfd5a15c7353c2b1d3f28",
-      "size": 7305
+      "size": 7305,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageProgress/styles.css",
       "sha256": "48cd6b1690d9c8faf43a957de71b97f564beda32f0070cf0d48d69df54413a91",
-      "size": 3067
+      "size": 3067,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
       "sha256": "453d393a509a0d2357dbaf3c48b5d3547d3fc9c99218ae24541588e0a4fc99b1",
-      "size": 1698
+      "size": 1698,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
       "sha256": "9d3e6c91e986fd4e26e6f9120cd70e0796e7b2cced9d41dd77183ec73c89a931",
-      "size": 9027
+      "size": 9027,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/aagArtifactExport.js",
       "sha256": "aa3071b3207076007f13991ce989b5485265b8c3e736c7c74cedd13d0da354d8",
-      "size": 2723
+      "size": 2723,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/index.js",
       "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164
+      "size": 5164,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/server-index.js",
       "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
-      "size": 6485
+      "size": 6485,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/launchers/aag-ai-start",
       "sha256": "26866bc20d59a48a1bcfb8f9bcf9087c95e3001df08306db66c69e2028e74772",
-      "size": 1826
+      "size": 1826,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/launchers/aag-image-start",
       "sha256": "31f31ffe5ab808d24174d221f461f78e3bac9a0fe3a980b80d8b6ffa700a627b",
-      "size": 4528
+      "size": 4528,
+      "type": "file"
     },
     {
       "repository_path": "image-system/integrations/launchers/aag-image-stop",
       "sha256": "d9e980a275508e8c41921700158097d7854e68f09a1fc7aa82c8a9b7e477b435",
-      "size": 1630
+      "size": 1630,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/model-neutral-compatibility",
+      "sha256": "8d8d253fe9f73d62b1e8192675c98b776418f9bb2aa9085557192948acfe2ce2",
+      "size": 58,
+      "target": "../../integrations/anythingllm/model-neutral-compatibility",
+      "type": "symlink"
     },
     {
       "repository_path": "image-system/libexec/aag-anythingllm-comfyui-network-watch",
       "sha256": "c06167853955eaa3fb931145b9636e1122958280e6c022d541fc6918307b2099",
-      "size": 3410
+      "size": 3410,
+      "type": "file"
     },
     {
       "repository_path": "image-system/libexec/aag-image-hub-control",
       "sha256": "46536ed9f7d7553421fa586535d78659c53dea45000c05b88bedad1c05e556c6",
-      "size": 2796
+      "size": 2796,
+      "type": "file"
     },
     {
       "repository_path": "image-system/libexec/aag-upscale-control",
       "sha256": "77163967a0d802a6ba4f4d82320ab552d3c31240439c05d10c137b5fee0f2e84",
-      "size": 6023
+      "size": 6023,
+      "type": "file"
     },
     {
       "repository_path": "image-system/libexec/refresh-network.sh",
       "sha256": "b88b84dc9d7ef3e4bcbbb1e4ba096a8c7366b1048865ab65dc94b026d1391d12",
-      "size": 2324
+      "size": 2324,
+      "type": "file"
     },
     {
       "repository_path": "image-system/package.json",
       "sha256": "4ad6f48602ca740e2b484a75325b4f4104fac652966f87662c17c95d959efb72",
-      "size": 352
+      "size": 352,
+      "type": "file"
     },
     {
       "repository_path": "image-system/routing/acceptance-queries.json",
       "sha256": "d7aa95d52e707015a9b48eff68ef936fc8261b89b7d225a92c4b6baacd6ddc6c",
-      "size": 2903
+      "size": 2903,
+      "type": "file"
     },
     {
       "repository_path": "image-system/routing/tool-routing-metadata.json",
       "sha256": "0ef3d9087fd74a08649016a19a1821840815d056e07d8f8442f06914ad10743d",
-      "size": 13012
+      "size": 13012,
+      "type": "file"
     },
     {
       "repository_path": "image-system/routing/toolReranker.js",
       "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
-      "size": 10237
+      "size": 10237,
+      "type": "file"
     },
     {
       "repository_path": "image-system/schemas/provider-batch.schema.json",
       "sha256": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c",
-      "size": 5727
+      "size": 5727,
+      "type": "file"
     },
     {
       "repository_path": "image-system/schemas/provider-job.schema.json",
       "sha256": "7ea608f456abcf5731599e71c67560196a47698582ac7d5112dca5d4d27666c2",
-      "size": 497
+      "size": 497,
+      "type": "file"
     },
     {
       "repository_path": "image-system/schemas/provider-task.schema.json",
       "sha256": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755",
-      "size": 13661
+      "size": 13661,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-batch/handler.js",
       "sha256": "cdcf5278d319965c8cc23069f2f2ba1c63df0b69f2f7b0835ccde9e222eb7ac7",
-      "size": 579
+      "size": 579,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-batch/plugin.json",
       "sha256": "e5c70514bae3e1a4ceb8db43cf4406478d794ec5c3d10708ee234af5f9b5f90f",
-      "size": 2736
+      "size": 2736,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-job/handler.js",
       "sha256": "c48b17718626a68e69abaf24e87aa5eb02610836a67cfa8034755d01decbc9d4",
-      "size": 587
+      "size": 587,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-job/plugin.json",
       "sha256": "6f8b87054f63e4ac66545dc9f6bfbda7c817aef22cee99754b19387a4926f0d3",
-      "size": 1344
+      "size": 1344,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-task/handler.js",
       "sha256": "a4d55b30caf3ace2042a703e511d3a85da5293c3040df491e0ae53aaccdc165e",
-      "size": 1362
+      "size": 1362,
+      "type": "file"
     },
     {
       "repository_path": "image-system/skills/aag-image-task/plugin.json",
       "sha256": "48b73bb1cb0e2f7982872a6cd2d014dc9b66b0f34e50dd8b60f882d55b53e24e",
-      "size": 6866
+      "size": 6866,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/adapters.js",
       "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442",
-      "size": 7587
+      "size": 7587,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/batch.js",
       "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e",
-      "size": 26217
+      "size": 26217,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/comfy.js",
       "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37",
-      "size": 25945
+      "size": 25945,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/errors.js",
       "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9",
-      "size": 1770
+      "size": 1770,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/human-identity.js",
       "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b",
-      "size": 14570
+      "size": 14570,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/identity-routing.js",
       "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b",
-      "size": 6999
+      "size": 6999,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/identity.js",
       "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003",
-      "size": 9979
+      "size": 9979,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/image.js",
       "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9",
-      "size": 8874
+      "size": 8874,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/ordinary-policy.js",
       "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356",
-      "size": 2636
+      "size": 2636,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/prompt-quality.js",
       "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f",
-      "size": 9859
+      "size": 9859,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/recovery.js",
       "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798",
-      "size": 13595
+      "size": 13595,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/runtime.js",
       "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182",
-      "size": 29144
+      "size": 29144,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/scene-identity.js",
       "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a",
-      "size": 13016
+      "size": 13016,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/scheduler.js",
       "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d",
-      "size": 9888
+      "size": 9888,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/selective-knowledge.js",
       "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943",
-      "size": 441
+      "size": 441,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/store.js",
       "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f",
-      "size": 6327
+      "size": 6327,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/util.js",
       "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93",
-      "size": 4773
+      "size": 4773,
+      "type": "file"
     },
     {
       "repository_path": "image-system/src/visual-atlas.js",
       "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829",
-      "size": 12957
+      "size": 12957,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/artifact-export.test.js",
       "sha256": "f54d0ed0593798ad5d7bd78766c4bf0c71f2d5d9b3a910e65d572d3de3b51751",
-      "size": 2638
+      "size": 2638,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/artifact-presentation.test.js",
       "sha256": "9d4164a1dbf26c0e1932ed04e941c87cc0e8779e64d6c9e5532fa1b801ae648f",
-      "size": 9872
+      "size": 9872,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/batch.test.js",
       "sha256": "59412f3137401d04858586711f8348af119b1a66d3baeff39c1d2d32072b9823",
-      "size": 8424
+      "size": 8424,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/composer-native-chat.test.js",
       "sha256": "76758338b0749879143f63e3606ca2d48c56895b01cbbb4ca9106eebac48d22a",
-      "size": 10000
+      "size": 10000,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/frontend-export-contract.test.js",
       "sha256": "9680ce7fef16732575d8c70450731c8f36db01e8616d3d51c76c5b21fa64f496",
-      "size": 1780
+      "size": 1780,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/governed-update.test.js",
       "sha256": "c882c8efe3b42010ddb08eb5d0a0b2064ed0566e46fca6f013e029f97a00868f",
-      "size": 944
+      "size": 944,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/inline-composer-integration.test.js",
       "sha256": "0485bffec44bbb02fc7c23b20509f33859ac50f55f2c877e3ae5a4368dc8084d",
-      "size": 24025
+      "size": 24025,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/integration_security_test.py",
       "sha256": "8bdffda1f8d6bf3f9149539f55685939f38c9afd7ded1f8c3c9096eabc77127f",
-      "size": 23725
+      "size": 23725,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/ordinary-policy.test.js",
       "sha256": "eb2f4d1b47122d2e58f769078d710eb9d0cd2fd7633ff18340186a0fb3b78a71",
-      "size": 3734
+      "size": 3734,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/progress-persistence.test.js",
       "sha256": "94083efb4d325a6a7aa59e597df1696005d51a458c765be479d2863a2cf939cd",
-      "size": 11959
+      "size": 11959,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/prompt-quality.test.js",
       "sha256": "3bea95216b088dc2f251d77d7fadca3f5c9eaea505a20831e401c8d89824f9e3",
-      "size": 7129
+      "size": 7129,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/public-tool-schema.test.js",
       "sha256": "bbd914168d970c37659e3bc3a577239804be88b52dfe73624763b1b03ff1b563",
-      "size": 16163
+      "size": 16163,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/runtime.test.js",
       "sha256": "ea6509faecd01e23edd59f4d9e1587cf8aea5bd9651271e2f178542a5d635cc6",
-      "size": 48039
+      "size": 48039,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/scheduler.test.js",
       "sha256": "79f0b81e95c3fef28f16fd4b18e9b55480601df7da0e73f28c8f09ad5faa4fa4",
-      "size": 6280
+      "size": 6280,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/security.test.js",
       "sha256": "1a27a2a3ca05f5f5cb769484b26e95978237433187d41dd23fd905bf11f2fb90",
-      "size": 5894
+      "size": 5894,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/stall-recovery.test.js",
       "sha256": "07e1238790cd63fd4fdbb778a2fda2341963083ccb2d3ce2aa90c55ce8e1ecd6",
-      "size": 9852
+      "size": 9852,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/test_human_identity_bridge.py",
       "sha256": "cdde41609f749508a09b6d10a9e16768dbb8db6bdb306ffcfed49e280499f950",
-      "size": 6396
+      "size": 6396,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/test_scene_identity_bridge.py",
       "sha256": "5640e702a86d687b613480b0790d4454635c91de9e2120f586eedd3a67253a5d",
-      "size": 6488
+      "size": 6488,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/visual-atlas-product.test.js",
       "sha256": "d90d2ca71d2c0e882de431066f524e00eb1f0c1b32b7a0dfbf123fda1ffba9f0",
-      "size": 2760
+      "size": 2760,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tests/visual-atlas.test.js",
       "sha256": "a2da3b0a4c5a055fd3d4fd3db8bd7e12bc8564fc236d145197a636760e8f9946",
-      "size": 7536
+      "size": 7536,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/account-model-input.js",
       "sha256": "61e40e1c0478c54f9d5511767a0997677d0c649469beac69b1e9ff48ac7c678d",
-      "size": 5114
+      "size": 5114,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/apply-routing-metadata.js",
       "sha256": "eaace285eb8d56ff92faa5ebea23f958c7d3c6705bc4365774b16ece1654497d",
-      "size": 2305
+      "size": 2305,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-browser-acceptance.py",
       "sha256": "3de4146818205057e123af741b24ecc18b06fd0f660e5ecb4bc5dc22d3a7f6dc",
-      "size": 18145
+      "size": 18145,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-endpoint-regression.js",
       "sha256": "a45e1f797b927acf122c2e4c86640998a06ad74efe0b1ed28a12a5ba90793e2f",
-      "size": 6873
+      "size": 6873,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-final-evidence.js",
       "sha256": "55750a6ba78db8c77c79de344afe93b29125b8ac1e12f66a9d32536988924184",
-      "size": 14261
+      "size": 14261,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-integrity-evidence.js",
       "sha256": "51c55a6fd08a752e450a8299bc15263411a4f1372f88b59e8043ce6d3c2204b5",
-      "size": 6100
+      "size": 6100,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-live-acceptance.js",
       "sha256": "e97a00792390035fa540285e753f4c589de7a8f8a4f19cad98c6290a501e5790",
-      "size": 9059
+      "size": 9059,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/atlas-token-accounting.js",
       "sha256": "b7f0b888cadd76521ecaa49c22867319659fb6e7a227766fdd79dc388ada9699",
-      "size": 5442
+      "size": 5442,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/build-anythingllm-frontend.js",
       "sha256": "4ed7d68456281ec8b5918b8b6183576959dca817f0a804e794f0ea1bca4e99b9",
-      "size": 17505
+      "size": 17505,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/build.js",
       "sha256": "4587ee302c61987d83acce43bee7ab1152780533d82634444c016d872733ae64",
-      "size": 13298
+      "size": 13298,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/candidate-e2e.js",
       "sha256": "bd15dc1d3b2093a947387f7c4a1e08feb35bba3bd1c9efbae6929b23a1acc6d2",
-      "size": 2653
+      "size": 2653,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/capture-routing-model-input.js",
       "sha256": "aea6207340bd2d1d840e487eb726b7f971dee1a0abca378aaf2f937a26854514",
-      "size": 7241
+      "size": 7241,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/compile-routing-report.js",
       "sha256": "cd6fb2ce9d9a6333a53e3ca1fab9256c416477a79b289d58914065deabd906d3",
-      "size": 3192
+      "size": 3192,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/doctor.js",
       "sha256": "1cecd658b52692e1f5ac2f5e9223f059d4474211cedb4fd460ff9b01aa975214",
-      "size": 61720
+      "size": 61720,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/dynamic-identity-live-acceptance.js",
       "sha256": "5048e8ef162400442c68c0f4a053d98f1dbab90a7cb754e7c0ebbf52522a34f9",
-      "size": 5475
+      "size": 5475,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/face-similarity.py",
       "sha256": "c59f9f6f3ce1e64acdd1da35f1a69d276169e54c0fb3eb8943965a32f8d4ce91",
-      "size": 2054
+      "size": 2054,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/gemini-routing-validation.js",
       "sha256": "097a33c7d97a7bb0723c9683d607b9d0d6d35eefea944edb13c754e246a99478",
-      "size": 2912
+      "size": 2912,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/governed-update.js",
       "sha256": "6bd9e8843ebac021e00354e48a087af03829946416a2585269c37eb08c84bd1c",
-      "size": 5847
+      "size": 5847,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/identity-candidate.js",
       "sha256": "638fb2902e777df31290eb44f76967637c2225fe2c4b107fca69301bc367ea02",
-      "size": 7828
+      "size": 7828,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/live-agent-routing-acceptance.js",
       "sha256": "786d612612f599163a370f38db99067354b42e77729cba8def2fdf48938ef5bb",
-      "size": 4926
+      "size": 4926,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/live-routing-audit.js",
       "sha256": "0300bc6d7f5282fd82e8bdf7f7509eb293b6c1366ba6c1f21d5577f216fb83c2",
-      "size": 6690
+      "size": 6690,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/multi-image-provider-validation.js",
       "sha256": "4251901dd6ad32aa1ace6bda81bb6e607b56a702ea11332c929ee12e2bdb8c0c",
-      "size": 6865
+      "size": 6865,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/multi-image-registration-audit.js",
       "sha256": "96b1eb7e73dcd1af338c94a307b4a55a2e55f044548cc33bd4535f5310d4a465",
-      "size": 5504
+      "size": 5504,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/quality-semantics-live.js",
       "sha256": "f74aa9a66dde5b42007cc573b28fda785f27f44df618bffcb531eb7dabe5a7f2",
-      "size": 6806
+      "size": 6806,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/routing-cross-encoder-experiment.js",
       "sha256": "613e61a5400cb68b5435a8730e0bbf46af5773fdb90c3c0b923858f4b7287438",
-      "size": 4230
+      "size": 4230,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/routing-profile-experiment.js",
       "sha256": "c800a5b846a881f78e7c1ecf7916e86ad5fe189ad0ae7af18f7ad693a7de1f3e",
-      "size": 7224
+      "size": 7224,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/scene-identity-live-acceptance.js",
       "sha256": "989adfa381c40fb51de3e8a30f98f3768bdacdf35da35918d73b47758dca47e1",
-      "size": 5600
+      "size": 5600,
+      "type": "file"
     },
     {
       "repository_path": "image-system/tools/visual-atlas-product.js",
       "sha256": "f02ce6b3c12b8a261daaa9172d5ee557f4a956670fdfbf9d3f5c361a85455eb9",
-      "size": 13777
+      "size": 13777,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/docker-bridge.py",
       "sha256": "5c533a114475b450893450f3497f5cba47929f271c781431a51e4ff118867a5c",
-      "size": 5601
+      "size": 5601,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/docker-bridge.py.aag-before-graceful-shutdown-20260819-190222",
       "sha256": "37d03db780ac15817c20abbd07cd822829b87e69c8d8e90e8113e4a1d9935129",
-      "size": 2726
+      "size": 2726,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/docker-bridge.py.aag-before-graceful-v2-20260819-190616",
       "sha256": "dfa5aba7033b4ed2137540fa15090e107a5913b47c45d57f55796a29fdcd4ec2",
-      "size": 4430
+      "size": 4430,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/image-hub.py",
       "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0",
-      "size": 11818
+      "size": 11818,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/run-docker-bridge.sh",
       "sha256": "d89ead1924a70412183c1bad8598df9b06bd559e0916ff347f662afa49b11a00",
-      "size": 868
+      "size": 868,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/server.py",
       "sha256": "acce6bbd0764ecb42e2490f6a6960f8daf5bca6e8703a0c6043c0e46e348aeb6",
-      "size": 16700
+      "size": 16700,
+      "type": "file"
     },
     {
       "repository_path": "image-system/upscale-engine/upscale-server.py",
       "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b",
-      "size": 19681
+      "size": 19681,
+      "type": "file"
     },
     {
       "repository_path": "install.sh",
       "sha256": "2463ad3a8621cdb9b02c86c19f40122e622aa2d53f494283ae15d3cc828a0334",
-      "size": 4493
+      "size": 4493,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/anythingllm/aagArtifactPresentation.js",
       "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870",
-      "size": 15962
+      "size": 15962,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/anythingllm/aagComposerHistory.js",
       "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604",
-      "size": 12434
+      "size": 12434,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/anythingllm/aagPublicToolSchema.js",
       "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad",
-      "size": 7058
+      "size": 7058,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/aag-model-compatibility.service",
       "sha256": "509054c215ecbb5cf171e989c97e9d7c198cd94b4134c11c1138566472592693",
-      "size": 1231
+      "size": 1231,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/compatibility.py",
       "sha256": "51a8cf6f890d470ea420575db189422cd21216af90005ccfb824ec57fc155bd0",
-      "size": 78390
+      "size": 78390,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/composer/app.css",
       "sha256": "1d2b856a4b5021333028d1923622399475a45ed3d58c4f5d973e8b40bfc9dd9d",
-      "size": 8258
+      "size": 8258,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/composer/app.js",
       "sha256": "e7194949a7e7db439e79ec14e3c1a9c5cd7b289d3ec2df95e4157992540b33a0",
-      "size": 18621
+      "size": 18621,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/composer/index.html",
       "sha256": "cda9acec89089a6e0de20ba17e5b527db6cb6dfaed670cfaf84178293638ced5",
-      "size": 11880
+      "size": 11880,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/composer/visual-taxonomy.json",
       "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812
+      "size": 29812,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/composer_canonical.py",
       "sha256": "20807a4a1bd29b749f9cc659f51e1847c615bee63379fecd4992c9be1c8461e3",
-      "size": 3697
+      "size": 3697,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/server.py",
       "sha256": "9550a7727e7722c7d9fc8cccfefcdcf292edfff33ce937b69fb12018680b647a",
-      "size": 66368
+      "size": 66368,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_compatibility.py",
       "sha256": "dd4f6a66218c8decf5a235e46cb272a149f7accfe668a681ed99207ab95ad90c",
-      "size": 51774
+      "size": 51774,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_composer_canonical.py",
       "sha256": "22d60b3ac4e16f20035bea70630c9d02e3a5b6ad5d18a178d0ce26d2e335527f",
-      "size": 7630
+      "size": 7630,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_http_boundary.py",
       "sha256": "f3514e65e07adc704984480222fc1c56dfa68a340a1bbdeccd3df9594b96dfcf",
-      "size": 34553
+      "size": 34553,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_runtime_attestation.py",
       "sha256": "f041dd9f781776955accaab887fcfd4a44c912f5dc1f56c7e6b572b87307b778",
-      "size": 2767
+      "size": 2767,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas.py",
       "sha256": "ce821794769cd4c60fffb9a08ec3282d7dec8e516fe742e9961fe1cf0fadb23e",
-      "size": 7417
+      "size": 7417,
+      "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/visual_atlas.py",
       "sha256": "4bf721763bdf56b6511eebbafeb7106da021e3ac810806f2adf84d562f544b19",
-      "size": 15529
+      "size": 15529,
+      "type": "file"
     },
     {
       "repository_path": "integrations/comfyui/bridge/proxy.py",
       "sha256": "55bc6f9e4a17a28c9ff24b2657b0aa145ae0a1863a825dd00b53cc342af60c87",
-      "size": 35050
+      "size": 35050,
+      "type": "file"
     },
     {
       "repository_path": "integrations/llamacpp/aag-llama-control",
       "sha256": "a0bb9f6478aeed67fd939ef9036c4569e36906549197a10d4663dc77e7b1d728",
-      "size": 35592
+      "size": 35592,
+      "type": "file"
     },
     {
       "repository_path": "integrations/llamacpp/gemma4-schema-enforced.jinja",
       "sha256": "821843f6222fddc90cb961bb3026d43e477801b89e55f1f2b66e2b603ca024a5",
-      "size": 16490
+      "size": 16490,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/__init__.py",
       "sha256": "7827f36d90da2a50781b1ce6ab223c73459aeef89f16a56953b4d861d8433dd2",
-      "size": 121
+      "size": 121,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/audit.py",
       "sha256": "b9d018e0c43c3249fec3adfa0ca559acdc5647996c798ec1dac57674d3ae230b",
-      "size": 7615
+      "size": 7615,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/__init__.py",
       "sha256": "c68e7608488116e05a1dcde27c8cc4bc289621d3386843ecb0bb24468924bc5f",
-      "size": 335
+      "size": 335,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/benchmark.py",
       "sha256": "459726105a668520167a5f53e96081363a2f2e3522bc472faf71ad7fcf6ab0dc",
-      "size": 7641
+      "size": 7641,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/config.py",
       "sha256": "d7c004f6936e6d55b7d1306caef92acffcdfd656d45aeb3fd1d13147d96fd363",
-      "size": 5685
+      "size": 5685,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/context.py",
       "sha256": "02c6975648e36001bc70a74ff880b89e254732d1611958959e13182a357658c9",
-      "size": 15186
+      "size": 15186,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/ingestion.py",
       "sha256": "e663c17599f1709474653c396061f6592b7d093717d33e200eefd3d08dc86c21",
-      "size": 32607
+      "size": 32607,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/memory.py",
       "sha256": "e3c7736c4e50de45506bdfd57585a9d3fe35aae1e7328371371a974e69ec0c41",
-      "size": 23036
+      "size": 23036,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/models.py",
       "sha256": "7c0a2a2ef70fe88fe5a79d7e13f25a263451813d2acb616d056f2287d93a3f2d",
-      "size": 2495
+      "size": 2495,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/remediation.py",
       "sha256": "a3eb0f2c8ef3fa356140a395e71cd6674586d3d67927bef0b07a780c09adb8d1",
-      "size": 6170
+      "size": 6170,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/retrieval.py",
       "sha256": "6fa6b92884bc67b16c12764138fa03f13f3ad76b80b43b577785f2407e6e49bc",
-      "size": 22038
+      "size": 22038,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/service.py",
       "sha256": "b106c3415239d3bbfa70dad1eb797711a94ea9faa81911e89b027e1416b3de7b",
-      "size": 12060
+      "size": 12060,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/store.py",
       "sha256": "2e062c60e7aaa50ec836e398ed854f09cda517ad8cc163cfb3c61d3d42c05be7",
-      "size": 26806
+      "size": 26806,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/context_memory/tasks.py",
       "sha256": "1c71eb69e4b2cb3651fc4c910f85b6a9b7772e501f427e882760923b45654e09",
-      "size": 12122
+      "size": 12122,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/contracts.py",
       "sha256": "2182d5af2cc4ef145d0101394656a862458d84060d24a8f81ea8d2d583a2b698",
-      "size": 5633
+      "size": 5633,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/detectors.py",
       "sha256": "c499f3f77f5da06e6847023ba8fcb824a85078fb81ad0737506585b5e783f5af",
-      "size": 2492
+      "size": 2492,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/diagnostics.py",
       "sha256": "4070136a7a1987eea33a1ed58a4b145e59cd59c36a2eefad31c24be28e677880",
-      "size": 10787
+      "size": 10787,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/endpoints.py",
       "sha256": "f980abf5e6e83d41a2c66b6540fe00b03d9a655ac6ecefd80c883732a4d0d9be",
-      "size": 1335
+      "size": 1335,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/__init__.py",
       "sha256": "b5e467d53c623f6a9c9dfa43f1bfbd56e59e718f0de2fa8d4dc778a975dc0614",
-      "size": 244
+      "size": 244,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/engine.py",
       "sha256": "816af0f1d3f3b6f1c372155ab195fa96e56d1c9b07d8d8c3e56b62a07517b629",
-      "size": 20770
+      "size": 20770,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/models.py",
       "sha256": "a8417cc5d29cd16db73fe64515e839035e0c6438b7251c6feb0d6fc9d2878937",
-      "size": 1479
+      "size": 1479,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/registry.py",
       "sha256": "313cc0f3b138e6ea216f0255fc1712929723b438ee6a017e1545609864dc8a75",
-      "size": 10912
+      "size": 10912,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/service.py",
       "sha256": "7efc1798333936ce9b79930b66ea5a0076a804aba3d6b8c1f14ca637f34961f0",
-      "size": 983
+      "size": 983,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/investigation/store.py",
       "sha256": "6a5b7914adde965878189bb715bc84ee2b152cdde3ae9af92532bbbc3c30303f",
-      "size": 15119
+      "size": 15119,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/__init__.py",
       "sha256": "599e70a690cf225132f90e30df9296e57513c533896245e3b21a1c34d7423231",
-      "size": 178
+      "size": 178,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/adapters.py",
       "sha256": "5bbcdc1d57692c54ced324fdb8d6c9ea7145c7c3cc8082c42ab4ec8cbbb21098",
-      "size": 11634
+      "size": 11634,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/command.py",
       "sha256": "3d4cc034aa6c01e9301702b2c0ce5807e29690e632b26aab0eb1398c9bad801e",
-      "size": 10968
+      "size": 10968,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/config.py",
       "sha256": "414c6cb36cf7bb40dec216861ad09e4687eb0a7a1753bd45d41f9f6d90a3d2d6",
-      "size": 7861
+      "size": 7861,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/duplicates.py",
       "sha256": "24282528788755564ad16fac252bdc13def16f2f020d5b75c4fc2ff5040e3859",
-      "size": 11133
+      "size": 11133,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/filesystem.py",
       "sha256": "49934bfb5d1b396a65617b428bc22350843e66f63d7515f50c1a96ee40f14d21",
-      "size": 13889
+      "size": 13889,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/health.py",
       "sha256": "294553545a3e2820b4b528c24ad99e740b6b3ec58a4356a8a2cd169521cf96a1",
-      "size": 8352
+      "size": 8352,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/history.py",
       "sha256": "3d685b9b7f351f8eef839a6179d536b757c7aef4444d8188918176e3c5b46ff5",
-      "size": 17347
+      "size": 17347,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/models.py",
       "sha256": "02ff6a30771c0669627206f10a3637d09e3706bc5c71f248f20d05d67963f907",
-      "size": 5308
+      "size": 5308,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/mounts.py",
       "sha256": "b26cebd1e5792dc0822a349fb3fe8e7ac627811f69591b02ed8b52266b097de4",
-      "size": 12098
+      "size": 12098,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/orchestrator.py",
       "sha256": "0fa01296de0d5030d39dc4e3ac6e0419378081c4757416096e782f70cf8677da",
-      "size": 12082
+      "size": 12082,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/performance.py",
       "sha256": "21bff75088f2d34f7d6f66e7c34005b405afa2c0ca38726e56f5f1c4929d36cc",
-      "size": 16836
+      "size": 16836,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/policy.py",
       "sha256": "3c3bccba86b4fd6cd43fc0eb1127bf1715c19f510e6cfc78326de24416899bb9",
-      "size": 12905
+      "size": 12905,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/recommendations.py",
       "sha256": "a84eec0364d938e2cdd62ae2101f0ea28171b004ec2dbca3df241b037a52c381",
-      "size": 7034
+      "size": 7034,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/render.py",
       "sha256": "f0bc3cb46e1b8f9dda093f6ce0acd206c1cc36db1785a7963d0b84ebc68eecbf",
-      "size": 2499
+      "size": 2499,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maintenance/storage.py",
       "sha256": "411e49daa452da1f2fc618e9ae14e08cdad9cc91e77a890049c636df88bdab7e",
-      "size": 10154
+      "size": 10154,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/maturity.py",
       "sha256": "c55e78fc92778d6e6838faa8db694521cb248313c58602786b9fb87d2a266b30",
-      "size": 12341
+      "size": 12341,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/observations.py",
       "sha256": "dd2161c662222094213c94b3b368d7644e8bb0086f247ac4d7c30c285ce45540",
-      "size": 15317
+      "size": 15317,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/onboarding.py",
       "sha256": "5410b59e8ad8577582745750e8fd039d798c00cd1f04bb59c63909e417e159d3",
-      "size": 1926
+      "size": 1926,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/__init__.py",
       "sha256": "93a993cffadf06319d2bb2b60230a931b6385a93858f354bbb41ab83bfffe87a",
-      "size": 289
+      "size": 289,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/contracts.py",
       "sha256": "02de6641c7d296b2531b8a987ff27fa4fe38148a745d7ec602ab96921f830b5b",
-      "size": 5938
+      "size": 5938,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/engine.py",
       "sha256": "b25e6e4cb5d7acc1bb593f995dccba185c88cc64659563a58255f7991fd64036",
-      "size": 24751
+      "size": 24751,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/idempotency.py",
       "sha256": "9c291bda67a61d86b78584a15d08f127cfd11b7a0cab477153a02f9da9db4e58",
-      "size": 2682
+      "size": 2682,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/intent.py",
       "sha256": "3439cbbae60b4fa3cb90b23fca63a71c141cedbf5f1404b0bd9fb19f63e07e3a",
-      "size": 14289
+      "size": 14289,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/practical.py",
       "sha256": "72521aef721e395f559149ebdec1e70a4437c507a1eb7e0a04c71ffb80a7d6a2",
-      "size": 16027
+      "size": 16027,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/orchestration/service.py",
       "sha256": "46371e955aed71b5154811a1d870704ad72d7eaa1adb1ee201f4512156578119",
-      "size": 1742
+      "size": 1742,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/policy.py",
       "sha256": "6cdb18a14201c2573d07fb41e15de9e29066a5dc9dbb4a7a91d4dc9f1a95d591",
-      "size": 2286
+      "size": 2286,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/__init__.py",
       "sha256": "c38b578762ad3cff9892b103d47cf3a7d4bf88f30cb08b13f6008f0129b9c394",
-      "size": 431
+      "size": 431,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/bridge.py",
       "sha256": "61b4d3557ec476f91c5070673b559136925dda68fdaacb6cf356817cc4a97281",
-      "size": 9344
+      "size": 9344,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/context_link.py",
       "sha256": "d9c4fbb7fde74870f34af42bafb7c0beb988042011c1ff6ab2bbe1dbc78cddbc",
-      "size": 8059
+      "size": 8059,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/engine.py",
       "sha256": "7f50f59f407d9341fbc05988309fe660e87ebb30bdb01d9a421c462ea47b5f0d",
-      "size": 41997
+      "size": 41997,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/models.py",
       "sha256": "b53ba40b0f2c1d87c8905aec7ba378a30eb18469808924b6ab479e12d272ff38",
-      "size": 4054
+      "size": 4054,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/registry.py",
       "sha256": "661da85941bcd2d0fa9e7217938045ac5532e5c40e44795031f27338d1089356",
-      "size": 9625
+      "size": 9625,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/service.py",
       "sha256": "19e16b6341aca4499cf14fdf35794c0bcedfd03e4b0d42c2b3ad7065cb75531b",
-      "size": 586
+      "size": 586,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/remediation/store.py",
       "sha256": "437d1d9c1f734f0f7ec1b30fd93ef416a0558dbf21fd47876e946050cb9358ec",
-      "size": 15764
+      "size": 15764,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/app/agent.py",
       "sha256": "b4fa897e6495fba42d36336c0c74825d3f6cb0864c2abd1d9af9b199ea44d5c8",
-      "size": 210903
+      "size": 210903,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/app/host_bridge.py",
       "sha256": "a16f206849d8848314ed0f1e9013a207114a98a61095910d61d4a0fd86858fff",
-      "size": 4929
+      "size": 4929,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/app/host_bridge_v2.py",
       "sha256": "e83bfd9ff63869c1977b11fb7ffb8836b685543f2e9b3011229d4b40f7bca136",
-      "size": 13292
+      "size": 13292,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/app/test_openai.py",
       "sha256": "6b386a639d617e6a702d26ed69ef90bb0efdeca25af2d08454cf41f13616a7b1",
-      "size": 679
+      "size": 679,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/bridge.readiness_failure.v1.json",
       "sha256": "3c3bf0a146586de1df2c025ae8eab5b7ba946298a6077d4c8fae08c2e0f65a27",
-      "size": 1090
+      "size": 1090,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/context/context-package.v1.schema.json",
       "sha256": "719b31167dbd0f9d9727d1f7955dc8819a66d0039c4fc6be3a6e4e3ddf2597c7",
-      "size": 1277
+      "size": 1277,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/context/memory-candidate.v1.schema.json",
       "sha256": "11013ba9f68f6c6d8e40649ad7e9c557053f83151eb62f1dbeb5cb10b839cd1f",
-      "size": 664
+      "size": 664,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/context/remediation-plan.v1.schema.json",
       "sha256": "f006c94140cb35a61a3b8da554fa950fc9a602520c97777ad2ff9d47ec2fb687",
-      "size": 1441
+      "size": 1441,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/maintenance/maintenance-plan.v1.schema.json",
       "sha256": "e9cfe6defc78bafaad77cd51198103aa6630be4f59bc017e6b78ce9724ea1445",
-      "size": 1895
+      "size": 1895,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/maintenance/scan-envelope.v1.schema.json",
       "sha256": "6793a19fcbb0e6949d57fabe26df035d37ab83938b075571cc4a643cc3981798",
-      "size": 1890
+      "size": 1890,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/contracts/maintenance/tool-catalog.v1.json",
       "sha256": "ea59162bc8ecefdee15b05ef3780d6a9ef381152134f3467322b95cd9287cc7d",
-      "size": 2112
+      "size": 2112,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/README.md",
       "sha256": "4ce36eda9143e61af7c1df264c2949e36430b15ed4fc95dbb7941d78d48df6f3",
-      "size": 2629
+      "size": 2629,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/handler.js",
       "sha256": "5500881cdfc933ab9faeed75d446ce95f58a2def34cfbe9d56abf14e080f8815",
-      "size": 9956
+      "size": 9956,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-context-memory-v1/plugin.json",
       "sha256": "2bd8cff851148f2ffe03b955b660a8e83f993865fe67c95cfab7b12839a9b590",
-      "size": 2862
+      "size": 2862,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/README.md",
       "sha256": "e0ddc6e6455a548484785d5c8b9e57c53da4a7f0a79e3d11caee15d78332ce5b",
-      "size": 3986
+      "size": 3986,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/handler.js",
       "sha256": "6860b36eeb38af3c85abf88055a8306c4f0f8d575698d90c1064aa3c161c940b",
-      "size": 11820
+      "size": 11820,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-governed-orchestration-v1/plugin.json",
       "sha256": "e83a36361186c9dfa8b8167adfc8f1864c738927b7c9a59a992857945a85c7e5",
-      "size": 3903
+      "size": 3903,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/README.md",
       "sha256": "44518dbc7133951f6423c5eb91812e9e4e02e88eaef2847ef166af0d64536866",
-      "size": 2346
+      "size": 2346,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/handler.js",
       "sha256": "c65dcb941409fb79b8c8a1d63a1935c94b3d3042a5e9c29d259d28aabf7475c9",
-      "size": 12193
+      "size": 12193,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-maintenance-intelligence/plugin.json",
       "sha256": "7a90280fd21b86b7913a2122c0e1a606a9d8a9a81f0a94b94802af0eb7171b19",
-      "size": 2780
+      "size": 2780,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/README.md",
       "sha256": "23d8990a0e1a8e839b47449ddba75b7052e7415e40ad339315512945c64c6674",
-      "size": 734
+      "size": 734,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/handler.js",
       "sha256": "2525eaf9d63a852eeea0b33bd51d5d69d0ab29ff5d8d20b07ac779975699ddd5",
-      "size": 4852
+      "size": 4852,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/anythingllm/aag-ubuntu-diagnostics/plugin.json",
       "sha256": "64e7a65fb831dd504e0c1541d2cd13a8156c6c30fab871087235cf307065cf30",
-      "size": 2924
+      "size": 2924,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/integrations/systemd/aag-ubuntu-agent-bridge.service",
       "sha256": "9e339f7189e40474de29e59d7757780e5e456e6c0e9352767e4d12c21aa668ff",
-      "size": 386
+      "size": 386,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/context_memory_helpers.py",
       "sha256": "5affb1f3b80a9a89e438ffc8eebaeb826bf6baf782b0d849cdfc976f69919bf7",
-      "size": 2461
+      "size": 2461,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/healthy_bridge.json",
       "sha256": "04d14e377412603b8be027c0fb911bfaf0278100bd1f631029270479262ab9e2",
-      "size": 411
+      "size": 411,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/inactive_service.json",
       "sha256": "829f407d8c98a41141f973b1f63b105c949c782d7f613f761608805bc0367791",
-      "size": 440
+      "size": 440,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/indeterminate_health.json",
       "sha256": "1573e3bcc491736f6ad901d780372598284868dc90403172893981fc1ed5cfeb",
-      "size": 440
+      "size": 440,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/missing_evidence.json",
       "sha256": "ac3cdc0757650f8c8a5c5fc8bef9576b8fd38ddb71b5c9db702b5f9603b9a26d",
-      "size": 199
+      "size": 199,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/stale_evidence.json",
       "sha256": "1e45d59afcc969bf389352541204db3cbffe8bb23eb1683a2c65ee0d7ad6db9c",
-      "size": 484
+      "size": 484,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/supported_readiness_failure.json",
       "sha256": "ae0c27256cff96e90b3bbcefa0562a907d4939001a97a21db79554720a756e4d",
-      "size": 485
+      "size": 485,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/unobservable_health.json",
       "sha256": "3fd3940fc8f6c4f68e12641806ac1c581205cfbb09e8bafb00e31982c70d9320",
-      "size": 432
+      "size": 432,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/bridge_detector/wrong_target.json",
       "sha256": "fa9997f5c93d373fd99991aee0866267e5b1efc82ff4bd7aacad1fb5002108a9",
-      "size": 413
+      "size": 413,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/context_memory/golden_queries.json",
       "sha256": "9d8084db4dff0a017599fe657f11bdbf9faab263adfed45d565d82b5f1893d44",
-      "size": 10455
+      "size": 10455,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/diagnostics/scenarios.json",
       "sha256": "974e54a2ce6fa33ee61b07209f76c838b5f32e0f0f3b8b88df36f1285d108953",
-      "size": 3726
+      "size": 3726,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/orchestration/golden_intents.json",
       "sha256": "a7eaa096a3fcc79b55decdf3253376b49a9861df3e587c5e8d4de81368a7eb5b",
-      "size": 15310
+      "size": 15310,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/orchestration/practical_workflows.json",
       "sha256": "b0cb1e0517c271199640aa93710bed586e8b0d71b604640fc6e6ecce9a9b2037",
-      "size": 6343
+      "size": 6343,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/fixtures/semantic_routing/cases.json",
       "sha256": "30bbb9310c184bedefbd15bf7111cf53bd3a241340d64dc2e0bbcf26120da5eb",
-      "size": 2840
+      "size": 2840,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/investigation_helpers.py",
       "sha256": "8a131ed5f7de34b2bfa2c3269879a0e504e69b76bcca68653afb5e1d3f1dcd9b",
-      "size": 4212
+      "size": 4212,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/maintenance_helpers.py",
       "sha256": "5ed4b1bb0a9b0beafbda8b0cdaf13d8bf9db09c586ea4da97e5c4fbc4c268e43",
-      "size": 3718
+      "size": 3718,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/remediation_helpers.py",
       "sha256": "25e37f5d7afe9007e396ce7f73ed1259ee4c8b582629582986cea9a6418e41e3",
-      "size": 7905
+      "size": 7905,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_agent_contract_integration.py",
       "sha256": "8dc9b2598bc018f34c6bdb941a564d6bb42640483dc1d258dd07ace274de3a56",
-      "size": 7577
+      "size": 7577,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_audit.py",
       "sha256": "7f2f17e192c9dfbb02cb2342f310484b6668e637378eb9b03cfc647a219391de",
-      "size": 5447
+      "size": 5447,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_context_memory_ingestion.py",
       "sha256": "928ab87ea0789e310dff836b7e11fcd2600a9dad1a776b3571dddfc0a1ed9aff",
-      "size": 9038
+      "size": 9038,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_context_memory_integration.py",
       "sha256": "7ac3bd6cbac1b6966aea7ae2ba531fdadec69167bc027687feeef15841326668",
-      "size": 11397
+      "size": 11397,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_context_memory_retrieval.py",
       "sha256": "0e6185e976d42ac7d7c5c538ba99bbac2fe5c4a5a04274648cbb48a0f96c422f",
-      "size": 8099
+      "size": 8099,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_context_memory_security.py",
       "sha256": "91c6002200cbe1df69c1f939e6a5026295093dd100ae92fed5dff1e2f8970c6b",
-      "size": 7794
+      "size": 7794,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_context_memory_store.py",
       "sha256": "ba52744a28da9905f30e5eb26a325eca8badb0bee605e5a9c0dccafe8d5bd251",
-      "size": 13330
+      "size": 13330,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_contracts.py",
       "sha256": "dd7a7ce29fdaceecceb9581ec21d3b89750ca83aee6c6ea31fa5d601d408bee2",
-      "size": 6651
+      "size": 6651,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_deployed_diagnostics.py",
       "sha256": "8d93bd73b01ed81b22e64fa18e2114e80b1fe81a59fa0149f2e44b0c951f33e6",
-      "size": 8447
+      "size": 8447,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_detectors.py",
       "sha256": "c77bac1950dbc1338dda1f9f18adca93820156123df4c9e11a1a8f0233abbd34",
-      "size": 2533
+      "size": 2533,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_diagnostics.py",
       "sha256": "075669b82436cb60c73d1c9d78d94f07645477df7a33fab57f9f835f029825a0",
-      "size": 5650
+      "size": 5650,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_governed_orchestration_engine.py",
       "sha256": "61383482cc3ac1d3c0486103461a0a017dba5d667cee504d733745075d5b01cd",
-      "size": 5613
+      "size": 5613,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_governed_orchestration_intent.py",
       "sha256": "27af447ec262e861118828532f4dfadf301d51bc8ad1384c88f71a60e2c86997",
-      "size": 1954
+      "size": 1954,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_governed_orchestration_security.py",
       "sha256": "4e70394a800cb8c739866229e6a2788e7778597732dea6b96284ace44638f90e",
-      "size": 3691
+      "size": 3691,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_investigation_engine.py",
       "sha256": "498071f3d2a4fda260052211dbbe2ead2c05202ebdc9efc672e086742989b04d",
-      "size": 5308
+      "size": 5308,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_investigation_registry_store.py",
       "sha256": "38d1d623bf92caf648732b8045b340101fea43248d5d5b306f3b622c13321efe",
-      "size": 5999
+      "size": 5999,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_investigation_security.py",
       "sha256": "7f124af4b85a42f96c0f759155d51ed97d7f33b8128a62e6168b53e2b68b7242",
-      "size": 4214
+      "size": 4214,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_live_audit_security.py",
       "sha256": "021f5ddd0ac304c34867917682c3679fa9c3ff45100bed5cb721592ec284b67d",
-      "size": 1300
+      "size": 1300,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_command.py",
       "sha256": "be8c2301d01a989a31c0b6f549d939a16437fa224d868f22fbe372fc1ebc2e4c",
-      "size": 4892
+      "size": 4892,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_duplicates.py",
       "sha256": "2a69f449ae85f4bfe65fdf319a1bc89a546cd167e3ff3b8f9610b6a0da6ac234",
-      "size": 4886
+      "size": 4886,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_filesystem.py",
       "sha256": "01c5814c05bef2a74065dbeacbc9e6328b4c216738955e25105ad7b273d3b1be",
-      "size": 6148
+      "size": 6148,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_health.py",
       "sha256": "cc4103a3261a3f05168dc83f714e587a2fa4a9845e391342c53e7777029c9b5f",
-      "size": 7813
+      "size": 7813,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_history.py",
       "sha256": "c7bb8cee8e42b843a6c50f682353f188373223a7db12c67e75191c25494abe64",
-      "size": 5493
+      "size": 5493,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_integration.py",
       "sha256": "97e2d698b2bc4752bb24e12bf2762d2a435b11d1088bac5a2c1af70d34a10cab",
-      "size": 7926
+      "size": 7926,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_mounts.py",
       "sha256": "9c9e92f16900e62959fda732034465662517836949b15147cc8d62ab19ae1f9d",
-      "size": 2134
+      "size": 2134,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_policy.py",
       "sha256": "e5ae3df7b31dddffaa9ae3c4312fa360b672fa7e9fa119dc8c27f0ccd53b666b",
-      "size": 5194
+      "size": 5194,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_skill.py",
       "sha256": "ce6ea8a7a46b6f7d385e8bd0828823d2e1c0adecc4014d3c67460c488a11e990",
-      "size": 10640
+      "size": 10640,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maintenance_storage.py",
       "sha256": "3b10e3845d31177d634a7ee78787af4c10213e71a5a08625c6b0846aa4a8cea5",
-      "size": 5283
+      "size": 5283,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_maturity_verifier.py",
       "sha256": "e9b04c19262f952a9764a3997ca55dd9bd9acc7fa90a56c47bc730f776612c85",
-      "size": 3711
+      "size": 3711,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_observations.py",
       "sha256": "c696afc134677cce64d5347d6b3ac3a03620f136f7707115e211ffc1a4f0090a",
-      "size": 6653
+      "size": 6653,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_benchmark.py",
       "sha256": "c76b346cbd24fb51574c861fa62ebb28c9e1e171c282d3f021bce38066531187",
-      "size": 3297
+      "size": 3297,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_bridge.py",
       "sha256": "2897f16ef4358e542d09b8fa7092a58934d364bc5ad006c442db0d33f6cec98f",
-      "size": 8139
+      "size": 8139,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_contracts.py",
       "sha256": "cf534d83bed90735508192e66bc8ef14683b461ed9775275a7dc238b641dec6d",
-      "size": 4218
+      "size": 4218,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_engine.py",
       "sha256": "b371a57080b0dd679edfa3135b94bf1fb9d884b65a5c48fb7ade38c4744c9d2a",
-      "size": 11265
+      "size": 11265,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_practical.py",
       "sha256": "0d0806d5cd3b8a1285d07798ba8f6aac62fe9b2df7c5118c46d26333c6ab095f",
-      "size": 7473
+      "size": 7473,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_operational_orchestration_skill.py",
       "sha256": "3dd64d12bf2bdd243989d5de91aa4a6afcb2843f0f67b26fa510cd1e675318b3",
-      "size": 10185
+      "size": 10185,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_release_integrity.py",
       "sha256": "2312b9f6cf7978a8a86133c1a90fa034c50d25de821c6eec14bd6411f56a2a42",
-      "size": 883
+      "size": 883,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_safe_remediation_engine.py",
       "sha256": "97543a95a9850d1040cb9e2aed0e7e31a28be9a13d88c6bd010364524be168c9",
-      "size": 16762
+      "size": 16762,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_safe_remediation_registry_store.py",
       "sha256": "a7dfbf09ffa17b35ce02b38b2a8b7fb82021dcdacae21476a74e1e972afdaf37",
-      "size": 8509
+      "size": 8509,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_safe_remediation_security.py",
       "sha256": "cda006c17600033cb4c912b7a814a8f69d044b702dda868aaaba9721ee82b0ce",
-      "size": 6180
+      "size": 6180,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tests/test_winboat_knowledge_ingestion.py",
       "sha256": "c6a51073538c074ccebd0270476951da255e565185af4cf9502739711f9bd8b6",
-      "size": 4889
+      "size": 4889,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tools/context_memory.py",
       "sha256": "9967024b3ad84ed5f1751ae46ed76d7faa7d4ae6139e0a24a8e4837f4192e7ea",
-      "size": 13245
+      "size": 13245,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tools/diagnose.py",
       "sha256": "4f238976ad580673fd197f669170163e3c01aeac8b80f8b3df1804f86bb18cbe",
-      "size": 1793
+      "size": 1793,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tools/live_audit.py",
       "sha256": "95b81e39a4a945ceb61b977ce18a77eeb507ebe51884558ceea2f02b57a36003",
-      "size": 3839
+      "size": 3839,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tools/maintenance.py",
       "sha256": "1dc22fbed8e3ca15938d82af4c955de649719b3c385970905d231c04761ad029",
-      "size": 2717
+      "size": 2717,
+      "type": "file"
     },
     {
       "repository_path": "integrations/ubuntu-agent/tools/maturity_check.py",
       "sha256": "b0659978f365ce80017615ab35b37a10419a1f0e6d134350209029b941040fca",
-      "size": 903
+      "size": 903,
+      "type": "file"
     },
     {
       "repository_path": "manifests/AAG-BUILD-PROVENANCE.json",
       "sha256": "d55d6b848430852a5eea512696e285b4b315a87c3a361de6c72ce3078f0ed6b1",
-      "size": 921
+      "size": 921,
+      "type": "file"
     },
     {
       "repository_path": "manifests/LIVE-TO-REPOSITORY-MAP.csv",
       "sha256": "8a7bda896eb485175383a842d35ed0f718e677a027644083da0826cd0cb25d11",
-      "size": 1213
+      "size": 1213,
+      "type": "file"
     },
     {
       "repository_path": "manifests/ORPHAN-UNKNOWN.md",
       "sha256": "997931dd5f507a17773c4396fe3c00379482636ddc45ed1d79c897377dc96f76",
-      "size": 1129
+      "size": 1129,
+      "type": "file"
     },
     {
       "repository_path": "manifests/RELEASE-STATE.json",
       "sha256": "de6491860283f1755aa9fd2a6b904777c30c77776cd0d7bf6873f7af5d8a0408",
-      "size": 844
+      "size": 844,
+      "type": "file"
     },
     {
       "repository_path": "manifests/STAGED-MANIFEST.json",
       "sha256": "c01bbb26637f3b55c4dcc2a2f6c5256193567fa16afcc8d1112900af973344ee",
-      "size": 51740
+      "size": 51740,
+      "type": "file"
     },
     {
       "repository_path": "manifests/VISUAL-ATLAS-ASSET-REQUIREMENT.json",
       "sha256": "b69e98a2eb7ec1d19d7375c728031c6435df1208eb26d2b9dd4c511f529c292a",
-      "size": 732
+      "size": 732,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/00-DISCOVERY.md",
       "sha256": "558a71b6ddc37475f84598f2147da81c3afc6ef5cdac1e70167aa8ce82b4c5a8",
-      "size": 489
+      "size": 489,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/01-COMPLETE-FEATURE-INVENTORY.md",
       "sha256": "b62efaf87f3d938186c29554ca3334ee1c3f21f3c2ef07ddaa0321814dfc01d7",
-      "size": 374
+      "size": 374,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/02-STOCK-VS-AAG.md",
       "sha256": "4205bbfc78d551f46ba415fb3208b299c8690d665131cba832887f85bef67920",
-      "size": 368
+      "size": 368,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/03-PATCH-INVENTORY.md",
       "sha256": "68e22c6c394ec33ac950e7011a7a6e50f4f0ba87ee0fcef30705e42db4deaac7",
-      "size": 345
+      "size": 345,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/04-SECRETS-PRIVACY-AUDIT.md",
       "sha256": "a3c067601ef8a88db4938f1d9965615fef77c048068c553ff7b1bf829a997538",
-      "size": 406
+      "size": 406,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/05-LICENSE-AUDIT.md",
       "sha256": "2f1297609f940ad5556c1c4e343a4faec79b222583f9fce043e95572634178b5",
-      "size": 387
+      "size": 387,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/06-MODEL-EXCLUSION-AUDIT.md",
       "sha256": "080b7b0c89e1e131b0c6fa21f8ca94dc25fdcab12ccd680ff675b37be52f3353",
-      "size": 253
+      "size": 253,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/07-REPOSITORY-DESIGN.md",
       "sha256": "d41e54544967eea813e05e1e2d722bedbfc92acc1a61f5b64e3a7b7128c2b0ff",
-      "size": 281
+      "size": 281,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/08-INSTALLER.md",
       "sha256": "63acd150d9ad37562b0fdf1c84f2c49b602455daa1967394fef8b85e4ad9df06",
-      "size": 310
+      "size": 310,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/09-RECONSTRUCTION-TEST.md",
       "sha256": "c25421be81afeb66b44bc65fe35eb2c5be4d161526a46ef837cf71d9db50dfcc",
-      "size": 437
+      "size": 437,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/10-TESTS-CI.md",
-      "sha256": "510cf2bc9e533281bacc16458360f250cfe8e0c370944c3a59d803f1f5d732bf",
-      "size": 487
+      "sha256": "c02bdbda62724db81b9c893227fe0c398574cfab6b137f4ea3694a4686b78259",
+      "size": 517,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/11-LIVE-NONREGRESSION.md",
       "sha256": "c7817b328548407914f2f92a6ac04a4c7e83970bc991592b8893686350f30722",
-      "size": 353
+      "size": 353,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/12-GITHUB-PRE-PUSH-AUDIT.md",
       "sha256": "d338494ba96a7e8c1df2111376001750aa185a3650b5a407c8c6fd6b719ddbf8",
-      "size": 299
+      "size": 299,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/13-GITHUB-PUSH.md",
       "sha256": "32c2fd0ac25587b016e0370418ae2fed907929851e9dd614fc88b842eacae8a2",
-      "size": 275
+      "size": 275,
+      "type": "file"
     },
     {
       "repository_path": "packaging-evidence/FINAL-RESULT.md",
-      "sha256": "d28011d46d1bf03708b5de036c05286b560473cf601d9739a7e92a61c9b46c1d",
-      "size": 701
+      "sha256": "95ff65847e106d42734cfcd4afcc812e573729721f1a2d7d141d651ab36f9e5d",
+      "size": 779,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagArtifactExport.js",
       "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc",
-      "size": 11704
+      "size": 11704,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagArtifactPresentation.js",
       "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870",
-      "size": 15962
+      "size": 15962,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagComposerHistory.js",
       "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604",
-      "size": 12434
+      "size": 12434,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagComposerProxy.js",
       "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3",
-      "size": 9927
+      "size": 9927,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagIdentity.js",
       "sha256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a",
-      "size": 6662
+      "size": 6662,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagImageProgress.js",
       "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640",
-      "size": 15213
+      "size": 15213,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagOrdinary.js",
       "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2",
-      "size": 9779
+      "size": 9779,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagPdfAssembler.js",
       "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca",
-      "size": 12612
+      "size": 12612,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagPublicToolSchema.js",
       "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad",
-      "size": 7058
+      "size": 7058,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-ephemeral.js",
       "sha256": "cc1b4ecaf43a21ef3277a25c6965bc6aa605b1b2e65469d7ea38842112b5a8e5",
-      "size": 29338
+      "size": 29338,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-index.js",
       "sha256": "c6ad7dec0e65e82c0b0b5862d53771943c8b90df8a9486ad954f71bd49b67231",
-      "size": 42641
+      "size": 42641,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/apiChatHandler.js",
       "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268
+      "size": 29268,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/chat-apiChatHandler.js",
       "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268
+      "size": 29268,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/chats-index.js",
       "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164
+      "size": 5164,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/context-window-finder.offline.js",
       "sha256": "a746cdd5b09d86404af6bfb93f10b0c28d41349fc2afbbb6f9d2f987fef0c9f0",
-      "size": 7941
+      "size": 7941,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/index.js",
       "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164
+      "size": 5164,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/server-index.js",
       "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
-      "size": 6485
+      "size": 6485,
+      "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/toolReranker.js",
       "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
-      "size": 10237
+      "size": 10237,
+      "type": "file"
     },
     {
       "repository_path": "rollback.sh",
       "sha256": "62e62c68ba62a83b9b880679539ebf88418ca9890f5e7f3b4aaea5e6a871db7f",
-      "size": 627
+      "size": 627,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-chess-anythingllm-bridge.service",
       "sha256": "03b3e31aba0fe8df4875f6ad28d35bc462ba6a8455ff27c5cd2310c5970253bd",
-      "size": 628
+      "size": 628,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-comfyui-docker-bridge.service",
       "sha256": "120d296512705fb0cf251f5dafa59bc0dc50058ab5d6952450306e3f74a2a76f",
-      "size": 262
+      "size": 262,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-comfyui-image-proxy.service",
       "sha256": "651526d6ed4c230169a7a85de4f0fe63393446af65fa6550eb05396099f6dcaf",
-      "size": 277
+      "size": 277,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-composer-loopback-relay.service",
       "sha256": "8d37f10c9e3751f6eb7d87caa218ccf94360ab84e3f6d1dda89bc62b6ea1e6dc",
-      "size": 872
+      "size": 872,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-human-identity-bridge.service",
       "sha256": "e4dd65fba275b926da1266db04451ebcc6d9f0edd53eb0f0603e0ec7fb9c6c43",
-      "size": 777
+      "size": 777,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-human-identity-scene-bridge.service",
       "sha256": "00bd62d4a2f4b1f9afa4b9950f10a9614d2ff928aa843584faf519629440c4d1",
-      "size": 786
+      "size": 786,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-model-compatibility.service",
       "sha256": "509054c215ecbb5cf171e989c97e9d7c198cd94b4134c11c1138566472592693",
-      "size": 1231
+      "size": 1231,
+      "type": "file"
     },
     {
       "repository_path": "systemd/aag-ubuntu-agent-bridge.service",
       "sha256": "9e339f7189e40474de29e59d7757780e5e456e6c0e9352767e4d12c21aa668ff",
-      "size": 386
+      "size": 386,
+      "type": "file"
     },
     {
       "repository_path": "tools/build-inventory.py",
-      "sha256": "3963cc268b95e1e0a2c8fdc329f3ff13277eaeb0187ff422a0a665b58712c09d",
-      "size": 817
+      "sha256": "593b6ee1a4934c2edd6fc06291c06defb41b9c7a76f18f5a83aee232ec330b18",
+      "size": 1123,
+      "type": "file"
     },
     {
       "repository_path": "tools/sanitize.sh",
       "sha256": "c95fb88962ef70a6a07a5211f8e3e1b8f0b8dc67f74ec63a2e4de6f83ca880dd",
-      "size": 1252
+      "size": 1252,
+      "type": "file"
     },
     {
       "repository_path": "uninstall.sh",
       "sha256": "3adec67e94af4595b112508b42c569b589cbb25ca8a96d99f002d3901293dce4",
-      "size": 390
+      "size": 390,
+      "type": "file"
     },
     {
       "repository_path": "update.sh",
       "sha256": "9e1f7710321718b984b811c55396adcc382c92d43534943c2b613b355b47ee2f",
-      "size": 276
-    },
-    {
-      "repository_path": "visual-atlas/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426
+      "size": 276,
+      "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/atlas-manifest.json",
       "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426
+      "size": 1678426,
+      "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/preview-index.json",
       "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651
+      "size": 169651,
+      "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/product-assets.json",
       "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
-      "size": 242887
+      "size": 242887,
+      "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/retrieval-aliases.json",
       "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863
+      "size": 6863,
+      "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/visual-taxonomy.json",
       "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812
-    },
-    {
-      "repository_path": "visual-atlas/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651
-    },
-    {
-      "repository_path": "visual-atlas/product-assets.json",
-      "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
-      "size": 242887
-    },
-    {
-      "repository_path": "visual-atlas/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863
-    },
-    {
-      "repository_path": "visual-atlas/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812
+      "size": 29812,
+      "type": "file"
     }
   ],
   "generated_utc": "2026-09-04",
