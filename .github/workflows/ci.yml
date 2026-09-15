@@ -10,6 +10,5 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: chmod +x doctor.sh tools/sanitize.sh
-      - run: ./doctor.sh --preflight
+      - run: ./doctor.sh --package
       - run: python -m unittest discover -s image-system/integrations 2>/dev/null || true
-
