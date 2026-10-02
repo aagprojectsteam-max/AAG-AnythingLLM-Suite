@@ -1,102 +1,6 @@
 {
-  "file_count": 503,
+  "file_count": 507,
   "files": [
-    {
-      "repository_path": ".aag-atlas-product-test-8TzS74/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-8TzS74/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-WkfGLq/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-WkfGLq/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-axEqIV/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-axEqIV/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-k4mdHQ/image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json",
-      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
-      "size": 29812,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
-      "type": "file"
-    },
-    {
-      "repository_path": ".aag-atlas-product-test-k4mdHQ/visual-atlas/manifest/retrieval-aliases.json",
-      "sha256": "d6ac1345636bd2f757e5a425e92b3770b46564f0cd38726d3bcf946eebc4d23d",
-      "size": 6863,
-      "type": "file"
-    },
     {
       "repository_path": ".env.example",
       "sha256": "c4ee498c32715e09e6163c765ef1441ffae17b39f8b7bc5c5ebb9aff4c476dc6",
@@ -105,8 +9,8 @@
     },
     {
       "repository_path": ".github/workflows/ci.yml",
-      "sha256": "b8caf3b86b54857f06f9e4064d192c7e8a15c168b6740617dcad44eb3cfe29e1",
-      "size": 450,
+      "sha256": "927ea5923f4203ee4a0bf738650e578418254c93885caae1751caffbe586faf3",
+      "size": 740,
       "type": "file"
     },
     {
@@ -123,14 +27,26 @@
     },
     {
       "repository_path": "ATLAS-ASSET-DISTRIBUTION.md",
-      "sha256": "b49d6130424897504dc9b1bb82e0f3e9c08467a65c0b44c05afbc992018d2f9a",
-      "size": 660,
+      "sha256": "d8722d59229fef94095b60a0228b9053102670a003b32a777aa41cd5bea7adcb",
+      "size": 1120,
+      "type": "file"
+    },
+    {
+      "repository_path": "ATLAS-ASSET-PROVENANCE.json",
+      "sha256": "5e1b42fb4e6d020875bcbd06366fd5e1d1760281f4f3fabc59006bd598f471aa",
+      "size": 374816,
+      "type": "file"
+    },
+    {
+      "repository_path": "ATLAS-ASSET-PUBLICATION-DECISION.md",
+      "sha256": "845e25bd8b6ac392ee22b70263abeb80382cd4942f4e1f84b802cec1265f182a",
+      "size": 1312,
       "type": "file"
     },
     {
       "repository_path": "CHANGELOG.md",
-      "sha256": "b433f84114d9469125c80fc21b17325a9fe331753c7e063e5a246a99105eded0",
-      "size": 792,
+      "sha256": "51dd7eb1c05ff110a6dd5f27fd85fad88eebd6ff363ad081fe7a5f222e891e4f",
+      "size": 1713,
       "type": "file"
     },
     {
@@ -158,9 +74,105 @@
       "type": "file"
     },
     {
+      "repository_path": "FILE-OWNERSHIP-MAP.json",
+      "sha256": "ccf6f512890baa3474064f17b8a3fa0ed942ff506a5d80968390270b6052896d",
+      "size": 105117,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-ANONYMOUS-CLONE.md",
+      "sha256": "001556a12130b4fe20610e5c2f1fe7cc517eb11eae01b19765d679e6c8424f4b",
+      "size": 518,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-ATLAS-DISTRIBUTION.md",
+      "sha256": "8069789432da1f9d280ff5749e018c6919979377c9b661232fc462b94af27760",
+      "size": 1212,
+      "type": "file"
+    },
+    {
       "repository_path": "FINAL-DISTRIBUTION-RESULT.md",
       "sha256": "d6c3641a217bf32fc9047e0dcc3e59aa8044ccba5b061ef63767b3e41bc353fc",
       "size": 1849,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-FRESH-USER-TEST.md",
+      "sha256": "b7c494ad1a4da42a10647ac3e62a38d1a71d467d7f8a6bb3210501bc2db0bcb2",
+      "size": 1505,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-LICENSE-PUBLICATION-AUDIT.md",
+      "sha256": "8b0657bd4fccbc625d44bcaa91837dff6cb3583015b28e8266f78ebed2840c6d",
+      "size": 684,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-LIVE-NONREGRESSION.md",
+      "sha256": "71883c6dd3709a1642da990785ea4006002e6b20c21e3571cd06f8701a1fbeb3",
+      "size": 883,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-POST-PUBLICATION-SECURITY.md",
+      "sha256": "77a218ec54e2060e09bf429e8882b4e3a8917dbde27b0b70b1d5b3028ecd05ae",
+      "size": 751,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-PROJECT-CLOSURE.md",
+      "sha256": "e2d5565275ee245dcee74d8a2119640aed4b3c060b0b51fd3e7b049f2a1e5c1c",
+      "size": 1247,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-PUBLIC-READINESS.md",
+      "sha256": "29719d237716a299393b6384984812c53e4e3d2c11e9f2d8707fbf4548120d60",
+      "size": 991,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-PUBLICATION-BLOCKER-CLOSURE.md",
+      "sha256": "6def9dd721a4bc0f40ec718a1d37b913f640fd39d30a0852852351ae5287b39e",
+      "size": 2082,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-PUBLICATION.md",
+      "sha256": "691d0577254bf20bb2e0832f8ffc097e6506fe39f50ced2943b07a7d63d46684",
+      "size": 518,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-RC-RELEASE.md",
+      "sha256": "9f5b2c541b38425851a790b7d0979a0626355da842dfe2890b06879d7206a013",
+      "size": 598,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-REMOTE-AUDIT.md",
+      "sha256": "f31342717e5a5541cb6892c0f44049db0c20a0f42f13cf445d0204df49398f94",
+      "size": 790,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-REMOTE-CLONE-TEST.md",
+      "sha256": "b5c4eb97f96c9cd6e24713618d9468fb620a468d69f1dff59af05b0dcd06eec0",
+      "size": 466,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-SECURITY-HISTORY-AUDIT.md",
+      "sha256": "aae205d9fb45d877681b5f05883a580b80fb6915085f2781c1d0c2e26a5a9e8f",
+      "size": 1061,
+      "type": "file"
+    },
+    {
+      "repository_path": "FINAL-V1-RELEASE.md",
+      "sha256": "f6338b3c8aaa953afcac601b170f76921ac88e4623d75b386c3e2b73a34e5646",
+      "size": 442,
       "type": "file"
     },
     {
@@ -170,9 +182,21 @@
       "type": "file"
     },
     {
+      "repository_path": "HANDOFF.md",
+      "sha256": "e7f289b4929897eafb49fe0b1089a933d35ca34bb5161f9abea7da42c712a620",
+      "size": 7135,
+      "type": "file"
+    },
+    {
       "repository_path": "HARDWARE-DETECTION.md",
       "sha256": "8131512a03b552a28f2cb402673a50c164b39360cfa7e9441777275874a6e2bc",
       "size": 469,
+      "type": "file"
+    },
+    {
+      "repository_path": "LICENSE",
+      "sha256": "1c14d6a86337ce60583d51555bc70e1e68a8c45353be0f3ce3a3246c4f8b3ecb",
+      "size": 1087,
       "type": "file"
     },
     {
@@ -189,14 +213,20 @@
     },
     {
       "repository_path": "PATCH-MANIFEST.yaml",
-      "sha256": "d4c63ab0fe613fd18340fafdb1a9818248ac75915716babfe695345e143c8362",
-      "size": 2754,
+      "sha256": "03a8184469fa2c80b3ef5466401800ded592aba799f84d5cf30f6f5980d9f01c",
+      "size": 12813,
+      "type": "file"
+    },
+    {
+      "repository_path": "PUBLIC-LICENSE-OWNER-DECISION.md",
+      "sha256": "a47ea399231a920b351d3688eacaf08e5c4cd60bb00ec58b0d64d7c440f7cea2",
+      "size": 2386,
       "type": "file"
     },
     {
       "repository_path": "README.md",
-      "sha256": "391f3d7e8a40d17c55d45f4a3adf2d0fde98321ac8baf5a8c51ba7f607e813fa",
-      "size": 4869,
+      "sha256": "b99ef40209c2dc696b2766ea1d705b544a06fecbf7006e24262c33356d6b29cb",
+      "size": 5551,
       "type": "file"
     },
     {
@@ -206,9 +236,15 @@
       "type": "file"
     },
     {
+      "repository_path": "RELEASE-NOTES-v1.0.0.md",
+      "sha256": "236f71bc4407b8c57e56ccfddaa63f672067208406f34ad27d4c2116f1a472d0",
+      "size": 2383,
+      "type": "file"
+    },
+    {
       "repository_path": "RELEASE-READINESS.md",
-      "sha256": "e29e5a9a67c924dbd1b6f9fb9755bfc424f3d7e9b64a42da2d541c1774924c19",
-      "size": 864,
+      "sha256": "f909728ae0b38dd694ef946cf727a9795a7cdcae2a69980bde73753827b9093f",
+      "size": 816,
       "type": "file"
     },
     {
@@ -225,8 +261,8 @@
     },
     {
       "repository_path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "659994e2b1118ce48b5f2b9022bb1ea6f5f6057fef5a63ced043ebf162d861db",
-      "size": 590,
+      "sha256": "ebb4af3677e786bfcbbf07c99a1eeb752a4142168072836308b0ee101cfa02dc",
+      "size": 1177,
       "type": "file"
     },
     {
@@ -243,8 +279,8 @@
     },
     {
       "repository_path": "atlas-assets-manifest.json",
-      "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
-      "size": 242887,
+      "sha256": "62c6d501f169782f6a918c20bb042c50cb1150bc509a2bda343b8cdbc65f333f",
+      "size": 243336,
       "type": "file"
     },
     {
@@ -507,20 +543,26 @@
     },
     {
       "repository_path": "config/compatibility.json",
-      "sha256": "df5a8956d2961e875248124deec4c6c66b8e677d7e3bbcc230f6fa5795996880",
-      "size": 1065,
+      "sha256": "bc00f62901f32adf341c55ff2e633d5deda46fd6e8e2fa5c2ae61663a75c411b",
+      "size": 1716,
       "type": "file"
     },
     {
       "repository_path": "config/defaults.env",
-      "sha256": "c1a2a98b923852a253ef317f634fdb38d5c722fb036887d95a5147f57bfa0f15",
-      "size": 1343,
+      "sha256": "f84f76ff6cbe4dc45690cc6dc656d2dd1933c8d9c661667c27f24fe8dcfedc3f",
+      "size": 1339,
       "type": "file"
     },
     {
       "repository_path": "config/models.yaml",
       "sha256": "a8487142ee321e36003efbf8e03374b03ffb062d4bd8b3f48a41de9cadc994e7",
       "size": 3516,
+      "type": "file"
+    },
+    {
+      "repository_path": "config/ubuntu-agent.example.env",
+      "sha256": "60b879ab7c7360ce24ead9e502528db10349011b59a1fd6019a068d6fcb98942",
+      "size": 412,
       "type": "file"
     },
     {
@@ -537,8 +579,8 @@
     },
     {
       "repository_path": "docs/ANYTHINGLLM-PATCHES.md",
-      "sha256": "394176ed4d2e8923fd238794ba39a4219518a5c8bb1dcc4275ae0bdaa4bbe483",
-      "size": 827,
+      "sha256": "5b97411a474324501485c548bcb63575b68ff58502b8e87376077a10d9877548",
+      "size": 1086,
       "type": "file"
     },
     {
@@ -585,8 +627,8 @@
     },
     {
       "repository_path": "docs/LICENSING.md",
-      "sha256": "3668facee0455cf8d207a3d3f91442d07efc4a5e217d69acf3b03ca4ea18e7b4",
-      "size": 371,
+      "sha256": "74c7ba78567d814bfde5c37947d8c24dc7020ac7aac8c52e20bd3939ff41aca9",
+      "size": 1634,
       "type": "file"
     },
     {
@@ -650,6 +692,12 @@
       "type": "file"
     },
     {
+      "repository_path": "docs/UBUNTU-AGENT.md",
+      "sha256": "45f904cf69c1670814ef4f73a45f8ebfa59e0ff5cd9c90786ccabd15c77d8b63",
+      "size": 1572,
+      "type": "file"
+    },
+    {
       "repository_path": "docs/UPDATE.md",
       "sha256": "584b992c7b60af99132cf313a8ce4c326f620c0ef33621deb2f726077f23b568",
       "size": 257,
@@ -657,8 +705,8 @@
     },
     {
       "repository_path": "docs/UPSTREAM-COMPATIBILITY.md",
-      "sha256": "f9fa36ef46b6774fb95339f3b21548e3fc58289c714c7a4b39b359794284b9ec",
-      "size": 588,
+      "sha256": "31e5c1e3a906f7710f5ec9303d2e9e1784cf1e07918000ffa0d3e4650a2cceb7",
+      "size": 1189,
       "type": "file"
     },
     {
@@ -674,6 +722,12 @@
       "type": "file"
     },
     {
+      "repository_path": "docs/VISUAL-ATLAS-V2.md",
+      "sha256": "d84f733c97f3442bc29fb2bcbb61aa6c4815696ffba400e480eabec414dde37d",
+      "size": 4279,
+      "type": "file"
+    },
+    {
       "repository_path": "docs/VISUAL-ATLAS.md",
       "sha256": "183f2571e2f0f4858199a8d8af06499fe53ae699d84acf969b0bec848c8dff40",
       "size": 362,
@@ -681,8 +735,8 @@
     },
     {
       "repository_path": "doctor.sh",
-      "sha256": "85eeebaa5408d1ba198971d8be69556992f08948c2fb4efcd16cb498546685e4",
-      "size": 6060,
+      "sha256": "ef346bd5e5bb2e5586d37f046620fd1c3480d1169803dd771aae3842c777d68a",
+      "size": 6564,
       "type": "file"
     },
     {
@@ -691,6 +745,12 @@
       "size": 12,
       "target": "image-system",
       "type": "symlink"
+    },
+    {
+      "repository_path": "image-system/VERSION",
+      "sha256": "f333d757bb34185be8102ae734861105e4deb612d584829d3f23f17f9d5f0ef8",
+      "size": 17,
+      "type": "file"
     },
     {
       "repository_path": "image-system/bin/aag-ai-start",
@@ -861,42 +921,6 @@
       "type": "file"
     },
     {
-      "repository_path": "image-system/human-identity/runtime/composition_contract.py",
-      "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872",
-      "size": 3721,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity/runtime/evaluator_core.py",
-      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
-      "size": 2295,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity/runtime/pulid_worker.py",
-      "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f",
-      "size": 14379,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity/runtime/quality_gate.py",
-      "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52",
-      "size": 12145,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity/runtime/reference_validator.py",
-      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
-      "size": 5950,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity/runtime/validate_reference_cli.py",
-      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
-      "size": 2440,
-      "type": "file"
-    },
-    {
       "repository_path": "image-system/human-identity-scene/bin/process_inbox.py",
       "sha256": "a2a0557d78d9f1ede1f9ed948e961d30b7362b75a71a1f0392b6c95222aa2bed",
       "size": 37806,
@@ -918,36 +942,6 @@
       "repository_path": "image-system/human-identity-scene/config/SCENE-CONTRACT.json",
       "sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6",
       "size": 3372,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity-scene/runtime/evaluator_core.py",
-      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
-      "size": 2295,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity-scene/runtime/quality_gate.py",
-      "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6",
-      "size": 7327,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity-scene/runtime/reference_validator.py",
-      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
-      "size": 5950,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity-scene/runtime/scene_worker.py",
-      "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5",
-      "size": 14854,
-      "type": "file"
-    },
-    {
-      "repository_path": "image-system/human-identity-scene/runtime/validate_reference_cli.py",
-      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
-      "size": 2440,
       "type": "file"
     },
     {
@@ -1018,20 +1012,20 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
-      "sha256": "1fb8d1e49802ddf52f290d5fe71732f11f431710a7ce99d5d82641fa04c8fbcc",
-      "size": 75824,
+      "sha256": "31ecfdec3e860828dd8e5bfd007a7a3df05e125df227f2834883e9f7aa4c5a1c",
+      "size": 82969,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
-      "sha256": "1f85910d6d5aa8494a960e7e3ae12968fb724624792f4d17c41909031c1b876f",
-      "size": 13551,
+      "sha256": "b742430ccc3de329c1a8eb4e883ce94b6ab9d8ac4282d8a6d758c19c069c138c",
+      "size": 13595,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
-      "sha256": "c8caf16a77365def2f8761173f0adc8d0920656d8dc24038d6f4e05549a2136a",
-      "size": 19670,
+      "sha256": "07a37fac06d70a83d6bbe086e033c09ab3d0b241ec7db4acac6baa5eb6585e0f",
+      "size": 23936,
       "type": "file"
     },
     {
@@ -1307,8 +1301,8 @@
     },
     {
       "repository_path": "image-system/src/visual-atlas.js",
-      "sha256": "67bdfaa7980d59fe1daef0246e4e390a80dd539f8a89dca9cf70115bb4caf829",
-      "size": 12957,
+      "sha256": "05c2184d298dda121bbdb7cd1faa4089975dff2d9dfd855b8deae011bee2b22a",
+      "size": 13168,
       "type": "file"
     },
     {
@@ -1349,8 +1343,8 @@
     },
     {
       "repository_path": "image-system/tests/inline-composer-integration.test.js",
-      "sha256": "0485bffec44bbb02fc7c23b20509f33859ac50f55f2c877e3ae5a4368dc8084d",
-      "size": 24025,
+      "sha256": "8121b511d5fb0e8fed36b0b9e7d5479989cd380f926a921b96fd5b8b575e6f18",
+      "size": 24090,
       "type": "file"
     },
     {
@@ -1421,14 +1415,14 @@
     },
     {
       "repository_path": "image-system/tests/visual-atlas-product.test.js",
-      "sha256": "d90d2ca71d2c0e882de431066f524e00eb1f0c1b32b7a0dfbf123fda1ffba9f0",
-      "size": 2760,
+      "sha256": "4dc1179136fe5b3ee209dffafea46d452d3bb61ea2c56798ce0dc81d05d5b876",
+      "size": 3093,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/visual-atlas.test.js",
-      "sha256": "a2da3b0a4c5a055fd3d4fd3db8bd7e12bc8564fc236d145197a636760e8f9946",
-      "size": 7536,
+      "sha256": "9ca494f53121d1ec21e990cfac7255914c39fd6219ac96a1d824f4cd5b87eefd",
+      "size": 7694,
       "type": "file"
     },
     {
@@ -1474,15 +1468,15 @@
       "type": "file"
     },
     {
-      "repository_path": "image-system/tools/atlas-token-accounting.js",
-      "sha256": "b7f0b888cadd76521ecaa49c22867319659fb6e7a227766fdd79dc388ada9699",
-      "size": 5442,
+      "repository_path": "image-system/tools/atlas-ui-acceptance.py",
+      "sha256": "7f2fda402078222036b19e3dcb117ebf1b981b46a1b575ffde0f4e5896e27c82",
+      "size": 11853,
       "type": "file"
     },
     {
       "repository_path": "image-system/tools/build-anythingllm-frontend.js",
-      "sha256": "4ed7d68456281ec8b5918b8b6183576959dca817f0a804e794f0ea1bca4e99b9",
-      "size": 17505,
+      "sha256": "20acd7c046a16bebac69b50df2ef7b63fdce6545803294e0039abf01568669b8",
+      "size": 18440,
       "type": "file"
     },
     {
@@ -1595,8 +1589,8 @@
     },
     {
       "repository_path": "image-system/tools/visual-atlas-product.js",
-      "sha256": "f02ce6b3c12b8a261daaa9172d5ee557f4a956670fdfbf9d3f5c361a85455eb9",
-      "size": 13777,
+      "sha256": "a375dece0ecbbf928b71df5219e6cf3ea2633166bc65f58e90575e6593397f97",
+      "size": 12969,
       "type": "file"
     },
     {
@@ -1643,8 +1637,8 @@
     },
     {
       "repository_path": "install.sh",
-      "sha256": "375f4c19c7939659962f9e5f26290bc47e1982518cca88483dbd6c96e80ee7ed",
-      "size": 6791,
+      "sha256": "a54e37de9cbc5f06fb2432b917d7189fcb7b49941306f51e979b63b7e2fcbee7",
+      "size": 8454,
       "type": "file"
     },
     {
@@ -1727,8 +1721,8 @@
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_http_boundary.py",
-      "sha256": "f3514e65e07adc704984480222fc1c56dfa68a340a1bbdeccd3df9594b96dfcf",
-      "size": 34553,
+      "sha256": "b16faa95958041594d4591ade52d1b9b4b74819a7de8eedfc6359b4650953d02",
+      "size": 34873,
       "type": "file"
     },
     {
@@ -1739,14 +1733,20 @@
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas.py",
-      "sha256": "ce821794769cd4c60fffb9a08ec3282d7dec8e516fe742e9961fe1cf0fadb23e",
-      "size": 7417,
+      "sha256": "40fcbd287cea3c9d39141894cee79ecd631d29a9f11aa01c6323009005598a8b",
+      "size": 7710,
+      "type": "file"
+    },
+    {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas_publication.py",
+      "sha256": "e5bb69ce23b49e6b0b04b6d7c254761aaabaff03e161bb5d63ebeecc6eb873e3",
+      "size": 5507,
       "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/visual_atlas.py",
-      "sha256": "4bf721763bdf56b6511eebbafeb7106da021e3ac810806f2adf84d562f544b19",
-      "size": 15529,
+      "sha256": "eebf8ebed4d98919906ebf9a9e3c02cbd64ce149e3af252bb0e5dde2ee737699",
+      "size": 16709,
       "type": "file"
     },
     {
@@ -2860,6 +2860,18 @@
       "type": "file"
     },
     {
+      "repository_path": "patches/anythingllm/frontend/ChatContainer-index.jsx",
+      "sha256": "7df74d00c2ee977d7b54abeae8e364c79cdabc281a625ad9364aa107879a1d16",
+      "size": 22558,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/PromptInput-index.jsx",
+      "sha256": "5f74be90b1c218ca61569a2e16c9f7eba78720e7fdae8c831fb0591c0ab8efab",
+      "size": 19273,
+      "type": "file"
+    },
+    {
       "repository_path": "patches/anythingllm/index.js",
       "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
       "size": 5164,
@@ -2933,14 +2945,20 @@
     },
     {
       "repository_path": "tools/atlas-assets.py",
-      "sha256": "d37f977d1288cf5a4d2226136ee062125e25fbb3c071514a1fdcb6423a104136",
-      "size": 1765,
+      "sha256": "31f68e4e66e11562288e2f2aa1b26698be1e15a0ec7f08b7451ed2216c46d4fb",
+      "size": 2076,
       "type": "file"
     },
     {
       "repository_path": "tools/build-inventory.py",
       "sha256": "593b6ee1a4934c2edd6fc06291c06defb41b9c7a76f18f5a83aee232ec330b18",
       "size": 1123,
+      "type": "file"
+    },
+    {
+      "repository_path": "tools/build-release-metadata.py",
+      "sha256": "aec4d645552a501706e8264084035f67e15bac99ba0c8c3852d5625476716d74",
+      "size": 8215,
       "type": "file"
     },
     {
@@ -2963,8 +2981,8 @@
     },
     {
       "repository_path": "tools/render-units.py",
-      "sha256": "fefb201c1d18bb9dfe90b18926907c8b26113841cfd1ad185a99434c232ddc2b",
-      "size": 3029,
+      "sha256": "3e5ff2339f842482fa69596f4e271c104b6e1fd6fd08a58c92f76fabc91f90bd",
+      "size": 3121,
       "type": "file"
     },
     {
@@ -2992,21 +3010,27 @@
       "type": "file"
     },
     {
+      "repository_path": "visual-atlas/README.md",
+      "sha256": "c42fcf6fc3987e26a209f2d7569cb65e245f77b7320a1e2e56c9180bf009be47",
+      "size": 1345,
+      "type": "file"
+    },
+    {
       "repository_path": "visual-atlas/manifest/atlas-manifest.json",
-      "sha256": "a28e240603ca04c47582622cc102db6953caeb46fa2a279bdc49a978362fc15e",
-      "size": 1678426,
+      "sha256": "1a8a0c7af0012bda6b98d7c7ab99ab36aad6e224f2bc3fdb5fec18da89b96b99",
+      "size": 1484392,
       "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/preview-index.json",
-      "sha256": "8f9b21c52ecf85f12ba740b9e627a127d66551120e89eb5bc3231344a1601b4c",
-      "size": 169651,
+      "sha256": "f47363c617fd5bcdba02986a4255adea8360ab37b435a25eb897bad6585d7da1",
+      "size": 214548,
       "type": "file"
     },
     {
       "repository_path": "visual-atlas/manifest/product-assets.json",
-      "sha256": "4cfc1eec8c45bf973dff569423bfa9616caa4425763f3b275766075f995733ee",
-      "size": 242887,
+      "sha256": "62c6d501f169782f6a918c20bb042c50cb1150bc509a2bda343b8cdbc65f333f",
+      "size": 243336,
       "type": "file"
     },
     {
@@ -3022,6 +3046,6 @@
       "type": "file"
     }
   ],
-  "generated_utc": "2026-09-04",
+  "generated_utc": "2026-10-02",
   "schema_version": 1
 }

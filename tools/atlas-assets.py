@@ -22,9 +22,13 @@ if ns.command=='verify': raise SystemExit(0 if verify(src,m) else 1)
 if not ns.target: ap.error('--target is required for install')
 if not verify(src,m): raise SystemExit(1)
 dst=pathlib.Path(ns.target).expanduser(); dst.mkdir(parents=True,exist_ok=True)
-for name in ('images','thumbs'): shutil.copytree(src/name,dst/name,dirs_exist_ok=True)
+for entry in m['entries']:
+ for kind in ('reference','thumbnail'):
+  rel=pathlib.Path(entry[kind]['path']); rel=pathlib.Path(*rel.parts[1:]) if rel.parts[0]=='visual-atlas' else rel
+  (dst/rel).parent.mkdir(parents=True,exist_ok=True); shutil.copy2(src/rel,dst/rel)
 for name in ('atlas-manifest.json','preview-index.json','retrieval-aliases.json','product-assets.json','visual-taxonomy.json'):
- p=src/'manifest'/name
+ # Install the package's public metadata, never private/stale source runtime metadata.
+ p=pathlib.Path(__file__).parents[1]/'visual-atlas'/'manifest'/name
  if p.exists(): (dst/'manifest').mkdir(exist_ok=True); shutil.copy2(p,dst/'manifest'/name)
 print(f'ATLAS_INSTALL=PASS target={dst}')
 

@@ -1,5 +1,7 @@
 # AAG AnythingLLM Suite
 
+The current [Visual Atlas V2 implementation](docs/VISUAL-ATLAS-V2.md) includes exact per-image prompt disclosure, compact icon actions, responsive prompt scrolling and XLarge cards. Pixels remain external under the existing publication policy.
+
 AAG AnythingLLM Suite is an MIT-licensed distribution that adds governed image generation, native Composer controls, Visual Atlas style selection, safe artifacts/PDFs, verified chess puzzles, and optional local-LLM operations to a compatible AnythingLLM source installation.
 
 It is an installer-driven distribution—not a backup of one workstation. Original-machine paths, usernames, models, conversations and secrets are not required or included.

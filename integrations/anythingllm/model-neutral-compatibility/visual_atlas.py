@@ -217,6 +217,8 @@ class VisualAtlas:
             "atlas": {
                 "available": bool(entry.get("assets_available")),
                 "sha256": entry["sha256"],
+                "prompt": entry.get("generation_prompt"),
+                "prompt_sha256": entry.get("prompt_sha256"),
                 "thumbnail_sha256": self.thumbnail_sha256[pair],
                 "width": entry["width"],
                 "height": entry["height"],

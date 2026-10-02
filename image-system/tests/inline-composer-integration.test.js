@@ -182,7 +182,7 @@ test("Atlas UX v2 provides persistent presentation-only responsive sizing", () =
     path.join(root, "integrations/anythingllm/frontend/AagImageComposerPanel/styles.css"),
     "utf8"
   );
-  assert.match(source, /ATLAS_SIZES = Object\.freeze\(\["small", "medium", "large"\]\)/);
+  assert.match(source, /ATLAS_SIZES = Object\.freeze\(\["small", "medium", "large", "xlarge"\]\)/);
   assert.match(source, /aag\.image-composer\.v1\.2\.atlas-thumbnail-size/);
   assert.match(source, /data-testid="aag-atlas-size-control"/);
   assert.match(source, /data-thumbnail-size=\{size\}/);
@@ -192,6 +192,7 @@ test("Atlas UX v2 provides persistent presentation-only responsive sizing", () =
   assert.match(styles, /--aag-atlas-card-min: 112px/);
   assert.match(styles, /--aag-atlas-card-min: 148px/);
   assert.match(styles, /--aag-atlas-card-min: 200px/);
+  assert.match(styles, /--aag-atlas-card-min: 360px/);
   assert.match(styles, /repeat\(auto-fill/);
   assert.match(source, /matches\.slice\(0, limit\)/);
   assert.match(source, /<AtlasImage[\s\S]*?lazy/);

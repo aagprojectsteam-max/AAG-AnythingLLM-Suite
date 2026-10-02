@@ -222,7 +222,7 @@
       "UPSTREAM_COMMIT": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
       "UPSTREAM_SHA256": null,
       "AAG_PATCH": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel",
-      "PATCH_SHA256": "152b1653480a2d3e6d7f0f0a75b405531e406809e242db6de8d0ff3951fbe7db",
+      "PATCH_SHA256": "4a2dba695bb66de79f1d7b64ec43cb125df9b2c3148621f5627711e1bf02ae17",
       "PURPOSE": "Composer UI",
       "MODE": "add-tree",
       "TEST": "tools/verify-upstream.py + isolated install/doctor + focused overlay tests",

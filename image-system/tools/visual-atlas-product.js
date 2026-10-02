@@ -15,8 +15,6 @@ const REQUIRED_METADATA = Object.freeze([
   "visual-atlas/manifest/atlas-manifest.json",
   "visual-atlas/manifest/preview-index.json",
   "visual-atlas/manifest/retrieval-aliases.json",
-  "visual-atlas/state/atlas-state.json",
-  "visual-atlas/reports/completeness-audit.json",
   "visual-atlas/README.md",
 ]);
 
@@ -57,12 +55,10 @@ function inventory(projectRoot) {
   const manifestPath = path.join(atlasRoot, "manifest/atlas-manifest.json");
   const previewIndexPath = path.join(atlasRoot, "manifest/preview-index.json");
   const aliasesPath = path.join(atlasRoot, "manifest/retrieval-aliases.json");
-  const statePath = path.join(atlasRoot, "state/atlas-state.json");
   const manifest = readJson(manifestPath);
   const taxonomy = readJson(taxonomyPath);
   const previewIndex = readJson(previewIndexPath);
   const aliases = readJson(aliasesPath);
-  const state = readJson(statePath);
   const taxonomyKeys = new Set();
   for (const family of taxonomy.families || []) {
     for (const style of family.subfamilies || []) {
@@ -135,7 +131,6 @@ function inventory(projectRoot) {
     taxonomy,
     previewIndex,
     aliases,
-    state,
     taxonomyKeys,
     manifestKeys,
     entries,
@@ -150,6 +145,7 @@ function sealedManifest(projectRoot) {
   return {
     schema: "aag.visual-atlas.product-assets.v1",
     atlas_version: EXPECTED_VERSION,
+    image_set: data.manifest.image_set || "visual-atlas-v1",
     expected_families: EXPECTED_FAMILIES,
     expected_styles: EXPECTED_STYLES,
     packaging: {
@@ -165,7 +161,6 @@ function sealedManifest(projectRoot) {
       manifest: "visual-atlas/manifest/atlas-manifest.json",
       preview_index: "visual-atlas/manifest/preview-index.json",
       retrieval_aliases: "visual-atlas/manifest/retrieval-aliases.json",
-      state: "visual-atlas/state/atlas-state.json",
       references: "visual-atlas/images/<family>/<subfamily>/preview.png",
       thumbnails: "visual-atlas/thumbs/<family>/<subfamily>.webp",
     },
@@ -196,7 +191,6 @@ function verify(projectRoot = DEFAULT_PROJECT_ROOT) {
   const checks = {
     atlas_version_1_0_0:
       data.manifest.atlas_version === EXPECTED_VERSION &&
-      data.state.atlas_version === EXPECTED_VERSION &&
       product.atlas_version === EXPECTED_VERSION,
     families_28: data.taxonomy.families?.length === EXPECTED_FAMILIES,
     styles_493:
@@ -210,23 +204,8 @@ function verify(projectRoot = DEFAULT_PROJECT_ROOT) {
       data.metadata[
         "image-agent/integrations/model-neutral-compatibility/composer/visual-taxonomy.json"
       ].sha256 === data.manifest.taxonomy_sha256,
-    state_manifest_hash_matches:
-      data.metadata["visual-atlas/manifest/atlas-manifest.json"].sha256 ===
-      data.state.manifest_sha256,
-    state_complete_healthy_idle:
-      data.state.total === EXPECTED_STYLES &&
-      data.state.completed === EXPECTED_STYLES &&
-      data.state.pending === 0 &&
-      data.state.queued === 0 &&
-      data.state.generating === 0 &&
-      data.state.failed_retryable === 0 &&
-      data.state.failed_final === 0 &&
-      data.state.engine_health === "HEALTHY" &&
-      data.state.xpu_lane === "IDLE",
-    thermal_policy_preserved:
-      data.state.thermal_submit_limit_c === 100 &&
-      data.state.thermal_resume_c === 95 &&
-      data.state.thermal_critical_c === 105,
+    // A distributable asset pack has no private scheduler or thermal state.
+    // Generation/resource gates remain in the runtime; this gate verifies bytes.
     preview_index_complete:
       Array.isArray(data.previewIndex.entries) &&
       data.previewIndex.entries.length === EXPECTED_STYLES,

@@ -66,6 +66,7 @@ const HE_UI = Object.freeze({
   thumbnailSizesmall: "קטן",
   thumbnailSizemedium: "בינוני",
   thumbnailSizelarge: "גדול",
+  thumbnailSizexlarge: "גדול מאוד",
   inspectStyle: "בדיקת",
   selectStyle: "בחירת סגנון",
   selectThisStyle: "בחירת סגנון זה",

@@ -27,7 +27,12 @@ function hardlinkFixture() {
   for (const relative of files) {
     const destination = path.join(root, relative);
     fs.mkdirSync(path.dirname(destination), { recursive: true });
-    fs.linkSync(path.join(projectRoot, relative), destination);
+    try {
+      fs.linkSync(path.join(projectRoot, relative), destination);
+    } catch (error) {
+      if (error.code !== "EXDEV") throw error;
+      fs.copyFileSync(path.join(projectRoot, relative), destination);
+    }
   }
   return { root, product };
 }

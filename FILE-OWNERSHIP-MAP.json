@@ -168,6 +168,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "HANDOFF.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "HARDWARE-DETECTION.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -609,6 +614,11 @@
     },
     {
       "path": "docs/VISUAL-ATLAS-PACKAGING.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "docs/VISUAL-ATLAS-V2.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -1228,6 +1238,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/atlas-ui-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/build-anythingllm-frontend.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1444,6 +1459,11 @@
     },
     {
       "path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas_publication.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2501,6 +2521,11 @@
       "path": "update.sh",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "visual-atlas/README.md",
+      "classification": "GENERATED_ASSET",
+      "basis": "AAG-generated metadata; pixel rights separately classified"
     },
     {
       "path": "visual-atlas/manifest/atlas-manifest.json",

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — current Visual Atlas V2
+
+- Publish sanitized bindings for the 493 existing V2 images; pixels remain external.
+- Include exact Show/Hide/Copy Prompt, accessible icon actions, viewport-bounded scrolling and persistent XLarge display size.
+- Preserve the existing Atlas integration and normal generation behavior.
+
 ## 1.0.0 - 2026-09-04
 
 - Adds the owner-approved MIT license for AAG-owned code.

@@ -12,3 +12,5 @@ jobs:
       - run: chmod +x doctor.sh tools/sanitize.sh
       - run: ./doctor.sh --package
       - run: python -m unittest discover -s image-system/integrations 2>/dev/null || true
+      - run: python -m unittest discover -s integrations/anythingllm/model-neutral-compatibility -p 'test_visual_atlas*.py'
+      - run: node --test image-system/tests/visual-atlas*.test.js image-system/tests/inline-composer-integration.test.js image-system/tests/composer-native-chat.test.js
