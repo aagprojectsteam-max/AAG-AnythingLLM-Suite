@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Expert reusable style grammar with explicit family inheritance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "canonical_id",
+    "family_id",
+    "style_id",
+    "label",
+    "definition",
+    "recognition_anchors",
+    "construction",
+    "failure_prevention",
+    "minimum_instruction",
+    "expanded_instruction",
+    "inherits",
+    "token_priorities",
+    "subject_policy"
+  ],
+  "properties": {
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+/[a-z0-9-]+$"
+    },
+    "family_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "style_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": {
+      "type": "string",
+      "minLength": 16
+    },
+    "recognition_anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "construction": {
+      "type": "string",
+      "minLength": 24
+    },
+    "failure_prevention": {
+      "type": "string",
+      "minLength": 12
+    },
+    "minimum_instruction": {
+      "type": "string",
+      "minLength": 40
+    },
+    "expanded_instruction": {
+      "type": "object",
+      "required": [
+        "essential",
+        "secondary",
+        "avoid",
+        "optional"
+      ]
+    },
+    "inherits": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "token_priorities": {
+      "type": "object",
+      "required": [
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    "subject_policy": {
+      "type": "string",
+      "minLength": 40
+    }
+  }
+}

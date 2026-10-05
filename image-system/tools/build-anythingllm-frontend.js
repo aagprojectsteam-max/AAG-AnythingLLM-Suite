@@ -50,13 +50,13 @@ function patchPromptInput(checkoutRoot) {
   source = replaceOnce(
     source,
     'import { useIsAgentSessionActive } from "@/utils/chat/agent";',
-    'import { useIsAgentSessionActive } from "@/utils/chat/agent";\nimport AagImageComposerPanel from "./AagImageComposerPanel";\nimport AagImageProgress from "./AagImageProgress";',
+    'import { useIsAgentSessionActive } from "@/utils/chat/agent";\nimport useImageComposerMode from "@/utils/useImageComposerMode";\nimport AagImageComposerPanel from "./AagImageComposerPanel";\nimport AagImageProgress from "./AagImageProgress";\nimport { ensureArtifactSerials } from "@/utils/aagArtifactSerials";\nimport showToast from "@/utils/toast";',
     "PromptInput import"
   );
   source = replaceOnce(
     source,
     "  const formRef = useRef(null);\n  const textareaRef = useRef(null);",
-    "  const formRef = useRef(null);\n  const textareaRef = useRef(null);\n  const composerPanelRef = useRef(null);\n  const [composerMode, setComposerMode] = useState(\"auto\");\n  const isImageGenerator = (workspace?.slug || workspaceSlug) === \"image-generator\";",
+    "  const formRef = useRef(null);\n  const textareaRef = useRef(null);\n  const composerPanelRef = useRef(null);\n  const [composerMode, setComposerMode] = useState(\"auto\");\n  const activeWorkspaceSlug = workspace?.slug || workspaceSlug;\n  const { enabled: isImageComposerEnabledForCurrentWorkspace } =\n    useImageComposerMode(activeWorkspaceSlug);",
     "PromptInput state"
   );
   source = replaceOnce(
@@ -68,7 +68,7 @@ function patchPromptInput(checkoutRoot) {
   source = replaceOnce(
     source,
     "  function handleSubmit(e) {\n    // Ignore submits from portaled modals (slash command preset forms)\n    if (e.target !== e.currentTarget) return;\n    setFocused(false);\n    setShowTools(false);\n    submit(e);\n  }",
-    "  async function handleSubmit(e) {\n    // Ignore submits from portaled modals (slash command preset forms)\n    if (e.target !== e.currentTarget) return;\n    setFocused(false);\n    setShowTools(false);\n    if (isImageGenerator && composerMode === \"advanced\") {\n      e.preventDefault();\n      const prepared = await composerPanelRef.current?.prepare();\n      if (!prepared) return;\n      return submit(e, prepared);\n    }\n    return submit(e);\n  }",
+    "  async function handleSubmit(e) {\n    // Ignore submits from portaled modals (slash command preset forms)\n    if (e.target !== e.currentTarget) return;\n    e.preventDefault();\n    try { await ensureArtifactSerials(activeWorkspaceSlug); } catch (error) { e.preventDefault(); showToast(error.message, \"error\"); return; }\n    setFocused(false);\n    setShowTools(false);\n    if (isImageComposerEnabledForCurrentWorkspace && composerMode === \"advanced\") {\n      e.preventDefault();\n      const prepared = await composerPanelRef.current?.prepare();\n      if (!prepared) return;\n      return submit(e, prepared);\n    }\n    return submit(e);\n  }",
     "PromptInput submit"
   );
   source = replaceOnce(
@@ -80,7 +80,7 @@ function patchPromptInput(checkoutRoot) {
   source = replaceOnce(
     source,
     '          <div className="relative w-[95vw] md:w-[750px]">\n            <ToolsMenu',
-    '          <div className="relative w-[95vw] md:w-[750px]">\n            {isImageGenerator && (\n              <AagImageProgress\n                workspaceSlug={workspace?.slug || workspaceSlug}\n                threadSlug={threadSlug}\n              />\n            )}\n            {isImageGenerator && (\n              <AagImageComposerPanel\n                ref={composerPanelRef}\n                mode={composerMode}\n                onModeChange={setComposerMode}\n                prompt={promptInput}\n                history={history}\n                threadSlug={threadSlug}\n                disabled={isStreaming || isDisabled}\n              />\n            )}\n            <ToolsMenu',
+    '          <div className="relative w-[95vw] md:w-[750px]">\n            {isImageComposerEnabledForCurrentWorkspace && (\n              <AagImageProgress\n                workspaceSlug={activeWorkspaceSlug}\n                threadSlug={threadSlug}\n              />\n            )}\n            {(isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator") && (\n              <AagImageComposerPanel\n                composerEnabled={isImageComposerEnabledForCurrentWorkspace}\n                ref={composerPanelRef}\n                mode={composerMode}\n                onModeChange={setComposerMode}\n                prompt={promptInput}\n                history={history}\n                threadSlug={threadSlug}\n                workspaceSlug={activeWorkspaceSlug}\n                disabled={isStreaming || isDisabled}\n              />\n            )}\n            <ToolsMenu',
     "PromptInput render"
   );
   fs.writeFileSync(promptPath, source);
@@ -173,6 +173,62 @@ function patchChatContainer(checkoutRoot) {
   fs.writeFileSync(chatPath, source);
 }
 
+function patchThreadContainer(checkoutRoot) {
+  const threadContainerPath = path.join(
+    checkoutRoot,
+    "frontend",
+    "src",
+    "components",
+    "Sidebar",
+    "ActiveWorkspaces",
+    "ThreadContainer",
+    "index.jsx"
+  );
+  let source = fs.readFileSync(threadContainerPath, "utf8");
+  source = replaceOnce(
+    source,
+    'import useHoverMetaKey from "./hooks";',
+    'import useHoverMetaKey from "./hooks";\nimport useImageComposerMode from "@/utils/useImageComposerMode";',
+    "ThreadContainer Image Composer mode import"
+  );
+  source = replaceOnce(
+    source,
+    "  const { threadSlug = null } = useParams();\n  const [threads, setThreads] = useState([]);",
+    "  const { threadSlug = null } = useParams();\n  const { enabled: isImageComposerEnabledForCurrentWorkspace } =\n    useImageComposerMode(workspace?.slug);\n  const [threads, setThreads] = useState([]);",
+    "ThreadContainer Image Composer mode state"
+  );
+  source = replaceOnce(
+    source,
+    "      {defaultThreadHasChats && (\n        <ThreadItem\n          idx={0}\n          activeIdx={activeThreadIdx}\n          isActive={activeThreadIdx === 0}\n          workspace={workspace}\n          thread={{ slug: null, name: \"default\" }}\n          hasNext={threads.length > 0 || showVirtualThread}\n        />\n      )}",
+    "      {defaultThreadHasChats &&\n        !isImageComposerEnabledForCurrentWorkspace && (\n          <ThreadItem\n            idx={0}\n            activeIdx={activeThreadIdx}\n            isActive={activeThreadIdx === 0}\n            workspace={workspace}\n            thread={{ slug: null, name: \"default\" }}\n            hasNext={threads.length > 0 || showVirtualThread}\n          />\n        )}",
+    "ThreadContainer legacy default row visibility"
+  );
+  fs.writeFileSync(threadContainerPath, source);
+}
+
+function patchArtifactText(checkoutRoot) {
+  const historyPath = path.join(checkoutRoot,"frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx");
+  let source = fs.readFileSync(historyPath,"utf8");
+  source = replaceOnce(source,'import HistoricalMessage from "./HistoricalMessage";',
+    'import HistoricalMessage from "./HistoricalMessage";\nimport useAagArtifactText from "@/utils/useAagArtifactText";',"artifact text import");
+  source = replaceOnce(source,'  const { textSizeClass } = useTextSize();',
+    '  const { textSizeClass } = useTextSize();\n  const displayText = useAagArtifactText();',"artifact text language");
+  source = replaceOnce(source,'      buildMessages({\n        workspace,',
+    '      buildMessages({\n        displayText,\n        workspace,',"artifact text callback");
+  source = replaceOnce(source,'      forkThread,\n      websocket,\n    ]',
+    '      forkThread,\n      websocket,\n      displayText,\n    ]',"artifact text language dependency");
+  source = replaceOnce(source,'function buildMessages({\n  history,',
+    'function buildMessages({\n  displayText,\n  history,',"artifact text helper");
+  source = replaceOnce(source,'  return history.reduce((acc, props, index) => {',
+    '  return history.reduce((acc, originalProps, index) => {\n    const props = {...originalProps, content:displayText(originalProps.content, originalProps.outputs || [], originalProps.role)};',"artifact display text");
+  fs.writeFileSync(historyPath,source);
+  const messagePath = path.join(checkoutRoot,"frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx");
+  let message = fs.readFileSync(messagePath,"utf8");
+  message = replaceOnce(message,'      prevProps.message === nextProps.message &&\n      prevProps.isLastMessage === nextProps.isLastMessage &&',
+    '      prevProps.message === nextProps.message &&\n      JSON.stringify(prevProps.outputs) === JSON.stringify(nextProps.outputs) &&\n      prevProps.isLastMessage === nextProps.isLastMessage &&',"native output memo hydration");
+  fs.writeFileSync(messagePath,message);
+}
+
 function treeHash(directory) {
   const files = [];
   function walk(current) {
@@ -240,11 +296,22 @@ try {
   copy(path.join(overlay, "ImageGenerationCard", "index.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "ImageGenerationCard", "index.jsx"));
   copy(path.join(overlay, "HistoricalOutputs", "index.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "HistoricalMessage", "HistoricalOutputs", "index.jsx"));
   copy(path.join(overlay, "AagImageCollection.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "AagImageCollection", "index.jsx"));
+  copy(path.join(overlay, "AagArtifactPrompt.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "AagArtifactPrompt.jsx"));
+  copy(path.join(overlay, "AagArtifactDetails.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "AagArtifactDetails.jsx"));
   copy(path.join(overlay, "aagArtifactExport.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactExport.js"));
+  copy(path.join(overlay, "aagArtifactFile.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactFile.js"));
+  copy(path.join(overlay, "aagArtifactSerials.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactSerials.js"));
+  const displaySource = fs.readFileSync(path.join(root,"integrations/anythingllm/aagArtifactText.js"),"utf8");
+  fs.writeFileSync(path.join(checkout,"frontend/src/utils/aagArtifactText.js"),displaySource.replace('module.exports = { displayArtifactText, artifactFilename };','export { displayArtifactText, artifactFilename };'));
+  copy(path.join(overlay, "useAagArtifactText.js"), path.join(checkout, "frontend", "src", "utils", "useAagArtifactText.js"));
+  copy(path.join(overlay, "useImageComposerMode.js"), path.join(checkout, "frontend", "src", "utils", "useImageComposerMode.js"));
+  copy(path.join(overlay, "useExpertPromptMode.js"), path.join(checkout, "frontend", "src", "utils", "useExpertPromptMode.js"));
   fs.cpSync(path.join(overlay, "AagImageComposerPanel"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "PromptInput", "AagImageComposerPanel"), { recursive: true, force: true });
   fs.cpSync(path.join(overlay, "AagImageProgress"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "PromptInput", "AagImageProgress"), { recursive: true, force: true });
   patchPromptInput(checkout);
   patchChatContainer(checkout);
+  patchThreadContainer(checkout);
+  patchArtifactText(checkout);
 
   // Release engineering can materialize the two deterministic stock-file
   // transformations without installing frontend dependencies or building a
@@ -261,6 +328,10 @@ try {
       path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "index.jsx"),
       path.join(patchOutput, "ChatContainer-index.jsx")
     );
+    copy(
+      path.join(checkout, "frontend", "src", "components", "Sidebar", "ActiveWorkspaces", "ThreadContainer", "index.jsx"),
+      path.join(patchOutput, "ThreadContainer-index.jsx")
+    );
     console.log(`FRONTEND_PATCH_RECONSTRUCTION=PASS output=${patchOutput}`);
     return;
   }
@@ -270,6 +341,8 @@ try {
   fs.rmSync(output, { recursive: true, force: true });
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.cpSync(path.join(checkout, "frontend", "dist"), output, { recursive: true, force: true });
+  copy(path.join(overlay, "atlas-prompt-disclosure.js"), path.join(output, "atlas-prompt-disclosure.js"));
+  fs.appendFileSync(path.join(output, "index.js"), '\nimport "/atlas-prompt-disclosure.js";\n');
   const built = treeHash(output);
   const provenance = {
     schema: "aag.anythingllm-frontend-build.v1",
@@ -280,7 +353,15 @@ try {
       "ImageGenerationCard/index.jsx",
       "HistoricalOutputs/index.jsx",
       "AagImageCollection.jsx",
+      "AagArtifactPrompt.jsx",
+      "AagArtifactDetails.jsx",
       "aagArtifactExport.js",
+      "aagArtifactFile.js",
+      "aagArtifactSerials.js",
+      "aagArtifactText.js (shared presentation function)",
+      "useAagArtifactText.js",
+      "useImageComposerMode.js",
+      "useExpertPromptMode.js",
       "AagImageComposerPanel/index.jsx",
       "AagImageComposerPanel/styles.css",
       "AagImageComposerPanel/localization.js",
@@ -288,8 +369,13 @@ try {
       "AagImageProgress/index.jsx",
       "AagImageProgress/styles.css",
       "PromptInput/index.jsx (deterministic inline patch)",
-      "ChatContainer/index.jsx (deterministic native-message augmentation patch)"
+      "ChatContainer/index.jsx (deterministic native-message augmentation patch)",
+      "ThreadContainer/index.jsx (deterministic legacy-default visibility patch)"
+      ,"ChatHistory/index.jsx (artifact result presentation)",
+      "HistoricalMessage/index.jsx (native output memo hydration)"
     ],
+    overlayTreeSha256: treeHash(overlay).sha256,
+    buildToolSha256: crypto.createHash("sha256").update(fs.readFileSync(__filename)).digest("hex"),
     publicFiles: built.files,
     publicTreeSha256: built.sha256,
     builtAt: new Date().toISOString(),

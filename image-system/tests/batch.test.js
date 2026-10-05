@@ -52,6 +52,7 @@ function deps(options = {}) {
   let call = 0;
   const bytes = new Map();
   return {
+    requireReady: async () => {},
     scheduler: { engineActivity: async () => ({ active: false }), disableHeartbeat: true, sleep: async () => {} },
     adapters: {
       execute: async (task) => {
@@ -159,4 +160,20 @@ test("provider-neutral batch execution has no provider/model branch and preserve
   const planned = args(2);
   await batch.createBatch(planned, trusted(root, "neutral", "Create exactly two distinct illustrated city parks as a coherent series"), { deps: mock });
   assert.deepEqual(observed, planned.items.map((entry) => entry.prompt));
+});
+
+test('batch captures one exact original turn and separate final texts, preserving both during resume',async(t)=>{
+ const root=temporary();t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const provenance=require('../src/prompt-provenance');
+ const original='  Create exactly two distinct illustrated city parks as a coherent series\r\n  ';
+ const dependencies=deps({failCalls:new Set([2])}),execute=dependencies.adapters.execute;
+ dependencies.adapters.execute=async(task,normalized,rt,context,token,adapterDeps)=>{
+   adapterDeps.onFinalPrompt({prompt:task.prompt,boundary:'comfy.CLIPTextEncode.text'});
+   adapterDeps.onEngineMetadata({final_prompt_sha256:provenance.hash(task.prompt)});
+   return execute(task,normalized,rt,context,token,adapterDeps);
+ };
+ const created=await batch.createBatch(args(2),trusted(root,'provenance',original),{deps:dependencies});assert.equal(created.job.status,'PARTIAL');
+ const resumed=await batch.resumeBatch(created.job.job_id,trusted(root,'resume','resume please'),{deps:dependencies});assert.equal(resumed.status,'COMPLETED');
+ for(const [i,a] of resumed.artifacts.entries()){
+  const value=provenance.resolve(root,{jobId:resumed.job_id,artifactId:a.artifact_id,artifactSha256:a.sha256});assert.equal(value.original_user_request,original);assert.equal(value.final_generation_prompt,args(2).items[i].prompt);
+ }
 });

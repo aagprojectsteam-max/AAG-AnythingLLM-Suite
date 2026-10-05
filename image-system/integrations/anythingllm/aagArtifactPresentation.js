@@ -1,8 +1,9 @@
 "use strict";
 
 const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
+const artifactFormat = require("./aagArtifactFormat");
+const artifactNaming = require("./aagArtifactNaming");
+const { displayArtifactText } = require("./aagArtifactText");
 
 const AAG_RESULT_HEADER = "AAG_IMAGE_RESULT";
 const AAG_PUBLIC_HOSTS = new Set(["127.0.0.1", "localhost"]);
@@ -156,39 +157,6 @@ function inspectPng(bytes) {
   return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
 }
 
-function presentationFilename(sha256) {
-  const value = sha256.slice(0, 32);
-  return `img-${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}.png`;
-}
-
-function verifyExistingFile(target, sha256) {
-  const bytes = fs.readFileSync(target);
-  const actual = crypto.createHash("sha256").update(bytes).digest("hex");
-  if (actual !== sha256)
-    throw presentationError("deterministic presentation file collision");
-  return bytes.length;
-}
-
-function persistPresentationCopy(generatedImagesPath, bytes, sha256) {
-  fs.mkdirSync(generatedImagesPath, { recursive: true });
-  const storageFilename = presentationFilename(sha256);
-  const target = path.resolve(generatedImagesPath, storageFilename);
-  const relative = path.relative(path.resolve(generatedImagesPath), target);
-  if (relative.startsWith("..") || path.isAbsolute(relative))
-    throw presentationError("presentation target escaped storage");
-  try {
-    fs.writeFileSync(target, bytes, { flag: "wx", mode: 0o600 });
-    return { storageFilename, fileSize: bytes.length, created: true };
-  } catch (error) {
-    if (error?.code !== "EEXIST") throw error;
-    return {
-      storageFilename,
-      fileSize: verifyExistingFile(target, sha256),
-      created: false,
-    };
-  }
-}
-
 async function fetchAndVerifyArtifact(artifact, fetchImpl) {
   const response = await fetchImpl(
     `${AAG_INTERNAL_ORIGIN}/files/${encodeURIComponent(artifact.filename)}`,
@@ -199,8 +167,8 @@ async function fetchAndVerifyArtifact(artifact, fetchImpl) {
   const contentType = String(response.headers?.get?.("content-type") || "")
     .split(";", 1)[0]
     .toLowerCase();
-  if (contentType !== "image/png")
-    throw presentationError("presentation artifact MIME is not image/png");
+  if (!["image/png","image/jpeg","image/webp"].includes(contentType))
+    throw presentationError("presentation artifact MIME is unsupported");
   const bytes = Buffer.from(await response.arrayBuffer());
   if (bytes.length < 128 || bytes.length > MAX_ARTIFACT_BYTES)
     throw presentationError("presentation artifact size is invalid");
@@ -210,7 +178,8 @@ async function fetchAndVerifyArtifact(artifact, fetchImpl) {
     .digest("hex");
   if (actualSha256 !== artifact.sha256)
     throw presentationError("presentation artifact SHA-256 mismatch");
-  const dimensions = inspectPng(bytes);
+  const dimensions = artifactFormat.inspect(bytes);
+  if (contentType !== dimensions.mime) throw presentationError("presentation artifact MIME mismatch");
   if (
     dimensions.width !== artifact.width ||
     dimensions.height !== artifact.height
@@ -219,39 +188,47 @@ async function fetchAndVerifyArtifact(artifact, fetchImpl) {
   return bytes;
 }
 
-function displayName(operation, index, count) {
-  const base = operation === "upscale" ? "upscaled-image" : "generated-image";
-  return count === 1 ? `${base}.png` : `${base}-${String(index).padStart(3, "0")}.png`;
+function presentationPrompt(value, expertPrompts = []) {
+  const text = String(value || "");
+  const sha = crypto.createHash("sha256").update(text, "utf8").digest("hex");
+  const verified = expertPrompts.some(record => record?.contract === "aag.expert.prompt.v1" &&
+    record.sha256 === sha && record.prompt === text && record.truncated === false &&
+    Number.isInteger(record.tokens_including_template) && record.tokens_including_template <= 512);
+  if (verified) {
+    if (text.length > 8000) throw presentationError("Expert prompt exceeds transport bound");
+    return text;
+  }
+  return text.slice(0, 2000);
 }
 
 async function buildPresentationOutputs({
   parsed,
   prompt,
   promptsByLogicalIndex = new Map(),
+  expertPrompts = [],
   collectionBrief = "",
   generatedImagesPath,
   fetchImpl,
+  naming = {},
 }) {
   const outputs = [];
   for (let index = 0; index < parsed.artifacts.length; index += 1) {
     const artifact = parsed.artifacts[index];
     const bytes = await fetchAndVerifyArtifact(artifact, fetchImpl);
-    const persisted = persistPresentationCopy(
-      generatedImagesPath,
-      bytes,
-      artifact.sha256
-    );
+    const persisted = await artifactNaming.persist({
+      ...naming, generatedImagesPath, bytes, parsed, artifact: { ...artifact, format: artifactFormat.inspect(bytes).format },
+    });
     outputs.push({
       type: "imageGenerationCard",
       payload: {
         storageFilename: persisted.storageFilename,
-        filename: displayName(
-          parsed.operation,
-          artifact.logicalIndex,
-          parsed.requestedCount
-        ),
+        filename: persisted.storageFilename,
+        generatedAt: persisted.generatedAt,
+        workspaceSerial: persisted.workspaceSerial,
+        threadSerial: persisted.threadSerial,
+        filenameTimezone: persisted.filenameTimezone,
         fileSize: persisted.fileSize,
-        prompt: String(promptsByLogicalIndex.get(artifact.logicalIndex) || prompt || "").slice(0, 2000),
+        prompt: presentationPrompt(promptsByLogicalIndex.get(artifact.logicalIndex) || prompt || "", expertPrompts),
         artifactUrl: artifact.url,
         artifactSha256: artifact.sha256,
         artifactWidth: artifact.width,
@@ -291,7 +268,7 @@ function escapeRegExp(value) {
 }
 
 function normalizeFinalText(content, artifactUrls) {
-  let text = String(content || "");
+  let text = displayArtifactText(content, [{type:"imageGenerationCard"}]);
   for (const url of artifactUrls) {
     const escaped = escapeRegExp(url);
     text = text
@@ -300,7 +277,7 @@ function normalizeFinalText(content, artifactUrls) {
       .replace(new RegExp(escaped, "gi"), "");
   }
   text = text.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
-  return text || "Image generated successfully.";
+  return text;
 }
 
 function appendUniqueOutputs(aibitat, outputs) {
@@ -308,12 +285,12 @@ function appendUniqueOutputs(aibitat, outputs) {
   const known = new Set(
     aibitat._pendingOutputs
       .filter((output) => output?.type === "imageGenerationCard")
-      .map((output) => output?.payload?.artifactSha256)
+      .map((output) => output?.payload?.artifactId)
       .filter(Boolean)
   );
   for (const output of outputs) {
-    if (known.has(output.payload.artifactSha256)) continue;
-    known.add(output.payload.artifactSha256);
+    if (known.has(output.payload.artifactId)) continue;
+    known.add(output.payload.artifactId);
     aibitat._pendingOutputs.push(output);
   }
 }
@@ -347,6 +324,7 @@ function installAagArtifactPresentation({
   generatedImagesPath,
   fetchImpl = globalThis.fetch,
   authorizeOutputs = null,
+  naming = {},
   log = () => {},
 }) {
   if (!aibitat || aibitat._aagArtifactPresentationInstalled) return false;
@@ -365,15 +343,18 @@ function installAagArtifactPresentation({
       const result = await originalHandler(args);
       const parsed = parseAagImageResult(result);
       if (!parsed) return result;
-      const prompt = semanticPrompt(args);
+      const expertPrompts = task.runtimeArgs?.AAG_EXPERT_VALIDATED_PROMPTS || [];
+      const prompt = expertPrompts.length && typeof args?.prompt === "string" ? args.prompt : semanticPrompt(args);
       const plan = batchPresentationPlan(args);
       const outputs = await buildPresentationOutputs({
         parsed,
         prompt,
         promptsByLogicalIndex: plan.prompts,
+        expertPrompts,
         collectionBrief: plan.collectionBrief,
         generatedImagesPath,
         fetchImpl,
+        naming: { ...naming, stateRoot: task.runtimeArgs?.AAG_IMAGE_AGENT_STATE_ROOT || naming.stateRoot },
       });
       if (typeof authorizeOutputs === "function") await authorizeOutputs(outputs);
       appendUniqueOutputs(aibitat, outputs);
@@ -415,12 +396,11 @@ function installAagArtifactPresentation({
 }
 
 module.exports = {
+  presentationPrompt,
   AAG_IMAGE_PROVIDER_POLICY: "OPEN_BY_CAPABILITY",
   parseAagImageResult,
   parseCanonicalArtifactUrl,
   inspectPng,
-  presentationFilename,
-  persistPresentationCopy,
   fetchAndVerifyArtifact,
   buildPresentationOutputs,
   normalizeFinalText,

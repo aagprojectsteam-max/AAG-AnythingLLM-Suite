@@ -1,0 +1,91 @@
+{
+  "request": "Create exactly one realistic studio product photograph of a blue ceramic mug standing on a wooden table beside a folded linen napkin. The mug has a smooth glazed surface and one curved handle. Use a centered composition with believable proportions, a clean softly blurred neutral background, gentle side lighting, crisp highlights, and a subtle contact shadow. Show the entire mug in a detailed square photographic view. No lettering or logos.",
+  "record": {
+    "prompt": "A realistic studio product photograph of a single vibrant blue ceramic mug resting upright on a natural wooden tabletop. The ceramic mug features a glossy, smooth glazed finish with subtle organic depth, a neatly attached curved handle on one side, and fully visible intact proportions centered in frame. Neatly folded beside the mug rests a textured natural linen napkin with visible fabric weave. The mug casts an authentic, gentle contact shadow onto the warm wood grain. Soft directional studio side lighting defines the cylindrical volume of the mug, creating clean, crisp specular highlights along the curved glazed porcelain body and rim while preserving rich, saturated ceramic color. A shallow depth of field gently softens the clean neutral studio backdrop into a smooth, unobtrusive blur. Sharp optical focus across the entire ceramic vessel, perfectly plain surfaces with no logos, lettering, or brand marks.",
+    "sha256": "76d98a100418d3b6298db1bd2418965aea4c322a275dec8e14fa2661e56018ec",
+    "tokens_including_template": 180,
+    "operating_token_limit": 512,
+    "selected_style": "photography/product",
+    "protected_fragment_ids": [
+      "p1-core-scene",
+      "p2-lighting-and-optics"
+    ],
+    "truncated": false,
+    "route": "generate",
+    "semantic_review_required": true,
+    "plan": {
+      "conflicts": [],
+      "fragments": [
+        {
+          "id": "p1-core-scene",
+          "priority": 1,
+          "text": "A realistic studio product photograph of a single vibrant blue ceramic mug resting upright on a natural wooden tabletop. The ceramic mug features a glossy, smooth glazed finish with subtle organic depth, a neatly attached curved handle on one side, and fully visible intact proportions centered in frame. Neatly folded beside the mug rests a textured natural linen napkin with visible fabric weave. The mug casts an authentic, gentle contact shadow onto the warm wood grain."
+        },
+        {
+          "id": "p2-lighting-and-optics",
+          "text": "Soft directional studio side lighting defines the cylindrical volume of the mug, creating clean, crisp specular highlights along the curved glazed porcelain body and rim while preserving rich, saturated ceramic color. A shallow depth of field gently softens the clean neutral studio backdrop into a smooth, unobtrusive blur. Sharp optical focus across the entire ceramic vessel, perfectly plain surfaces with no logos, lettering, or brand marks.",
+          "priority": 2
+        }
+      ],
+      "facts": [
+        {
+          "classification": "USER_REQUIRED",
+          "text": "Exactly one mug standing as the central product subject.",
+          "source_text": "Create exactly one",
+          "dimension": "count"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "text": "A vibrant blue ceramic mug with a smooth glazed surface and a single curved handle.",
+          "source_text": "blue ceramic mug standing on a wooden table beside a folded linen napkin. The mug has a smooth glazed surface and one curved handle.",
+          "dimension": "subjects"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "source_text": "beside a folded linen napkin",
+          "text": "A folded natural linen napkin placed neatly beside the mug on the tabletop.",
+          "dimension": "required_objects"
+        },
+        {
+          "dimension": "environment",
+          "text": "A wooden table surface with a clean, softly blurred neutral studio background.",
+          "classification": "USER_REQUIRED",
+          "source_text": "on a wooden table beside a folded linen napkin. The mug has a smooth glazed surface and one curved handle. Use a centered composition with believable proportions, a clean softly blurred neutral background"
+        },
+        {
+          "dimension": "lighting",
+          "text": "Gentle directional side lighting producing crisp specular highlights along the glaze and a subtle contact shadow beneath the base.",
+          "classification": "USER_REQUIRED",
+          "source_text": "gentle side lighting, crisp highlights, and a subtle contact shadow."
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "source_text": "Use a centered composition with believable proportions, a clean softly blurred neutral background, gentle side lighting, crisp highlights, and a subtle contact shadow. Show the entire mug in a detailed square photographic view.",
+          "text": "Centered composition displaying the full silhouette of the mug within square framing.",
+          "dimension": "composition_focal_hierarchy"
+        },
+        {
+          "text": "Completely blank ceramic surface with no text, lettering, or logos.",
+          "classification": "USER_REQUIRED",
+          "source_text": "No lettering or logos.",
+          "dimension": "exclusions"
+        }
+      ]
+    },
+    "request_sha256": "7f04e0906eca5acb79653b939ba3ef2a1cfff5d1db0e521d6b769b7420a87433",
+    "context_sha256": "42d1ee54d643d02048c2575f12c232d6c362c714f96a80f8c93ef74bdd24c4ca",
+    "author": "current-active-chat-llm",
+    "contract": "aag.expert.prompt.v1",
+    "authoring_contract": "self-contained.v2",
+    "review_style": {
+      "canonical_id": "photography/product",
+      "label": "Product",
+      "recognition_anchors": [
+        "Accurate silhouette and controlled material reflections"
+      ]
+    }
+  },
+  "responses": [
+    "```json\n{\n  \"pass\": true,\n  \"issues\": [],\n  \"checks\": {\n    \"all_user_requirements\": true,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": true,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"single vibrant blue ceramic mug\",\n      \"protected_evidence\": \"single vibrant blue ceramic mug\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"glossy, smooth glazed finish with subtle organic depth, a neatly attached curved handle on one side\",\n      \"protected_evidence\": \"glossy, smooth glazed finish with subtle organic depth, a neatly attached curved handle on one side\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"Neatly folded beside the mug rests a textured natural linen napkin\",\n      \"protected_evidence\": \"Neatly folded beside the mug rests a textured natural linen napkin\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": true,\n      \"evidence\": \"natural wooden tabletop\",\n      \"protected_evidence\": \"natural wooden tabletop\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"Soft directional studio side lighting defines the cylindrical volume of the mug, creating clean, crisp specular highlights along the curved glazed porcelain body and rim\",\n      \"protected_evidence\": \"Soft directional studio side lighting defines the cylindrical volume of the mug, creating clean, crisp specular highlights along the curved glazed porcelain body and rim\"\n    },\n    {\n      \"index\": 5,\n      \"preserved\": true,\n      \"evidence\": \"fully visible intact proportions centered in frame\",\n      \"protected_evidence\": \"fully visible intact proportions centered in frame\"\n    },\n    {\n      \"index\": 6,\n      \"preserved\": true,\n      \"evidence\": \"perfectly plain surfaces with no logos, lettering, or brand marks\",\n      \"protected_evidence\": \"perfectly plain surfaces with no logos, lettering, or brand marks\"\n    }\n  ]\n}\n```"
+  ]
+}

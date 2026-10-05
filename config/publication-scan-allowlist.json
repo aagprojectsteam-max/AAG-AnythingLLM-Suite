@@ -1,0 +1,53 @@
+{
+  "schema": "aag.publication-scan-allowlist.v1",
+  "synthetic_test_lines": [
+    {
+      "path": "image-system/tests/prompt-provenance.test.js",
+      "line": 48,
+      "kind": "credential",
+      "line_sha256": "c4e02f659a817dd53d8d1d6276f243aabc0badc8d188ecdc1e31b0c6671abdc0",
+      "reason": "Explicit synthetic negative-test string; no usable credential. Exact line hash only."
+    },
+    {
+      "path": "image-system/tests/prompt-provenance.test.js",
+      "line": 51,
+      "kind": "assignment",
+      "line_sha256": "9d0f5a1bcf2ffdec58a3bf03fda48ee67a13e3953f6ec21ce24d829464640b07",
+      "reason": "Explicit synthetic negative-test string; no usable credential. Exact line hash only."
+    },
+    {
+      "path": "image-system/tests/prompt-provenance.test.js",
+      "line": 52,
+      "kind": "assignment",
+      "line_sha256": "3eea559a7b950fe2da3bc56222d7bce4c14c82e356ba879f9a2502acf64775e7",
+      "reason": "Explicit synthetic negative-test string; no usable credential. Exact line hash only."
+    },
+    {
+      "path": "image-system/tests/runtime.test.js",
+      "line": 689,
+      "kind": "credential",
+      "line_sha256": "6f5b6994e7042e2d4da543f294960b88fd7dc1ef5bf4d703263f3e1802296a01",
+      "reason": "Explicit synthetic negative-test string; no usable credential. Exact line hash only."
+    }
+  ],
+  "binary_fixtures": [
+    {
+      "path": "image-system/tests/fixtures/artifact-formats/verified.jpg",
+      "sha256": "45c00eda90ee90b654d23c8f239c3513331cc519832f8bdb70cfedf1cc7c42ca",
+      "bytes": 1050,
+      "reason": "Approved tiny deterministic image-format decoding fixture"
+    },
+    {
+      "path": "image-system/tests/fixtures/artifact-formats/verified.png",
+      "sha256": "b9806123574a571c4077c05d2f0d62baf03a6642f0c725d97e7c412bea43751e",
+      "bytes": 490,
+      "reason": "Approved tiny deterministic image-format decoding fixture"
+    },
+    {
+      "path": "image-system/tests/fixtures/artifact-formats/verified.webp",
+      "sha256": "78201321ec294c72b5194b07211935911e3cc045d0f130a4a6407f16171afcf9",
+      "bytes": 714,
+      "reason": "Approved tiny deterministic image-format decoding fixture"
+    }
+  ]
+}

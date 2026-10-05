@@ -1,3 +1,5 @@
+import AagArtifactDetails from "@/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactDetails";
+import AagArtifactPrompt from "@/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactPrompt";
 import { memo, useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { saveAs } from "file-saver";
@@ -17,6 +19,7 @@ import { openImageLightbox } from "@/components/ImageLightbox";
 import { PASTE_ATTACHMENT_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
 import { PROMPT_INPUT_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput";
 import { exportArtifactsAsPdf } from "@/utils/aagArtifactExport";
+import { artifactFilename } from "@/utils/aagArtifactText";
 
 /**
  * Renders a generated image returned by the `/img` command. The serve endpoint
@@ -26,6 +29,8 @@ import { exportArtifactsAsPdf } from "@/utils/aagArtifactExport";
 function ImageGenerationCard({ props }) {
   const { t } = useTranslation();
   const { storageFilename, filename, prompt } = props.content || {};
+  const [resolvedFile, setResolvedFile] = useState(null);
+  const actualFilename = artifactFilename(props.content, resolvedFile);
   const [blob, setBlob] = useState(null);
   const [objectUrl, setObjectUrl] = useState(null);
   const [status, setStatus] = useState("loading");
@@ -67,7 +72,7 @@ function ImageGenerationCard({ props }) {
 
   const handleDownload = () => {
     if (!blob) return;
-    saveAs(blob, filename || storageFilename);
+    saveAs(blob, actualFilename || "image.png");
     setMenuOpen(false);
   };
 
@@ -99,7 +104,7 @@ function ImageGenerationCard({ props }) {
     setMenuOpen(false);
     if (!blob) return;
 
-    const file = new File([blob], filename || storageFilename, {
+    const file = new File([blob], actualFilename || "image.png", {
       type: blob.type,
     });
 
@@ -121,7 +126,13 @@ function ImageGenerationCard({ props }) {
 
   return (
     <div className="my-2">
-      <div className="inline-block">
+      <div className="inline-block" style={{maxWidth:"100%",minWidth:0}}>
+        <div data-testid="aag-artifact-filename" data-artifact-id={props.content?.artifactId || ""}
+          title={actualFilename || undefined} dir="ltr"
+          className="mb-2 text-sm text-zinc-300 light:text-slate-700"
+          style={{maxWidth:"min(500px,80vw)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",userSelect:"text"}}>
+          {actualFilename || "Generated image"}
+        </div>
         {status !== "ready" && (
           <div className="relative rounded-xl overflow-hidden bg-zinc-800 aspect-square w-[280px]">
             {status === "loading" && (
@@ -215,11 +226,13 @@ function ImageGenerationCard({ props }) {
             </div>
           </div>
         )}
-        {status === "ready" && (
-          <div className="flex flex-wrap items-center gap-2 mt-2">
+        {(
+          <div data-testid="aag-artifact-actions" dir="ltr" className="flex items-center gap-2 mt-2" style={{direction:"ltr",flexWrap:"nowrap",overflowX:"auto",maxWidth:"100%"}}>
+            <AagArtifactDetails artifact={props.content} onFileResolved={setResolvedFile}>
             <button
               type="button"
               onClick={handleDownload}
+              disabled={status !== "ready"}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white text-xs text-white light:text-slate-700 hover:bg-zinc-800 light:hover:bg-slate-100"
             >
               <DownloadSimple size={14} weight="bold" /> Download
@@ -227,11 +240,13 @@ function ImageGenerationCard({ props }) {
             <button
               type="button"
               onClick={handlePdf}
-              disabled={pdfStatus === "working"}
+              disabled={status !== "ready" || pdfStatus === "working"}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white text-xs text-white light:text-slate-700 hover:bg-zinc-800 light:hover:bg-slate-100 disabled:opacity-50"
             >
               {pdfStatus === "working" ? <CircleNotch size={14} className="animate-spin" /> : <FilePdf size={14} weight="bold" />} PDF
             </button>
+            <AagArtifactPrompt artifact={props.content} />
+            </AagArtifactDetails>
             {pdfError && <span role="alert" className="inline-flex items-center gap-1 text-xs text-red-500"><WarningCircle size={14} />{pdfError}</span>}
           </div>
         )}

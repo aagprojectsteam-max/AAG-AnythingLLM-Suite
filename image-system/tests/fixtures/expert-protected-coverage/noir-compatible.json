@@ -1,0 +1,86 @@
+{
+  "request": "A single empty chair beside a window in a quiet room at night. Hard directional moonlight cuts across the chair, leaving deep controlled shadows. Wide framing, monochrome film noir, no visible text.",
+  "record": {
+    "prompt": "A wide cinematic film still of a single empty wooden chair resting beside a tall multi-pane window inside a quiet, dimly lit room at night. Hard, stark directional moonlight cuts diagonally through the window mullions, striking the chair with crisp geometric highlights while plunging the rest of the room into deep, controlled darkness. The sharp silhouette of the window frame and chair casts long, graphic diagonal shadows across the bare floorboards and plaster wall. Classic monochrome film noir visual grammar featuring dramatic chiaroscuro contrast, rich velvety blacks, clean luminous silver highlights, and subtle atmospheric film grain. Wide composition with no visible text.",
+    "sha256": "24cf05d377a35de1b28741ae58973ab033119028fbf0f6f36cd1bc7cca0f8d37",
+    "tokens_including_template": 141,
+    "operating_token_limit": 512,
+    "selected_style": "cinematic-film-still/noir",
+    "protected_fragment_ids": [
+      "p1-scene-core",
+      "p2-noir-treatment"
+    ],
+    "truncated": false,
+    "route": "generate",
+    "semantic_review_required": true,
+    "plan": {
+      "facts": [
+        {
+          "text": "A single empty chair rests as the solitary central subject.",
+          "dimension": "subjects",
+          "source_text": "A single empty chair",
+          "classification": "USER_REQUIRED"
+        },
+        {
+          "text": "Positioned beside a window inside a quiet, sparsely furnished room at night.",
+          "classification": "USER_REQUIRED",
+          "dimension": "environment",
+          "source_text": "beside a window in a quiet room at night"
+        },
+        {
+          "text": "Hard directional moonlight beams diagonally through the window panes, slicing across the chair and generating deep, controlled graphic shadows.",
+          "source_text": "Hard directional moonlight cuts across the chair, leaving deep controlled shadows",
+          "dimension": "lighting",
+          "classification": "USER_REQUIRED"
+        },
+        {
+          "source_text": "Wide framing",
+          "classification": "USER_REQUIRED",
+          "text": "Wide framing capturing the chair, the architectural window structure, and the expanse of shadow on the floor and wall.",
+          "dimension": "composition_focal_hierarchy"
+        },
+        {
+          "dimension": "style_constraints",
+          "text": "Monochrome film noir aesthetic with hard chiaroscuro tonal separation and rich velvety blacks.",
+          "source_text": "monochrome film noir",
+          "classification": "USER_REQUIRED"
+        },
+        {
+          "text": "No visible text, lettering, or signs in the scene.",
+          "classification": "USER_REQUIRED",
+          "dimension": "text_requirements",
+          "source_text": "no visible text"
+        }
+      ],
+      "fragments": [
+        {
+          "priority": 1,
+          "text": "A wide cinematic frame of a single empty wooden chair standing beside a tall multi-pane window in a quiet room at night. Hard directional moonlight streams sharply through the window mullions, slicing diagonally across the chair's backrest and seat, casting crisp, elongated, oblique shadows onto the bare floor and wall.",
+          "id": "p1-scene-core"
+        },
+        {
+          "text": "Monochrome film noir visual language defined by intense chiaroscuro contrast, deep graphic shadow masses, crisp luminous edges, and fine silver-halide film grain, completely devoid of visible text or typography.",
+          "id": "p2-noir-treatment",
+          "priority": 2
+        }
+      ],
+      "conflicts": []
+    },
+    "request_sha256": "61b5371dce33d0a3985645a100359f8f66940555b1388c50687ec2e74bb6b9ba",
+    "context_sha256": "88363d75337e31f7146144c5c7515691f545c5a2cc9935e07c553a7bc159ecfc",
+    "author": "current-active-chat-llm",
+    "contract": "aag.expert.prompt.v1",
+    "authoring_contract": "self-contained.v2",
+    "review_style": {
+      "canonical_id": "cinematic-film-still/noir",
+      "label": "Noir",
+      "recognition_anchors": [
+        "Hard chiaroscuro",
+        "oblique shadows and controlled darkness"
+      ]
+    }
+  },
+  "responses": [
+    "```json\n{\n  \"pass\": true,\n  \"issues\": [],\n  \"checks\": {\n    \"all_user_requirements\": true,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": true,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"single empty wooden chair\",\n      \"protected_evidence\": \"single empty wooden chair\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"beside a tall multi-pane window inside a quiet, dimly lit room at night\",\n      \"protected_evidence\": \"beside a tall multi-pane window in a quiet room at night\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"Hard, stark directional moonlight cuts diagonally through the window mullions, striking the chair with crisp geometric highlights while plunging the rest of the room into deep, controlled darkness\",\n      \"protected_evidence\": \"Hard directional moonlight streams sharply through the window mullions, slicing diagonally across the chair's backrest and seat, casting crisp, elongated, oblique shadows\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": true,\n      \"evidence\": \"A wide cinematic film still\",\n      \"protected_evidence\": \"A wide cinematic frame\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"Classic monochrome film noir visual grammar\",\n      \"protected_evidence\": \"Monochrome film noir visual language\"\n    },\n    {\n      \"index\": 5,\n      \"preserved\": true,\n      \"evidence\": \"no visible text\",\n      \"protected_evidence\": \"completely devoid of visible text or typography\"\n    }\n  ]\n}\n```"
+  ]
+}

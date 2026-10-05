@@ -1,0 +1,622 @@
+{
+  "schema": "aag.expert.families.v1",
+  "taxonomy_sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+  "profiles": [
+    {
+      "canonical_id": "photography",
+      "label": "Photography",
+      "definition": "credible optics, observed physical surfaces and exposure-dependent detail",
+      "composition_viewpoint": "Choose a camera position that explains the subject; preserve believable focal length, occlusion and depth of field",
+      "lighting": "physically motivated daylight or controlled studio light",
+      "materials_textures": "real surface microtexture and natural imperfections",
+      "color_edges_depth": "Organize exposure and white balance; edges follow focus and motion, not arbitrary outlines",
+      "rendering_detail": "camera-like tonal response, plausible focus and perspective",
+      "failures_conflicts": "Painterly edges, plastic surfaces, impossible reflections and uniform sharpness conflict with optical evidence",
+      "budget_emphasis": "Spend tokens on subject, light source, lens behavior and material response before retouch language",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "cinematic-film-still",
+      "label": "Cinematic / Film Still",
+      "definition": "narrative staging, production design and layered filmic depth",
+      "composition_viewpoint": "Stage a decisive supplied moment with readable blocking, motivated framing and layered planes",
+      "lighting": "motivated key light with controlled practical sources",
+      "materials_textures": "tangible set materials with restrained film grain",
+      "color_edges_depth": "Unify tonal grade while retaining local color; foreground occlusion and focus guide attention",
+      "rendering_detail": "cinematic frame with intentional lens behavior and tonal grade",
+      "failures_conflicts": "Invented narrative events, gratuitous anamorphic flare and crushed blacks obscure the brief",
+      "budget_emphasis": "Prioritize action, blocking, camera placement and motivated light over generic film adjectives",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "illustration",
+      "label": "Illustration",
+      "definition": "authored line and shape communicate an idea through selective detail",
+      "composition_viewpoint": "Make the supplied idea legible through silhouette, grouping and selective exaggeration",
+      "lighting": "designed value hierarchy appropriate to drawn forms",
+      "materials_textures": "visible brush or line character appropriate to the selected technique",
+      "color_edges_depth": "Let contour, flat shape and chosen marks organize space; color relationships support meaning",
+      "rendering_detail": "purposeful stylization with clear contour and color organization",
+      "failures_conflicts": "Generic digital gloss, indiscriminate detail and unrelated symbolism weaken authored visual decisions",
+      "budget_emphasis": "Describe shape and mark grammar before decorative detail",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "fine-art-traditional-media",
+      "label": "Fine Art / Traditional Media",
+      "definition": "physical pigment behavior and hand-made marks on a visible support",
+      "composition_viewpoint": "Compose for the physical support and selected mark scale; preserve focal structure",
+      "lighting": "light reveals both depicted subject and medium behavior",
+      "materials_textures": "paper, canvas or plaster with authentic pigment deposition",
+      "color_edges_depth": "Specify how pigment, binder and support produce edges, transparency, impasto or grain",
+      "rendering_detail": "observable traditional-media marks rather than a uniform digital filter",
+      "failures_conflicts": "A digital filter cannot substitute for authentic deposition; incompatible wet/dry techniques need explicit intent",
+      "budget_emphasis": "Name medium behavior and focal marks before optional support texture",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "3d-cgi",
+      "label": "3D / CGI",
+      "definition": "modeled volumes, coherent material response and deliberate dimensional lighting",
+      "composition_viewpoint": "Use consistent camera projection and modeled scale; maintain contact and occlusion",
+      "lighting": "key, fill and contact shadows that establish volume",
+      "materials_textures": "physically coherent or deliberately stylized material surfaces",
+      "color_edges_depth": "Describe roughness, transmission and specularity separately; edges and subdivision follow construction",
+      "rendering_detail": "consistent modeled geometry and spatial occlusion",
+      "failures_conflicts": "Melted geometry, floating joints and contradictory reflections break modeled coherence",
+      "budget_emphasis": "Prioritize volume, material response and light geometry",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "graphic-design",
+      "label": "Graphic Design",
+      "definition": "hierarchy, alignment, visual grouping and composition for communication",
+      "composition_viewpoint": "Use grid, alignment, margins and hierarchy to communicate supplied content",
+      "lighting": "flat graphic treatment unless showing a printed mockup",
+      "materials_textures": "print-aware surfaces or clean digital fields",
+      "color_edges_depth": "Color and shape encode roles; depth is optional and must not compete with hierarchy",
+      "rendering_detail": "disciplined visual hierarchy with designed shapes and margins",
+      "failures_conflicts": "Unrequested copy, pseudo-text and ornamental clutter damage communication",
+      "budget_emphasis": "Prioritize information order, spacing and exact supplied text",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "vector-flat-art",
+      "label": "Vector / Flat Art",
+      "definition": "precise contour construction, controlled fills and scalable shape economy",
+      "composition_viewpoint": "Build the scene with deliberate paths, overlap and shape economy",
+      "lighting": "flat graphic light expressed through deliberate planes",
+      "materials_textures": "clean edges with texture only where intrinsic to the style",
+      "color_edges_depth": "Use clean contour and controlled fill relationships; depth comes from plane overlap",
+      "rendering_detail": "crisp vector-like paths and simple shape relationships",
+      "failures_conflicts": "Photographic texture, accidental gradients and tangled paths conflict with vector clarity",
+      "budget_emphasis": "Prioritize silhouette, path behavior and fill hierarchy",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "cartoon-animation",
+      "label": "Cartoon / Animation",
+      "definition": "readable silhouettes, expressive staging and simplified appealing forms",
+      "composition_viewpoint": "Stage readable poses with clear action lines and balanced exaggeration",
+      "lighting": "clear designed values that support pose and expression",
+      "materials_textures": "simplified surfaces suited to drawn or tactile animation",
+      "color_edges_depth": "Group values and shape families; retain consistent contour and character construction",
+      "rendering_detail": "animation-ready shape language with clear focal action",
+      "failures_conflicts": "Fused limbs, off-model shapes and arbitrary detail weaken animation readability",
+      "budget_emphasis": "Prioritize pose, expression when relevant, silhouette and controlled shape language",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "comic-sequential-art",
+      "label": "Comic / Sequential Art",
+      "definition": "ink hierarchy, bounded story moments and panel-aware visual pacing",
+      "composition_viewpoint": "Choose one supplied story beat or explicit panel sequence; keep action and reading order clear",
+      "lighting": "strong readable shadow groups appropriate to ink",
+      "materials_textures": "line, ink masses and print texture where applicable",
+      "color_edges_depth": "Ink weights, shadow masses and screen texture define depth and emphasis",
+      "rendering_detail": "narrative panel composition with deliberate contour emphasis",
+      "failures_conflicts": "Invented speech, extra panels and confusing action continuity obscure the request",
+      "budget_emphasis": "Prioritize moment, panel organization, contour hierarchy and exact requested lettering",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "anime-manga",
+      "label": "Anime / Manga",
+      "definition": "designed contour shapes, cel or ink value groups and expressive staging",
+      "composition_viewpoint": "Use designed silhouettes, expressive staging and consistent anatomy for the supplied subject",
+      "lighting": "clean value separation with atmospheric background light",
+      "materials_textures": "precise linework and style-specific cel or screen texture",
+      "color_edges_depth": "Cel planes or ink/screentone must match the exact substyle; backgrounds support focal forms",
+      "rendering_detail": "anime or manga grammar adapted to the chosen subject",
+      "failures_conflicts": "Automatic human characters, mismatched rendering and inconsistent facial construction are not style fidelity",
+      "budget_emphasis": "Prioritize contour design, value grouping and subject-specific stylization",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "concept-art",
+      "label": "Concept Art",
+      "definition": "functional design ideation, clear silhouettes and world-building evidence",
+      "composition_viewpoint": "Choose views that explain design function and scale; detail resolves the focal proposition",
+      "lighting": "value masses communicate design before fine detail",
+      "materials_textures": "purposeful material indication rather than incidental decoration",
+      "color_edges_depth": "Value masses and selective material indications communicate construction",
+      "rendering_detail": "production-design study with readable invented function",
+      "failures_conflicts": "Polished spectacle without design logic, impossible mechanisms and unrelated world-building are weak",
+      "budget_emphasis": "Prioritize functional silhouette and construction before finish",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "fantasy",
+      "label": "Fantasy",
+      "definition": "Coherent imaginative form governed by the supplied extraordinary premise",
+      "composition_viewpoint": "Keep supplied imaginative rules legible through scale, staging and coherent relationships",
+      "lighting": "Consistent atmospheric or physical light; magical emission only when requested",
+      "materials_textures": "invented materials grounded by recognizable natural texture",
+      "color_edges_depth": "Ground extraordinary forms in consistent material and lighting behavior",
+      "rendering_detail": "Specified fantasy grammar without automatic narrative additions",
+      "failures_conflicts": "Automatic magic, medieval scenery or invented characters change intent",
+      "budget_emphasis": "Prioritize the specified extraordinary relationship and its physical presentation",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "sci-fi-futuristic",
+      "label": "Sci-Fi / Futuristic",
+      "definition": "speculative function, advanced materials and coherent technological systems",
+      "composition_viewpoint": "Explain supplied technology through coherent modules, access and scale",
+      "lighting": "practical engineered lighting with restrained emissive accents",
+      "materials_textures": "manufactured surfaces and readable construction details",
+      "color_edges_depth": "Separate manufactured surfaces, interfaces and emission with consistent light response",
+      "rendering_detail": "technology design that communicates purpose and scale",
+      "failures_conflicts": "Random greebles, neon and pseudo-labels do not establish technological function",
+      "budget_emphasis": "Prioritize functional construction and exact era/subgenre grammar",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "architecture-interior",
+      "label": "Architecture / Interior",
+      "definition": "spatial clarity, structural proportions and designed material relationships",
+      "composition_viewpoint": "Preserve layout, circulation, structural proportions and camera geometry",
+      "lighting": "architecturally motivated daylight or installed lighting",
+      "materials_textures": "building finishes shown at plausible scale",
+      "color_edges_depth": "Use coherent material junctions, verticals and window-to-interior exposure",
+      "rendering_detail": "controlled verticals and coherent space without arbitrary distortion",
+      "failures_conflicts": "Impossible supports, warped rooms and invented floor plans misrepresent the design",
+      "budget_emphasis": "Prioritize spatial organization, construction and light paths",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "product-commercial",
+      "label": "Product / Commercial",
+      "definition": "object fidelity, presentation hierarchy and material-led selling detail",
+      "composition_viewpoint": "Choose a view that reveals accurate silhouette and defining construction",
+      "lighting": "controlled studio or contextual commercial light",
+      "materials_textures": "clean manufactured material response with useful detail",
+      "color_edges_depth": "Controlled reflection shapes and contact shadows communicate finish without altering color",
+      "rendering_detail": "commercial object presentation with readable silhouette",
+      "failures_conflicts": "Invented brands, misleading proportions and blown highlights weaken product fidelity",
+      "budget_emphasis": "Prioritize product identity, material response and useful detail",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "infographic-educational",
+      "label": "Infographic / Educational",
+      "definition": "visual hierarchy explains sequence, comparison or function",
+      "composition_viewpoint": "Arrange supplied facts into sequence, comparison or functional relationships",
+      "lighting": "flat even treatment prioritizing information",
+      "materials_textures": "clean diagram surfaces with consistent symbol vocabulary",
+      "color_edges_depth": "Use a consistent symbol grammar, alignment and color role; keep leaders unambiguous",
+      "rendering_detail": "ordered explanatory structure and unobscured relationships",
+      "failures_conflicts": "Fabricated data, unsupported causal claims and pseudo-text are unacceptable",
+      "budget_emphasis": "Prioritize information correctness, relational structure and exact labels",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "coloring-page-line-art",
+      "label": "Coloring Page / Line Art",
+      "definition": "closed black contours on white with colorable regions",
+      "composition_viewpoint": "Keep margins, enclosed regions and readable overlaps appropriate to intended complexity",
+      "lighting": "no tonal shading or grey fill",
+      "materials_textures": "pure white paper and clear black lines",
+      "color_edges_depth": "Use distinct black contours on a plain light field; no tonal fills unless explicitly required",
+      "rendering_detail": "printable line-art boundaries, clear margins and unfilled interiors",
+      "failures_conflicts": "Broken outlines, gray shading and tiny accidental regions defeat colorability",
+      "budget_emphasis": "Prioritize enclosure, line weight, count and printable spacing",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "pixel-art",
+      "label": "Pixel Art",
+      "definition": "intentional square clusters and palette economy at visible low resolution",
+      "composition_viewpoint": "Choose a consistent pixel grid and readable cluster scale",
+      "lighting": "lighting represented by discrete pixel-value groups",
+      "materials_textures": "hard unfiltered pixel edges and controlled dithering",
+      "color_edges_depth": "Use discrete color ramps, purposeful stepping and selective dithering",
+      "rendering_detail": "nearest-neighbor pixel structure without smooth anti-aliasing",
+      "failures_conflicts": "Smooth interpolation, mixed resolution and random pixel noise contradict the medium",
+      "budget_emphasis": "Prioritize cluster design, palette roles and silhouette",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "isometric",
+      "label": "Isometric",
+      "definition": "equal-axis parallel projection and legible spatial layering",
+      "composition_viewpoint": "Maintain one parallel projection with shared axes and consistent scale",
+      "lighting": "consistent light across parallel planes",
+      "materials_textures": "style-appropriate surfaces subordinate to spatial clarity",
+      "color_edges_depth": "Plane values and occlusion explain depth without vanishing-point convergence",
+      "rendering_detail": "30-degree isometric axes, parallel edges, no vanishing point",
+      "failures_conflicts": "Mixed camera systems or inconsistent axis slopes destroy spatial coherence",
+      "budget_emphasis": "Prioritize projection, footprint, contacts and plane hierarchy",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "low-poly-voxel-game-stylized",
+      "label": "Low-Poly / Voxel / Game-Stylized",
+      "definition": "economical geometry and gameplay-readable silhouette",
+      "composition_viewpoint": "Make silhouette and spatial use readable at the intended game scale",
+      "lighting": "clear value groups and simple directional light",
+      "materials_textures": "faceted, cubic or hand-painted surfaces as specified",
+      "color_edges_depth": "Use the exact selected geometry system: facets, cubes or stylized meshes; keep material hierarchy simple",
+      "rendering_detail": "deliberate geometry simplification with readable game function",
+      "failures_conflicts": "Mixing voxel and polygon rules or noisy detail obscures construction",
+      "budget_emphasis": "Prioritize geometric grammar and action-readable form",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "paper-craft-handmade",
+      "label": "Paper / Craft / Handmade",
+      "definition": "visible construction, tactile material and hand-made variation",
+      "composition_viewpoint": "Show how material pieces join, fold, overlap and support the supplied form",
+      "lighting": "soft raking light reveals edges, seams and fibers",
+      "materials_textures": "paper, cloth, wood or clay with authentic craft evidence",
+      "color_edges_depth": "Edges, seams, fibers and thickness create tactile depth under suitable light",
+      "rendering_detail": "physically assembled craft object or flat handmade composition",
+      "failures_conflicts": "Seamless plastic, impossible folds and texture pasted across joins betray the medium",
+      "budget_emphasis": "Prioritize construction evidence and material-specific surface behavior",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "icon-ui-asset",
+      "label": "Icon / UI Asset",
+      "definition": "compact recognizability, optical balance and consistent asset boundaries",
+      "composition_viewpoint": "Design for small-size recognition, optical balance and clear safe margins",
+      "lighting": "simple clear light that preserves tiny-scale silhouette",
+      "materials_textures": "clean compact surfaces without distracting detail",
+      "color_edges_depth": "Use consistent stroke, fill or volumetric grammar for the exact icon type",
+      "rendering_detail": "single UI asset or explicitly specified set with safe margins",
+      "failures_conflicts": "Tiny text, busy scenery and unequal stroke weight reduce utility",
+      "budget_emphasis": "Prioritize silhouette, internal gaps and compact recognition anchors",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "pattern-decorative",
+      "label": "Pattern / Decorative",
+      "definition": "repeat rhythm, motif hierarchy and coherent surface coverage",
+      "composition_viewpoint": "Establish repeat unit, interval and motif hierarchy across the field",
+      "lighting": "flat even surface treatment",
+      "materials_textures": "surface-design texture appropriate to medium",
+      "color_edges_depth": "Use consistent motif scale and edge continuation with a controlled surface treatment",
+      "rendering_detail": "controlled repetition and balanced intermotif spacing",
+      "failures_conflicts": "Random placement, unintended seams and excessive focal variation break repetition",
+      "budget_emphasis": "Prioritize repeat structure and motif relationships",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "abstract-experimental",
+      "label": "Abstract / Experimental",
+      "definition": "nonliteral relationships of shape, material, light or process",
+      "composition_viewpoint": "Make the selected process or relationship observable through hierarchy and rhythm",
+      "lighting": "light or value treatment serves the chosen abstraction",
+      "materials_textures": "observable medium or process rather than arbitrary decoration",
+      "color_edges_depth": "Shape, light, surface and mark behavior must obey the chosen abstraction",
+      "rendering_detail": "nonrepresentational visual structure without benchmark subject constraints",
+      "failures_conflicts": "Random decoration, literal benchmark objects and undifferentiated noise weaken intent",
+      "budget_emphasis": "Prioritize process-specific evidence rather than invented narrative",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "retro-vintage",
+      "label": "Retro / Vintage",
+      "definition": "era-specific form, reproduction behavior and historically coherent palette",
+      "composition_viewpoint": "Use one coherent period vocabulary for layout and reproduction",
+      "lighting": "period-appropriate graphic or photographic treatment",
+      "materials_textures": "analog print, paper or period digital surface as specified",
+      "color_edges_depth": "Distinguish print, photographic and early digital behavior; aging remains subordinate",
+      "rendering_detail": "coherent era vocabulary without mixing unrelated decades",
+      "failures_conflicts": "Mixed eras, compulsory palettes and fake historical text are misleading",
+      "budget_emphasis": "Prioritize period shape and reproduction grammar over damage",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "minimal-clean",
+      "label": "Minimal / Clean",
+      "definition": "essential forms, deliberate omission and measured negative space",
+      "composition_viewpoint": "Retain every required element while reducing incidental competition",
+      "lighting": "restrained clear lighting or flat graphic values",
+      "materials_textures": "quiet surfaces without incidental clutter",
+      "color_edges_depth": "Use deliberate negative space, precise edges and restrained tonal hierarchy",
+      "rendering_detail": "Reduced incidental detail while retaining every user-required element",
+      "failures_conflicts": "Removing invariants or flattening all material differences is not useful minimalism",
+      "budget_emphasis": "Prioritize placement, proportion and essential distinctions",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "surreal-dreamlike",
+      "label": "Surreal / Dreamlike",
+      "definition": "one legible impossible relationship within an otherwise coherent world",
+      "composition_viewpoint": "Make the supplied impossible relationship deliberate while preserving local coherence",
+      "lighting": "atmospheric light supporting the specific spatial paradox",
+      "materials_textures": "credible or illustrative surfaces consistent within the image",
+      "color_edges_depth": "Use consistent rendering and selective perceptual uncertainty rather than universal blur",
+      "rendering_detail": "intentional dream logic with a visible focal contradiction",
+      "failures_conflicts": "Accidental geometry errors, invented symbolism and lost counts are not dream logic",
+      "budget_emphasis": "Prioritize the exact paradox and readable anchors",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    },
+    {
+      "canonical_id": "map-spatial-illustration",
+      "label": "Map / Spatial Illustration",
+      "definition": "spatial topology, geographic hierarchy and consistent landmark symbols",
+      "composition_viewpoint": "Preserve topology, adjacency, route continuity and supplied geographic hierarchy",
+      "lighting": "flat map light or controlled relief shading",
+      "materials_textures": "map substrate and symbols appropriate to the map purpose",
+      "color_edges_depth": "Use a consistent symbol key, scale treatment and relief convention",
+      "rendering_detail": "readable routes and terrain relationships across one geographic field",
+      "failures_conflicts": "Invented places, false connections and meaningless labels undermine spatial communication",
+      "budget_emphasis": "Prioritize topology and exact supplied names before ornament",
+      "inherits": [
+        "universal.v1"
+      ],
+      "prompt_order": [
+        "P0 request",
+        "P1 spatial structure",
+        "P2 exact style grammar",
+        "P3 relevant art direction",
+        "P4 optional enrichment"
+      ]
+    }
+  ]
+}

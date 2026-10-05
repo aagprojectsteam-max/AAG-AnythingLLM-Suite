@@ -203,6 +203,40 @@ function aagComposerProxyEndpoints(app) {
     validWorkspaceAndThreadSlug,
   ];
 
+  // Event-driven initialization only; it does not participate in job polling.
+  // The browser supplies its actual sidebar order, never requested serial values.
+  app.post('/aag-composer/:slug/artifact-serials', guards, async (request, response) => {
+    try {
+      const { userFromSession, multiUserMode } = require('../utils/http');
+      const { Workspace } = require('../models/workspace');
+      const { WorkspaceThread } = require('../models/workspaceThread');
+      const user = await userFromSession(request, response);
+      const workspaces = multiUserMode(response) && user ? await Workspace.whereWithUser(user) : await Workspace.where();
+      const body = request.body;
+      const sameIds = (a, b) => Array.isArray(a) && a.length === b.length &&
+        a.every(id => Number.isSafeInteger(id) && id > 0) && new Set(a).size === a.length && a.every(id => b.includes(id));
+      if (!body || Object.keys(body).some(k => !['workspaceIds','threads'].includes(k)) ||
+          !sameIds(body.workspaceIds, workspaces.map(w => w.id)) || !Array.isArray(body.threads) || body.threads.length !== workspaces.length)
+        return response.status(400).json({error:'Workspace order is incomplete or invalid.'});
+      for (let i = 0; i < body.workspaceIds.length; i++) {
+        const workspaceId = body.workspaceIds[i], group = body.threads[i];
+        const threads = await WorkspaceThread.where({workspace_id:workspaceId,user_id:user?.id || null});
+        if (!group || Object.keys(group).some(k => !['workspaceId','threadIds'].includes(k)) || group.workspaceId !== workspaceId || !sameIds(group.threadIds, threads.map(t => t.id)))
+          return response.status(400).json({error:'Thread order is incomplete or invalid.'});
+      }
+      const namingPath='/app/server/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactNaming.js';
+      const naming=require(fs.existsSync(namingPath) ? namingPath : './aagArtifactNaming');
+      const result=await naming.initializeSerials(require('../utils/prisma'), body);
+      return response.status(200).json(result);
+    } catch {
+      return response.status(503).json({error:'Artifact numbering is temporarily unavailable. Please try again.'});
+    }
+  });
+
+  const lifecycle = require(fs.existsSync('/app/server/storage/aag-image-agent-integration/multi-image-export/server/aagLifecycleProxy.js') ? '/app/server/storage/aag-image-agent-integration/multi-image-export/server/aagLifecycleProxy.js' : './aagLifecycleProxy').lifecycleProxy({composerSocket: SOCKET_PATH, sessionCookie: composerSessionCookie, csrf: safeCsrf});
+  app.get('/aag-composer/:slug/lifecycle/status', guards, (req, res) => lifecycle(req, res, 'status'));
+  app.post('/aag-composer/:slug/lifecycle/start', guards, (req, res) => lifecycle(req, res, 'start'));
+  app.post('/aag-composer/:slug/lifecycle/stop', guards, (req, res) => lifecycle(req, res, 'stop'));
   startImageReconciler({
     logger: (message) => console.log(message),
   });

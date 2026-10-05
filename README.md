@@ -1,10 +1,12 @@
 # AAG AnythingLLM Suite
 
+Current production Golden: **20261005T133425Z**. See the [release closure and exact source manifest](docs/RELEASE-GOLDEN-20261005T133425Z.md) for approved features, external dependencies and validation.
+
 The current [Visual Atlas V2 implementation](docs/VISUAL-ATLAS-V2.md) includes exact per-image prompt disclosure, compact icon actions, responsive prompt scrolling and XLarge cards. Pixels remain external under the existing publication policy.
 
 AAG AnythingLLM Suite is an MIT-licensed distribution that adds governed image generation, native Composer controls, Visual Atlas style selection, safe artifacts/PDFs, verified chess puzzles, and optional local-LLM operations to a compatible AnythingLLM source installation.
 
-It is an installer-driven distribution—not a backup of one workstation. Original-machine paths, usernames, models, conversations and secrets are not required or included.
+This source distribution excludes production storage, active machine configuration, user artifacts and credentials. Approved integration source retains its existing deployment-path defaults; host services and workspace policy bindings require local configuration.
 
 ## Supported platform
 
@@ -40,7 +42,7 @@ When AnythingLLM is in `~/anything-llm` or `/opt/anything-llm`, `./install.sh` c
 
 Weights are never downloaded silently. Configure `AAG_MODEL_ROOT`; `./doctor.sh` reports each dependency as `FOUND`, `MISSING`, or `OPTIONAL`. See `config/models.yaml` and `MODEL-ASSET-SETUP.md`.
 
-The 493 Atlas references and 493 thumbnails are not in Git because no explicit redistribution grant was found. The shipped 493-style metadata supports Composer selection without pixels; previews are optional. An authorized owner can install a byte-exact pack:
+The 493 Atlas references and 493 thumbnails are not in Git because no explicit redistribution grant was found. The shipped 493-style metadata can be audited without pixels. The Golden runtime and full regression suites require an authorized Atlas asset pack. An authorized owner can install a byte-exact pack:
 
 ```bash
 ./tools/atlas-assets.py verify --source /path/to/visual-atlas

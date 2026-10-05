@@ -412,10 +412,18 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     const engineReference = await prepareGeneralReference(normalized, referenceMegapixels, deps);
     const referenceName = await upload(engineReference, leaseToken, deps);
     const base = String(task.prompt || task.request).trim().replace(/[.\s]+$/, "");
+    if (task._aag_prompt_contract?.id === "aag.expert.prompt.v1") {
+      finalEnginePrompt = task.prompt;
+      if (crypto.createHash("sha256").update(finalEnginePrompt).digest("hex") !== task._aag_prompt_contract.final_prompt_sha256)
+        throw new AagError("EXPERT_PROMPT_CHANGED", "Expert prompt changed at the image-engine boundary.");
+    } else {
     finalEnginePrompt = `${base}. Use the supplied authorized reference as the visual source for the main subject. Preserve the subject's recognizable shape, proportions, colors, markings, materials, texture, design, and distinctive details unless explicitly requested otherwise. Apply the requested action, scene, setting, and composition faithfully.`;
+    }
     graph = generalGraph({ model, referenceName, prompt: finalEnginePrompt, seed: task.seed, width: size.width, height: size.height, referenceMegapixels, prefix: `REF-H2-subject-${new Date().toISOString().replace(/[:.]/g,"-")}-${task.seed}` });
     kind = "REF";
   }
+  const promptNode = transform ? "7" : "4";
+  deps.onFinalPrompt?.({prompt:graph[promptNode].inputs.text,boundary:"comfy.CLIPTextEncode.text"});
   const clientId = `aag-image-${crypto.randomUUID()}`;
   const submission = await fetchJson(`${COMFY}/prompt`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt: graph, client_id: clientId }) }, 30_000, leaseToken, deps);
   if (!submission?.prompt_id) throw new AagError("ENGINE_CRASH", "The image engine did not return a job identifier.", true);
@@ -445,6 +453,7 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     ...promptMetadata,
   };
   deps.onEngineMetadata?.(metadata);
+  deps.onExecutionDetails?.({...require('./generation-details').executionFromGraph(graph,{model_family:'FLUX.2 Klein',resolved_quality:model.name,workflow_revision:'comfy.klein.v2'}),route:metadata.adapter});
   deps.onEngineProgress?.({
     engine_progress_source: "comfy-websocket-bridge",
     last_engine_progress_at: new Date().toISOString(),

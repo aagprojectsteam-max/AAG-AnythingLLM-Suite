@@ -2,6 +2,12 @@ const path = require("path");
 const fs = require("fs");
 const LEGACY_MODEL_MAP = require("./legacy");
 
+// Verified 2026-10-04 against the provider's model specification:
+// https://developers.openai.com/api/docs/models/gpt-6-sol
+// Fallback only: explicit cached metadata still takes precedence. This does
+// not change provider/model selection or enable a remote refresh.
+const VERIFIED_CONTEXT_WINDOWS = { openai: { "gpt-6-sol": 1050000 } };
+
 class ContextWindowFinder {
   static instance = null;
   static modelMap = LEGACY_MODEL_MAP;
@@ -38,6 +44,8 @@ class ContextWindowFinder {
   cacheFilePath = path.resolve(this.cacheLocation, "context-windows.json");
   cacheFileExpiryPath = path.resolve(this.cacheLocation, ".cached_at");
   seenStaleCacheWarning = false;
+  providerMetadata = {};
+  missingModelWarnings = new Set();
 
   constructor() {
     if (ContextWindowFinder.instance) return ContextWindowFinder.instance;
@@ -200,17 +208,32 @@ You can fix this by restarting AnythingLLM so the model map is re-pulled.
    * @param {string|null} model - The model to get the context window for
    * @returns {number|null} - The context window for the given provider and model
    */
-  get(provider = null, model = null) {
-    if (!provider || !this.cachedModelMap || !this.cachedModelMap[provider])
-      return null;
-    if (!model) return this.cachedModelMap[provider];
+  // Called only by existing provider model-metadata clients. No remote lookup
+  // or guessed model capacity is introduced in the shared context boundary.
+  rememberProviderMetadata(provider, model, metadata) {
+    const tokens = metadata?.max_input_tokens;
+    if (metadata?.id !== model || !Number.isSafeInteger(tokens) || tokens <= 0) return false;
+    if (!Object.hasOwn(ContextWindowFinder.trackedProviders, provider)) return false;
+    this.providerMetadata[provider] ??= {};
+    this.providerMetadata[provider][model] = tokens;
+    this.missingModelWarnings.delete(provider + '/' + model);
+    return true;
+  }
 
-    const modelContextWindow = this.cachedModelMap[provider][model];
+  get(provider = null, model = null) {
+    if (!provider) return null;
+    const cached = this.cachedModelMap;
+    const models = { ...VERIFIED_CONTEXT_WINDOWS[provider], ...cached?.[provider], ...this.providerMetadata[provider] };
+    if (!Object.keys(models).length) return null;
+    if (!model) return models;
+    const modelContextWindow = models[model];
     if (!modelContextWindow) {
-      this.log("Invalid access to model context window - not found in cache", {
-        provider,
-        model,
-      });
+      const key = provider + '/' + model;
+      if (!this.missingModelWarnings.has(key)) {
+        if (this.missingModelWarnings.size >= 512) this.missingModelWarnings.clear();
+        this.missingModelWarnings.add(key);
+        this.log("Model context metadata unavailable; provider safe fallback remains active", { provider, model });
+      }
       return null;
     }
     return Number(modelContextWindow);

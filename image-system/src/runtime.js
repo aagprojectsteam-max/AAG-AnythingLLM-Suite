@@ -207,18 +207,23 @@ function childFailureStatus(mapped) {
 }
 
 async function createTask(args, runtime = {}, context = {}) {
+  const originalUserRequest = runtime.AAG_INVOCATION_PROMPT;
   let task;
   try {
-    task = normalizeTask(args, runtime);
+    const expert = await require("./expert-prompt").prepare(args, runtime, context.deps?.expertValidate);
+    task = normalizeTask(expert.args, runtime);
     capabilityCheck(task, runtime);
-    promptQuality.applyToTask(task);
-    selectiveKnowledge.applyToTask(task, context);
+    if (expert.records) require("./expert-prompt").apply(task, expert.records[0]);
+    else {
+      promptQuality.applyToTask(task);
+      selectiveKnowledge.applyToTask(task, context);
+    }
   } catch (error) { return failureEnvelope(error); }
   const deps = context.deps || {};
   const root = stateRoot(runtime);
   ensureDirectory(path.join(root, "jobs"));
   let resolved;
-  try { resolved = await resolveSource(task, runtime, root, deps); } catch (error) { return failureEnvelope(error); }
+  try { await (deps.requireReady || require("./lifecycle").requireReady)(); resolved = await resolveSource(task, runtime, root, deps); } catch (error) { return failureEnvelope(error); }
   if (task.preservation === "identity") {
     try { adapters.humanIdentity.classifySource({ _aag_source: resolved.source }); }
     catch (error) { return failureEnvelope(error); }
@@ -227,6 +232,9 @@ async function createTask(args, runtime = {}, context = {}) {
   try { selected = workflow(task); } catch (error) { return failureEnvelope(error); }
   const key = idempotencyKey(task);
   try { const prior = store.getIdempotent(root, key, task.owner); if (prior) return resultEnvelope(prior); } catch (error) { return failureEnvelope(error); }
+  let generationRequest;
+  try { generationRequest = await require('./generation-details').captureRequest(task,runtime,deps); }
+  catch(error) { return failureEnvelope(error); }
 
   const capability = task.preservation === "identity" ? {
     status: "ACTIVE_VALIDATED_SCOPE",
@@ -238,7 +246,7 @@ async function createTask(args, runtime = {}, context = {}) {
     normalized_framing: { orientation: task._aag_normalized_orientation, width: task._aag_internal_width, height: task._aag_internal_height },
     validated_scope: "historical-fixtures-and-trusted-current-attachment-runtime-references",
   } : null;
-  const parent = store.createRecord(root, { release: VERSION, owner: task.owner, operation: task.operation, workflow_id: selected, source: resolved.source, count: task.count, capability, atlas: task.atlas, final_output_quality: task.final_output_quality });
+  const parent = store.createRecord(root, { generation_request:generationRequest, release: VERSION, owner: task.owner, operation: task.operation, workflow_id: selected, source: resolved.source, count: task.count, capability, atlas: task.atlas, final_output_quality: task.final_output_quality, ...(task._aag_expert ? { expert_prompt: task._aag_expert } : {}) });
   const claim = store.claimIdempotency(root, key, parent.job_id);
   if (!claim.claimed) {
     store.transitionAndWrite(root, parent, "CANCELLED", "Suppressed duplicate provider invocation");
@@ -246,8 +254,9 @@ async function createTask(args, runtime = {}, context = {}) {
   }
   const children = [];
   try {
+    require("./prompt-provenance").captureOriginal(root, parent, originalUserRequest);
     for (let index = 0; index < task.count; index++) {
-      const child = store.createRecord(root, { release: VERSION, parent_job_id: parent.job_id, child_index: index + 1, owner: task.owner, operation: task.operation, workflow_id: selected, source: resolved.source, seed: seedFor(task, index), capability, atlas: task.atlas, final_output_quality: task.final_output_quality });
+      const child = store.createRecord(root, { release: VERSION, parent_job_id: parent.job_id, child_index: index + 1, owner: task.owner, operation: task.operation, workflow_id: selected, source: resolved.source, seed: seedFor(task, index), capability, atlas: task.atlas, final_output_quality: task.final_output_quality, ...(task._aag_expert ? { expert_prompt: task._aag_expert } : {}) });
       store.transition(child, "VALIDATED", "Child arguments and source validated");
       store.transitionAndWrite(root, child, "QUEUED", "Waiting behind parent XPU lease");
       children.push(child);
@@ -272,6 +281,7 @@ async function createTask(args, runtime = {}, context = {}) {
       deps: deps.scheduler || {},
       isCancelled: () => { try { return store.read(root, parent.job_id).status === "CANCELLED"; } catch { return false; } },
     });
+    await (deps.requireReady || require("./lifecycle").requireReady)();
     const current = store.read(root, parent.job_id);
     if (current.status === "CANCELLED") throw new AagError("JOB_CANCELLED", "The queued image job was cancelled.");
     const recovered = store.recoverStale(root, integer(runtime.AAG_IMAGE_JOB_STALE_MS, 2 * 60 * 60 * 1000, 60 * 60 * 1000, 24 * 60 * 60 * 1000));
@@ -297,6 +307,20 @@ async function createTask(args, runtime = {}, context = {}) {
         const upstreamProgress = baseAdapterDeps.onEngineProgress;
         const adapterDeps = {
           ...baseAdapterDeps,
+          onExecutionDetails(value) {
+            child.execution_details = {...child.execution_details,...value};
+            store.write(root,child);
+            baseAdapterDeps.onExecutionDetails?.(value);
+          },
+          onProcessingStage(value) {
+            child.processing_stages = [...(child.processing_stages||[]),value];
+            store.write(root,child);
+            baseAdapterDeps.onProcessingStage?.(value);
+          },
+          onFinalPrompt(value) {
+            require("./prompt-provenance").capture(root, child, value);
+            baseAdapterDeps.onFinalPrompt?.(value);
+          },
           onEngineMetadata(metadata = {}) {
             const allowed = {};
             for (const key of ["adapter", "prompt_id", "submitted_at", "completed_at", "elapsed_seconds", "model", "identity_cosine", "negative_margin", "composition_result", "blur_result", "network_result", "cleanup_result", "contract_id", "contract_sha256", "scene_profile", "prompt_sha256", "recipe_id", "model_file", "model_sha256", "text_encoder_file", "text_encoder_sha256", "vae_file", "vae_sha256", "workflow_sha256", "sampler", "scheduler", "steps", "cfg", "dimensions", "aspect", "aspect_source", "prompt_policy", "negative_prompt_policy", "offline_policy", "prompt_contract", "prompt_author", "prompt_quality_status", "prompt_fidelity_status", "prompt_structure_status", "final_prompt_sha256"]) {
@@ -370,6 +394,7 @@ async function createTask(args, runtime = {}, context = {}) {
           parent.intermediate_artifacts.push(baseArtifact);
         }
         if (parent.artifacts.some(existing => existing.filename === artifact.filename || existing.sha256 === artifact.sha256)) throw new AagError("OUTPUT_COLLISION", "Two declared image outputs are not unique.");
+        require('./generation-details').capture(root,parent,child,artifact,baseArtifact,child.processing_stages||[]);
         child.artifacts.push(artifact);
         parent.artifacts.push(artifact);
         child.progress = { ...(child.progress || {}), artifact_verified_at: artifact.verified_at };

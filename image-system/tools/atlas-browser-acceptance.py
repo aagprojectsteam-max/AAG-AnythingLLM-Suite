@@ -11,9 +11,12 @@ import subprocess
 import tempfile
 import time
 import urllib.request
+import sys
 from pathlib import Path
 
 import websocket
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from browser_lifecycle import OwnedBrowser
 
 
 class Cdp:
@@ -21,17 +24,20 @@ class Cdp:
         self.socket = websocket.create_connection(url, timeout=15, origin="http://127.0.0.1:9224")
         self.identifier = 0
 
-    def call(self, method: str, params: dict | None = None) -> dict:
+    def call(self, method: str, params: dict | None = None, timeout: float = 15) -> dict:
         self.identifier += 1
         identifier = self.identifier
         self.socket.send(json.dumps({"id": identifier, "method": method, "params": params or {}}))
-        while True:
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            self.socket.settimeout(max(.01, deadline - time.monotonic()))
             message = json.loads(self.socket.recv())
             if message.get("id") != identifier:
                 continue
             if "error" in message:
                 raise RuntimeError(f"CDP {method}: {message['error']}")
             return message.get("result", {})
+        raise TimeoutError(f"CDP call timed out: {method}")
 
     def evaluate(self, expression: str):
         result = self.call("Runtime.evaluate", {
@@ -47,7 +53,7 @@ class Cdp:
     def wait(self, expression: str, timeout: float = 20.0):
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline:
-            value = self.evaluate(expression)
+            value = self.evaluate('Promise.resolve((' + expression + ')).then(v => v && typeof v === "object" ? true : v)')
             if value:
                 return value
             time.sleep(0.15)
@@ -56,6 +62,13 @@ class Cdp:
     def screenshot(self, path: Path) -> None:
         encoded = self.call("Page.captureScreenshot", {"format": "png", "captureBeyondViewport": True})["data"]
         path.write_bytes(base64.b64decode(encoded))
+
+    def select_option(self, testid: str, value: str, timeout: float = 20):
+        selector = json.dumps('[data-testid="' + testid + '"]')
+        wanted = json.dumps(value)
+        self.wait(f'(()=>{{const e=document.querySelector({selector});return e && !e.disabled && Array.from(e.options).some(o=>o.value==={wanted})}})()', timeout)
+        self.evaluate(f'(()=>{{const e=document.querySelector({selector});e.value={wanted};e.dispatchEvent(new Event("change",{{bubbles:true}}))}})()')
+        self.wait(f'document.querySelector({selector}).value==={wanted}', timeout)
 
 
 def fetch_json(url: str):
@@ -75,7 +88,7 @@ def main() -> int:
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     profile = Path(tempfile.mkdtemp(prefix="aag-atlas-browser-"))
-    chrome = subprocess.Popen([
+    chrome = OwnedBrowser([
         args.browser,
         "--headless=new",
         "--no-sandbox",
@@ -85,7 +98,7 @@ def main() -> int:
         "--no-default-browser-check",
         "--ignore-certificate-errors",
         "--remote-allow-origins=*",
-        "--remote-debugging-port=9224",
+        "--remote-debugging-port=0",
         f"--user-data-dir={profile}",
         "--window-size=1440,1100",
         args.url,
@@ -99,21 +112,8 @@ def main() -> int:
             raise AssertionError(f"acceptance failed: {name}: {evidence}")
 
     try:
-        deadline = time.monotonic() + 20
-        targets = None
-        while time.monotonic() < deadline:
-            try:
-                targets = fetch_json("http://127.0.0.1:9224/json/list")
-                if targets:
-                    break
-            except Exception:
-                time.sleep(0.2)
-        if not targets:
-            raise RuntimeError("Chrome debugging target did not start")
-        target = next((item for item in targets if "/workspace/image-generator" in item.get("url", "")), None)
-        if target is None:
-            target = next((item for item in targets if item.get("type") == "page"), targets[0])
-        cdp = Cdp(target["webSocketDebuggerUrl"])
+        target = chrome.target()
+        cdp = chrome.attach(Cdp(target["webSocketDebuggerUrl"]))
         cdp.call("Page.enable")
         cdp.call("Runtime.enable")
         cdp.call("Network.enable")
@@ -236,12 +236,7 @@ def main() -> int:
         print(json.dumps(report, indent=2))
         return 0
     finally:
-        chrome.terminate()
-        try:
-            chrome.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            chrome.kill()
-        shutil.rmtree(profile, ignore_errors=True)
+        chrome.close()
 
 
 if __name__ == "__main__":

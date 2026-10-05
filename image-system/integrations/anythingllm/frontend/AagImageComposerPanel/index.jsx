@@ -7,6 +7,9 @@ import {
   useRef,
   useState,
 } from "react";
+import { CaretDown, CaretUp, X } from "@phosphor-icons/react";
+import { createPortal } from "react-dom";
+import useExpertPromptMode from "@/utils/useExpertPromptMode";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import StorageFiles from "@/models/files";
@@ -75,9 +78,10 @@ const RATIOS = [
 ];
 
 const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
-  { mode, onModeChange, prompt, history = [], threadSlug = null, disabled = false },
+  { mode, onModeChange, prompt, history = [], threadSlug = null, workspaceSlug = "image-generator", disabled = false, composerEnabled = true },
   ref
 ) {
+  const { enabled: expertEnabled, setEnabled: setExpertEnabled } = useExpertPromptMode(workspaceSlug, mode);
   const [settings, setSettings] = useState({ ...INITIAL });
   const [taxonomy, setTaxonomy] = useState(null);
   const [language, setLanguage] = useState(() => loadUiLanguage());
@@ -302,7 +306,12 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
   }, [latestThreadArtifact?.storageFilename]);
 
   function resetAdvanced() {
-    setSettings({ ...INITIAL });
+    setSettings((current) => ({
+      ...INITIAL,
+      visualFamily: current.visualFamily,
+      visualSubfamily: current.visualSubfamily,
+      atlasSelectionMode: current.atlasSelectionMode,
+    }));
     setFiles([]);
     setSourceIndex("1");
     setStatus(null);
@@ -420,6 +429,9 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
   }
 
   function chooseFamily(value) {
+    // Ignore stale/synthetic events from a select whose options are not ready.
+    // Keep the user's current choice; submission validation remains authoritative.
+    if (!taxonomy || (value !== "auto" && !taxonomy.families.some((entry) => entry.id === value))) return;
     setSettings((current) => ({
       ...current,
       visualFamily: value,
@@ -429,6 +441,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
   }
 
   function chooseSubfamily(value) {
+    if (!family || (value !== "auto" && !family.subfamilies.some((entry) => entry.id === value))) return;
     setSettings((current) => ({
       ...current,
       visualSubfamily: value,
@@ -617,6 +630,9 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
 
     return {
       mode: "advanced",
+      ui_language: language,
+      ui_version: "1.3",
+      ...(expertEnabled ? { expert_mode: true } : {}),
       free_text: text,
       operation: ["create", "batch"].includes(settings.operation)
         ? "generate"
@@ -682,11 +698,12 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
     };
   }
 
-  async function request(path, payload) {
+  async function request(path, payload, signal) {
     const csrf = csrfRef.current || (await establishSession());
     return api(path, {
       method: "POST",
       headers: { "X-AAG-CSRF": csrf },
+      signal,
       body: JSON.stringify(payload),
     });
   }
@@ -706,6 +723,8 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
       ],
     });
     try {
+      const lifecycle = await api("lifecycle/status");
+      if (lifecycle.state !== "READY") throw new Error(language === "he" ? "מערכת התמונות אינה פועלת. יש להפעיל אותה ולהמתין למצב פועל." : `AAG Image System is ${lifecycle.state}. Wait for READY before generating.`);
       const payload = await collectPayload();
       const data = await request("prepare", payload);
       if (typeof data?.modelMessage !== "string" || !data.modelMessage)
@@ -739,14 +758,9 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
     }
   }
 
-  useImperativeHandle(ref, () => ({ prepare }), [
-    busy,
-    disabled,
-    prompt,
-    settings,
-    files,
-    sourceIndex,
-  ]);
+  // prepare also reads asynchronously loaded taxonomy and thread-derived state.
+  // Publish the current render's closure so the parent never validates a stale snapshot.
+  useImperativeHandle(ref, () => ({ prepare }));
 
   return (
     <section
@@ -756,6 +770,8 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
       dir={language === "he" ? "rtl" : "ltr"}
       aria-label={tr("composerControls", "AAG Image Composer mode and controls")}
     >
+      <LifecycleControl api={api} request={request} language={language} composerEnabled={composerEnabled} />
+      <div hidden={!composerEnabled}>
       <div className="aag-composer-bar">
         <div className="aag-composer-identity">
           <span>AAG IMAGE</span>
@@ -785,6 +801,15 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
             {tr("advancedMode", "ADVANCED")}
           </button>
         </div>
+        <label className="aag-expert-prompt-toggle">
+          <input type="checkbox" data-testid="aag-expert-prompt-toggle"
+            checked={expertEnabled} disabled={busy || disabled}
+            onChange={(event) => {
+              setExpertEnabled(event.target.checked);
+              if (event.target.checked && mode !== "advanced") onModeChange("advanced");
+            }} />
+          <span>{language === "he" ? "פרומפט מקצועי מפורט" : "Expert detailed prompt"}</span>
+        </label>
         <label className="aag-composer-language">
           <span>{tr("language", "Language")}</span>
           <select
@@ -803,13 +828,14 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
           <button
             type="button"
             className="aag-composer-collapse"
+            data-testid="aag-controls-disclosure"
             aria-expanded={expanded}
             aria-controls="aag-composer-controls"
+            title={expanded ? tr("hideControls", "Hide controls") : tr("showControls", "Show controls")}
+            aria-label={expanded ? tr("hideControls", "Hide controls") : tr("showControls", "Show controls")}
             onClick={() => setExpanded((value) => !value)}
           >
-            {expanded
-              ? tr("hideControls", "Hide controls")
-              : tr("showControls", "Show controls")}
+            {expanded ? <CaretDown size={18} aria-hidden="true" data-disclosure-icon="down" /> : <CaretUp size={18} aria-hidden="true" data-disclosure-icon="up" />}
           </button>
         )}
       </div>
@@ -1575,7 +1601,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
           )}
         </div>
       )}
-      {atlasOpen && taxonomy && (
+      {composerEnabled && atlasOpen && taxonomy && (
         <AtlasBrowser
           taxonomy={taxonomy}
           language={language}
@@ -1603,7 +1629,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
           onClose={() => setAtlasOpen(false)}
         />
       )}
-      {previewTarget && (
+      {composerEnabled && previewTarget && (
         <AtlasLightbox
           family={previewTarget.family}
           style={previewTarget.style}
@@ -1619,6 +1645,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
           }
         />
       )}
+      </div>
     </section>
   );
 });
@@ -1731,6 +1758,16 @@ function AtlasImage({
   );
 }
 
+function AtlasPortal({ language, children }) {
+  // Keep the existing scoped styles/RTL while escaping the chat's stacking context.
+  return createPortal(
+    <div className="aag-inline-composer" dir={language === "he" ? "rtl" : "ltr"} style={{ display: "contents" }}>
+      {children}
+    </div>,
+    document.body
+  );
+}
+
 function AtlasBrowser({
   taxonomy,
   language,
@@ -1749,6 +1786,18 @@ function AtlasBrowser({
   onSelect,
   onClose,
 }) {
+  const closeHandler = useRef(onClose);
+  closeHandler.current = onClose;
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape" && !document.querySelector(".aag-atlas-lightbox")) {
+        event.preventDefault();
+        closeHandler.current();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
   const matches = useMemo(() => {
     const query = search.normalize("NFKC").toLocaleLowerCase().trim();
     const results = [];
@@ -1776,6 +1825,7 @@ function AtlasBrowser({
 
   const visible = matches.slice(0, limit);
   return (
+    <AtlasPortal language={language}>
     <div
       className="aag-atlas-browser"
       role="dialog"
@@ -1797,10 +1847,12 @@ function AtlasBrowser({
           <button
             type="button"
             className="aag-atlas-close"
+            data-testid="aag-atlas-close"
             onClick={onClose}
-            aria-label={tr("closeAtlas", "Close Visual Atlas")}
+            aria-label={tr("close", "Close")}
+            title={tr("close", "Close")}
           >
-            ×
+            <X size={20} aria-hidden="true" />
           </button>
         </header>
         <div className="aag-atlas-toolbar">
@@ -1918,6 +1970,7 @@ function AtlasBrowser({
         )}
       </div>
     </div>
+    </AtlasPortal>
   );
 }
 
@@ -1965,6 +2018,7 @@ function AtlasLightbox({
   }, [onClose]);
 
   return (
+    <AtlasPortal language={language}>
     <div
       className="aag-atlas-lightbox"
       role="presentation"
@@ -1987,7 +2041,7 @@ function AtlasLightbox({
           onClick={onClose}
           aria-label={tr("closePreview", "Close preview")}
         >
-          ×
+          <X size={20} aria-hidden="true" />
         </button>
         <AtlasImage
           kind="atlas-preview"
@@ -2022,6 +2076,7 @@ function AtlasLightbox({
         </div>
       </div>
     </div>
+    </AtlasPortal>
   );
 }
 
@@ -2080,7 +2135,7 @@ function findLatestThreadArtifact(history) {
       const payload = output?.payload;
       if (
         output?.type !== "imageGenerationCard" ||
-        !/^img-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.png$/.test(
+        !/^(?:img-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\.png|(?:AAG-Image-)?[1-9][0-9]*-(?:0|[1-9][0-9]*)-[0-9]{8}-[0-9]{6}(?:-[1-9][0-9]*)?\.(?:png|jpe?g|webp))$/.test(
           payload?.storageFilename || ""
         ) ||
         !/^[0-9a-f]{64}$/.test(payload?.artifactSha256 || "") ||
@@ -2275,3 +2330,85 @@ export default AagImageComposerPanel;
 })();
 
 // END LIVE ATLAS PROMPT DISCLOSURE
+
+
+// Runtime truth is fetched on every mount/reopen. No persisted lifecycle boolean.
+function LifecycleControl({ api, request, language, composerEnabled }) {
+  const [value, setValue] = useState({ state: "UNKNOWN" });
+  const [pending, setPending] = useState(false);
+  const locked = useRef(false);
+  const alive = useRef(true);
+  const epoch = useRef(0);
+  const requestRef = useRef(request);
+  requestRef.current = request;
+  const refreshRef = useRef(null);
+  const actionAbort = useRef(null);
+  useEffect(() => {
+    alive.current = true;
+    let timer = null, abortTimer = null, controller = null, inFlight = false, active = true;
+    async function poll() {
+      if (inFlight || !active || locked.current) return;
+      inFlight = true;
+      const generation = epoch.current;
+      controller = new AbortController();
+      abortTimer = window.setTimeout(() => controller.abort(), 12000);
+      let next = null;
+      try {
+        next = await api("lifecycle/status", { signal: controller.signal });
+        if (active && generation === epoch.current) setValue(next);
+      } catch (error) {
+        if (active && generation === epoch.current) setValue({state:"ERROR",error:{component:"control",message:language === "he" ? "בקרת השירות אינה זמינה. אפשר לנסות שוב." : "Lifecycle control is unavailable. Retry shortly.",retryable:true}});
+      } finally {
+        inFlight = false; window.clearTimeout(abortTimer);
+        if (active) { window.clearTimeout(timer); timer = window.setTimeout(poll, ["STARTING","STOPPING"].includes(next?.state) ? 1000 : 5000); }
+      }
+    }
+    refreshRef.current = () => { window.clearTimeout(timer); poll(); };
+    const wake = () => { if (document.visibilityState === "visible") refreshRef.current?.(); };
+    poll(); window.addEventListener("focus",wake); document.addEventListener("visibilitychange",wake);
+    return () => { active = false; alive.current = false; epoch.current += 1; controller?.abort(); actionAbort.current?.abort(); window.clearTimeout(timer); window.clearTimeout(abortTimer); window.removeEventListener("focus",wake); document.removeEventListener("visibilitychange",wake); };
+  }, [api, language]);
+  async function change(action) {
+    if (locked.current || ["STARTING","STOPPING"].includes(value.state)) return;
+    locked.current = true; epoch.current += 1; setPending(true);
+    setValue({state:action === "start" ? "STARTING" : "STOPPING"});
+    const controller = new AbortController(); actionAbort.current = controller;
+    let deadline;
+    try {
+      const timeout = new Promise((_, reject) => { deadline = window.setTimeout(() => { controller.abort(); reject(new Error("Lifecycle request timed out")); }, 20000); });
+      const actual = await Promise.race([requestRef.current("lifecycle/"+action, {}, controller.signal), timeout]);
+      if (alive.current) setValue(actual);
+    }
+    catch { if (alive.current) setValue({state:"ERROR",error:{component:"control",message:language === "he" ? "הפעולה לא אושרה. בודק את מצב השירות." : "The operation was not confirmed. Checking runtime state.",retryable:true}}); }
+    finally { window.clearTimeout(deadline); actionAbort.current = null; locked.current = false; if (alive.current) {setPending(false); refreshRef.current?.();} }
+  }
+  const labels = language === "he"
+    ? {UNKNOWN:"בודק מצב…",OFF:"כבוי.",STARTING:"מפעיל…",READY:"מוכן. כל הרכיבים הנדרשים תקינים.",STOPPING:"מכבה…",ERROR:"תקלה."}
+    : {UNKNOWN:"Checking…",OFF:"Off.",STARTING:"Starting…",READY:"Ready. All required components are healthy.",STOPPING:"Stopping…",ERROR:"Error."};
+  const transitioning = pending || ["UNKNOWN","STARTING","STOPPING"].includes(value.state);
+  const on = value.state === "READY" || value.state === "STOPPING";
+  const statusText = `AAG Image System — ${labels[value.state] || labels.UNKNOWN}${value.error?.message ? " " + value.error.message : ""}`;
+  return <div className="aag-lifecycle" data-testid="aag-lifecycle" data-state={value.state}>
+    <span className="aag-lifecycle-light" aria-hidden="true" />
+    <strong>AAG Image System</strong>
+    <span className="aag-composer-passive-status" dir="ltr" data-testid="aag-image-composer-status" role="status" aria-live="polite"
+      aria-label={language === "he" ? `Image Composer ${composerEnabled ? "פעיל" : "כבוי"}.` : `Image Composer is ${composerEnabled ? "on" : "off"}.`}>
+      Image Composer: {composerEnabled ? "ON" : "OFF"}
+    </span>
+    <span id="aag-lifecycle-description" className="aag-lifecycle-sr" role="status" aria-live="polite">{statusText}</span>
+    <button type="button" role="switch" aria-checked={on}
+      aria-label={language === "he" ? "הפעלה או כיבוי של מערכת התמונות" : "AAG Image System power"}
+      aria-describedby="aag-lifecycle-description" aria-busy={transitioning}
+      title={statusText} data-testid="aag-lifecycle-toggle"
+      className="aag-lifecycle-switch" disabled={transitioning}
+      onClick={() => change(on ? "stop" : "start")}>
+      <span className="aag-lifecycle-thumb" aria-hidden="true" />
+    </button>
+    <span className="aag-lifecycle-tooltip" aria-hidden="true">{statusText}</span>
+    {value.error && <span role="alert">{value.error.message}</span>}
+    {value.state === "ERROR" && <div className="aag-lifecycle-recovery">
+      <button type="button" disabled={pending} onClick={() => change("start")}>{language === "he" ? "ניסיון הפעלה חוזר" : "Retry start"}</button>
+      <button type="button" disabled={pending} onClick={() => change("stop")}>{language === "he" ? "כיבוי בטוח" : "Safe stop"}</button>
+    </div>}
+  </div>;
+}

@@ -529,7 +529,7 @@ def _flatten_message(message: dict[str, Any]) -> dict[str, str]:
     return {"role": role, "content": content}
 
 
-def build_adapter_payload(payload: dict[str, Any], tools: list[dict[str, Any]]) -> dict[str, Any]:
+def build_adapter_payload(payload: dict[str, Any], tools: list[dict[str, Any]], *, expert_context: bool = False) -> dict[str, Any]:
     messages = payload.get("messages")
     if not isinstance(messages, list) or not messages:
         raise CompatibilityError("INVALID_MESSAGES", "Chat messages must be a non-empty array.")
@@ -549,7 +549,10 @@ def build_adapter_payload(payload: dict[str, Any], tools: list[dict[str, Any]]) 
     adapted.pop("response_format", None)
     adapted["stream"] = False
     adapted["temperature"] = 0
-    adapted["max_tokens"] = min(int(payload.get("max_tokens", 512) or 512), 512)
+    if not expert_context:
+        adapted["max_tokens"] = min(int(payload.get("max_tokens", 512) or 512), 512)
+    # Expert inherits the active provider's explicit output budget, or its
+    # native default when absent. Never impose the legacy adapter-only cap.
     return adapted
 
 
@@ -560,6 +563,7 @@ def build_candidate_adapter_payload(
     *,
     preserve_arguments: dict[str, Any] | None = None,
     required_arguments: dict[str, Any] | None = None,
+    expert_context: bool = False,
 ) -> dict[str, Any]:
     """Build a compact, model-neutral repair turn from a rejected native call.
 
@@ -604,6 +608,11 @@ def build_candidate_adapter_payload(
         "temperature": 0,
         "max_tokens": min(int(payload.get("max_tokens", 512) or 512), 512),
     }
+    if expert_context:
+        if "max_tokens" in payload:
+            adapted["max_tokens"] = payload["max_tokens"]
+        else:
+            adapted.pop("max_tokens", None)
     return adapted
 
 
@@ -698,7 +707,7 @@ def normalize_composer_candidate(
             normalized_item = {
                 key: value
                 for key, value in item.items()
-                if key in {"prompt", "aspect_ratio", "width", "height", "seed"}
+                if key in ({"prompt", "aspect_ratio", "width", "height", "seed", "expert_plan"} if intent.get("expert_prompt") else {"prompt", "aspect_ratio", "width", "height", "seed"})
             }
             normalized_item.pop("width", None)
             normalized_item.pop("height", None)
@@ -856,7 +865,12 @@ def openai_sse_events(response: dict[str, Any]) -> Iterable[bytes]:
         finish_reason = response["choices"][0].get("finish_reason") or "stop"
     yield ("data: " + stable_json(delta) + "\n\n").encode("utf-8")
     finish = {**base, "choices": [{"index": 0, "delta": {}, "finish_reason": finish_reason}]}
+    for key in ("usage", "timings"):
+        if key in response:
+            finish[key] = response[key]
     yield ("data: " + stable_json(finish) + "\n\n").encode("utf-8")
+    if response.get("usage") is not None:
+        yield ("data: " + stable_json({**base, "choices": [], "usage": response["usage"]}) + "\n\n").encode("utf-8")
     yield b"data: [DONE]\n\n"
 
 
@@ -958,7 +972,7 @@ COMPOSER_INPUT_KEYS = {
     "mode", "free_text", "operation", "edit_mode", "visual_family", "visual_subfamily", "aspect_ratio", "count", "quality", "final_output_quality",
     "source_policy", "source_index", "preservation", "scale", "seed", "output_purpose", "background", "visible_text",
     "batch_relationship", "reference_purpose", "reference_source", "reference_artifact_sha256",
-    "source_instruction", "attachments", "atlas_selection_mode",
+    "source_instruction", "attachments", "atlas_selection_mode", "expert_mode", "ui_language", "ui_version",
 }
 COMPOSER_INTENT_PREFIX = "AAG_COMPOSER_STRUCTURED_REQUIREMENTS_V1="
 COMPOSER_USER_REQUEST_PREFIX = "USER_CREATIVE_DIRECTION=\n"
@@ -1066,6 +1080,12 @@ def compose_request(data: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
     unexpected = sorted(set(data) - COMPOSER_INPUT_KEYS)
     if unexpected:
         raise CompatibilityError("COMPOSER_INPUT_INVALID", "Composer payload contains an unsupported field.")
+    if type(data.get("expert_mode", False)) is not bool:
+        raise CompatibilityError("EXPERT_MODE_INVALID", "Expert mode must be a boolean.")
+    if "ui_language" in data and data["ui_language"] not in ("en", "he"):
+        raise CompatibilityError("COMPOSER_INPUT_INVALID", "Composer language is invalid.")
+    if "ui_version" in data and data["ui_version"] != "1.3":
+        raise CompatibilityError("COMPOSER_INPUT_INVALID", "Composer UI version is invalid.")
     mode = data.get("mode", "auto")
     if mode not in {"auto", "advanced"}:
         raise CompatibilityError("COMPOSER_INPUT_INVALID", "Composer mode is invalid.")
@@ -1093,6 +1113,8 @@ def compose_request(data: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
         clean_attachments.append({"name": name, "mime": mime, "contentString": content})
 
     if mode == "auto":
+        if data.get("expert_mode"):
+            raise CompatibilityError("EXPERT_MODE_REQUIRES_ADVANCED", "Enable the structured Composer mode for Expert context; automatic style selection remains available there.")
         return free_text, clean_attachments
 
     values: dict[str, Any] = {}
@@ -1336,8 +1358,26 @@ def compose_request(data: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
         "delivery": {"final_output_quality": values["final_output_quality"]},
         "user_request_sha256": hashlib.sha256(free_text.encode("utf-8")).hexdigest(),
     }
+    if "ui_language" in data:
+        structured["language"] = data["ui_language"]
+    if "ui_version" in data:
+        structured["composer_version"] = data["ui_version"]
+    structured["atlas_selection_mode"] = data.get("atlas_selection_mode", "auto")
     if atlas_plan["used"]:
         structured["knowledge_modules"] = {"visual_atlas": atlas_plan}
+    if data.get("expert_mode") is True:
+        import sys
+        expert_root = str(Path(__file__).resolve().parents[2] / "expert-prompt")
+        if expert_root not in sys.path:
+            sys.path.insert(0, expert_root)
+        from neutral_context import prepare_context
+        try:
+            # Include retrieval reason privately for fail-closed AUTO resolution.
+            expert_intent = {**structured, "knowledge_modules": {"visual_atlas": atlas_plan}}
+            structured["expert_prompt"] = prepare_context(free_text, expert_intent)
+            structured.pop("knowledge_modules", None)
+        except ValueError as error:
+            raise CompatibilityError(getattr(error, "code", "EXPERT_CONTEXT_INVALID"), str(error)) from error
     atlas_instruction = (
         " When knowledge_modules.visual_atlas is present, use its small selected style descriptors only as "
         "presentation guidance; never copy the Atlas benchmark subject, and never let style guidance override "

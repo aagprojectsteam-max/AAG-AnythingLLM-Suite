@@ -1,0 +1,43 @@
+{
+  "golden_version": "20261005T133425Z",
+  "rebuild": {
+    "schema": "aag.anythingllm-frontend-build.v1",
+    "aagRelease": "0.9.0-preview.13",
+    "anythingllmSource": "https://github.com/Mintplex-Labs/anything-llm.git",
+    "anythingllmRevision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+    "overlayFiles": [
+      "ImageGenerationCard/index.jsx",
+      "HistoricalOutputs/index.jsx",
+      "AagImageCollection.jsx",
+      "AagArtifactPrompt.jsx",
+      "AagArtifactDetails.jsx",
+      "aagArtifactExport.js",
+      "aagArtifactFile.js",
+      "aagArtifactSerials.js",
+      "aagArtifactText.js (shared presentation function)",
+      "useAagArtifactText.js",
+      "useImageComposerMode.js",
+      "useExpertPromptMode.js",
+      "AagImageComposerPanel/index.jsx",
+      "AagImageComposerPanel/styles.css",
+      "AagImageComposerPanel/localization.js",
+      "AagImageComposerPanel/heTaxonomyLabels.js",
+      "AagImageProgress/index.jsx",
+      "AagImageProgress/styles.css",
+      "PromptInput/index.jsx (deterministic inline patch)",
+      "ChatContainer/index.jsx (deterministic native-message augmentation patch)",
+      "ThreadContainer/index.jsx (deterministic legacy-default visibility patch)",
+      "ChatHistory/index.jsx (artifact result presentation)",
+      "HistoricalMessage/index.jsx (native output memo hydration)"
+    ],
+    "overlayTreeSha256": "148bc335b3b135c36409e0bc94f625d4046669998af388eb6e330b6a55141620",
+    "buildToolSha256": "1dc021ea2ac8e88b1a17b8ee0b6f91b9faf23f81e3339ceaad33127cf5638249",
+    "publicFiles": 255,
+    "publicTreeSha256": "2995d8f0b859ed447170966e42bcfb628aa8e0c3cfb0fdf7c1d8ddfed6b4e141",
+    "builtAt": "2026-10-05T14:31:26.701Z"
+  },
+  "compiled_tree_published": false,
+  "source_matches_golden": true,
+  "binary_tree_matches_golden": false,
+  "note": "Source rebuild validation, not a replacement deployment. The immutable Golden retains the original compiled payload."
+}

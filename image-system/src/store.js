@@ -65,6 +65,8 @@ function createRecord(root, fields) {
     attempts: fields.attempts || [],
     final_output_quality: fields.final_output_quality || "standard",
     progress: fields.progress || {},
+    ...(fields.expert_prompt ? { expert_prompt: fields.expert_prompt } : {}),
+    ...(fields.generation_request ? {generation_request:fields.generation_request} : {}),
   };
   atomicJson(jobFile(root, record.job_id), record);
   return record;
@@ -166,7 +168,20 @@ function recoverStale(root, staleMs, nowMs = Date.now()) {
   return recovered;
 }
 
+// One index per server process/state root. Explicit tool reads remain authoritative.
+const indexes = new Map();
+function jobIndex(root, options) {
+  const key = path.resolve(root);
+  if (!indexes.has(key)) indexes.set(key, require("./job-index").createJobIndex(key, module.exports, options));
+  return indexes.get(key);
+}
+function closeJobIndex(root) {
+  const key = path.resolve(root);
+  indexes.get(key)?.close(); indexes.delete(key);
+}
+
 module.exports = {
+  jobIndex, closeJobIndex,
   TERMINAL, TRANSITIONS, validId, newId, jobFile, createRecord, read, write,
   transition, transitionAndWrite, reopenAndWrite, getIdempotent, claimIdempotency, listJobs,
   recoverStale,

@@ -1,0 +1,21 @@
+count|Explicit exact count or multiple similar entities|Enumerate required entities and distinguish each; preserve the count without background duplicates.
+duplication|Repeated objects, mirrors or multiple actors|Specify which instances are real and which are reflections; avoid unrequested copies.
+fusion|Contact, close spacing or overlap|Keep each subject's silhouette and owned parts traceable across occlusion.
+anatomy|People or animals with visible articulated bodies|Use plausible joint direction and limb ownership; add no generic anatomy paragraph to objects.
+attribute|Different colors, clothing or identifying features|Bind each feature to its named owner and repeat ownership only where ambiguity would matter.
+object|Held, mounted or attached objects|State the attachment or grip and preserve object continuity through overlap.
+pose|Movement or complex stance|Clarify balance, support and motion direction while retaining the requested action.
+contact|Touching, holding, riding or interacting|Describe the actual contact surfaces and their physical relationship.
+perspective|Multiple planes, architecture or deep space|Use one camera/projection and consistent convergence or parallel axes.
+geometry|Mechanisms, structures or rigid products|Keep supports, joints, repeated modules and component alignment coherent.
+reflection|Reflective or transparent surfaces|Make reflected light and duplicate images correspond to real sources and viewpoint.
+shadow|Directional light or grounded objects|Align contact and cast shadows with the same light arrangement and support plane.
+clutter|Many required elements or elaborate surroundings|Group related elements and subordinate incidental detail without deleting required objects.
+focal|Competing subjects or dense information|Establish explicit attention order and value separation.
+style|A selected exact canonical style|Use its recognition anchors and reject incompatible sibling grammar.
+media|A named physical or digital medium|Make mark-making and surface behavior match the medium rather than apply a generic filter.
+palette|Explicit colors or color-coded information|Protect color ownership and preserve enough value contrast for readability.
+lighting|Several sources or emissive materials|Keep source direction, falloff, local emission and reflected light consistent.
+text|Quoted or required visible lettering|Preserve exact spelling, order and placement; avoid invented words and pseudo-text.
+logo|Branded objects or graphic marks|Use only supplied branding; do not invent a trademark.
+watermark|Any generated composition|Do not add unrequested signatures, attribution text or watermarks.

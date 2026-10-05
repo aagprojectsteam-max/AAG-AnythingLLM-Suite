@@ -28,6 +28,18 @@ if [[ $profile == image || $profile == full ]]; then
  add "$ROOT/image-system/integrations/anythingllm/frontend/AagImageComposerPanel" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel"
  add "$ROOT/image-system/integrations/anythingllm/frontend/AagImageProgress" "$ANYTHINGLLM_ROOT/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress"
 fi
+# Exact source overlays for the approved Golden. Paths are package-relative.
+if [[ $profile == image || $profile == full ]]; then
+ while IFS=$'\t' read -r src dst; do
+  if [[ $dst == storage/* ]]; then add "$ROOT/$src" "$ANYTHINGLLM_STORAGE/${dst#storage/}"
+  else add "$ROOT/$src" "$ANYTHINGLLM_ROOT/$dst"; fi
+ done < <(python3 - "$ROOT/manifests/GOLDEN-INSTALL-MAP.json" <<'AAG_MAP'
+import json,sys
+for row in json.load(open(sys.argv[1]))["entries"]:
+    print(row["source"] + "\t" + row["target"])
+AAG_MAP
+ )
+fi
 if [[ $profile == chess || $profile == full ]]; then add "$ROOT/chess" "$AAG_INSTALL_ROOT/chess"; add "$ROOT/chess/integrations/anythingllm/skill/aag-chess-puzzle" "$ANYTHINGLLM_STORAGE/plugins/agent-skills/aag-chess-puzzle"; fi
 if [[ $profile == local-llm || $profile == full ]]; then add "$ROOT/integrations/llamacpp" "$AAG_INSTALL_ROOT/llamacpp"; add "$ROOT/integrations/anythingllm/model-neutral-compatibility" "$AAG_INSTALL_ROOT/model-neutral-compatibility"; fi
 if [[ $profile == image || $profile == local-llm || $profile == full ]]; then add "$ROOT/visual-atlas" "$AAG_INSTALL_ROOT/visual-atlas"; fi

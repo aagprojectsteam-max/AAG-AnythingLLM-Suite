@@ -1,0 +1,7 @@
+{
+ "schema":"aag.expert.rubric.v1",
+ "scale":{"0":"contradicted or absent when required","1":"present but ambiguous","2":"clear, coherent and useful","null":"not applicable; explanation required"},
+ "dimensions":["semantic_fidelity","invariants","subject_count","action","spatial_relationships","composition","style_fidelity","style_coherence","lighting","color","materials","structural_risk","text_risk","contradictions","detail_completeness","token_usefulness","overconstraint","invention_risk","medium_behavior"],
+ "hard_failures":["lost user invariant","changed exact count","wrong selected style","invented visible text","silent truncation","unsupported route","unverified token budget"],
+ "policy":"Scores require evidence from request, plan and prompt; verbosity alone never earns credit. Automated checks establish binding and structural validity, not perfect semantic understanding."
+}

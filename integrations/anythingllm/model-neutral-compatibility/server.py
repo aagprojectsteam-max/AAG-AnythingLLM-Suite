@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import hmac
+import http.client
 import http.cookies
 import json
 import os
@@ -26,6 +27,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -35,6 +37,7 @@ from typing import Any
 from composer_canonical import composer_canonical_json
 from compatibility import (
     LAYER_VERSION,
+    MAX_CANONICAL_BYTES,
     CompatibilityError,
     adapter_instruction,
     build_adapter_payload,
@@ -61,6 +64,7 @@ from compatibility import (
     validate_required_arguments,
 )
 from visual_atlas import AtlasError, get_visual_atlas
+from text_stream import encode_event, read_events, validated_text_events
 
 
 MAX_CHAT_BODY = 4 * 1024 * 1024
@@ -278,6 +282,26 @@ class Upstream:
         if not isinstance(value, dict):
             raise BoundaryError(502, "UPSTREAM_RESPONSE_INVALID", "The inference runtime returned an invalid object.")
         return value
+
+    @contextmanager
+    def open_stream(self, payload: dict[str, Any]):
+        request = urllib.request.Request(
+            self.base_url + "/v1/chat/completions",
+            data=stable_json(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json", "Accept": "text/event-stream", "User-Agent": f"AAG-Compatibility/{LAYER_VERSION}"},
+            method="POST",
+        )
+        try:
+            response = urllib.request.urlopen(request, timeout=max(self.timeout, 600))
+        except urllib.error.HTTPError as error:
+            error.close()
+            raise BoundaryError(502, "UPSTREAM_COMPLETION_FAILED", f"The inference runtime returned HTTP {error.code}.") from error
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
+            raise BoundaryError(503, "MODEL_RUNTIME_UNAVAILABLE", "The local inference runtime is unavailable.") from error
+        try:
+            yield response
+        finally:
+            response.close()
 
     def healthy(self) -> bool:
         try:
@@ -777,6 +801,56 @@ class Application:
             return intent
         return None
 
+    def generation_provenance(self, data: dict[str, Any]) -> dict[str, Any]:
+        envelope = data.get("envelope")
+        if not isinstance(envelope, str) or len(envelope.encode()) > MAX_CANONICAL_BYTES:
+            raise CompatibilityError("COMPOSER_PROVENANCE_INVALID", "Invalid Composer envelope.")
+        intent = self.trusted_composer_intent({"messages": [{"role": "user", "content": envelope}]})
+        if not intent or data.get("request") != composer_user_request_from_message(envelope):
+            raise CompatibilityError("COMPOSER_PROVENANCE_INVALID", "The current request does not match signed Composer intent.")
+        keys = ("operation", "aspect_ratio", "count", "quality", "final_output_quality", "preservation", "scale", "seed", "language", "atlas_selection_mode", "composer_version")
+        result = {key: intent[key] for key in keys if key in intent}
+        result["creative_direction"] = {key: intent.get("creative_direction", {}).get(key) for key in ("visual_family", "visual_subfamily", "output_purpose", "background", "visible_text")}
+        result["constraints"] = {key: intent[key] for key in ("edit_mode", "preservation", "source_policy", "reference_purpose") if key in intent}
+        return result
+
+    def validate_expert(self, data: dict[str, Any]) -> dict[str, Any]:
+        envelope = data.get("envelope")
+        if not isinstance(envelope, str) or len(envelope.encode()) > MAX_CANONICAL_BYTES:
+            raise CompatibilityError("EXPERT_CONTEXT_INVALID", "Invalid Expert envelope.")
+        intent = self.trusted_composer_intent({"messages": [{"role": "user", "content": envelope}]})
+        if not intent or not intent.get("expert_prompt"):
+            raise CompatibilityError("EXPERT_CONTEXT_REQUIRED", "Expert intent must be signed by Composer.")
+        request = composer_user_request_from_message(envelope)
+        if data.get("request") != request:
+            raise CompatibilityError("EXPERT_REQUEST_CHANGED", "The current invocation does not match its signed request.")
+        args = data.get("arguments")
+        if not isinstance(args, dict):
+            raise CompatibilityError("EXPERT_ARGUMENT_INVALID", "Missing image arguments.")
+        batch = intent.get("operation") == "generate" and intent.get("count", 1) >= 2
+        name = "aag-image-batch" if batch else "aag-image-task"
+        from compatibility import CanonicalCall
+        from expert_schema import provider_schema
+        try:
+            schema = provider_schema(name)
+        except (OSError, ValueError) as error:
+            raise CompatibilityError("EXPERT_VALIDATOR_UNAVAILABLE", "A required Expert validation dependency is unavailable.") from error
+        tool = {"type": "function", "function": {"name": name, "parameters": schema}}
+        call = normalize_composer_candidate(CanonicalCall(name, args, 0), [tool], intent)
+        items = call.arguments.get("items", []) if batch else [call.arguments]
+        results = []
+        expert_root = str(Path(__file__).resolve().parents[2] / "expert-prompt")
+        if expert_root not in sys.path:
+            sys.path.insert(0, expert_root)
+        from neutral_context import validate_candidate
+        for item in items:
+            try:
+                result = validate_candidate(request, intent, item.get("prompt"), item.get("expert_plan"))
+            except (ValueError, ImportError, OSError) as error:
+                raise CompatibilityError(getattr(error, "code", "EXPERT_VALIDATOR_UNAVAILABLE"), str(error)[:700]) from error
+            results.append(result)
+        return {"arguments": call.arguments, "results": results}
+
     def prepare_composer(self, data: dict[str, Any]) -> dict[str, Any]:
         """Validate and sign Advanced intent without submitting a chat/job."""
         if data.get("mode") != "advanced":
@@ -884,6 +958,8 @@ class BoundaryHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
         self.send_header("X-Content-Type-Options", "nosniff")
+        if self.close_connection:
+            self.send_header("Connection", "close")
         if headers:
             for key, header_value in headers.items():
                 self.send_header(key, header_value)
@@ -1082,14 +1158,28 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                     },
                 )
                 return
-            if path in {"/composer/preview", "/composer/prepare", "/composer/submit"}:
+            if path == "/composer/provenance":
+                self._require_composer_local()
+                self._json(200, APP.generation_provenance(self._read_json(MAX_CANONICAL_BYTES)))
+                return
+            if path == "/composer/expert/validate":
+                self._require_composer_local()
+                # Private relay + mandatory HMAC-bound current request. This
+                # endpoint only validates text; it cannot call a model or job.
+                self._json(200, APP.validate_expert(self._read_json(MAX_CANONICAL_BYTES)))
+                return
+            if path in {"/composer/preview", "/composer/prepare", "/composer/submit", "/composer/authorize"}:
                 self._require_composer_local()
                 if not self._composer_origin_ok():
                     raise BoundaryError(403, "COMPOSER_ORIGIN_INVALID", "Composer origin validation failed.")
                 if not APP.composer_sessions.validate(self._composer_cookie(), self.headers.get("X-AAG-CSRF")):
                     raise BoundaryError(403, "COMPOSER_CSRF_INVALID", "Composer CSRF validation failed.")
                 data = self._read_json(MAX_COMPOSER_BODY)
-                if path.endswith("preview"):
+                if path.endswith("authorize"):
+                    if data != {}:
+                        raise BoundaryError(400, "ARGUMENTS_FORBIDDEN", "Authorization accepts no arguments.")
+                    self._json(200, {"authorized": True})
+                elif path.endswith("preview"):
                     preview = composer_preview(data)
                     self._json(200, {"summary": preview, "attachment_count": len(data.get("attachments", []))})
                 elif path.endswith("prepare"):
@@ -1130,8 +1220,81 @@ class BoundaryHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(response_body)))
         self.send_header("Cache-Control", "no-store")
         self.send_header("X-Content-Type-Options", "nosniff")
+        if self.close_connection:
+            self.send_header("Connection", "close")
         self.end_headers()
         self.wfile.write(response_body)
+
+    def _stream_text(self, payload: dict[str, Any]) -> None:
+        upstream_payload = dict(payload)
+        upstream_payload["stream"] = True
+        if payload.get("stream_options") is not None and not isinstance(payload["stream_options"], dict):
+            raise BoundaryError(400, "STREAM_OPTIONS_INVALID", "stream_options must be an object.")
+        upstream_payload["stream_options"] = {**(payload.get("stream_options") or {}), "include_usage": True}
+        started = time.monotonic()
+        headers_sent = False
+        chunks = 0
+        first_content = None
+        digest = hashlib.sha256()
+        terminal = {}
+        try:
+            with APP.upstream.open_stream(upstream_payload) as upstream:
+                if upstream.headers.get_content_type() != "text/event-stream":
+                    raw = upstream.read(MAX_CHAT_BODY + 1)
+                    if len(raw) > MAX_CHAT_BODY:
+                        raise BoundaryError(502, "UPSTREAM_RESPONSE_INVALID", "The upstream response is too large.")
+                    try:
+                        response = json.loads(raw)
+                    except (ValueError, UnicodeError) as error:
+                        raise BoundaryError(502, "UPSTREAM_RESPONSE_INVALID", "The upstream response is not valid JSON.") from error
+                    if not isinstance(response, dict):
+                        raise BoundaryError(502, "UPSTREAM_RESPONSE_INVALID", "The upstream response is not an object.")
+                    validate_ordinary_response(response)
+                    events = openai_sse_events(response)
+                    true_stream = False
+                else:
+                    events = (encode_event(event) for event in validated_text_events(read_events(upstream)))
+                    true_stream = True
+                self.send_response(200)
+                self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("Connection", "close")
+                self.send_header("X-Accel-Buffering", "no")
+                self.end_headers()
+                headers_sent = True
+                self.close_connection = True
+                for event in events:
+                    self.wfile.write(event)
+                    self.wfile.flush()
+                    digest.update(event)
+                    chunks += 1
+                    if event != b"data: [DONE]\n\n":
+                        data = json.loads(event[6:])
+                        choice = (data.get("choices") or [{}])[0]
+                        delta = choice.get("delta") or {}
+                        if first_content is None and any(delta.get(k) for k in ("content", "reasoning_content", "reasoning")):
+                            first_content = time.monotonic() - started
+                        if choice.get("finish_reason"):
+                            terminal = {key: data[key] for key in ("usage", "timings") if key in data}
+                if true_stream:
+                    self.wfile.write(b"data: [DONE]\n\n")
+                    self.wfile.flush()
+                APP.audit.write("completion_validated", session_sha256=APP.capabilities.session_sha256, mode="CHAT_ONLY_STREAM", stream_requested=True, true_stream=true_stream, stream_sha256=digest.hexdigest(), chunks=chunks, first_content_s=first_content, total_s=time.monotonic() - started, **terminal)
+        except (BrokenPipeError, ConnectionResetError):
+            self.close_connection = True
+            APP.audit.write("stream_disconnected", session_sha256=APP.capabilities.session_sha256, chunks=chunks)
+        except (CompatibilityError, BoundaryError, OSError, http.client.HTTPException, UnicodeError) as error:
+            if not isinstance(error, (CompatibilityError, BoundaryError)):
+                error = BoundaryError(502, "UPSTREAM_STREAM_FAILED", "The inference stream was interrupted.")
+            if not headers_sent:
+                raise error
+            APP.audit.write("stream_rejected", session_sha256=APP.capabilities.session_sha256, code=error.code, chunks=chunks)
+            try:
+                self.wfile.write(encode_event({"error": {"message": str(error), "type": "aag_compatibility_error", "code": error.code}}))
+                self.wfile.flush()
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+            self.close_connection = True
 
     def _chat_completion(self) -> None:
         payload = self._read_json(MAX_CHAT_BODY)
@@ -1141,6 +1304,11 @@ class BoundaryHandler(BaseHTTPRequestHandler):
             raise BoundaryError(400, "CHAT_REQUEST_INVALID", "model and non-empty messages are required.")
         stream_requested = payload.get("stream") is True
         composer_intent = APP.trusted_composer_intent(payload)
+        expert_context = bool(composer_intent and composer_intent.get("expert_prompt"))
+        def validate_output(value):
+            validate_ordinary_response(value)
+            if expert_context and value.get("choices", [{}])[0].get("finish_reason") not in {"stop", "tool_calls"}:
+                raise CompatibilityError("EXPERT_COMPLETION_INCOMPLETE", "The active model did not finish its Expert prompt. Nothing was truncated or submitted.")
         basic = APP.capabilities.ensure_basic(payload)
         if not basic.ok:
             raise BoundaryError(
@@ -1156,6 +1324,10 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                 f"Ordinary chat compatibility gate failed: {chat.code}.",
             )
 
+        if stream_requested and payload.get("tools") is None and composer_intent is None and not payload.get("functions") and not payload.get("function_call") and payload.get("n", 1) == 1:
+            self._stream_text(payload)
+            return
+
         upstream_payload = dict(payload)
         upstream_payload["stream"] = False
         tools = payload.get("tools")
@@ -1167,7 +1339,7 @@ class BoundaryHandler(BaseHTTPRequestHandler):
             if mode == "NATIVE_TOOLS":
                 try:
                     response = APP.upstream.json(upstream_payload)
-                    validate_ordinary_response(response)
+                    validate_output(response)
                     message = response["choices"][0]["message"]
                     if message.get("tool_calls"):
                         if composer_intent is not None:
@@ -1256,10 +1428,11 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                             candidate,
                             preserve_arguments=preserved,
                             required_arguments=required,
+                            expert_context=expert_context,
                         )
                         adapter_input = "REJECTED_NATIVE_CANDIDATE"
                     else:
-                        adapter_payload = build_adapter_payload(upstream_payload, normalized)
+                        adapter_payload = build_adapter_payload(upstream_payload, normalized, expert_context=expert_context)
                         adapter_input = "ORIGINAL_REQUEST"
                     if deterministic_call is None:
                         APP.audit.write(
@@ -1270,7 +1443,7 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                             required_argument_names=sorted(required),
                         )
                         response = APP.upstream.json(adapter_payload)
-                        validate_ordinary_response(response)
+                        validate_output(response)
                         content = response["choices"][0]["message"].get("content")
                         if not isinstance(content, str):
                             raise CompatibilityError("CANONICAL_JSON_INVALID", "Adapter did not return canonical text.")
@@ -1282,8 +1455,8 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                         response = canonical_to_openai_response(response, call)
                         mode = "GENERIC_ADAPTER_TOOLS_AFTER_NATIVE_REJECTION"
             elif mode == "GENERIC_ADAPTER_TOOLS":
-                response = APP.upstream.json(build_adapter_payload(upstream_payload, normalized))
-                validate_ordinary_response(response)
+                response = APP.upstream.json(build_adapter_payload(upstream_payload, normalized, expert_context=expert_context))
+                validate_output(response)
                 content = response["choices"][0]["message"].get("content")
                 if not isinstance(content, str):
                     raise CompatibilityError("CANONICAL_JSON_INVALID", "Adapter did not return canonical text.")
@@ -1299,7 +1472,7 @@ class BoundaryHandler(BaseHTTPRequestHandler):
                 )
         else:
             response = APP.upstream.json(upstream_payload)
-            validate_ordinary_response(response)
+            validate_output(response)
 
         if composer_intent is not None:
             APP.audit.write(

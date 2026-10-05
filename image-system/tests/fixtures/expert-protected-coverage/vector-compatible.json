@@ -1,0 +1,79 @@
+{
+  "request": "One blue sailboat on a calm sea under a yellow sun, shown with uniform unshaded flat vector fills and clean overlapping shapes. No gradients, no lettering.",
+  "record": {
+    "prompt": "Minimalist flat vector graphic of one blue sailboat floating on a calm sea beneath a vibrant yellow circular sun. The artwork is composed entirely of crisp geometric silhouettes, solid uniform unshaded color blocks, and clean overlapping shapes defining the boat hull, white and blue sails, gentle horizontal sea planes, and the open sky. Flat 2D vector aesthetic with bold clean edges, strictly no gradients, no photographic lighting, no drop shadows, and no text or lettering.",
+    "sha256": "27de545543b76b55b399d654b5479352101192c3a4780f2b9cbb1b5d4357b256",
+    "tokens_including_template": 108,
+    "operating_token_limit": 512,
+    "selected_style": "vector-flat-art/flat-vector",
+    "protected_fragment_ids": [
+      "p1-core-scene",
+      "p2-flat-vector-style"
+    ],
+    "truncated": false,
+    "route": "generate",
+    "semantic_review_required": true,
+    "plan": {
+      "conflicts": [],
+      "facts": [
+        {
+          "classification": "USER_REQUIRED",
+          "dimension": "subjects",
+          "text": "A single blue sailboat rests on the water.",
+          "source_text": "One blue sailboat"
+        },
+        {
+          "dimension": "environment",
+          "source_text": "on a calm sea",
+          "classification": "USER_REQUIRED",
+          "text": "The sailboat floats upon a calm, smooth sea with minimal geometric wave lines."
+        },
+        {
+          "text": "A solid yellow circular sun hangs in the sky above the sea.",
+          "classification": "USER_REQUIRED",
+          "source_text": "under a yellow sun",
+          "dimension": "environment"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "source_text": "uniform unshaded flat vector fills and clean overlapping shapes",
+          "text": "Rendered entirely in a flat vector art style with uniform unshaded color blocks and clean overlapping geometric shapes.",
+          "dimension": "style_constraints"
+        },
+        {
+          "source_text": "No gradients, no lettering",
+          "text": "There are no gradients, no shading, and no text, letters, or numbers anywhere in the artwork.",
+          "classification": "USER_REQUIRED",
+          "dimension": "exclusions"
+        }
+      ],
+      "fragments": [
+        {
+          "priority": 1,
+          "text": "A minimalist flat vector illustration centered on a single blue sailboat floating atop a tranquil, calm sea under a bright yellow circular sun in an open sky. The composition uses pure, uniform unshaded color fills and crisp geometric silhouettes with clean overlapping planes. There are strictly no gradients, drop shadows, 3D volume, text, lettering, or watermarks.",
+          "id": "p1-core-scene"
+        },
+        {
+          "text": "Flat vector aesthetic defined by sharp contour paths, solid untextured color fields, and spatial depth created entirely through the overlap of flat geometric shapes against a clean graphic background.",
+          "id": "p2-flat-vector-style",
+          "priority": 2
+        }
+      ]
+    },
+    "request_sha256": "df2dd4625d038afda321bc7231755e6d4cd4aba56c99082e2ac0fc71c50760e5",
+    "context_sha256": "e5e9fa0338c9726120e8af87e5bc4a11534b20480d746731ababa0069bd4eacd",
+    "author": "current-active-chat-llm",
+    "contract": "aag.expert.prompt.v1",
+    "authoring_contract": "self-contained.v2",
+    "review_style": {
+      "canonical_id": "vector-flat-art/flat-vector",
+      "label": "Flat vector",
+      "recognition_anchors": [
+        "Uniform unshaded fills and clean overlap"
+      ]
+    }
+  },
+  "responses": [
+    "```json\n{\n  \"pass\": true,\n  \"issues\": [],\n  \"checks\": {\n    \"all_user_requirements\": true,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": true,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"one blue sailboat\",\n      \"protected_evidence\": \"a single blue sailboat\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"floating on a calm sea\",\n      \"protected_evidence\": \"floating atop a tranquil, calm sea\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"beneath a vibrant yellow circular sun\",\n      \"protected_evidence\": \"under a bright yellow circular sun\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": true,\n      \"evidence\": \"solid uniform unshaded color blocks, and clean overlapping shapes\",\n      \"protected_evidence\": \"pure, uniform unshaded color fills and crisp geometric silhouettes with clean overlapping planes\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"strictly no gradients, no photographic lighting, no drop shadows, and no text or lettering\",\n      \"protected_evidence\": \"strictly no gradients, drop shadows, 3D volume, text, lettering, or watermarks\"\n    }\n  ]\n}\n```"
+  ]
+}

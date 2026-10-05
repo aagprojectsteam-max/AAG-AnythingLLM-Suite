@@ -1,0 +1,70 @@
+{
+  "request": "תעשה תמונה של רוכב אופנוע מירוצים באמצע מירוץ עם האופנוע כמעט נוגע ברצפה מהסיבוב החד",
+  "intent": {
+    "selected_style": "photography/sports-action"
+  },
+  "prompt": "A professional motorcycle racer in a full aerodynamic leather racing suit and helmet astride a high-performance racing superbike is carving through a sharp hairpin curve with immense centrifugal force. Competing during an intense high-speed circuit race on a paved asphalt track, the racing motorcycle is tilted at an extreme lean angle, with fairings and the rider's knee slider skimming mere inches above the asphalt surface. Executed in authentic Sports/action photography style, delivering readable peak action and controlled motion depiction. The camera maintains coherent contact points, equipment ownership and rider body mechanics, freezing the intense mechanical details of the leaning bike while capturing high-speed dynamism. Shot from a dramatic low trackside angle with a telephoto lens, framing the apex of the turn with painted red-and-white rumble-strip kerbing curving along the edge of the dark bitumen asphalt. Bright natural daytime sunlight glints off the streamlined glossy carbon fairings, tinted helmet visor, and hot racing slick tires, casting crisp directional shadows directly beneath the chassis. The background bleeds into smooth horizontal optical panning motion blur across distant safety barriers and empty grandstands, isolating the razor-sharp focal clarity of the helmet, handlebars, and aggressive aerodynamic winglets in peak physical tension.",
+  "plan": {
+    "facts": [
+      {
+        "source_text": "רוכב אופנוע מירוצים",
+        "classification": "USER_REQUIRED",
+        "dimension": "subjects",
+        "text": "A professional motorcycle racer in a full aerodynamic leather racing suit and helmet astride a high-performance racing superbike"
+      },
+      {
+        "text": "competing during an intense high-speed circuit race on a paved asphalt track",
+        "classification": "USER_REQUIRED",
+        "source_text": "באמצע מירוץ",
+        "dimension": "environment"
+      },
+      {
+        "source_text": "האופנוע כמעט נוגע ברצפה",
+        "classification": "USER_REQUIRED",
+        "dimension": "actions_poses",
+        "text": "the racing motorcycle is tilted at an extreme lean angle, with fairings and the rider's knee slider skimming mere inches above the asphalt surface"
+      },
+      {
+        "dimension": "composition_focal_hierarchy",
+        "classification": "USER_REQUIRED",
+        "source_text": "מהסיבוב החד",
+        "text": "carving through a sharp hairpin curve with immense centrifugal force"
+      },
+      {
+        "source_text": "",
+        "dimension": "style_constraints",
+        "text": "Authentic Sports/action photography style delivering readable peak action and controlled motion depiction with coherent mechanical and rider anatomy",
+        "classification": "SAFE_INFERENCE"
+      },
+      {
+        "source_text": "",
+        "classification": "SAFE_INFERENCE",
+        "dimension": "viewpoint_perspective_depth",
+        "text": "Low trackside perspective focusing sharply on the rider and bike with natural speed panning blur in the distant background"
+      }
+    ],
+    "fragments": [
+      {
+        "priority": 1,
+        "text": "A professional motorcycle racer in a full aerodynamic leather racing suit and helmet astride a high-performance racing superbike is carving through a sharp hairpin curve with immense centrifugal force. Competing during an intense high-speed circuit race on a paved asphalt track, the racing motorcycle is tilted at an extreme lean angle, with fairings and the rider's knee slider skimming mere inches above the asphalt surface.",
+        "id": "scene-core-action"
+      },
+      {
+        "text": "Executed in authentic Sports/action photography style, delivering readable peak action and controlled motion depiction. The camera maintains coherent contact points, equipment ownership and rider body mechanics, freezing the intense mechanical details of the leaning bike while capturing high-speed dynamism.",
+        "priority": 2,
+        "id": "sports-action-style"
+      },
+      {
+        "id": "track-environment-light",
+        "priority": 3,
+        "text": "Shot from a dramatic low trackside angle with a telephoto lens, framing the apex of the turn with painted red-and-white rumble-strip kerbing curving along the edge of the dark bitumen asphalt. Bright natural daytime sunlight glints off the streamlined glossy carbon fairings, tinted helmet visor, and hot racing slick tires, casting crisp directional shadows directly beneath the chassis."
+      },
+      {
+        "id": "dynamic-details",
+        "text": "The background bleeds into smooth horizontal optical panning motion blur across distant safety barriers and empty grandstands, isolating the razor-sharp focal clarity of the helmet, handlebars, and aggressive aerodynamic winglets in peak physical tension.",
+        "priority": 4
+      }
+    ],
+    "conflicts": []
+  }
+}

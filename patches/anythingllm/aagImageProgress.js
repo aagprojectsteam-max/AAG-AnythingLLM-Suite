@@ -133,15 +133,24 @@ async function bindCompletedJob(job, core, server, options = {}) {
   const binding = await presentationBinding(job, server);
   if (!binding) return null;
   if (!binding.alreadyBound) {
-    const parsed = server.presentation.parseAagImageResult(
-      core.runtime.resultEnvelope(job)
-    );
+    // Batch cards require their logical child IDs/counts from the existing
+    // status serializer; a single-image envelope cannot represent a collection.
+    const result = job.operation === "multi_generate" && Number(job.schema_version) >= 3
+      ? await core.runtime.jobAction({ action: "status", job_id: job.job_id }, {
+          AAG_IMAGE_AGENT_STATE_ROOT: options.stateRoot || DEFAULT_STATE_ROOT,
+          AAG_WORKSPACE_ID: job.owner.workspace_id,
+          AAG_THREAD_ID: job.owner.thread_id,
+          AAG_USER_ID: job.owner.user_id,
+        })
+      : core.runtime.resultEnvelope(job);
+    const parsed = server.presentation.parseAagImageResult(result);
     if (!parsed) return null;
     const outputs = await server.presentation.buildPresentationOutputs({
       parsed,
       prompt: binding.visiblePrompt,
       generatedImagesPath: server.generatedImagesPath,
       fetchImpl: options.fetchImpl || globalThis.fetch,
+      naming: { ...options.naming, job, stateRoot: options.stateRoot || DEFAULT_STATE_ROOT },
     });
     const { message } = await server.WorkspaceChats.upsert(binding.chat.id, {
       workspaceId: Number(job.owner.workspace_id),
@@ -187,25 +196,32 @@ async function reconcileImageState(options = {}) {
   const core = loadCore(options.core || {});
   const server = loadServer(options.server || {});
   const root = options.stateRoot || DEFAULT_STATE_ROOT;
+  const index = options.index || core.store.jobIndex(root, options);
   const recovered = await core.recovery.recoverCompletedJobs(root, {
+    ...options,
     runtime: core.runtime,
-    logger: options.logger,
+    jobs: index.activeJobs(),
     createdBefore: options.recoveryCutoff,
   });
-  const jobs = core.store.listJobs(root)
-    .filter((job) => !job.parent_job_id && ["COMPLETED", "PARTIAL"].includes(job.status))
-    .sort((left, right) => eventTime(left.updated_at) - eventTime(right.updated_at));
-  const bindings = [];
-  for (const job of jobs) {
+  const pending = new Map(index.takePending().map(job => [job.job_id, job]));
+  for (const id of options.retryIds || []) {
+    const job = index.get(id);
+    if (job) pending.set(id, job);
+  }
+  for (const job of recovered) pending.set(job.job_id, job);
+  const bindings = [], unbound = [], errors = [];
+  for (const job of pending.values()) {
     if (job.presentation?.status === "COMPLETED") continue;
     try {
-      const bound = await bindCompletedJob(job, core, server, options);
+      const bound = await bindCompletedJob(structuredClone(job), core, server, options);
       if (bound) bindings.push(bound);
+      else unbound.push(job.job_id);
     } catch (error) {
+      errors.push(job.job_id);
       options.logger?.(`[AAG-IMAGE] presentation reconciliation skipped ${job.job_id}: ${error.message}`);
     }
   }
-  return { recovered, bindings };
+  return { recovered, bindings, unbound, errors };
 }
 
 function stageRows(snapshot, chatDurable) {
@@ -269,10 +285,8 @@ async function threadProgress({ workspace, thread, userId = null }, options = {}
   const server = loadServer(options.server || {});
   const root = options.stateRoot || DEFAULT_STATE_ROOT;
   const ownerUser = userId ?? thread.user_id ?? "unknown";
-  const parents = core.store.listJobs(root)
-    .filter((job) => !job.parent_job_id && ownerMatches(job, workspace.id, thread.id, ownerUser))
-    .sort((left, right) => eventTime(right.created_at) - eventTime(left.created_at));
-  const job = parents[0] || null;
+  const index = options.index || core.store.jobIndex(root, options);
+  const job = index.latest({ workspace_id: workspace.id, thread_id: thread.id, user_id: ownerUser });
   const chats = await server.WorkspaceChats.where(
     { workspaceId: Number(workspace.id), thread_id: Number(thread.id), user_id: userId || null },
     20,
@@ -296,7 +310,7 @@ async function threadProgress({ workspace, thread, userId = null }, options = {}
     return { active: true, status: snapshot.status, startedAt: snapshot.startedAt, stages: stageRows(snapshot, false) };
   }
   if (!job) return { active: false };
-  const children = (job.child_jobs || []).map((id) => core.store.read(root, id));
+  const children = (job.child_jobs || []).map((id) => index.get(id)).filter(Boolean);
   const snapshot = core.recovery.progressSnapshot(job, children);
   const bound = chats.some((chat) => outputHasJob(chat, job.job_id));
   const presentationAt = eventTime(job.presentation?.committed_at);
@@ -338,25 +352,64 @@ async function threadProgress({ workspace, thread, userId = null }, options = {}
   };
 }
 
-let interval = null;
+const reconcilers = new Map();
 function startImageReconciler(options = {}) {
-  if (interval) return interval;
-  // Only jobs which predate this server process are eligible for restart
-  // recovery. A live job may already have an engine output while its original
-  // request is still verifying it; the reconciler must never race that path.
+  const root = options.stateRoot || DEFAULT_STATE_ROOT;
+  if (reconcilers.has(root)) return reconcilers.get(root);
+  const core = loadCore(options.core || {});
+  const index = core.store.jobIndex(root, options);
+  // Do not race the original verification path of a job created by this server.
   const recoveryCutoff = options.recoveryCutoff || new Date().toISOString();
-  let running = false;
-  const tick = async () => {
-    if (running) return;
-    running = true;
-    try { await reconcileImageState({ ...options, recoveryCutoff }); }
-    catch (error) { options.logger?.(`[AAG-IMAGE] reconciliation pass failed: ${error.message}`); }
-    finally { running = false; }
+  const retry = new Map();
+  let timer = null, running = false, dirty = false, closed = false;
+  const schedule = (delay = 25) => {
+    if (closed) return;
+    if (running) { dirty = true; return; }
+    clearTimeout(timer);
+    timer = setTimeout(tick, delay); timer.unref?.();
   };
-  void tick();
-  interval = setInterval(tick, options.intervalMs || RECONCILE_INTERVAL_MS);
-  interval.unref?.();
-  return interval;
+  const responseIndex = core.recovery.createResponseIndex(root, { ...options, onChange: schedule });
+  const tick = async () => {
+    if (closed || running) return;
+    clearTimeout(timer); timer = null; running = true; dirty = false;
+    try {
+      const result = await reconcileImageState({ ...options, core, index, recoveryCutoff, responseIndex, retryIds: retry.keys() });
+      const remaining = new Set([...result.unbound, ...result.errors]);
+      for (const id of retry.keys()) if (!remaining.has(id)) retry.delete(id);
+      for (const id of remaining) {
+        const job = index.get(id);
+        // Missing historical invocations are not unfinished image work. New
+        // completions get a bounded grace period for concurrent native chat writes.
+        if (result.errors.includes(id)) {
+          // A failed fetch/durability operation is still pending work. Preserve
+          // recovery across temporary outages without revisiting the archive.
+          retry.set(id, Infinity);
+        } else if (eventTime(job?.created_at) < eventTime(recoveryCutoff)) {
+          retry.delete(id);
+        } else if (!retry.has(id) || !Number.isFinite(retry.get(id))) {
+          retry.set(id, Date.now() + 60_000);
+        }
+        if (retry.get(id) <= Date.now()) retry.delete(id);
+      }
+    } catch (error) {
+      options.logger?.(`[AAG-IMAGE] reconciliation pass failed: ${error.message}`);
+    } finally {
+      running = false;
+      if (dirty) schedule();
+      else if (retry.size || index.activeJobs().some(job => core.recovery.recoveryEligible(job, recoveryCutoff))) schedule(options.intervalMs || RECONCILE_INTERVAL_MS);
+    }
+  };
+  const unsubscribe = index.subscribe(schedule);
+  const controller = {
+    close() {
+      closed = true; clearTimeout(timer); unsubscribe(); responseIndex.close();
+      core.store.closeJobIndex(root); reconcilers.delete(root);
+    },
+    async settle() { while (running || timer) await new Promise(resolve => setTimeout(resolve, 10)); },
+  };
+  reconcilers.set(root, controller);
+  schedule(0);
+  return controller;
 }
 
 module.exports = {

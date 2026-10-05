@@ -1,0 +1,39 @@
+{
+  "schema":"aag.ordinary-generation.recipe-freeze.v1",
+  "release":"0.9.0-preview.4",
+  "recipe_id":"ordinary.flux2-klein-4b.balanced-aspect.v1",
+  "default_quality":"auto",
+  "profiles":{
+    "auto":{"model_profile":"fast","dimension_policy":"balanced-aspect-v1"},
+    "balanced":{"model_profile":"fast","dimension_policy":"balanced-aspect-v1"},
+    "fast":{"model_profile":"fast","dimension_policy":"production-0.9.0-preview.3"},
+    "quality":{"model_profile":"quality","dimension_policy":"production-0.9.0-preview.3"}
+  },
+  "model":{
+    "filename":"flux-2-klein-4b-fp8.safetensors",
+    "sha256":"97ed34fe0567e436200f2faee3939b88f2b5d99f8af2a4dc16532c4245c0ccb6",
+    "canonical_path":"/mnt/data/AI/Models/Diffusion_Models/flux-2-klein-4b-fp8.safetensors",
+    "license":"Apache-2.0"
+  },
+  "text_encoder":{
+    "filename":"qwen_3_4b.safetensors",
+    "sha256":"6c671498573ac2f7a5501502ccce8d2b08ea6ca2f661c458e708f36b36edfc5a",
+    "canonical_path":"/mnt/data/AI/Models/Text_Encoders/qwen_3_4b.safetensors"
+  },
+  "vae":{
+    "filename":"flux2-vae.safetensors",
+    "sha256":"868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "canonical_path":"/mnt/data/AI/Models/VAE/flux2-vae.safetensors"
+  },
+  "inference":{"sampler":"euler","scheduler":"Flux2Scheduler","steps":4,"cfg":1.0,"seed_policy":"caller seed preserved; otherwise one cryptographically random base seed; count increments deterministically","positive_prompt_policy":"workspace LLM authored; canonical validation-only quality gate; trusted invocation authoritative; accepted creative prompt preserved unchanged","negative_prompt_policy":"ConditioningZeroOut; no textual negative"},
+  "balanced_presets":{"square":[640,640],"portrait":[512,768],"landscape":[768,512]},
+  "explicit_aspects":{"1:1":[640,640],"16:9":[768,448],"9:16":[448,768],"4:3":[640,512],"3:2":[768,512],"landscape":[768,512],"portrait":[512,768]},
+  "auto_aspect_policy":"Explicit aspect wins. Otherwise exact orientation words win, then narrow full-body/architectural/landscape scene cues, otherwise square. Aspect selection uses semantic request cues before the final prompt is canonically enriched.",
+  "output_metadata_required":["recipe_id","model filename and sha256","text encoder filename and sha256","VAE filename and sha256","workflow sha256","sampler","scheduler","steps","cfg","seed","dimensions","aspect decision source","output sha256","latency","cleanup","offline classification"],
+  "runtime_network_events":0,
+  "xpu_lifecycle":"one global filesystem FIFO lease; one worker; deterministic cleanup; no CPU diffusion fallback",
+  "offline_environment":{"ORT_DISABLE_TELEMETRY":"1","HF_HUB_OFFLINE":"1","TRANSFORMERS_OFFLINE":"1","HF_DATASETS_OFFLINE":"1","HF_HUB_DISABLE_TELEMETRY":"1","DO_NOT_TRACK":"1"},
+  "unknown_external_event":"FAIL_CLOSED",
+  "failure_policy":"bounded local error; no remote fallback, hidden retry, model fetch, or partial success",
+  "human_identity_boundary":"byte-immutable Contract B, route, prompts, thresholds, evaluator, bridge and model paths"
+}

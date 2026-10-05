@@ -29,6 +29,7 @@ function response(bytes, contentType = "image/png") {
 function mockDeps(options = {}) {
   let executeCount = 0;
   return {
+    requireReady: async () => {},
     scheduler: { engineActivity: async () => ({ active: false }), disableHeartbeat: true, sleep: ms => new Promise(resolve => setTimeout(resolve, Math.min(ms, 2))) },
     adapters: {
       execute: options.execute || (async () => [`result-${++executeCount}.png`]),
@@ -685,7 +686,7 @@ test("previous-artifact follow-up is scoped and re-normalized", async () => {
 });
 
 test("error and token redaction never exposes internal paths or secrets", () => {
-  const value = redact("failed /mnt/data/AI/private/file sk-proj-TESTFIXTURE authorization: Bearer-test AIzaTESTFIXTURE");
+  const value = redact("failed /mnt/data/AI/private/file sk-proj-abcdefghijklmnop authorization: Bearer-secret AIzaABCDEFGHIJKLMNOP");
   assert.doesNotMatch(value, /\/mnt\/data|sk-proj|Bearer-secret|AIzaABCDEFGHIJKLMNOP/);
   const mapped = r.classifyError(new Error("boom /app/server/storage/x"));
   assert.equal(mapped.code, "INTERNAL_ERROR"); assert.equal(mapped.message, "The image task failed safely."); assert.doesNotMatch(mapped.message, /app\/server/);
@@ -706,4 +707,36 @@ test("provider schemas are shallow, activated, preview-labelled, identity-truthf
   }
   for (const name of ["provider-task.schema.json", "provider-job.schema.json"]) assert.equal(require(`../schemas/${name}`).additionalProperties, false);
   assert.deepEqual(require("../schemas/provider-task.schema.json").required, ["operation", "prompt", "source_policy", "preservation"]);
+});
+
+
+test("STOPPING after lease acquisition prevents engine submission and releases the lease", async () => {
+  const root = temporary(); let checks = 0, submitted = 0;
+  const deps = mockDeps({execute: async () => {submitted++; return ["unexpected.png"];}});
+  deps.requireReady = async () => { if (++checks === 2) throw new AagError("LIFECYCLE_STOPPING", "Image system is stopping", true); };
+  const result = await r.createTask({operation:"generate",request:"one cat in a studio"}, runtime(root, "lifecycle-race"), {deps});
+  assert.match(result, /LIFECYCLE_STOPPING/); assert.equal(checks, 2); assert.equal(submitted, 0);
+  assert.equal(fs.existsSync(path.join(root, "scheduler", "lease")), false);
+});
+
+test("runtime binds full immutable engine text to each completed artifact outside bounded metadata", async (t) => {
+  const root = temporary(); t.after(() => fs.rmSync(root, {recursive:true,force:true}));
+  const provenance = require('../src/prompt-provenance');
+  const texts = ['שלום\r\n' + 'Soft lighting and brushed copper. '.repeat(150), 'Second image — blue ceramic.\n'];
+  let index = 0;
+  const deps = mockDeps({execute: async (_task, _normalized, _runtime, _context, _token, adapterDeps) => {
+    const text = texts[index++];
+    adapterDeps.onFinalPrompt({prompt:text,boundary:'comfy.CLIPTextEncode.text'});
+    adapterDeps.onEngineMetadata({final_prompt_sha256:provenance.hash(text)});
+    return [`result-${index}.png`];
+  }});
+  const out = await r.createTask({operation:'generate',request:'two ceramic cups',count:2},{...runtime(root,'provenance'),AAG_INVOCATION_PROMPT:'  two ceramic cups\r\n  '},{deps});
+  assert.match(out,/status=completed/);
+  const parent = r.store.listJobs(root).find(j => !j.parent_job_id);
+  assert.equal(parent.artifacts.length,2);
+  for (const [i,artifact] of parent.artifacts.entries()) {
+    const value = provenance.resolve(root,{jobId:parent.job_id,artifactId:artifact.artifact_id,artifactSha256:artifact.sha256});
+    assert.equal(value.prompt,texts[i]); assert.equal(value.sha256,provenance.hash(texts[i]));
+    assert.equal(value.original_user_request,'  two ceramic cups\r\n  ');
+  }
 });

@@ -31,6 +31,8 @@ const {
 } = require("/app/server/storage/aag-image-agent-integration/runtime-context-bridge/workspaceToolPolicy.js");
 const {
   composerInvocationPrompt,
+  isExpertComposerPrompt,
+  installExpertModelRouting,
   composerModelAttachments,
   composerModelHistory,
   composerRuntimeAttachments,
@@ -483,8 +485,18 @@ class AgentHandler {
   }
 
   async #providerSetupAndCheck() {
+    const expertContext = {};
+    composerInvocationPrompt(this.invocation?.prompt || "", expertContext);
+    if (expertContext.AAG_EXPERT_ENVELOPE || this.invocation?.workspace?.slug === "image-generator") {
+      // Use the existing chat/router resolution, never an Expert selector.
+      const activeChat = this.#getFallbackProvider();
+      if (!activeChat) throw new Error("No active chat model is available for image authoring.");
+      this.provider = activeChat.provider;
+      this.model = activeChat.model;
+    } else {
     this.provider = this.invocation.workspace.agentProvider ?? null; // set provider to workspace agent provider if it exists
     this.model = this.#fetchModel();
+    }
 
     // If provider resolved to model router, resolve the actual provider/model
     if (this.provider === "anythingllm-router") {
@@ -713,7 +725,7 @@ class AgentHandler {
         ? this.attachments
         : [];
       callOpts.AAG_INVOCATION_PROMPT = composerInvocationPrompt(
-        this.invocation?.prompt || ""
+        this.invocation?.prompt || "", callOpts
       );
       callOpts.AAG_WORKSPACE_ID = this.invocation?.workspace_id ?? null;
       callOpts.AAG_THREAD_ID = this.invocation?.thread_id ?? null;
@@ -814,6 +826,8 @@ class AgentHandler {
    * @returns {Promise<string>} Formatted context string to append to user message
    */
   async #fetchParsedFileContext() {
+    const currentPrompt = this.aibitat?._chats?.findLast(message => message?.from === USER_AGENT.name)?.content ?? this.invocation?.prompt;
+    if (isExpertComposerPrompt(currentPrompt)) return "";
     const user = this.invocation.user_id
       ? { id: this.invocation.user_id }
       : null;
@@ -941,7 +955,7 @@ class AgentHandler {
             continue;
           fn.runtimeArgs.AAG_TURN_ID = currentTurnId;
           fn.runtimeArgs.AAG_INVOCATION_PROMPT = composerInvocationPrompt(
-            String(latest.content || "")
+            String(latest.content || ""), fn.runtimeArgs
           );
           fn.runtimeArgs.AAG_INVOCATION_ATTACHMENTS =
             currentTurnAttachments;
@@ -1020,6 +1034,18 @@ class AgentHandler {
         )
       );
     }
+
+    installExpertModelRouting(this.aibitat, async (prompt) => {
+      const fresh = await Workspace.get({ id: this.invocation.workspace.id });
+      if (!fresh) throw new Error("Active workspace is unavailable for Expert routing.");
+      this.invocation.workspace = fresh;
+      const initialPrompt = this.invocation.prompt;
+      try {
+        this.invocation.prompt = prompt;
+        await this.#providerSetupAndCheck();
+        return { provider: this.provider, model: this.model };
+      } finally { this.invocation.prompt = initialPrompt; }
+    }, { followActiveModel: this.invocation?.workspace?.slug === "image-generator" });
 
     // Attach standard websocket plugin for frontend communication.
     this.log(`Attached ${AgentPlugins.websocket.name} plugin to Agent cluster`);

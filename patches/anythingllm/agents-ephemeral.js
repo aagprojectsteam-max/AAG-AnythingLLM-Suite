@@ -31,6 +31,9 @@ const {
 } = require("/app/server/storage/aag-image-agent-integration/runtime-context-bridge/workspaceToolPolicy.js");
 const {
   composerInvocationPrompt,
+  isExpertComposerPrompt,
+  installExpertModelRouting,
+  composerModelHistory,
 } = require("/app/server/storage/aag-image-agent-integration/runtime-context-bridge/aagComposerHistory.js");
 
 /**
@@ -216,8 +219,18 @@ class EphemeralAgentHandler extends AgentHandler {
   }
 
   async #providerSetupAndCheck() {
+    const expertContext = {};
+    composerInvocationPrompt(this.#prompt || "", expertContext);
+    if (expertContext.AAG_EXPERT_ENVELOPE || this.#workspace?.slug === "image-generator") {
+      // Use the existing chat/router resolution, never an Expert selector.
+      const activeChat = this.#getFallbackProvider();
+      if (!activeChat) throw new Error("No active chat model is available for image authoring.");
+      this.provider = activeChat.provider;
+      this.model = activeChat.model;
+    } else {
     this.provider = this.#workspace?.agentProvider ?? null;
     this.model = this.#fetchModel();
+    }
 
     // If provider resolved to model router, resolve the actual provider/model
     if (this.provider === "anythingllm-router") {
@@ -389,7 +402,7 @@ class EphemeralAgentHandler extends AgentHandler {
           ? this.#attachments
           : [];
         callOpts.AAG_INVOCATION_PROMPT = composerInvocationPrompt(
-          this.#prompt || ""
+          this.#prompt || "", callOpts
         );
         callOpts.AAG_WORKSPACE_ID = this.#workspace?.id ?? null;
         callOpts.AAG_THREAD_ID = this.#threadId ?? null;
@@ -461,6 +474,8 @@ class EphemeralAgentHandler extends AgentHandler {
    * @returns {Promise<string>} Formatted context string to append to user message
    */
   async #fetchParsedFileContext() {
+    const currentPrompt = this.aibitat?._chats?.findLast(message => message?.from === USER_AGENT.name)?.content ?? this.#prompt;
+    if (isExpertComposerPrompt(currentPrompt)) return "";
     if (!this.#workspace) return "";
 
     const user = this.#userId ? { id: this.#userId } : null;
@@ -554,6 +569,9 @@ class EphemeralAgentHandler extends AgentHandler {
       },
     });
 
+    const originalModelHistory = this.aibitat.getOrFormatNodeChatHistory.bind(this.aibitat);
+    this.aibitat.getOrFormatNodeChatHistory = (...values) => composerModelHistory(originalModelHistory(...values));
+
     // AAG_WORKSPACE_CAPABILITY_PROFILES_V1
     // Keep API, scheduled, Telegram, and one-off Agent executions under the
     // same pre-rerank and pre-execution workspace policy as websocket turns.
@@ -594,6 +612,18 @@ class EphemeralAgentHandler extends AgentHandler {
         )
       );
     }
+
+    installExpertModelRouting(this.aibitat, async (prompt) => {
+      const fresh = await Workspace.get({ id: this.#workspace.id });
+      if (!fresh) throw new Error("Active workspace is unavailable for Expert routing.");
+      this.#workspace = fresh;
+      const initialPrompt = this.#prompt;
+      try {
+        this.#prompt = prompt;
+        await this.#providerSetupAndCheck();
+        return { provider: this.provider, model: this.model };
+      } finally { this.#prompt = initialPrompt; }
+    }, { followActiveModel: this.#workspace?.slug === "image-generator" });
 
     // Attach HTTP response object if defined for chunk streaming.
     // When telegramChatId is provided, tool approval via Telegram is enabled.

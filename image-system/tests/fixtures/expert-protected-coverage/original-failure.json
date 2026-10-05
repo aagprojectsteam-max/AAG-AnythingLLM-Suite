@@ -1,0 +1,108 @@
+{
+  "request": "Create exactly one realistic studio product photograph of a blue ceramic mug standing on a wooden table beside a folded linen napkin. The mug has a smooth glazed surface and one curved handle. Use a centered composition with believable proportions, a clean softly blurred neutral background, gentle side lighting, crisp highlights, and a subtle contact shadow. Show the entire mug in a detailed square photographic view. No lettering or logos.",
+  "record": {
+    "prompt": "A professional studio product photograph of a single blue ceramic mug standing upright on a warm-toned wooden tabletop, centered in the frame. Beside the mug lies a neatly folded neutral linen cloth napkin showing natural woven fabric texture. The mug is finished in a smooth, glossy deep blue ceramic glaze that catches crisp, elongated specular highlights from a gentle directional studio side light, revealing its clean cylindrical silhouette and single curved handle. The tabletop features subtle natural wood grain and satin reflection, with a soft, physically believable contact shadow anchoring the mug and napkin. The entire mug is sharply in focus with realistic proportions and optical clarity, transitioning into a clean, softly blurred neutral studio backdrop. The ceramic surface is entirely smooth, pristine, and devoid of any text, lettering, or logos.",
+    "sha256": "6947be34f5200c954d000f0076d5aeae27611fe09a58e1a10e9e3f543d7c5341",
+    "tokens_including_template": 170,
+    "operating_token_limit": 512,
+    "selected_style": "photography/product",
+    "protected_fragment_ids": [
+      "scene-structure",
+      "style-product-photography"
+    ],
+    "truncated": false,
+    "route": "generate",
+    "semantic_review_required": true,
+    "plan": {
+      "fragments": [
+        {
+          "text": "A single upright blue ceramic mug stands firmly on a natural wooden tabletop, positioned directly beside a neatly folded textured linen napkin in a centered commercial still-life arrangement.",
+          "id": "scene-structure",
+          "priority": 1
+        },
+        {
+          "id": "style-product-photography",
+          "text": "Commercial studio product photography exhibiting accurate silhouette contours, controlled material reflections, sharp optical focus across the mug's rim and glazed body, and realistic physical exposure without digital artifacts.",
+          "priority": 2
+        },
+        {
+          "id": "lighting-and-materials",
+          "text": "Gentle directional studio side lighting defines the cylindrical volume of the glossy cobalt-blue ceramic glaze with crisp specular highlights and soft shadow roll-off, casting a subtle, grounded contact shadow onto the warm wood grain while illuminating the tactile weave of the folded linen.",
+          "priority": 3
+        },
+        {
+          "id": "composition-framing",
+          "priority": 4,
+          "text": "A square-format composition framing the entire mug with comfortable breathing room, set against a softly blurred, seamless neutral gray studio backdrop with complete absence of visible text, logos, or markings."
+        }
+      ],
+      "conflicts": [],
+      "facts": [
+        {
+          "source_text": "blue ceramic mug",
+          "classification": "USER_REQUIRED",
+          "text": "A single blue ceramic mug featuring a smooth glazed finish and one curved handle.",
+          "dimension": "subjects"
+        },
+        {
+          "text": "A neatly folded textured linen cloth napkin resting beside the mug.",
+          "source_text": "folded linen napkin",
+          "classification": "USER_REQUIRED",
+          "dimension": "required_objects"
+        },
+        {
+          "dimension": "environment",
+          "text": "A warm natural wooden tabletop serving as the grounded display surface.",
+          "classification": "USER_REQUIRED",
+          "source_text": "wooden table"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "dimension": "lighting",
+          "text": "Soft directional studio side illumination providing soft tonal roll-off, crisp specular highlights along the glaze, and natural contact shadows under the base.",
+          "source_text": "gentle side lighting, crisp highlights, and a subtle contact shadow"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "text": "A balanced, centered commercial product composition displaying the entire mug clearly with authentic proportions.",
+          "dimension": "composition_focal_hierarchy",
+          "source_text": "centered composition with believable proportions"
+        },
+        {
+          "dimension": "background",
+          "text": "A clean, neutral studio background gently softened with shallow optical depth of field.",
+          "classification": "USER_REQUIRED",
+          "source_text": "clean softly blurred neutral background"
+        },
+        {
+          "source_text": "No lettering or logos",
+          "text": "A completely plain, unbranded ceramic surface free of any text, typography, emblems, or logos.",
+          "dimension": "exclusions",
+          "classification": "USER_REQUIRED"
+        },
+        {
+          "source_text": "realistic studio product photograph",
+          "classification": "USER_REQUIRED",
+          "dimension": "style_constraints",
+          "text": "Authentic studio commercial product photography with credible optical focus, realistic exposure, and tangible material surfaces."
+        }
+      ]
+    },
+    "request_sha256": "7f04e0906eca5acb79653b939ba3ef2a1cfff5d1db0e521d6b769b7420a87433",
+    "context_sha256": "8af1fefcd027793c436a482dd89ebd87bf9460f3e92ee2c0ca3faa137196e640",
+    "author": "current-active-chat-llm",
+    "contract": "aag.expert.prompt.v1",
+    "authoring_contract": "self-contained.v2",
+    "review_style": {
+      "canonical_id": "photography/product",
+      "label": "Product",
+      "recognition_anchors": [
+        "Accurate silhouette and controlled material reflections"
+      ]
+    }
+  },
+  "responses": [
+    "```json\n{\n  \"pass\": false,\n  \"issues\": [\n    \"The protected prose fails to include the required clean softly blurred neutral background.\",\n    \"The protected prose fails to include the negative constraint excluding lettering and logos.\"\n  ],\n  \"checks\": {\n    \"all_user_requirements\": false,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": false,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"single blue ceramic mug standing upright... smooth, glossy deep blue ceramic glaze... single curved handle\",\n      \"protected_evidence\": \"single upright blue ceramic mug stands firmly... glazed body\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"Beside the mug lies a neatly folded neutral linen cloth napkin\",\n      \"protected_evidence\": \"positioned directly beside a neatly folded textured linen napkin\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"warm-toned wooden tabletop\",\n      \"protected_evidence\": \"natural wooden tabletop\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": false,\n      \"evidence\": \"Missing from protected prose: gentle side lighting and subtle contact shadow are not represented.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"centered in the frame... The entire mug is sharply in focus with realistic proportions\",\n      \"protected_evidence\": \"centered commercial still-life arrangement\"\n    },\n    {\n      \"index\": 5,\n      \"preserved\": false,\n      \"evidence\": \"Missing from protected prose: clean softly blurred neutral background is not represented.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 6,\n      \"preserved\": false,\n      \"evidence\": \"Missing from protected prose: negative constraint prohibiting lettering or logos is omitted.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 7,\n      \"preserved\": true,\n      \"evidence\": \"professional studio product photograph\",\n      \"protected_evidence\": \"Commercial studio product photography\"\n    }\n  ]\n}\n```",
+    "```json\n{\n  \"pass\": false,\n  \"issues\": [\n    \"Gentle side lighting and subtle contact shadow are missing from protected prose.\",\n    \"Clean softly blurred neutral background is missing from protected prose.\",\n    \"Exclusion of lettering and logos is missing from protected prose.\"\n  ],\n  \"checks\": {\n    \"all_user_requirements\": false,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": false,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"single blue ceramic mug\",\n      \"protected_evidence\": \"single upright blue ceramic mug\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"neatly folded neutral linen cloth napkin\",\n      \"protected_evidence\": \"neatly folded textured linen napkin\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"warm-toned wooden tabletop\",\n      \"protected_evidence\": \"natural wooden tabletop\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": false,\n      \"evidence\": \"Gentle side lighting and subtle contact shadow are absent from protected prose.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"centered in the frame\",\n      \"protected_evidence\": \"centered commercial still-life arrangement\"\n    },\n    {\n      \"index\": 5,\n      \"preserved\": false,\n      \"evidence\": \"Clean softly blurred neutral background is absent from protected prose.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 6,\n      \"preserved\": false,\n      \"evidence\": \"Exclusion of lettering and logos is absent from protected prose.\",\n      \"protected_evidence\": \"\"\n    },\n    {\n      \"index\": 7,\n      \"preserved\": true,\n      \"evidence\": \"professional studio product photograph\",\n      \"protected_evidence\": \"Commercial studio product photography\"\n    }\n  ]\n}\n```"
+  ]
+}

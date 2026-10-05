@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AAG governed multi-image generation public contract",
+  "description": "Create one general governed multi-image collection. Use this tool only when one user request requires 2..10 intended new images. The workspace model owns the collection plan and must author exactly count self-contained creative prompts before calling; AAG validates, persists, orders, schedules, executes, verifies, resumes, and presents them but never invents missing images or creative wording. A successful batch means exactly count verified artifacts under one parent. Distinct alternatives, related variants, coherent series, sequential scenes, and controlled consistency are all supported according to the user's meaning. This is generate-only: batch transform, upscale, and identity are deliberately outside this public contract. All art direction stays in collection_brief and item prompt text; there is no structured style field. QUALITY: fast requires explicit technical speed/latency priority; quality requires explicit maximum generation quality or quality over speed; balanced requires an explicit speed/quality compromise; otherwise use auto. Creative words such as cinematic, detailed, 3D, storybook, watercolor, polished, professional, or realistic never select quality by themselves. Call at most once in the user turn. A failed or partial result must be surfaced without same-turn regeneration; explicit resume is available through AAG Image Job only after new user input.",
+  "type": "object",
+  "required": ["operation", "collection_brief", "count", "quality", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": ["multi_generate"],
+      "description": "REQUIRED closed enum. Use exactly multi_generate for one generate-only collection of 2..10 intended images."
+    },
+    "request": {
+      "type": "string",
+      "maxLength": 4000,
+      "description": "Optional faithful summary. Normally omit because the trusted server-injected current user request is authoritative."
+    },
+    "collection_brief": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000,
+      "description": "REQUIRED workspace-model-authored relationship and consistency brief for the whole collection. State the requested count and preserve the user's subjects, important counts, art direction, ordering, and whether images are distinct, variant, sequential, or visually coherent. This is creative plan text, not backend routing."
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10,
+      "description": "REQUIRED exact intended image count, 2..10. The items array length must equal this value. Ratios such as 16:9 and dimensions such as 768x448 are not image counts."
+    },
+    "quality": {
+      "type": "string",
+      "enum": ["auto", "fast", "balanced", "quality"],
+      "description": "REQUIRED closed technical preference. Use fast only for explicit speed/quick-output/low-latency/fastest intent; quality only for explicit maximum/best/highest generation quality or quality-over-speed intent; balanced only for an explicit compromise; auto when no technical speed-versus-quality preference is expressed. Aesthetic or detail words alone never select a non-auto value."
+    },
+    "final_output_quality": {
+      "type": "string",
+      "enum": ["standard", "enhanced_2x"],
+      "default": "standard",
+      "description": "Optional governed delivery-stage quality for every verified child. standard returns each verified generation artifact; enhanced_2x applies the validated 2x postprocess after each base artifact succeeds. Use exactly one listed value; do not invent additional values."
+    },
+    "items": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 10,
+      "description": "REQUIRED ordered intended image plan. Supply exactly count items. Array order is the durable logical presentation and PDF order. Never submit placeholders or ask AAG to fill missing prompts.",
+      "items": {
+        "type": "object",
+        "required": ["prompt"],
+        "additionalProperties": false,
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1800,
+            "description": "REQUIRED self-contained workspace-model-authored production prompt for this intended image. Preserve the relevant user constraints, exact subject/object counts, collection relationship, composition, spatial coherence, art direction, lighting, materials, color, and rendering detail. AAG passes it unchanged and performs no creative enrichment."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": ["auto", "1:1", "16:9", "9:16", "4:3", "3:2", "landscape", "portrait"],
+            "default": "auto",
+            "description": "Optional closed framing value for this item. Use an exact explicit ratio/orientation or auto."
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 2048,
+            "description": "Optional semantic width hint for this item, 256..2048."
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 2048,
+            "description": "Optional semantic height hint for this item, 256..2048."
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647,
+            "description": "Optional deterministic seed for this intended item. Otherwise omit so AAG persists a governed seed before execution."
+          }
+        }
+      }
+    }
+  }
+}

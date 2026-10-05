@@ -1,0 +1,412 @@
+{
+  "schema": "aag.golden-install-map.v1",
+  "golden_version": "20261005T133425Z",
+  "upstream_revision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "entries": [
+    {
+      "target": "server/index.js",
+      "source": "patches/anythingllm/server-index.js",
+      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad"
+    },
+    {
+      "target": "server/endpoints/aagArtifactExport.js",
+      "source": "patches/anythingllm/aagArtifactExport.js",
+      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4"
+    },
+    {
+      "target": "server/endpoints/aagArtifactFormat.js",
+      "source": "patches/anythingllm/aagArtifactFormat.js",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4"
+    },
+    {
+      "target": "server/endpoints/aagComposerProxy.js",
+      "source": "patches/anythingllm/aagComposerProxy.js",
+      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529"
+    },
+    {
+      "target": "server/endpoints/aagPdfAssembler.js",
+      "source": "patches/anythingllm/aagPdfAssembler.js",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca"
+    },
+    {
+      "target": "server/endpoints/agentFileServer.js",
+      "source": "patches/anythingllm/agentFileServer.js",
+      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281"
+    },
+    {
+      "target": "server/jobs/aagGeneratedImageCleanup.js",
+      "source": "patches/anythingllm/golden/server/jobs/aagGeneratedImageCleanup.js",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192"
+    },
+    {
+      "target": "server/jobs/cleanup-generated-images.js",
+      "source": "patches/anythingllm/golden/server/jobs/cleanup-generated-images.js",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c"
+    },
+    {
+      "target": "server/utils/agents/ephemeral.js",
+      "source": "patches/anythingllm/agents-ephemeral.js",
+      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a"
+    },
+    {
+      "target": "server/utils/agents/index.js",
+      "source": "patches/anythingllm/agents-index.js",
+      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3"
+    },
+    {
+      "target": "server/utils/chats/apiChatHandler.js",
+      "source": "patches/anythingllm/chat-apiChatHandler.js",
+      "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789"
+    },
+    {
+      "target": "server/utils/chats/index.js",
+      "source": "patches/anythingllm/chats-index.js",
+      "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b"
+    },
+    {
+      "target": "server/utils/files/index.js",
+      "source": "patches/anythingllm/golden/server/utils/files/index.js",
+      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f"
+    },
+    {
+      "target": "server/utils/AiProviders/anthropic/index.js",
+      "source": "patches/anythingllm/golden/server/utils/AiProviders/anthropic/index.js",
+      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad"
+    },
+    {
+      "target": "server/utils/AiProviders/genericOpenAi/index.js",
+      "source": "patches/anythingllm/golden/server/utils/AiProviders/genericOpenAi/index.js",
+      "sha256": "436badcf5e29b50a271581235c02b5fcb1711aa94f61bf6f830195ff422b325d"
+    },
+    {
+      "target": "server/utils/AiProviders/modelMap/index.js",
+      "source": "patches/anythingllm/context-window-finder.offline.js",
+      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17"
+    },
+    {
+      "target": "server/utils/AiProviders/openAi/index.js",
+      "source": "patches/anythingllm/golden/server/utils/AiProviders/openAi/index.js",
+      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9"
+    },
+    {
+      "target": "server/utils/agents/aibitat/index.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/index.js",
+      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c"
+    },
+    {
+      "target": "server/utils/chats/commands/aagIdentity.js",
+      "source": "patches/anythingllm/golden/server/utils/chats/commands/aagIdentity.js",
+      "sha256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a"
+    },
+    {
+      "target": "server/utils/chats/commands/aagOrdinary.js",
+      "source": "patches/anythingllm/golden/server/utils/chats/commands/aagOrdinary.js",
+      "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/anthropic.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/anthropic.js",
+      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/gemini.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/gemini.js",
+      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/ollama.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/ollama.js",
+      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/openai.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/openai.js",
+      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/responses-stream.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/responses-stream.js",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/tool-contract.js",
+      "source": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/tool-contract.js",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee"
+    },
+    {
+      "target": "server/utils/agents/aibitat/utils/toolReranker.js",
+      "source": "patches/anythingllm/toolReranker.js",
+      "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactFormat.js",
+      "source": "patches/anythingllm/aagArtifactFormat.js",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactNaming.js",
+      "source": "patches/anythingllm/aagArtifactNaming.js",
+      "sha256": "8239e24a52df06a747d9fcb475cf4354d0b166f00b6f398a84260113cf914090"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/index.js",
+      "source": "patches/anythingllm/index.js",
+      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/ephemeral.js",
+      "source": "patches/anythingllm/ephemeral.js",
+      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactPresentation.js",
+      "source": "patches/anythingllm/aagArtifactPresentation.js",
+      "sha256": "ee51e28e47223aeb8c39f828e31ba819771e5644b5e7da356cc3e90c6d611f3a"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactText.js",
+      "source": "patches/anythingllm/aagArtifactText.js",
+      "sha256": "f1b020ad39c14411012ae6e4e6f8dba8742c73184b445f856603d9fc2aa67a1e"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagComposerHistory.js",
+      "source": "patches/anythingllm/aagComposerHistory.js",
+      "sha256": "faa0d68ae1b2b0ab0977dec31705b4559d03a5a778bcfaf91a26273b466e3196"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagPublicToolSchema.js",
+      "source": "patches/anythingllm/aagPublicToolSchema.js",
+      "sha256": "c00e17e87e4e23c121b044ea83e8c97db31783d5f8c4d6ea1a97fae436da1d41"
+    },
+    {
+      "target": "frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx",
+      "source": "patches/anythingllm/frontend/ThreadContainer-index.jsx",
+      "sha256": "7e93305c9624fd79149db43f26fd8684f954c0d077d9978bb2a2c1dae4c36929"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactDetails.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/AagArtifactDetails.jsx",
+      "sha256": "3596659467a916a549679f33306607a4b6e404e72e2277cf8e8525c1871847c1"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactPrompt.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/AagArtifactPrompt.jsx",
+      "sha256": "a46a5ef21d6f71a3235965daf0f7e19a6a6b03be2c0c346fc1e76a982cc124ff"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagImageCollection/index.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
+      "sha256": "e7d5244f4b8d7a04a37b4a206d6bd7c911916cf538ce533c8db8ba94abfb5f4c"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/HistoricalOutputs/index.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
+      "sha256": "453d393a509a0d2357dbaf3c48b5d3547d3fc9c99218ae24541588e0a4fc99b1"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
+      "source": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
+      "sha256": "c381e0f44a8af36bb925c9e27742b868f0cf8d0c4ec35b0c35ee6608ee7e981b"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ImageGenerationCard/index.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
+      "sha256": "936fc6d05bf0d8fcf47b5626a14d3edd3cba49987341131cd63da37e702f2259"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
+      "source": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
+      "sha256": "b56b489c0494f5bd347b227be542bbfe24481a3c06cb921c4708da2a95c7eb7f"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/heTaxonomyLabels.js",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/heTaxonomyLabels.js",
+      "sha256": "4f8ebe301a4b0cce695484511fc07a3dea502b7eec4c86cfe770f2106d325060"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/index.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
+      "sha256": "60b5d6704c5da4e455a9225f0f29975eb288d5ea8fbbcb511b2e6f8d2d5790cb"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/localization.js",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
+      "sha256": "116103536c9dce853be6b47ea160a9d6d42e351bd74fd08e4abb41a635b446cd"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/styles.css",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
+      "sha256": "1d739aa5355a62e37891341566f00516e7efd7fd890e7ed56ae2c07bfdbfc574"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress/index.jsx",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageProgress/index.jsx",
+      "sha256": "be29569fc1a5ba3f17701fff4d55aa6b33f63762ebedfd5a15c7353c2b1d3f28"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress/styles.css",
+      "source": "image-system/integrations/anythingllm/frontend/AagImageProgress/styles.css",
+      "sha256": "48cd6b1690d9c8faf43a957de71b97f564beda32f0070cf0d48d69df54413a91"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx",
+      "source": "patches/anythingllm/frontend/PromptInput-index.jsx",
+      "sha256": "c2c8bf31ba7ebb01d49d6782635b1edd4f7bdf08c31ff1b8e546a53a531db91f"
+    },
+    {
+      "target": "frontend/src/components/WorkspaceChat/ChatContainer/index.jsx",
+      "source": "patches/anythingllm/frontend/ChatContainer-index.jsx",
+      "sha256": "7df74d00c2ee977d7b54abeae8e364c79cdabc281a625ad9364aa107879a1d16"
+    },
+    {
+      "target": "frontend/src/utils/aagArtifactExport.js",
+      "source": "image-system/integrations/anythingllm/frontend/aagArtifactExport.js",
+      "sha256": "aa3071b3207076007f13991ce989b5485265b8c3e736c7c74cedd13d0da354d8"
+    },
+    {
+      "target": "frontend/src/utils/aagArtifactFile.js",
+      "source": "image-system/integrations/anythingllm/frontend/aagArtifactFile.js",
+      "sha256": "940476c56d4442ea284f2834c198aa20c6f23879c442d13c1d6adb4aac0487ed"
+    },
+    {
+      "target": "frontend/src/utils/aagArtifactSerials.js",
+      "source": "image-system/integrations/anythingllm/frontend/aagArtifactSerials.js",
+      "sha256": "bdbe3f03eba9135a7f21ac2bb19f34d686c7b32516c14949590adf561ed60708"
+    },
+    {
+      "target": "frontend/src/utils/aagArtifactText.js",
+      "source": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
+      "sha256": "063fb3252902687e5f81a0ecad01fd3f4c77ee937966720fcd1b59cbffa1e916"
+    },
+    {
+      "target": "frontend/src/utils/useAagArtifactText.js",
+      "source": "image-system/integrations/anythingllm/frontend/useAagArtifactText.js",
+      "sha256": "6cd43c5aca26b5d8a9eed22fb35d04ba2ec42eb3ffd60e773fbcc0c9027e568f"
+    },
+    {
+      "target": "frontend/src/utils/useExpertPromptMode.js",
+      "source": "image-system/integrations/anythingllm/frontend/useExpertPromptMode.js",
+      "sha256": "2172cefd29b8e0b982394570b8e94d5bad47de3d9737d22519fe1ac63dfb7e1d"
+    },
+    {
+      "target": "frontend/src/utils/useImageComposerMode.js",
+      "source": "image-system/integrations/anythingllm/frontend/useImageComposerMode.js",
+      "sha256": "3152dd864ec5f518cc98d92cbed58cee85bd7596c92cde36f666cfa082d22308"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/generated-image-cleanup/cleanup-generated-images.js",
+      "source": "image-system/integrations/anythingllm/cleanup-generated-images.js",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/generated-image-cleanup/aagGeneratedImageCleanup.js",
+      "source": "image-system/integrations/anythingllm/aagGeneratedImageCleanup.js",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/generated-image-server.js",
+      "source": "image-system/integrations/anythingllm/generated-image-server.js",
+      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/generated-image-files.js",
+      "source": "image-system/integrations/anythingllm/generated-image-files.js",
+      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/ordinary-anthropic.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/ordinary-anthropic.js",
+      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/ordinary-openai.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/ordinary-openai.js",
+      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/aibitat.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/aibitat.js",
+      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/openai.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/openai.js",
+      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/responses-stream.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/responses-stream.js",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/tool-contract.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/tool-contract.js",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/gemini.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/gemini.js",
+      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/anthropic.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/anthropic.js",
+      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/anthropic-transport.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/anthropic-transport.js",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/provider-streaming/ollama.js",
+      "source": "image-system/integrations/anythingllm/provider-streaming/ollama.js",
+      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/phase8-final-activation/context-window-finder.offline.js",
+      "source": "image-system/integrations/anythingllm/context-window-finder.offline.js",
+      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/aagLifecycleProxy.js",
+      "source": "image-system/integrations/anythingllm/aagLifecycleProxy.js",
+      "sha256": "9cad89245265e58ad5911c399323460d1a9e8b9d5d3fa73b8c1bd2dd47fe75b8"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/aagComposerProxy.js",
+      "source": "image-system/integrations/anythingllm/aagComposerProxy.js",
+      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/aagImageProgress.js",
+      "source": "image-system/integrations/anythingllm/aagImageProgress.js",
+      "sha256": "3010036c80eb9c59c746105e70a8238f2bf3ba06204c6c06ac0f67c47e2e27a3"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/aagPdfAssembler.js",
+      "source": "image-system/integrations/anythingllm/aagPdfAssembler.js",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/aagArtifactExport.js",
+      "source": "image-system/integrations/anythingllm/aagArtifactExport.js",
+      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/multi-image-export/server/index.js",
+      "source": "image-system/integrations/anythingllm/server-index.js",
+      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad"
+    },
+    {
+      "target": "storage/aag-image-agent-integration/runtime-context-bridge/workspaceToolPolicy.js",
+      "source": "patches/anythingllm/workspaceToolPolicy.js",
+      "sha256": "f99c1cdf52e7ebe14caded22cbca0a3221fc8e5e4c5ac1db6f9fcf4dd62ace18"
+    }
+  ]
+}

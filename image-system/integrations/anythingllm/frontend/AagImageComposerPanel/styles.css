@@ -275,9 +275,15 @@
 .light .aag-atlas-browser-panel > header span,
 .light .aag-atlas-results { color: #64748b; }
 
-.aag-atlas-close {
-  width: 34px;
-  height: 34px;
+.aag-atlas-browser .aag-atlas-close,
+.aag-atlas-lightbox .aag-atlas-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
   flex: 0 0 auto;
   color: #f4f4f5;
   background: #3f3f46;
@@ -288,6 +294,8 @@
 }
 
 .light .aag-atlas-close { color: #1e293b; background: #e2e8f0; }
+.aag-atlas-close:hover { background: #52525b; }
+.light .aag-atlas-close:hover { background: #cbd5e1; }
 
 .aag-atlas-toolbar {
   display: grid;
@@ -501,7 +509,13 @@
 }
 
 .aag-composer-collapse {
-  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
   color: #d4d4d8;
   background: transparent;
   border-radius: 8px;
@@ -941,3 +955,33 @@
 .aag-atlas-lightbox-card .aag-atlas-prompt-body > button { flex: 0 0 auto; min-height: 36px; margin: 0; }
 .aag-atlas-lightbox-card .aag-atlas-prompt [role="status"] { flex: 0 0 auto; }
 @media (max-height: 500px) { .aag-atlas-lightbox-card[data-prompt-open="true"] > img { height: 24dvh; max-height: 24dvh; } }
+
+.aag-expert-prompt-toggle { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; cursor: pointer; }
+.aag-expert-prompt-toggle input { accent-color: #7299ff; }
+.aag-expert-prompt-toggle input:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* Backend lifecycle state; no persisted UI power state. */
+.aag-lifecycle {position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.35rem .65rem;border-bottom:1px solid #63708055;font-size:.82rem;}
+.aag-lifecycle-light {width:.6rem;height:.6rem;flex-shrink:0;border-radius:50%;background:#94a3b8;box-shadow:0 0 0 2px #94a3b822;}
+.aag-lifecycle[data-state="READY"] .aag-lifecycle-light {background:#4ade80;box-shadow:0 0 0 2px #4ade8022;}
+.aag-lifecycle[data-state="STARTING"] .aag-lifecycle-light {background:#facc15;animation:aag-lifecycle-pulse 1.4s ease-in-out infinite;}
+.aag-lifecycle[data-state="STOPPING"] .aag-lifecycle-light {background:#fb923c;animation:aag-lifecycle-pulse 1.4s ease-in-out infinite;}
+.aag-lifecycle[data-state="ERROR"] .aag-lifecycle-light {background:#f87171;}
+.aag-lifecycle .aag-lifecycle-switch {position:relative;margin-inline-start:auto;display:flex;align-items:center;width:2.5rem;height:1.5rem;padding:2px;border:1px solid #94a3b8;border-radius:999px;background:#475569;cursor:pointer;flex-shrink:0;}
+.aag-lifecycle .aag-lifecycle-switch[aria-checked="true"] {background:#15803d;border-color:#4ade80;}
+.aag-lifecycle-thumb {display:block;width:1rem;height:1rem;border-radius:50%;background:#f8fafc;transform:translateX(0);transition:transform .15s ease;}
+.aag-lifecycle-switch[aria-checked="true"] .aag-lifecycle-thumb {transform:translateX(.95rem);}
+[dir="rtl"] .aag-lifecycle-switch[aria-checked="true"] .aag-lifecycle-thumb {transform:translateX(-.95rem);}
+.aag-lifecycle button:focus-visible {outline:2px solid #93c5fd;outline-offset:3px;}
+.aag-lifecycle button:disabled {cursor:wait;opacity:.65;}
+.aag-lifecycle-sr {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.aag-lifecycle-tooltip {display:none;position:absolute;inset-inline-end:.65rem;bottom:calc(100% + .3rem);max-width:min(25rem,90vw);background:#172033;color:#f8fafc;padding:.4rem .6rem;border:1px solid #64748b;border-radius:6px;z-index:20;pointer-events:none;}
+.aag-lifecycle-switch:hover + .aag-lifecycle-tooltip,.aag-lifecycle-switch:focus-visible + .aag-lifecycle-tooltip {display:block;}
+.aag-lifecycle [role="alert"] {flex-basis:100%;overflow-wrap:anywhere;color:#fca5a5;}
+.aag-lifecycle-recovery {display:flex;gap:.5rem;flex-basis:100%;}
+.aag-lifecycle-recovery button {border:1px solid #94a3b8;border-radius:6px;padding:.2rem .6rem;min-height:30px;}
+@keyframes aag-lifecycle-pulse {50% {opacity:.5;}}
+@media (prefers-reduced-motion:reduce) {.aag-lifecycle-light {animation:none!important;}.aag-lifecycle-thumb {transition:none;}}
+
+.aag-composer-passive-status {font-size:.72rem;opacity:.8;cursor:default;white-space:nowrap;}
+.aag-inline-composer > [hidden] {display:none;}

@@ -11,6 +11,9 @@ const crypto = require("crypto");
 const { execFileSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
+if (fs.existsSync(path.join(root, "releases/approved/CURRENT.json"))) {
+  throw new Error("Approved-runtime releases use: python3 lifecycle/release_candidate.py create, then python3 lifecycle/release_deploy.py deploy <sealed-release>. The historical narrow overlay updater cannot replace an approved runtime.");
+}
 const version = fs.readFileSync(path.join(root, "VERSION"), "utf8").trim();
 const stagedManifest = path.join(root, "releases/staged", version, "STAGED-MANIFEST.json");
 const releaseManifest = path.join(root, "releases", version, "STAGED-MANIFEST.json");

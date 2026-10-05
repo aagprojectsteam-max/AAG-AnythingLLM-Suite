@@ -3,6 +3,8 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const http = require("http");
+const artifactFormat = require("./aagArtifactFormat");
 const { userFromSession, multiUserMode, safeJsonParse } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
@@ -60,10 +62,12 @@ async function resolvePersistedOutputs(request, { user, isMultiUser }) {
     const byFilename = new Map(
       outputs
         .filter((output) => output?.type === "imageGenerationCard" && GENERATED_IMAGE_FILENAME_PATTERN.test(output?.payload?.storageFilename || ""))
+        .filter((output) => !request.identity || (output.payload.jobId === request.identity.jobId && output.payload.artifactId === request.identity.artifactId))
         .map((output) => [output.payload.storageFilename, output])
     );
     if (!request.artifacts.every((filename) => byFilename.has(filename))) continue;
     const selected = request.artifacts.map((filename) => byFilename.get(filename));
+    if (request.identity && selected.some(output => output.payload?.jobId !== request.identity.jobId || output.payload?.artifactId !== request.identity.artifactId)) continue;
     if (request.mode === "single") return { chat, outputs: selected };
     const descriptors = selected.map((output) => output.payload?.artifactExport);
     if (descriptors.some((descriptor) => !descriptor || descriptor.schema !== EXPORT_SCHEMA || descriptor.collectionComplete !== true)) continue;
@@ -89,7 +93,7 @@ function readTrustedImage(output) {
   try {
     fd = fs.openSync(target, fs.constants.O_RDONLY | (fs.constants.O_NOFOLLOW || 0));
     const stat = fs.fstatSync(fd);
-    if (!stat.isFile()) throw exportError(404, "EXPORT_SOURCE_MISSING", "The trusted source artifact is unavailable.");
+    if (!stat.isFile() || stat.size > 200 * 1024 * 1024 || stat.size < 128) throw exportError(404, "EXPORT_SOURCE_MISSING", "The trusted source artifact is unavailable.");
     bytes = fs.readFileSync(fd);
   } catch (error) {
     if (error?.status) throw error;
@@ -100,10 +104,74 @@ function readTrustedImage(output) {
   const sha256 = crypto.createHash("sha256").update(bytes).digest("hex");
   const persistedHash = String(payload.artifactSha256 || payload.artifactExport?.sourceSha256 || "").toLowerCase();
   if (persistedHash && (!/^[a-f0-9]{64}$/.test(persistedHash) || persistedHash !== sha256)) throw exportError(409, "EXPORT_PROVENANCE_MISMATCH", "The trusted artifact bytes differ from persisted provenance.");
-  const dimensions = parsePng(bytes);
+  let dimensions;
+  try { dimensions = artifactFormat.inspect(bytes); if (!artifactFormat.matchesFilename(filename, dimensions.format)) throw Error(); }
+  catch { throw exportError(409, "EXPORT_PROVENANCE_MISMATCH", "The trusted artifact format differs from its filename."); }
+  if (dimensions.format === "png") parsePng(bytes);
   if (payload.artifactWidth && Number(payload.artifactWidth) !== dimensions.width) throw exportError(409, "EXPORT_PROVENANCE_MISMATCH", "The trusted artifact width differs from persisted provenance.");
   if (payload.artifactHeight && Number(payload.artifactHeight) !== dimensions.height) throw exportError(409, "EXPORT_PROVENANCE_MISMATCH", "The trusted artifact height differs from persisted provenance.");
-  return { bytes, sha256, width: dimensions.width, height: dimensions.height, storageFilename: filename };
+  return { bytes, sha256, ...dimensions, storageFilename: filename };
+}
+
+// Remote installations without the private host bridge retain measured file
+// facts. Container paths are not physical host paths and are never displayed.
+function resolveCurrentFile(output) {
+  const filename = output?.payload?.storageFilename;
+  const identity = {jobId:output?.payload?.jobId || null, artifactId:output?.payload?.artifactId || null};
+  try {
+    const image = readTrustedImage(output);
+    return {schema:"aag.current-artifact-file.v1", state:"AVAILABLE", ...identity,
+      filename:image.storageFilename, sizeBytes:image.bytes.length, format:image.format.toUpperCase(), mime:image.mime,
+      width:image.width, height:image.height, sha256:image.sha256,
+      location:{scope:"APPLICATION_STORAGE", value:`${path.basename(generatedImagesPath)}/${image.storageFilename}`},
+      applicationPath:`generated-images/${image.storageFilename}`,
+      localAccessible:false};
+  } catch (error) {
+    if (!["EXPORT_SOURCE_MISSING","EXPORT_PROVENANCE_MISMATCH"].includes(error.code)) throw error;
+    return {schema:"aag.current-artifact-file.v1", ...identity, filename,
+      state:error.code === "EXPORT_SOURCE_MISSING" ? "NOT_FOUND" : "CHANGED", localAccessible:false};
+  }
+}
+
+function localArtifactBrowser(request) {
+  try {
+    const host = request.get("host"), origin = new URL(request.get("origin"));
+    return (["localhost", "127.0.0.1", "[::1]"].includes(origin.hostname) || origin.hostname.endsWith(".localhost")) &&
+      origin.host === host && ["http:", "https:"].includes(origin.protocol) &&
+      new URL(request.get("referer")).origin === origin.origin;
+  } catch { return false; }
+}
+
+function hostArtifact(resolved, reveal = false) {
+  // IDs come from the authorized persisted chat, never untrusted path input.
+  const payload = resolved.outputs[0].payload;
+  const body = JSON.stringify({chatId:resolved.chat.id, workspaceId:resolved.chat.workspaceId,
+    artifact:payload.storageFilename, jobId:payload.jobId || null, artifactId:payload.artifactId || null});
+  return new Promise((resolve, reject) => {
+    const req = http.request({socketPath:"/app/server/storage/aag-image-lifecycle/control.sock",
+      path:reveal ? "/artifacts/reveal" : "/artifacts/resolve", method:"POST", timeout:12_000,
+      headers:{"Content-Type":"application/json", "Content-Length":Buffer.byteLength(body)}}, res => {
+      let raw = "";
+      res.on("data", chunk => {raw += chunk;if(raw.length > 16384)req.destroy(new Error("oversize"));});
+      res.on("error", reject);
+      res.on("end", () => {
+        try {
+          const value = JSON.parse(raw), file = reveal ? value.file : value;
+          if (res.statusCode !== 200 || file?.schema !== "aag.current-artifact-file.v1" ||
+              file.filename !== payload.storageFilename || file.jobId !== (payload.jobId || null) || file.artifactId !== (payload.artifactId || null)) throw new Error("unavailable");
+          resolve(value);
+        } catch { reject(new Error("Artifact host unavailable")); }
+      });
+    });
+    req.on("error", reject);req.on("timeout", () => req.destroy(new Error("timeout")));req.end(body);
+  });
+}
+
+async function currentArtifact(resolved, request) {
+  try {
+    const file = await hostArtifact(resolved);
+    return {...file, localAccessible:file.localAccessible === true && localArtifactBrowser(request)};
+  } catch { return resolveCurrentFile(resolved.outputs[0]); }
 }
 
 function cacheIdentity(images) {
@@ -148,7 +216,7 @@ function pruneCache(currentKey) {
   }
 }
 
-function cachedOrAssemble(images) {
+async function cachedOrAssemble(images) {
   ensureCacheRoot();
   const key = cacheIdentity(images);
   const pdfPath = path.join(CACHE_ROOT, `${key}.pdf`);
@@ -162,7 +230,13 @@ function cachedOrAssemble(images) {
       return { pdf, key, cached: true, manifest };
     }
   } catch {}
-  const pdf = assemblePdf(images, { sourceHashes: images.map((image) => image.sha256) });
+  const pdfImages = await Promise.all(images.map(async image => {
+    if (image.format === "png") return image;
+    const sharp = require("/app/server/node_modules/sharp");
+    const bytes = await sharp(image.bytes, { failOn: "warning", limitInputPixels: 200000000 }).png().toBuffer();
+    return { ...image, bytes };
+  }));
+  const pdf = assemblePdf(pdfImages, { sourceHashes: images.map((image) => image.sha256) });
   const manifest = {
     schema: EXPORT_SCHEMA,
     contract: CONTRACT_ID,
@@ -183,6 +257,43 @@ function cachedOrAssemble(images) {
 
 function aagArtifactExportEndpoints(app) {
   if (!app) return;
+  for (const kind of ["prompt","details","reveal"]) app.post("/aag/artifact-"+kind, [validatedRequest, flexUserRoleValid([ROLES.all])], async (request, response) => {
+    response.setHeader("Cache-Control", "no-store");
+    try {
+      const body = request.body;
+      const legacyDetails = kind !== "prompt" && !body?.jobId && !body?.artifactId;
+      if (!body || Array.isArray(body) || Object.keys(body).some(k => !["artifact", "jobId", "artifactId"].includes(k)) ||
+          !GENERATED_IMAGE_FILENAME_PATTERN.test(body.artifact || "") || !legacyDetails && (!/^aag-[a-f0-9-]{36}$/i.test(body.jobId || "") || !/^artifact-[a-f0-9-]{36}$/i.test(body.artifactId || "")))
+        throw exportError(400, "PROMPT_REFERENCE_INVALID", "The image prompt reference is invalid.");
+      const user = await userFromSession(request, response);
+      const resolved = await resolvePersistedOutputs({mode:"single", artifacts:[body.artifact], identity:legacyDetails ? undefined : {jobId:body.jobId, artifactId:body.artifactId}}, {user, isMultiUser:multiUserMode(response)});
+      const output = resolved.outputs[0];
+      if (kind === "reveal") {
+        if (!localArtifactBrowser(request)) throw exportError(403, "REVEAL_LOCAL_ONLY", "File reveal is available on the local desktop.");
+        try { return response.status(200).json(await hostArtifact(resolved, true)); }
+        catch { throw exportError(503, "REVEAL_UNAVAILABLE", "Could not reveal the current file. It may be unavailable or the desktop could not open it."); }
+      }
+      if (kind === "prompt") readTrustedImage(output);
+      const provenance = require("/app/server/storage/plugins/agent-skills/aag-image-task/"+(kind==="details"?"generation-details.js":"prompt-provenance.js"));
+      const root = process.env.AAG_IMAGE_AGENT_STATE_ROOT || "/app/server/storage/aag-image-agent-state";
+      let value;
+      try { value = provenance.resolve(root, output.payload); }
+      catch { value = {available:false}; }
+      if (kind === "details") {
+        const file = await currentArtifact(resolved, request);
+        if (!value.available) value = {available:true, schema:"aag.generation-details.v1", schema_version:1,
+          artifact_id:output.payload.artifactId || null, job_id:output.payload.jobId || null,
+          source:"historical-persisted-evidence", generationAvailable:false, groups:[]};
+        // Avoid repeating current file facts as if they were historical facts.
+        const currentIds = new Set(["format","mime","file_size","artifact_hash"]);
+        value = {...value, file, groups:value.groups.map(group => ({...group, rows:group.rows.filter(row => !currentIds.has(row.id))})).filter(group => group.rows.length)};
+      }
+      return response.status(200).json(value);
+    } catch (error) {
+      return response.status(error.status || 500).json({error:error.status ? error.message : "The recorded image details are unavailable."});
+    }
+  });
+
   app.post(
     "/aag/artifact-export/pdf",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
@@ -192,7 +303,7 @@ function aagArtifactExportEndpoints(app) {
         const user = await userFromSession(request, response);
         const resolved = await resolvePersistedOutputs(normalized, { user, isMultiUser: multiUserMode(response) });
         const images = resolved.outputs.map(readTrustedImage);
-        const exported = cachedOrAssemble(images);
+        const exported = await cachedOrAssemble(images);
         const filename = suggestedPdfFilename();
         response.setHeader("Content-Type", "application/pdf");
         response.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
@@ -219,6 +330,10 @@ module.exports = {
   normalizeRequest,
   resolvePersistedOutputs,
   readTrustedImage,
+  resolveCurrentFile,
+  currentArtifact,
+  hostArtifact,
+  localArtifactBrowser,
   cacheIdentity,
   cachedOrAssemble,
   aagArtifactExportEndpoints,

@@ -64,6 +64,8 @@ async function verifyArtifact(filename, jobId, childId, source, operation, scale
       filename,
       url: publicArtifactUrl(filename),
       mime: contentType || `image/${decoded.format === "jpeg" ? "jpeg" : decoded.format}`,
+      format: decoded.format,
+      ...(decoded.color_profile ? {color_profile:decoded.color_profile} : {}),
       bytes: bytes.length,
       sha256: crypto.createHash("sha256").update(bytes).digest("hex"),
       width: decoded.width,
@@ -95,6 +97,10 @@ async function upscale(task, normalized, leaseToken, deps = {}) {
   if (body.public_path !== expectedPath) throw new AagError("OUTPUT_POLICY_VIOLATION", "The upscale engine returned an unsafe artifact path.");
   publicArtifactUrl(body.filename);
   deps.onEngineMetadata?.({ adapter: "upscale-local-v1", completed_at: new Date().toISOString(), elapsed_seconds: Number(body.elapsed_seconds || 0), model: String(body.model || "standard") });
+  const detail=require('./generation-details');
+  const decoded=await inspectOutput(normalized.bytes,deps);
+  deps.onProcessingStage?.({stage:'upscale',model:typeof body.model==='string'?body.model:undefined,scale:body.scale===undefined?task.scale:body.scale,input_dimensions:detail.dimension(decoded.width,decoded.height)});
+  if(task.operation==='upscale')deps.onExecutionDetails?.({engine:'Upscayl / ncnn',image_model:body.model,route:'upscale-local-v1',workflow_revision:'upscale.local.v1'});
   return [body.filename];
 }
 

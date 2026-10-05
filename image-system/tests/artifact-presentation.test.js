@@ -7,6 +7,7 @@ const os = require("node:os");
 const path = require("node:path");
 const test = require("node:test");
 
+const {fixture: namingFixture} = require("./fixtures/artifact-naming");
 const presentation = require("../integrations/anythingllm/aagArtifactPresentation");
 
 function png(width = 1152, height = 896) {
@@ -106,13 +107,17 @@ test("artifact presentation verifies bytes, dimensions, hash, and deduplicates s
     arrayBuffer: async () => bytes,
   });
   try {
+    const naming = await namingFixture(parsed);
+    try {
     const first = await presentation.buildPresentationOutputs({
+      naming,
       parsed,
       prompt: "same person riding a camel",
       generatedImagesPath: dir,
       fetchImpl,
     });
     const second = await presentation.buildPresentationOutputs({
+      naming,
       parsed,
       prompt: "same person riding a camel",
       generatedImagesPath: dir,
@@ -124,6 +129,8 @@ test("artifact presentation verifies bytes, dimensions, hash, and deduplicates s
     assert.equal(first[0].payload.artifactUrl, parsed.artifacts[0].url);
     assert.equal(first[0].payload.artifactSha256, parsed.artifacts[0].sha256);
     assert.deepEqual(fs.readFileSync(path.join(dir, first[0].payload.storageFilename)), bytes);
+    assert.equal(first[0].payload.filename, "AAG-Image-1-2-20261005-070215.png");
+    } finally {await naming.close();}
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
@@ -184,10 +191,11 @@ test("installed adapter emits the native live image-card event and removes model
   };
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "aag-presentation-"));
   let authorizedOutputs = null;
+  const naming = await namingFixture(presentation.parseAagImageResult(result));
   try {
     assert.equal(
       presentation.installAagArtifactPresentation({
-        aibitat,
+        aibitat, naming,
         generatedImagesPath: dir,
         fetchImpl: async () => ({
           ok: true,
@@ -208,12 +216,13 @@ test("installed adapter emits the native live image-card event and removes model
         "![result](http://127.0.0.1:18190/files/REF-1d56edd4-7c3a-467b-b8de-d9c8699f58f7.png)",
     });
     assert.equal(messages[0].type, "imageGenerationCard");
-    assert.equal(messages[0].content, "Image generated successfully.");
+    assert.equal(messages[0].content, "");
     assert.equal(messages[0].outputs.length, 1);
     assert.equal(messages[0].outputs[0].type, "imageGenerationCard");
     assert.equal(aibitat._pendingOutputs.length, 1);
     assert.deepEqual(authorizedOutputs, messages[0].outputs);
   } finally {
+    await naming.close();
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
@@ -231,9 +240,10 @@ test("batch presentation remains one native response with ordered collection/exp
     newMessage(message) { messages.push(message); return message; },
   };
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "aag-presentation-"));
+  const naming = await namingFixture(presentation.parseAagImageResult(result));
   try {
     assert.equal(presentation.installAagArtifactPresentation({
-      aibitat,
+      aibitat, naming,
       generatedImagesPath: dir,
       fetchImpl: async (url) => ({
         ok: true,
@@ -255,6 +265,7 @@ test("batch presentation remains one native response with ordered collection/exp
     assert.ok(messages[0].outputs.every((output) => output.payload.artifactExport.schema === "aag.trusted-artifact-export.v1"));
     assert.deepEqual(fs.readdirSync(dir).length, 2);
   } finally {
+    await naming.close();
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
@@ -265,4 +276,52 @@ test("failed and non-AAG tool results do not register presentation outputs", asy
     null
   );
   assert.equal(presentation.parseAagImageResult("ordinary tool text"), null);
+});
+
+test("identical-pixel siblings retain distinct identities and filenames while replay stays idempotent", async () => {
+  const bytes=png(), result=batchEnvelope(bytes,bytes).replace("artifact_2_dimensions=896x1152","artifact_2_dimensions=1152x896");
+  const naming=await namingFixture(presentation.parseAagImageResult(result));
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),"aag-identical-siblings-"));
+  const task={config:{hubId:"aag-image-batch"},handler:async()=>result};
+  const aibitat={functions:new Map([["task",task]]),newMessage:value=>value};
+  try {
+    presentation.installAagArtifactPresentation({aibitat,naming,generatedImagesPath:dir,fetchImpl:async()=>({ok:true,headers:{get:()=>"image/png"},arrayBuffer:async()=>bytes})});
+    await task.handler({prompt:"two siblings"});await task.handler({prompt:"two siblings"});
+    assert.equal(aibitat._pendingOutputs.length,2);
+    assert.deepEqual(aibitat._pendingOutputs.map(o=>o.payload.storageFilename),["AAG-Image-1-2-20261005-070215.png","AAG-Image-1-2-20261005-070215-2.png"]);
+    assert.equal(new Set(aibitat._pendingOutputs.map(o=>o.payload.artifactId)).size,2);
+    assert.equal(fs.readdirSync(dir).length,2);
+  } finally {await naming.close();fs.rmSync(dir,{recursive:true,force:true});}
+});
+
+test("completed internal result is hidden while exact tool response and native metadata remain intact", async () => {
+  const bytes = png(), result = envelope(bytes);
+  const task = {config:{hubId:"aag-image-task"}, handler:async()=>result};
+  const aibitat = {functions:new Map([["task",task]]), newMessage:message=>message};
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(),"aag-hidden-result-"));
+  const naming = await namingFixture(presentation.parseAagImageResult(result));
+  try {
+    presentation.installAagArtifactPresentation({aibitat, naming, generatedImagesPath:dir,
+      fetchImpl:async()=>({ok:true,headers:{get:()=>"image/png"},arrayBuffer:async()=>bytes})});
+    assert.equal(await task.handler({prompt:"a test image"}),result);
+    const message = aibitat.newMessage({from:"@agent",to:"USER",content:result});
+    assert.equal(message.content,"");
+    const card = message.outputs[0].payload;
+    assert.equal(card.artifactSha256,crypto.createHash("sha256").update(bytes).digest("hex"));
+    assert.equal(card.artifactWidth,1152);
+    assert.ok(card.jobId && card.artifactId && card.storageFilename && card.artifactUrl);
+  } finally { await naming.close(); fs.rmSync(dir,{recursive:true,force:true}); }
+});
+
+test("historical display hides protocol while preserving prose, user text and raw metadata", () => {
+  const {displayArtifactText}=require("../integrations/anythingllm/aagArtifactText");
+  const original = "Here is your image.\n```text\n"+envelope(png())+"\n```\nEnjoy.";
+  const outputs=[{type:"imageGenerationCard",payload:{artifactId:"retained"}}];
+  const saved=JSON.stringify({content:original,outputs});
+  assert.equal(displayArtifactText(original,outputs),"Here is your image.\nEnjoy.");
+  assert.equal(displayArtifactText("AAG_IMAGE_RESULT status=completed job_id=private sha256=private",outputs),"");
+  assert.equal(displayArtifactText(original,outputs,"user"),original);
+  assert.equal(displayArtifactText(original,[]),"Here is your image.\nImage generation completed.\nEnjoy.");
+  assert.equal(displayArtifactText("Documentation: AAG_IMAGE_RESULT is the protocol",outputs),"Documentation: AAG_IMAGE_RESULT is the protocol");
+  assert.equal(JSON.stringify({content:original,outputs}),saved);
 });

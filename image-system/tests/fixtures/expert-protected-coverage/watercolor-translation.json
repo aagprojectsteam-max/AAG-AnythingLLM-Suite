@@ -1,0 +1,86 @@
+{
+  "request": "צור תמונה אחת של שתי אגסים צהובים על שולחן לבן, באור חלון רך. רקע תכלת, ללא כיתוב. ציור בצבעי מים בשטיפות שקופות, עם אזורי נייר לבנים.",
+  "record": {
+    "prompt": "A still life watercolor painting depicting exactly two ripe yellow pears resting together on a clean white table surface. Gentle, soft window light enters from the side, casting subtle, delicate shadows across the white tabletop. The background consists of a delicate, airy light blue wash. The composition is clean and devoid of any text, writing, numbers, or signatures. Authentic fine art watercolor on textured cold-press paper. The forms and colors are rendered through layered transparent washes, fluid pigment blooms, and natural watermarks. Strong focal highlights on the pears and the white table are preserved as untouched bare white paper, creating luminous organic translucency with selective soft wet-in-wet color bleed and decisive dry-brush accents.",
+    "sha256": "76f1434f7b5ef6612c51b05f24d1bb4acda81deb9cfb4f524564d138f19cc2ac",
+    "tokens_including_template": 158,
+    "operating_token_limit": 512,
+    "selected_style": "fine-art-traditional-media/watercolor",
+    "protected_fragment_ids": [
+      "req-still-life-composition",
+      "style-watercolor-technique"
+    ],
+    "truncated": false,
+    "route": "generate",
+    "semantic_review_required": true,
+    "plan": {
+      "conflicts": [],
+      "fragments": [
+        {
+          "priority": 1,
+          "text": "A still life watercolor painting depicting exactly two ripe yellow pears resting together on a clean white table surface. Gentle, soft window light enters from the side, casting subtle, delicate shadows across the white tabletop. The background consists of a delicate, airy light blue wash. The composition is clean and devoid of any text, writing, numbers, or signatures.",
+          "id": "req-still-life-composition"
+        },
+        {
+          "id": "style-watercolor-technique",
+          "priority": 2,
+          "text": "Authentic fine art watercolor on textured cold-press paper. The forms and colors are rendered through layered transparent washes, fluid pigment blooms, and natural watermarks. Strong focal highlights on the pears and the white table are preserved as untouched bare white paper, creating luminous organic translucency with selective soft wet-in-wet color bleed and decisive dry-brush accents."
+        }
+      ],
+      "facts": [
+        {
+          "classification": "USER_REQUIRED",
+          "source_text": "שתי אגסים צהובים",
+          "text": "Exactly two yellow pears",
+          "dimension": "subjects"
+        },
+        {
+          "dimension": "environment",
+          "source_text": "על שולחן לבן",
+          "classification": "USER_REQUIRED",
+          "text": "Resting on a white table surface"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "source_text": "באור חלון רך",
+          "dimension": "lighting",
+          "text": "Gentle, soft natural window lighting illuminating the still life"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "text": "A soft light blue background",
+          "source_text": "רקע תכלת",
+          "dimension": "background"
+        },
+        {
+          "classification": "USER_REQUIRED",
+          "dimension": "exclusions",
+          "source_text": "ללא כיתוב",
+          "text": "Completely free of any text, lettering, signatures, or inscriptions"
+        },
+        {
+          "text": "Traditional watercolor painting executed in transparent washes with reserved white paper highlights",
+          "dimension": "style_constraints",
+          "source_text": "ציור בצבעי מים בשטיפות שקופות, עם אזורי נייר לבנים",
+          "classification": "USER_REQUIRED"
+        }
+      ]
+    },
+    "request_sha256": "5c35fc43f613737fed9989e61c2f4b45aa7e998ff84b5eb9ead2586316a89e24",
+    "context_sha256": "2bfffa48b730ec5e595fe0aa1a3ea2a28213feb926aa4e26e0f954ead2d01c59",
+    "author": "current-active-chat-llm",
+    "contract": "aag.expert.prompt.v1",
+    "authoring_contract": "self-contained.v2",
+    "review_style": {
+      "canonical_id": "fine-art-traditional-media/watercolor",
+      "label": "Watercolor",
+      "recognition_anchors": [
+        "Transparent washes",
+        "pigment blooms and reserved paper"
+      ]
+    }
+  },
+  "responses": [
+    "```json\n{\n  \"pass\": true,\n  \"issues\": [],\n  \"checks\": {\n    \"all_user_requirements\": true,\n    \"faithful_translation\": true,\n    \"counts\": true,\n    \"subjects_actions\": true,\n    \"attributes_colors\": true,\n    \"spatial_relationships\": true,\n    \"visible_text\": true,\n    \"negative_constraints\": true,\n    \"selected_style\": true,\n    \"self_contained\": true,\n    \"no_source_wrapper\": true,\n    \"no_analysis_or_plan_leakage\": true,\n    \"no_contradictions\": true\n  },\n  \"facts\": [\n    {\n      \"index\": 0,\n      \"preserved\": true,\n      \"evidence\": \"exactly two ripe yellow pears\",\n      \"protected_evidence\": \"exactly two ripe yellow pears\"\n    },\n    {\n      \"index\": 1,\n      \"preserved\": true,\n      \"evidence\": \"on a clean white table surface\",\n      \"protected_evidence\": \"on a clean white table surface\"\n    },\n    {\n      \"index\": 2,\n      \"preserved\": true,\n      \"evidence\": \"Gentle, soft window light enters from the side\",\n      \"protected_evidence\": \"Gentle, soft window light enters from the side\"\n    },\n    {\n      \"index\": 3,\n      \"preserved\": true,\n      \"evidence\": \"background consists of a delicate, airy light blue wash\",\n      \"protected_evidence\": \"background consists of a delicate, airy light blue wash\"\n    },\n    {\n      \"index\": 4,\n      \"preserved\": true,\n      \"evidence\": \"devoid of any text, writing, numbers, or signatures\",\n      \"protected_evidence\": \"devoid of any text, writing, numbers, or signatures\"\n    },\n    {\n      \"index\": 5,\n      \"preserved\": true,\n      \"evidence\": \"layered transparent washes, fluid pigment blooms, and natural watermarks. Strong focal highlights on the pears and the white table are preserved as untouched bare white paper\",\n      \"protected_evidence\": \"layered transparent washes, fluid pigment blooms, and natural watermarks. Strong focal highlights on the pears and the white table are preserved as untouched bare white paper\"\n    }\n  ]\n}\n```"
+  ]
+}

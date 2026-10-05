@@ -8,6 +8,15 @@ export const UI_LANGUAGES = Object.freeze([
 ]);
 
 const HE_UI = Object.freeze({
+  imageResultUnavailable: "מצב יצירת התמונה אינו זמין.",
+  imageResultCompleted: "יצירת התמונה הושלמה.",
+  imageResultFailed: "לא ניתן היה ליצור את התמונה.",
+  imageResultExpertFailed: "לא ניתן היה לאמת את הפרומפט לתמונה. יש לבדוק את הבקשה ואת הסגנון שנבחר.",
+  imageResultValidationFailed: "לא ניתן היה לאמת את בקשת התמונה. יש לבדוק את ההגדרות שנבחרו ואת הבקשה.",
+  imageResultEngineFailed: "יצירת התמונה לא הושלמה. אפשר לנסות שוב מאוחר יותר.",
+  imageResultPartial: "לא ניתן היה ליצור חלק מהתמונות.",
+  imageResultCancelled: "יצירת התמונה בוטלה.",
+  imageResultPending: "יצירת התמונה מתבצעת.",
   composerControls: "מצב ופקדים של AAG Image Composer",
   modeGroup: "מצב Image Composer",
   autoMode: "אוטומטי",
@@ -59,6 +68,7 @@ const HE_UI = Object.freeze({
   visualAtlas: "האטלס החזותי",
   atlasCount: "493 סגנונות חזותיים שהושלמו — בחרו אחד כדי להחיל אותו",
   closeAtlas: "סגירת האטלס החזותי",
+  close: "סגירה",
   searchStyles: "חיפוש סגנונות",
   searchStylesPlaceholder: "חיפוש סגנונות…",
   filterFamily: "סינון לפי משפחה",

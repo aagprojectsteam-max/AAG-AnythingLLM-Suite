@@ -21,7 +21,7 @@ function requiredField(args, name) {
   if (!Object.hasOwn(args, name)) throw new AagError("INVALID_ARGUMENT", `The batch field ${name} is required.`);
 }
 
-function normalizeBatch(args = {}, runtime = {}) {
+function normalizeBatch(args = {}, runtime = {}, expertRecords = null) {
   if (!args || typeof args !== "object" || Array.isArray(args)) throw new AagError("INVALID_ARGUMENT", "The image batch arguments are invalid.");
   const unexpected = Object.keys(args).filter((key) => !BATCH_KEYS.has(key));
   if (unexpected.length) throw new AagError("INVALID_ARGUMENT", "The image batch contains an unsupported argument.", false, unexpected.join(","));
@@ -48,8 +48,9 @@ function normalizeBatch(args = {}, runtime = {}) {
     const extra = Object.keys(input).filter((key) => !ITEM_KEYS.has(key));
     if (extra.length) throw new AagError("INVALID_ARGUMENT", `Batch item ${index + 1} contains an unsupported argument.`, false, extra.join(","));
     requiredField(input, "prompt");
-    const prompt = text(input.prompt, promptQuality.MAX_PROMPT_CHARS, true);
-    const validated = promptQuality.validate({ authoritative: prompt, proposal: prompt });
+    const prompt = text(input.prompt, expertRecords ? 8000 : promptQuality.MAX_PROMPT_CHARS, true);
+    const expertTask = expertRecords ? require("./expert-prompt").apply({ prompt }, expertRecords[index]) : null;
+    const validated = expertTask ? { prompt, contract: expertTask._aag_prompt_contract } : promptQuality.validate({ authoritative: prompt, proposal: prompt });
     const item = {
       logical_child_id: `item-${String(index + 1).padStart(4, "0")}`,
       index: index + 1,
@@ -69,7 +70,8 @@ function normalizeBatch(args = {}, runtime = {}) {
       _aag_upstream_request: upstreamRequest,
       _aag_prompt_contract: item.prompt_contract,
     };
-    selectiveKnowledge.applyToTask(atlasTask);
+    if (expertTask) { atlasTask.atlas = expertTask.atlas; }
+    else selectiveKnowledge.applyToTask(atlasTask);
     item.prompt = atlasTask.prompt;
     item.prompt_contract = atlasTask._aag_prompt_contract;
     item.atlas = atlasTask.atlas;
@@ -199,6 +201,18 @@ function metadataDeps(root, child, base = {}) {
   const upstreamProgress = base.onEngineProgress;
   return {
     ...base,
+    onExecutionDetails(value) {
+      child.execution_details = {...child.execution_details,...value};
+      store.write(root,child);base.onExecutionDetails?.(value);
+    },
+    onProcessingStage(value) {
+      child.processing_stages = [...(child.processing_stages||[]),value];
+      store.write(root,child);base.onProcessingStage?.(value);
+    },
+    onFinalPrompt(value) {
+      require("./prompt-provenance").capture(root, child, value);
+      base.onFinalPrompt?.(value);
+    },
     onEngineMetadata(metadata = {}) {
       const allowed = {};
       for (const key of ["adapter", "prompt_id", "submitted_at", "completed_at", "elapsed_seconds", "model", "recipe_id", "model_file", "model_sha256", "text_encoder_file", "text_encoder_sha256", "vae_file", "vae_sha256", "workflow_sha256", "sampler", "scheduler", "steps", "cfg", "dimensions", "aspect", "aspect_source", "prompt_policy", "negative_prompt_policy", "offline_policy", "prompt_contract", "prompt_author", "prompt_quality_status", "prompt_fidelity_status", "prompt_structure_status", "final_prompt_sha256"]) {
@@ -284,6 +298,7 @@ async function executeParent(root, parent, runtime, context = {}) {
       deps: deps.scheduler || {},
       isCancelled: () => cancellationRequested(root, parent.job_id),
     });
+    await (deps.requireReady || require("./lifecycle").requireReady)();
     parent = store.read(root, parent.job_id);
     if (cancellationRequested(root, parent.job_id)) throw new AagError("JOB_CANCELLED", "The image batch was cancelled.");
     parent.scheduler = { lease_token_hash: sha256(lease.token), acquired_at: lease.owner.acquired_at, waited_ms: lease.waited_ms, queue_kind: "filesystem-fifo", owner_kind: "agent-batch" };
@@ -336,6 +351,7 @@ async function executeParent(root, parent, runtime, context = {}) {
         if (siblings.some((candidate) => candidate.artifacts?.some((existing) => existing.filename === artifact.filename || existing.sha256 === artifact.sha256))) {
           throw new AagError("OUTPUT_COLLISION", "Two intended batch children produced the same declared artifact.");
         }
+        require('./generation-details').capture(root,parent,child,artifact,baseArtifact,child.processing_stages||[]);
         child.artifacts = [artifact];
         child.progress = { ...(child.progress || {}), artifact_verified_at: artifact.verified_at };
         attempt.status = "COMPLETED";
@@ -397,8 +413,13 @@ async function executeParent(root, parent, runtime, context = {}) {
 }
 
 async function createBatch(args, runtime = {}, context = {}) {
+  const originalUserRequest = runtime.AAG_INVOCATION_PROMPT;
   let batch;
-  try { batch = normalizeBatch(args, runtime); }
+  try {
+    const expert = await require("./expert-prompt").prepare(args, runtime, context.deps?.expertValidate);
+    batch = normalizeBatch(expert.args, runtime, expert.records);
+    await (context.deps?.requireReady || require("./lifecycle").requireReady)();
+  }
   catch (error) { return { error: classifyError(error) }; }
   const root = stateRoot(runtime);
   ensureDirectory(path.join(root, "jobs"));
@@ -408,6 +429,9 @@ async function createBatch(args, runtime = {}, context = {}) {
     if (prior) return { job: prior, idempotent: true };
   } catch (error) { return { error: classifyError(error) }; }
 
+  let generationRequest;
+  try {generationRequest=await require('./generation-details').captureRequest(batch,runtime,context.deps||{});}
+  catch(error){return {error:classifyError(error)};}
   const publicPlan = batch.items.map((item) => ({
     logical_child_id: item.logical_child_id,
     index: item.index,
@@ -432,6 +456,7 @@ async function createBatch(args, runtime = {}, context = {}) {
     estimated_context_tokens: batch.items.reduce((total, item) => total + Number(item.atlas?.estimated_context_tokens || 0), 0),
   };
   const parent = store.createRecord(root, {
+    generation_request:generationRequest,
     schema_version: 3,
     release: VERSION,
     owner: batch.owner,
@@ -452,8 +477,10 @@ async function createBatch(args, runtime = {}, context = {}) {
     return { job: store.read(root, claim.job_id), idempotent: true };
   }
   try {
+    require("./prompt-provenance").captureOriginal(root, parent, originalUserRequest);
     for (const item of publicPlan) {
       const child = store.createRecord(root, {
+        generation_request:{...generationRequest, normalized:{...generationRequest.normalized, operation:"generate",aspect_ratio:item.aspect_ratio,...(item.width!==undefined?{width:item.width}:{}),...(item.height!==undefined?{height:item.height}:{})}},
         schema_version: 3,
         release: VERSION,
         parent_job_id: parent.job_id,

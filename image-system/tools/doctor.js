@@ -7,6 +7,10 @@ const { execFileSync } = require("child_process");
 const { verify: verifyVisualAtlasProduct } = require("./visual-atlas-product");
 
 const root = path.resolve(__dirname, "..");
+if (process.argv.includes("--deployed") && !process.argv.includes("--candidate-audit") && (fs.existsSync(path.join(root, "releases/approved/CURRENT.json")) || fs.existsSync(path.join(root, "releases/runtime-control/release_gate.py")))) {
+  try { process.stdout.write(execFileSync("/usr/bin/python3", ["-I", path.resolve(root, "../image-agent/releases/runtime-control/release_gate.py"), "verify"], {encoding:"utf8"})); process.exit(0); }
+  catch (error) { process.stderr.write(String(error.stderr || error.message)); process.exit(1); }
+}
 const version = fs.readFileSync(path.join(root, "VERSION"), "utf8").trim();
 const out = path.join(root, "releases", "staged", version);
 const manifest = JSON.parse(fs.readFileSync(path.join(out, "STAGED-MANIFEST.json")));
@@ -113,9 +117,12 @@ function verifyBridgePersistence() {
   const presentationContents = fs.readFileSync(canonicalPresentation, "utf8");
   const publicSchemaAdapterContents = fs.readFileSync(canonicalPublicSchemaAdapter, "utf8");
   const composerHistoryContents = fs.readFileSync(canonicalComposerHistory, "utf8");
+  // Candidate validation checks the new source; live parity is checked after deployment.
+  if (checkDeployed) {
   assertCheck("artifact presentation canonical/deployed parity", hash(canonicalPresentation) === hash(deployedPresentation), `${hash(canonicalPresentation)} != ${hash(deployedPresentation)}`);
   assertCheck("public tool schema canonical/deployed parity", hash(canonicalPublicSchemaAdapter) === hash(deployedPublicSchemaAdapter), `${hash(canonicalPublicSchemaAdapter)} != ${hash(deployedPublicSchemaAdapter)}`);
   assertCheck("Composer native-history canonical/deployed parity", hash(canonicalComposerHistory) === hash(deployedComposerHistory), `${hash(canonicalComposerHistory)} != ${hash(deployedComposerHistory)}`);
+  }
   assertCheck("public tool schema validates before handler execution", publicSchemaAdapterContents.includes("validatePublicArguments(schema, args)") && publicSchemaAdapterContents.includes("PUBLIC_SCHEMA_VIOLATION"), "closed runtime validation is missing");
   assertCheck("public tool schema enforces direct final output", publicSchemaAdapterContents.includes('same_turn_retry === "forbidden"') && publicSchemaAdapterContents.includes("skipHandleExecution = true"), "same-turn retry enforcement is missing");
   assertCheck("artifact presentation capability-open policy", presentationContents.includes('AAG_IMAGE_PROVIDER_POLICY: "OPEN_BY_CAPABILITY"'), "provider capability policy marker is missing");
@@ -137,7 +144,7 @@ function verifyBridgePersistence() {
     "/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/bin/aag-image-start",
   ]) {
     const contents = fs.readFileSync(launcher, "utf8");
-    assertCheck(`start doctor gate ${launcher}`, markerCount(contents, "AAG_IMAGE_DOCTOR_GATE_V1") === 1 && contents.includes("tools/doctor.js") && contents.includes("--deployed"), "canonical start verification gate is missing");
+    assertCheck(`start doctor gate ${launcher}`, (contents.includes("image-agent/releases/runtime-control/lifecycle.py") || (markerCount(contents, "AAG_IMAGE_DOCTOR_GATE_V1") === 1 && contents.includes("tools/doctor.js") && contents.includes("--deployed"))), "canonical start verification gate is missing");
   }
 
   const composePath = "/home/aag-linux/docker/anythingllm/compose.yaml";
@@ -465,7 +472,14 @@ for (const item of manifest.source_files) {
 }
 for (const item of manifest.provider_files) {
   check(`staged ${item.path}`, path.join(out, item.path), item.sha256);
-  check(`source-to-staged ${item.source}`, path.join(root, item.source), item.sha256);
+  if (item.source === "governed-candidate-release-identity") {
+    const identity=JSON.parse(fs.readFileSync(path.join(out,item.path),"utf8"));
+    assertCheck("governed runtime release identity "+item.path,
+      /^(?:aag-image-task|aag-image-batch|aag-image-job)\/runtime-release\.json$/.test(item.path) &&
+      Object.keys(identity).sort().join(',')==='release_id,runtime_version,schema' &&
+      identity.schema==='aag.runtime-release.v1' && identity.runtime_version===version &&
+      identity.release_id===(process.env.AAG_CANDIDATE_RELEASE_ID||null), "Invalid generated runtime release identity");
+  } else check(`source-to-staged ${item.source}`, path.join(root, item.source), item.sha256);
   if (checkDeployed) check(`deployed ${item.deploy_target}`, item.deploy_target, item.sha256);
 }
 for (const item of manifest.integration_files) {

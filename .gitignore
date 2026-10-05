@@ -47,3 +47,31 @@ generated-images/
 *.tar
 *.tar.gz
 *.zip
+
+# Release evidence, build outputs and private local data never belong in Git.
+/evaluation/
+/image-system/releases/
+*.strace
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+
+# Reviewed implementation directories (no runtime state).
+!image-system/human-identity/runtime/
+!image-system/human-identity-scene/runtime/
+!image-system/expert-prompt/tests/tokenizer_parity.py
+!image-system/human-identity-scene/runtime/evaluator_core.py
+!image-system/human-identity-scene/runtime/quality_gate.py
+!image-system/human-identity-scene/runtime/reference_validator.py
+!image-system/human-identity-scene/runtime/scene_worker.py
+!image-system/human-identity-scene/runtime/validate_reference_cli.py
+!image-system/human-identity/runtime/composition_contract.py
+!image-system/human-identity/runtime/evaluator_core.py
+!image-system/human-identity/runtime/pulid_worker.py
+!image-system/human-identity/runtime/quality_gate.py
+!image-system/human-identity/runtime/reference_validator.py
+!image-system/human-identity/runtime/validate_reference_cli.py
+!image-system/tests/fixtures/artifact-formats/verified.jpg
+!image-system/tests/fixtures/artifact-formats/verified.png
+!image-system/tools/atlas-token-accounting.js

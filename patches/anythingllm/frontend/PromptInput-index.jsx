@@ -18,8 +18,11 @@ import usePromptInputStorage from "@/hooks/usePromptInputStorage";
 import ToolsMenu, { TOOLS_MENU_KEYBOARD_EVENT } from "./ToolsMenu";
 import { useSearchParams } from "react-router-dom";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
+import useImageComposerMode from "@/utils/useImageComposerMode";
 import AagImageComposerPanel from "./AagImageComposerPanel";
 import AagImageProgress from "./AagImageProgress";
+import { ensureArtifactSerials } from "@/utils/aagArtifactSerials";
+import showToast from "@/utils/toast";
 
 export const PROMPT_INPUT_ID = "primary-prompt-input";
 export const PROMPT_INPUT_EVENT = "set_prompt_input";
@@ -58,7 +61,9 @@ export default function PromptInput({
   const textareaRef = useRef(null);
   const composerPanelRef = useRef(null);
   const [composerMode, setComposerMode] = useState("auto");
-  const isImageGenerator = (workspace?.slug || workspaceSlug) === "image-generator";
+  const activeWorkspaceSlug = workspace?.slug || workspaceSlug;
+  const { enabled: isImageComposerEnabledForCurrentWorkspace } =
+    useImageComposerMode(activeWorkspaceSlug);
   const [_, setFocused] = useState(false);
   const undoStack = useRef([]);
   const redoStack = useRef([]);
@@ -127,9 +132,11 @@ export default function PromptInput({
   async function handleSubmit(e) {
     // Ignore submits from portaled modals (slash command preset forms)
     if (e.target !== e.currentTarget) return;
+    e.preventDefault();
+    try { await ensureArtifactSerials(activeWorkspaceSlug); } catch (error) { e.preventDefault(); showToast(error.message, "error"); return; }
     setFocused(false);
     setShowTools(false);
-    if (isImageGenerator && composerMode === "advanced") {
+    if (isImageComposerEnabledForCurrentWorkspace && composerMode === "advanced") {
       e.preventDefault();
       const prepared = await composerPanelRef.current?.prepare();
       if (!prepared) return;
@@ -344,20 +351,22 @@ export default function PromptInput({
           className={`flex items-center rounded-lg md:w-full ${centered ? "mb-0" : "mb-4"}`}
         >
           <div className="relative w-[95vw] md:w-[750px]">
-            {isImageGenerator && (
+            {isImageComposerEnabledForCurrentWorkspace && (
               <AagImageProgress
-                workspaceSlug={workspace?.slug || workspaceSlug}
+                workspaceSlug={activeWorkspaceSlug}
                 threadSlug={threadSlug}
               />
             )}
-            {isImageGenerator && (
+            {(isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator") && (
               <AagImageComposerPanel
+                composerEnabled={isImageComposerEnabledForCurrentWorkspace}
                 ref={composerPanelRef}
                 mode={composerMode}
                 onModeChange={setComposerMode}
                 prompt={promptInput}
                 history={history}
                 threadSlug={threadSlug}
+                workspaceSlug={activeWorkspaceSlug}
                 disabled={isStreaming || isDisabled}
               />
             )}

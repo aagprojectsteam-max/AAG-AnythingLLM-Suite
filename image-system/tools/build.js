@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, "..");
 const version = fs.readFileSync(path.join(root, "VERSION"), "utf8").trim();
 const out = path.join(root, "releases", "staged", version);
 const deployedSkills = "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills";
-const modules = ["runtime.js", "batch.js", "errors.js", "util.js", "image.js", "store.js", "scheduler.js", "identity.js", "human-identity.js", "identity-routing.js", "scene-identity.js", "ordinary-policy.js", "prompt-quality.js", "visual-atlas.js", "selective-knowledge.js", "comfy.js", "adapters.js", "recovery.js"];
+const modules = ["generation-details.js", "generation-details-fields.json","expert-review.js","prompt-provenance.js","lifecycle.js","expert-prompt.js", "runtime.js", "batch.js", "errors.js", "util.js", "image.js", "store.js", "job-index.js", "scheduler.js", "identity.js", "human-identity.js", "identity-routing.js", "scene-identity.js", "ordinary-policy.js", "prompt-quality.js", "visual-atlas.js", "selective-knowledge.js", "comfy.js", "adapters.js", "recovery.js"];
 const humanIdentityPaths = [
   "human-identity/runtime/composition_contract.py",
   "human-identity/runtime/evaluator_core.py",
@@ -34,9 +34,51 @@ const sceneIdentityPaths = [
   "human-identity-scene/config/PRODUCTION-CONFIG.json",
 ];
 const integrations = [
+  ...["cleanup-generated-images.js", "aagGeneratedImageCleanup.js"].map(name => ({
+    source: `integrations/anythingllm/${name}`,
+    targets: [`/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/generated-image-cleanup/${name}`],
+    container_target: `/app/server/jobs/${name}`,
+  })),
+  { source: "integrations/anythingllm/generated-image-server.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/generated-image-server.js"],
+    container_target: "/app/server/endpoints/agentFileServer.js" },
+  { source: "integrations/anythingllm/aagArtifactFormat.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactFormat.js"],
+    container_target: "/app/server/endpoints/aagArtifactFormat.js" },
+  { source: "integrations/anythingllm/generated-image-files.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/generated-image-files.js"],
+    container_target: "/app/server/utils/files/index.js" },
+  { source: "integrations/anythingllm/aagArtifactNaming.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactNaming.js"] },
+  { source: "integrations/anythingllm/provider-streaming/ordinary-anthropic.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/provider-streaming/ordinary-anthropic.js"],
+    container_target: "/app/server/utils/AiProviders/anthropic/index.js" },
+  { source: "integrations/anythingllm/provider-streaming/ordinary-openai.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/provider-streaming/ordinary-openai.js"],
+    container_target: "/app/server/utils/AiProviders/openAi/index.js" },
+  { source: "integrations/anythingllm/provider-streaming/aibitat.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/provider-streaming/aibitat.js"],
+    container_target: "/app/server/utils/agents/aibitat/index.js" },
+  ...["openai.js", "responses-stream.js", "tool-contract.js", "gemini.js", "anthropic.js", "anthropic-transport.js", "ollama.js"].map(name => ({
+    source: `integrations/anythingllm/provider-streaming/${name}`,
+    targets: [`/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/provider-streaming/${name}`],
+    container_target: `/app/server/utils/agents/aibitat/providers/${name}`,
+  })),
+  { source: "integrations/anythingllm/context-window-finder.offline.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/phase8-final-activation/context-window-finder.offline.js"],
+    container_target: "/app/server/utils/AiProviders/modelMap/index.js" },
+  {source: "integrations/anythingllm/aagLifecycleProxy.js", targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/aagLifecycleProxy.js"]},
+  ...["index.js", "ephemeral.js"].map(name => ({
+    source: `integrations/anythingllm/runtime-context-bridge/${name}`,
+    targets: [`/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/${name}`],
+  })),
   {
     source: "integrations/anythingllm/aagArtifactPresentation.js",
     targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactPresentation.js"],
+  },
+  {
+    source: "integrations/anythingllm/aagArtifactText.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactText.js"],
   },
   {
     source: "integrations/anythingllm/aagComposerHistory.js",
@@ -104,12 +146,16 @@ for (const name of ["aag-image-task", "aag-image-batch", "aag-image-job"]) {
   const copies = [
     { file: "plugin.json", source: `skills/${name}/plugin.json` },
     { file: "handler.js", source: `skills/${name}/handler.js` },
+    { file: "expert-plan.schema.json", source: "expert-prompt/schemas/visual-plan.schema.json" },
     { file: "visual-taxonomy.json", source: "integrations/model-neutral-compatibility/composer/visual-taxonomy.json" },
     ...(name === "aag-image-task" ? [{ file: "provider-task.schema.json", source: "schemas/provider-task.schema.json" }] : []),
     ...(name === "aag-image-batch" ? [{ file: "provider-batch.schema.json", source: "schemas/provider-batch.schema.json" }] : []),
     ...(name === "aag-image-job" ? [{ file: "provider-job.schema.json", source: "schemas/provider-job.schema.json" }] : []),
     ...modules.map(file => ({ file, source: `src/${file}` })),
   ];
+  const runtimeRelease = path.join(dest,"runtime-release.json");
+  fs.writeFileSync(runtimeRelease,JSON.stringify({schema:"aag.runtime-release.v1",release_id:process.env.AAG_CANDIDATE_RELEASE_ID||null,runtime_version:version})+"\n",{mode:0o600});
+  providerFiles.push({path:`${name}/runtime-release.json`,source:"governed-candidate-release-identity",deploy_target:`${deployedSkills}/${name}/runtime-release.json`,mode:"0600",sha256:hash(runtimeRelease)});
   for (const item of copies) {
     const destination = path.join(dest, item.file);
     fs.copyFileSync(path.join(root, item.source), destination);
@@ -132,8 +178,11 @@ const sourcePaths = [
   "skills/aag-image-batch/plugin.json", "skills/aag-image-batch/handler.js",
   "skills/aag-image-job/plugin.json", "skills/aag-image-job/handler.js",
   ...modules.map(file => `src/${file}`),
+  ...["png","jpg","webp"].map(ext => `tests/fixtures/artifact-formats/verified.${ext}`),
+  "tests/artifact-naming.test.js", "tests/fixtures/artifact-naming.js", "tests/fixtures/sqlite-test-client.py", "docs/ARTIFACT-FILENAMES.md",
+  "tests/generated-image-cleanup.test.js", "tests/fixtures/legacy-cleanup-generated-images.js", "docs/GENERATED-IMAGE-CLEANUP.md",
   "tests/runtime.test.js", "tests/scheduler.test.js", "tests/security.test.js", "tests/prompt-quality.test.js", "tests/public-tool-schema.test.js", "tests/integration_security_test.py", "tests/composer-native-chat.test.js", "tests/inline-composer-integration.test.js", "tests/progress-persistence.test.js", "tests/stall-recovery.test.js",
-  "tests/visual-atlas.test.js", "tests/governed-update.test.js",
+  "tests/expert-provider-neutral.test.js", "tests/visual-atlas.test.js", "tests/governed-update.test.js", "tests/image-composer-mode.test.js",
   "tests/test_human_identity_bridge.py", "tests/test_scene_identity_bridge.py", "tests/ordinary-policy.test.js", "tests/artifact-presentation.test.js", "tests/batch.test.js", "tests/artifact-export.test.js", "tests/frontend-export-contract.test.js",
   "tools/build.js", "tools/governed-update.js", "tools/build-anythingllm-frontend.js", "tools/doctor.js", "tools/atlas-token-accounting.js", "tools/atlas-integrity-evidence.js", "tools/atlas-final-evidence.js", "tools/atlas-browser-acceptance.py", "tools/atlas-endpoint-regression.js", "tools/visual-atlas-product.js", "tools/atlas-live-acceptance.js", "tools/candidate-e2e.js", "tools/dynamic-identity-live-acceptance.js", "tools/scene-identity-live-acceptance.js", "tools/quality-semantics-live.js", "tools/multi-image-registration-audit.js", "tools/multi-image-provider-validation.js",
   "ordinary-generation/config/ORDINARY-RECIPE.json",
@@ -142,6 +191,13 @@ const sourcePaths = [
   "integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
   "integrations/anythingllm/frontend/AagImageCollection.jsx",
   "integrations/anythingllm/frontend/aagArtifactExport.js",
+  "integrations/anythingllm/frontend/aagArtifactFile.js",
+  "integrations/anythingllm/frontend/AagArtifactDetails.jsx",
+  "integrations/anythingllm/frontend/AagArtifactPrompt.jsx",
+  "schemas/generation-details.schema.json",
+  "tests/generation-details.test.js", "tests/artifact-file-details.test.js",
+  "tests/expert-review-format.test.js", "tests/expert-prompt-preference.test.js",
+  "integrations/anythingllm/frontend/useImageComposerMode.js",
   "integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
   "integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
   "integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
@@ -152,10 +208,14 @@ const sourcePaths = [
   "integrations/model-neutral-compatibility/composer_canonical.py",
   "integrations/model-neutral-compatibility/visual_atlas.py",
   "integrations/model-neutral-compatibility/server.py",
+  "integrations/model-neutral-compatibility/expert_schema.py",
+  "integrations/anythingllm/frontend/useExpertPromptMode.js",
+  ...["compiler.py", "knowledge.py", "neutral_context.py", "prompt_budget.py", "engine-budget-profile.json", "schemas/visual-plan.schema.json", "knowledge/families.json", "knowledge/styles.json", "knowledge/universal.json", "knowledge/tasks.tsv", "knowledge/failures.tsv", "knowledge/rubric.json"].map(name => `expert-prompt/${name}`),
   "integrations/model-neutral-compatibility/test_compatibility.py",
   "integrations/model-neutral-compatibility/test_composer_canonical.py",
   "integrations/model-neutral-compatibility/test_http_boundary.py",
   "integrations/model-neutral-compatibility/test_visual_atlas.py",
+  "integrations/model-neutral-compatibility/test_generation_provenance.py",
   "integrations/model-neutral-compatibility/aag-model-compatibility.service",
   "integrations/model-neutral-compatibility/composer/index.html",
   "integrations/model-neutral-compatibility/composer/app.css",

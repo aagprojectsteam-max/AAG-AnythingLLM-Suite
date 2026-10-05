@@ -25,7 +25,7 @@ def tree_sha(path: pathlib.Path) -> str:
     return digest.hexdigest()
 
 
-tracked = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).splitlines()
+tracked = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard"], cwd=ROOT, text=True).splitlines()
 additive = {
     "patches/anythingllm/aagArtifactExport.js",
     "patches/anythingllm/aagArtifactPresentation.js",
@@ -41,6 +41,8 @@ anythingllm_derived = {
     "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
     "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
 }
+tracked = sorted(set(tracked))
+additive.update({"patches/anythingllm/" + name for name in ["workspaceToolPolicy.js", "aagArtifactFormat.js", "aagArtifactNaming.js", "aagArtifactText.js", "aagLifecycleProxy.js", "aagImageProgress.js"]})
 ownership = []
 for name in tracked:
     if name in {"atlas-assets-manifest.json"} or name.startswith("visual-atlas/"):
@@ -83,6 +85,15 @@ patches = [
     ("frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel", "image-system/integrations/anythingllm/frontend/AagImageComposerPanel", "add-tree", "Composer UI"),
     ("frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress", "image-system/integrations/anythingllm/frontend/AagImageProgress", "add-tree", "progress/status/cancel UI"),
 ]
+# Golden source mappings replace earlier package paths for the same target.
+golden_path = ROOT / "manifests/GOLDEN-INSTALL-MAP.json"
+if golden_path.exists():
+    by_target = {entry[0]: entry for entry in patches}
+    for entry in json.loads(golden_path.read_text())["entries"]:
+        target, source = entry["target"], entry["source"]
+        mode = "replace" if target in stock_hashes else "add"
+        by_target[target] = (target, source, mode, "approved Golden source overlay")
+    patches = list(by_target.values())
 records = []
 for target, source, mode, purpose in patches:
     source_path = ROOT / source

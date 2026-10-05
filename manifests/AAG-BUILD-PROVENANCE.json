@@ -7,7 +7,15 @@
     "ImageGenerationCard/index.jsx",
     "HistoricalOutputs/index.jsx",
     "AagImageCollection.jsx",
+    "AagArtifactPrompt.jsx",
+    "AagArtifactDetails.jsx",
     "aagArtifactExport.js",
+    "aagArtifactFile.js",
+    "aagArtifactSerials.js",
+    "aagArtifactText.js (shared presentation function)",
+    "useAagArtifactText.js",
+    "useImageComposerMode.js",
+    "useExpertPromptMode.js",
     "AagImageComposerPanel/index.jsx",
     "AagImageComposerPanel/styles.css",
     "AagImageComposerPanel/localization.js",
@@ -15,9 +23,14 @@
     "AagImageProgress/index.jsx",
     "AagImageProgress/styles.css",
     "PromptInput/index.jsx (deterministic inline patch)",
-    "ChatContainer/index.jsx (deterministic native-message augmentation patch)"
+    "ChatContainer/index.jsx (deterministic native-message augmentation patch)",
+    "ThreadContainer/index.jsx (deterministic legacy-default visibility patch)",
+    "ChatHistory/index.jsx (artifact result presentation)",
+    "HistoricalMessage/index.jsx (native output memo hydration)"
   ],
-  "publicFiles": 254,
-  "publicTreeSha256": "9d32257081a513d18a5d147ecc24d0a69aa321ab46f0a722eefda22b814ca5b9",
-  "builtAt": "2026-09-03T16:08:54.572Z"
+  "overlayTreeSha256": "148bc335b3b135c36409e0bc94f625d4046669998af388eb6e330b6a55141620",
+  "buildToolSha256": "1dc021ea2ac8e88b1a17b8ee0b6f91b9faf23f81e3339ceaad33127cf5638249",
+  "publicFiles": 255,
+  "publicTreeSha256": "0444503e17b4fccdfb0e24882eadfd1cd551fdd926af93780feade17794ea2dd",
+  "builtAt": "2026-10-05T11:12:47.690Z"
 }

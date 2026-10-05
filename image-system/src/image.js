@@ -161,7 +161,7 @@ async function inspectOutput(bytes, deps = {}) {
     if (!meta.width || !meta.height || Number(meta.pages || 1) !== 1 || !["jpeg", "png", "webp"].includes(String(meta.format))) {
       throw new Error("invalid image metadata");
     }
-    return { width: meta.width, height: meta.height, format: meta.format };
+    return { width: meta.width, height: meta.height, format: meta.format, color_profile:meta.icc ? `ICC SHA256 ${sha256(meta.icc)}` : undefined };
   } catch (error) {
     throw new AagError("OUTPUT_INVALID", "The produced artifact cannot be decoded safely.", false, error?.message);
   }

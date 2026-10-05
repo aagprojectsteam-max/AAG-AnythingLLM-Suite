@@ -189,7 +189,7 @@ test("completed identity response is recovered only through exact parent evidenc
   assert.equal(store.read(root, child.job_id).artifacts[0].sha256, responseValue.artifact_sha256);
 });
 
-test("reconciler binds an existing verified artifact to the exact pending native chat without regeneration", async () => {
+test("reconciler binds an existing verified artifact to the exact pending native chat without regeneration", async (t) => {
   const generatedImagesPath = temporary("aag-presented-");
   const bytes = fakePng();
   const digest = crypto.createHash("sha256").update(bytes).digest("hex");
@@ -211,7 +211,7 @@ test("reconciler binds an existing verified artifact to the exact pending native
     status: "COMPLETED", artifacts: [{
       artifact_id: `artifact-${crypto.randomUUID()}`,
       filename: "GEN-existing.png", url: "http://127.0.0.1:18190/files/GEN-existing.png",
-      sha256: digest, width: 8, height: 8,
+      sha256: digest, width: 8, height: 8, format: "png", verified_at: "2026-10-05T04:02:15.000Z",
     }],
   };
   let writeCount = 0;
@@ -235,11 +235,16 @@ test("reconciler binds an existing verified artifact to the exact pending native
     presentation,
     history,
   };
+  const naming = await require("./fixtures/artifact-naming").fixture(presentation.parseAagImageResult(runtime.resultEnvelope(job)));
+  t.after(() => naming.close());
+  await naming.database.$executeRawUnsafe("INSERT INTO workspaces VALUES(10, 'recovery workspace')");
+  await naming.database.$executeRawUnsafe("INSERT INTO workspace_threads VALUES(224, 10, 'recovery thread')");
   const bound = await progress.bindCompletedJob(
     job,
     { runtime, store: { write() { writeCount += 1; } } },
     server,
     {
+      naming,
       stateRoot: temporary("aag-state-"),
       fetchImpl: async () => ({ ok: true, headers: { get: () => "image/png" }, arrayBuffer: async () => bytes }),
     }
@@ -248,7 +253,7 @@ test("reconciler binds an existing verified artifact to the exact pending native
   assert.equal(writeCount, 1);
   assert.equal(chat.include, true);
   assert.equal(progress.outputHasJob(chat, job.job_id), true);
-  assert.equal(fs.readdirSync(generatedImagesPath).length, 1);
+  assert.deepEqual(fs.readdirSync(generatedImagesPath), ["AAG-Image-3-1-20261005-070215.png"]);
 });
 
 test("final output quality remains postprocess-only and identity generation routing stays locked", async () => {
@@ -267,6 +272,7 @@ test("final output quality remains postprocess-only and identity generation rout
     preservation: "none",
     final_output_quality: "enhanced_2x",
   }, owner, { deps: {
+    requireReady: async () => {},
     scheduler: { engineActivity: async () => ({ active: false }), disableHeartbeat: true, sleep: async () => {} },
     adapters: {
       execute: async () => ["base.png"],

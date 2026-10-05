@@ -1,5 +1,5 @@
 {
-  "file_count": 507,
+  "file_count": 769,
   "files": [
     {
       "repository_path": ".env.example",
@@ -9,14 +9,14 @@
     },
     {
       "repository_path": ".github/workflows/ci.yml",
-      "sha256": "927ea5923f4203ee4a0bf738650e578418254c93885caae1751caffbe586faf3",
-      "size": 740,
+      "sha256": "fafefd38aaa5e2effb295797daa07f70b8eca5dca1403747528836d1a64955d1",
+      "size": 1065,
       "type": "file"
     },
     {
       "repository_path": ".gitignore",
-      "sha256": "ece68ac605593cd84c969f616538e5a6b0b89396c7e9d3105fd05bf0d9a40501",
-      "size": 451,
+      "sha256": "8cb65b2b2a3b156bf01f6d9942fc994ceb18808bad4228967708ed45ec077871",
+      "size": 1638,
       "type": "file"
     },
     {
@@ -75,8 +75,8 @@
     },
     {
       "repository_path": "FILE-OWNERSHIP-MAP.json",
-      "sha256": "ccf6f512890baa3474064f17b8a3fa0ed942ff506a5d80968390270b6052896d",
-      "size": 105117,
+      "sha256": "1fd4d8d96974a134f27088b8fb0a73337cc96497574e351998a755f647a6f10f",
+      "size": 161067,
       "type": "file"
     },
     {
@@ -213,8 +213,8 @@
     },
     {
       "repository_path": "PATCH-MANIFEST.yaml",
-      "sha256": "03a8184469fa2c80b3ef5466401800ded592aba799f84d5cf30f6f5980d9f01c",
-      "size": 12813,
+      "sha256": "bbad21d5761faa10e034fd3a03087914aac60b685d4ef49f4cd62601f700175f",
+      "size": 50806,
       "type": "file"
     },
     {
@@ -225,8 +225,8 @@
     },
     {
       "repository_path": "README.md",
-      "sha256": "b99ef40209c2dc696b2766ea1d705b544a06fecbf7006e24262c33356d6b29cb",
-      "size": 5551,
+      "sha256": "2b6394a058e2ce79aee9a864ea11169b82e0707462bb87696f2a4ecba87de807",
+      "size": 5896,
       "type": "file"
     },
     {
@@ -543,8 +543,8 @@
     },
     {
       "repository_path": "config/compatibility.json",
-      "sha256": "bc00f62901f32adf341c55ff2e633d5deda46fd6e8e2fa5c2ae61663a75c411b",
-      "size": 1716,
+      "sha256": "35a0a8993760a93501f178452392fd2284485846288a8397d1b83f32328aab4b",
+      "size": 3532,
       "type": "file"
     },
     {
@@ -557,6 +557,12 @@
       "repository_path": "config/models.yaml",
       "sha256": "a8487142ee321e36003efbf8e03374b03ffb062d4bd8b3f48a41de9cadc994e7",
       "size": 3516,
+      "type": "file"
+    },
+    {
+      "repository_path": "config/publication-scan-allowlist.json",
+      "sha256": "72b8057158b8a6ff501a7cdb3d469f6a15d0aa371b75d207ae52a55f5b5331fe",
+      "size": 2160,
       "type": "file"
     },
     {
@@ -674,6 +680,12 @@
       "type": "file"
     },
     {
+      "repository_path": "docs/RELEASE-GOLDEN-20261005T133425Z.md",
+      "sha256": "386a4ac39a9b01987726c53f4faf5102c70df421baf7358a5ce0eb4778cd9641",
+      "size": 5292,
+      "type": "file"
+    },
+    {
       "repository_path": "docs/ROLLBACK.md",
       "sha256": "4743999a281fcfd6da95a65ea28c4c652617b772963d6b0b313772924c8764db",
       "size": 247,
@@ -745,6 +757,18 @@
       "size": 12,
       "target": "image-system",
       "type": "symlink"
+    },
+    {
+      "repository_path": "image-system/CHANGELOG.md",
+      "sha256": "6c92ad57e5cd2778be78b2d22ac4f1726a79021dac31953e31a1c669f29dfc93",
+      "size": 12279,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/README.md",
+      "sha256": "b8504f09788449c2cc1826f607acd48a17dd0a0b4e3e8b676831ac937c63b8c8",
+      "size": 4610,
+      "type": "file"
     },
     {
       "repository_path": "image-system/VERSION",
@@ -849,6 +873,24 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/docs/ANTHROPIC-TRANSPORT-HARDENING.md",
+      "sha256": "3ab9216bd9f31e3050199eadcab678e23b38a3b3d8a6534abf8c112b421e0077",
+      "size": 4011,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/ARTIFACT-FILENAMES.md",
+      "sha256": "4b3a5e5bdf44d0fc08f8a2195c5cacefff6a507a5c86c24566cd4cb4218656fd",
+      "size": 4785,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/GENERATED-IMAGE-CLEANUP.md",
+      "sha256": "014f9ceff28cbd2e13ae463f7ca3facffdaf70524867d3a800b1fb8df2f2f7c7",
+      "size": 4132,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/docs/MIGRATION.md",
       "sha256": "fa7e6cc994d9cee5180461db74036c17d4654d51cb230a8fa9be19eda9e83bdf",
       "size": 3703,
@@ -864,6 +906,12 @@
       "repository_path": "image-system/docs/PROVIDER-NEUTRAL-BOUNDARY.md",
       "sha256": "384f28deb943a6f827c3b291fbb36cfe0daabd0ffad726ac568a53138f646bad",
       "size": 6678,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/RESILIENT-RELEASE-LIFECYCLE.md",
+      "sha256": "726c734cae09670dbab89ac87510a201f64ed4406e02f92b03a11cd9aa050e19",
+      "size": 5940,
       "type": "file"
     },
     {
@@ -888,6 +936,138 @@
       "repository_path": "image-system/docs/VISUAL-ATLAS-PACKAGING.md",
       "sha256": "409d9ed5dcba52a4af1931bd1a62edec3344aed8c2b8a01350ee9e8e77dcc93c",
       "size": 5820,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/compiler.py",
+      "sha256": "bd82745d8870b1b1066e46455c25e917b0f43d77396de300faf2a39f2126e7d2",
+      "size": 13760,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/engine-budget-profile.json",
+      "sha256": "490f9829a81dd2e29fe49dfbd3bdf721dd5284d910201490f0d97bed1a924c25",
+      "size": 1785,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/failures.tsv",
+      "sha256": "70256fc1b68fc680d5e5fff96074f5bad93be703dc888ba9beb083002f175e3d",
+      "size": 2650,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/families.json",
+      "sha256": "6fe082b2d5e23b85766c3892443a6c367f6ebd2bb21dacf54e26aa0b14537aef",
+      "size": 31322,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/family-basis.tsv",
+      "sha256": "b83f8915dc027211c1cefd9813cb0322e78384181198b41f81c0124eec0a66e9",
+      "size": 7117,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/family-direction.tsv",
+      "sha256": "d4ee72ac0942e806aa49090feedf0ccdac14a91df7b6d5ca8a3ce7559316498d",
+      "size": 9408,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/rubric.json",
+      "sha256": "d6c27555302f6de0ac063e7078f9c22be47a3e492583738d68dc7a734bfa807e",
+      "size": 895,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/style-notes.tsv",
+      "sha256": "2da88baad5ab45242dabeb6f7ca8dd70e58d0aac1c91954536ff74112eda3deb",
+      "size": 115018,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/styles.json",
+      "sha256": "b0a7e3c9fa9c76b1925c9930890b5475a03a11a554217179fe573547c2a61a73",
+      "size": 1109751,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/tasks.tsv",
+      "sha256": "dc98c6615a3084fadbaa687e3364120dcbd8c292d82dc1c1a5a43aa6ceae106e",
+      "size": 2590,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge/universal.json",
+      "sha256": "84089ae0a77cb759789c87d61426ca80c91ba24e9bd7597be60787166b7a3867",
+      "size": 4812,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/knowledge.py",
+      "sha256": "b2e3ac19a1a5da01d958d690f8bfa4269bd1ef1b0bdea6a7434a1e3c83544cc3",
+      "size": 4629,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/neutral_context.py",
+      "sha256": "4f3ee0a5283e301295d105726d5fe3e244b9c14b3c7ca7e6065ebb05c9a960ad",
+      "size": 11657,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/prompt_budget.py",
+      "sha256": "0aa902e3bd96a0698bc957254042d069c8c65f6246b57ff2165b41f182948f37",
+      "size": 13757,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/schemas/style-profile.schema.json",
+      "sha256": "203629022010bbb26a43d40376f2cac21f289f77c137286c1edc888a88dffbcc",
+      "size": 1806,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/schemas/visual-plan.schema.json",
+      "sha256": "c413a41928c1088c207f51724eda282a605a6f6eae5902ab811b24bca432d1c0",
+      "size": 1997,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tests/test_knowledge_compiler.py",
+      "sha256": "b07e111c5f66cccb709506da6b6304adadcab7e6143061fccaae2f6fd3a28a7d",
+      "size": 8819,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tests/test_neutral_context.py",
+      "sha256": "4dcd9e0636633ebebaae5315698897f808746c9131a7d5a9c38595bd1b156ba9",
+      "size": 7631,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tests/test_prompt_budget.py",
+      "sha256": "e7aa41f6678c24b1964b6b8a927f316975126351f4cb2031b7853c076f1495bd",
+      "size": 14689,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tests/test_self_contained.py",
+      "sha256": "9802f3cf8425482f02774b067404a9437e442ffe9782468139d27ec8a5bdf6a2",
+      "size": 6711,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tests/tokenizer_parity.py",
+      "sha256": "d66ebe6e575a6306041a8dcbbb125d64acfe6ce3ca5dc72fd43d6dad7e8c5398",
+      "size": 2535,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/expert-prompt/tools/build_knowledge.py",
+      "sha256": "44fff34ad1be9f18dce1dcce74d2a3b0a42402b3dc0c3c5fb26c7fe715bfe8d8",
+      "size": 3508,
       "type": "file"
     },
     {
@@ -921,6 +1101,42 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/human-identity/runtime/composition_contract.py",
+      "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872",
+      "size": 3721,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
+      "size": 2295,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity/runtime/pulid_worker.py",
+      "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f",
+      "size": 14379,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity/runtime/quality_gate.py",
+      "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52",
+      "size": 12145,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
+      "size": 5950,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
+      "size": 2440,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/human-identity-scene/bin/process_inbox.py",
       "sha256": "a2a0557d78d9f1ede1f9ed948e961d30b7362b75a71a1f0392b6c95222aa2bed",
       "size": 37806,
@@ -945,33 +1161,93 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/human-identity-scene/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb",
+      "size": 2295,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity-scene/runtime/quality_gate.py",
+      "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6",
+      "size": 7327,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity-scene/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59",
+      "size": 5950,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity-scene/runtime/scene_worker.py",
+      "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5",
+      "size": 14854,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/human-identity-scene/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61",
+      "size": 2440,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/integrations/anythingllm/aagArtifactExport.js",
-      "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc",
-      "size": 11704,
+      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4",
+      "size": 19156,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/aagArtifactFormat.js",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4",
+      "size": 2253,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/aagArtifactNaming.js",
+      "sha256": "8239e24a52df06a747d9fcb475cf4354d0b166f00b6f398a84260113cf914090",
+      "size": 13295,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagArtifactPresentation.js",
-      "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870",
-      "size": 15962,
+      "sha256": "ee51e28e47223aeb8c39f828e31ba819771e5644b5e7da356cc3e90c6d611f3a",
+      "size": 15824,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/aagArtifactText.js",
+      "sha256": "f1b020ad39c14411012ae6e4e6f8dba8742c73184b445f856603d9fc2aa67a1e",
+      "size": 4487,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagComposerHistory.js",
-      "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604",
-      "size": 12434,
+      "sha256": "faa0d68ae1b2b0ab0977dec31705b4559d03a5a778bcfaf91a26273b466e3196",
+      "size": 13719,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagComposerProxy.js",
-      "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3",
-      "size": 9927,
+      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529",
+      "size": 12827,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/aagGeneratedImageCleanup.js",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192",
+      "size": 10691,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagImageProgress.js",
-      "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640",
-      "size": 15213,
+      "sha256": "3010036c80eb9c59c746105e70a8238f2bf3ba06204c6c06ac0f67c47e2e27a3",
+      "size": 18000,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/aagLifecycleProxy.js",
+      "sha256": "9cad89245265e58ad5911c399323460d1a9e8b9d5d3fa73b8c1bd2dd47fe75b8",
+      "size": 2919,
       "type": "file"
     },
     {
@@ -988,14 +1264,38 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagPublicToolSchema.js",
-      "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad",
-      "size": 7058,
+      "sha256": "c00e17e87e4e23c121b044ea83e8c97db31783d5f8c4d6ea1a97fae436da1d41",
+      "size": 9006,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/apiChatHandler.js",
       "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
       "size": 29268,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/cleanup-generated-images.js",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c",
+      "size": 1362,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/context-window-finder.offline.js",
+      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17",
+      "size": 9286,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/AagArtifactDetails.jsx",
+      "sha256": "3596659467a916a549679f33306607a4b6e404e72e2277cf8e8525c1871847c1",
+      "size": 13706,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/AagArtifactPrompt.jsx",
+      "sha256": "a46a5ef21d6f71a3235965daf0f7e19a6a6b03be2c0c346fc1e76a982cc124ff",
+      "size": 8345,
       "type": "file"
     },
     {
@@ -1012,20 +1312,20 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
-      "sha256": "31ecfdec3e860828dd8e5bfd007a7a3df05e125df227f2834883e9f7aa4c5a1c",
-      "size": 82969,
+      "sha256": "60b5d6704c5da4e455a9225f0f29975eb288d5ea8fbbcb511b2e6f8d2d5790cb",
+      "size": 92231,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
-      "sha256": "b742430ccc3de329c1a8eb4e883ce94b6ab9d8ac4282d8a6d758c19c069c138c",
-      "size": 13595,
+      "sha256": "116103536c9dce853be6b47ea160a9d6d42e351bd74fd08e4abb41a635b446cd",
+      "size": 14484,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
-      "sha256": "07a37fac06d70a83d6bbe086e033c09ab3d0b241ec7db4acac6baa5eb6585e0f",
-      "size": 23936,
+      "sha256": "1d739aa5355a62e37891341566f00516e7efd7fd890e7ed56ae2c07bfdbfc574",
+      "size": 27392,
       "type": "file"
     },
     {
@@ -1048,8 +1348,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
-      "sha256": "9d3e6c91e986fd4e26e6f9120cd70e0796e7b2cced9d41dd77183ec73c89a931",
-      "size": 9027,
+      "sha256": "936fc6d05bf0d8fcf47b5626a14d3edd3cba49987341131cd63da37e702f2259",
+      "size": 10225,
       "type": "file"
     },
     {
@@ -1059,15 +1359,141 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagArtifactFile.js",
+      "sha256": "940476c56d4442ea284f2834c198aa20c6f23879c442d13c1d6adb4aac0487ed",
+      "size": 4105,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagArtifactSerials.js",
+      "sha256": "bdbe3f03eba9135a7f21ac2bb19f34d686c7b32516c14949590adf561ed60708",
+      "size": 1370,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/atlas-prompt-disclosure.js",
+      "sha256": "c4d38a2b837cdcacd28abe543de43ad298d9dd0647fe44d4aac487d2696b1e5f",
+      "size": 7027,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/useAagArtifactText.js",
+      "sha256": "6cd43c5aca26b5d8a9eed22fb35d04ba2ec42eb3ffd60e773fbcc0c9027e568f",
+      "size": 858,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/useExpertPromptMode.js",
+      "sha256": "2172cefd29b8e0b982394570b8e94d5bad47de3d9737d22519fe1ac63dfb7e1d",
+      "size": 3684,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/useImageComposerMode.js",
+      "sha256": "3152dd864ec5f518cc98d92cbed58cee85bd7596c92cde36f666cfa082d22308",
+      "size": 2849,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/generated-image-files.js",
+      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f",
+      "size": 33557,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/generated-image-server.js",
+      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281",
+      "size": 7715,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/integrations/anythingllm/index.js",
       "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
       "size": 5164,
       "type": "file"
     },
     {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/aibitat.js",
+      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c",
+      "size": 51570,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/anthropic-transport.js",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76",
+      "size": 6875,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/anthropic.js",
+      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984",
+      "size": 18150,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/gemini.js",
+      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c",
+      "size": 15118,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/ollama.js",
+      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397",
+      "size": 18419,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/openai.js",
+      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61",
+      "size": 8646,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/ordinary-anthropic.js",
+      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad",
+      "size": 13497,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/ordinary-openai.js",
+      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9",
+      "size": 9526,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/responses-stream.js",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d",
+      "size": 16511,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/provider-streaming/tool-contract.js",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee",
+      "size": 3474,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/runtime-context-bridge/ephemeral.js",
+      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
+      "size": 30912,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/runtime-context-bridge/index.js",
+      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
+      "size": 44091,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/integrations/anythingllm/server-index.js",
       "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
       "size": 6485,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/comfyui-bridge/proxy.py",
+      "sha256": "55bc6f9e4a17a28c9ff24b2657b0aa145ae0a1863a825dd00b53cc342af60c87",
+      "size": 35050,
       "type": "file"
     },
     {
@@ -1078,14 +1504,26 @@
     },
     {
       "repository_path": "image-system/integrations/launchers/aag-image-start",
-      "sha256": "31f31ffe5ab808d24174d221f461f78e3bac9a0fe3a980b80d8b6ffa700a627b",
-      "size": 4528,
+      "sha256": "317395131358f02f0023e58edbe72c234fe8cd92fb8a2d47d35bf0368ea3af36",
+      "size": 249,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/launchers/aag-image-status",
+      "sha256": "4944b1b14c4ea05a76628a5787abb90612817a59bb81f0e2b3ab5f434dfd97b6",
+      "size": 250,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/launchers/aag-image-stop",
-      "sha256": "d9e980a275508e8c41921700158097d7854e68f09a1fc7aa82c8a9b7e477b435",
-      "size": 1630,
+      "sha256": "0fc7a7129fd77a26da89d57849efebaf3696e95121b544e7d10eefeece81a6e4",
+      "size": 248,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/llamacpp/gemma4-schema-enforced.jinja",
+      "sha256": "821843f6222fddc90cb961bb3026d43e477801b89e55f1f2b66e2b603ca024a5",
+      "size": 16490,
       "type": "file"
     },
     {
@@ -1094,6 +1532,18 @@
       "size": 58,
       "target": "../../integrations/anythingllm/model-neutral-compatibility",
       "type": "symlink"
+    },
+    {
+      "repository_path": "image-system/integrations/upscale-engine/image-hub.py",
+      "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0",
+      "size": 11818,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/upscale-engine/upscale-server.py",
+      "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b",
+      "size": 19681,
+      "type": "file"
     },
     {
       "repository_path": "image-system/libexec/aag-anythingllm-comfyui-network-watch",
@@ -1120,9 +1570,105 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/lifecycle/artifact_files.py",
+      "sha256": "5e8be9c1b1c74b2e104eeb65f8867ac347ca89d3db935885eeea2fb6391a37bf",
+      "size": 10136,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/frozen-policy.json",
+      "sha256": "3852df193a06ba38e42b81d58c0186283a0ab738d998a0ff3c10aeb92b4b6b2f",
+      "size": 3869,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/lifecycle.py",
+      "sha256": "a815dfac650315f9f7e6e23b4916abf2652397fa70645f29b702e94778b7cc79",
+      "size": 18346,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/release_candidate.py",
+      "sha256": "4a2de4110ff1cb84d4a0f7c73a7961df6b1f1362fb5b1b9ebdcde06906980618",
+      "size": 12557,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/release_closure.py",
+      "sha256": "5b848e36e9f058a722c80ce833f2a93ceaa6c37fea11e8a2e0390679231a20c1",
+      "size": 4508,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/release_deploy.py",
+      "sha256": "16077f0a3f63cd2208054deb687a6ec5e46e7a40d02f16e897433a8b3f90edb4",
+      "size": 7733,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/release_gate.py",
+      "sha256": "c639a480d8fdf01aaed702535e4f7e0b4f13f5660b25fb42790993287246a2e8",
+      "size": 5081,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/release_mounts.py",
+      "sha256": "67928b27a3974e21dff8b7cf8b6b03191c6b2a802a6af29c040f43e3fc305c0f",
+      "size": 3792,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_artifact_files.py",
+      "sha256": "c6eb2995e31e574298234d1ebd4541f3f714ef1b116f1079968b9f1d3027d806",
+      "size": 10711,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_artifact_timezone.py",
+      "sha256": "fdedd1ebd386918578c1622134fdcb4fc3f310a74e370ac4b94568e0cd563339",
+      "size": 1944,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_lifecycle.py",
+      "sha256": "7106c800df460a69bdcfbe2cd7877c3489dfbae6ba68ed0838c0273a738d79c0",
+      "size": 5668,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_release_closure.py",
+      "sha256": "0fcf2225b66bf9555e384f874a4f7ffd93de6262bcf24838db6ca187c667f4e8",
+      "size": 1893,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_release_gate.py",
+      "sha256": "9568da9c2dd9b098a3220a261ae1c27fb5b6894ecaeb3fb766de85507780e161",
+      "size": 4543,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_release_mounts.py",
+      "sha256": "636fdee0432ef398bdef70244d010edbfe52a6c8292be92d6c9756081693f887",
+      "size": 1839,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/ordinary-generation/config/ORDINARY-RECIPE.json",
+      "sha256": "5e8163e7f143c627e1e9ea9b20ab5527dc1ba39fa575a61780a5638d8762ea24",
+      "size": 3053,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/package.json",
       "sha256": "4ad6f48602ca740e2b484a75325b4f4104fac652966f87662c17c95d959efb72",
       "size": 352,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/registry/workflows.json",
+      "sha256": "94ae85e1a42a9263a8363f54e6633dc7b215783a85cfda3415f266eecba9ca17",
+      "size": 2396,
       "type": "file"
     },
     {
@@ -1144,6 +1690,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/schemas/generation-details.schema.json",
+      "sha256": "19f8360fc4c4b2c6755b6c83771a6c63b3bdf58f83fea0210f4cbe57384918bf",
+      "size": 9872,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/schemas/provider-batch.schema.json",
       "sha256": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c",
       "size": 5727,
@@ -1162,9 +1714,105 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/skills/aag-image-batch/adapters.js",
+      "sha256": "c61a545f919ebc5c8146cb1b99b8257596f048b65a646cf11e14781ebf43e89a",
+      "size": 8193,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/batch.js",
+      "sha256": "b0b549400a7581635499eb0566f0e1c78788f81ed50f42a8095c379618538c9c",
+      "size": 28033,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/comfy.js",
+      "sha256": "7006f01e8bbf148722beb9446a2e7dba453765f30ba5052505b05147cb5917e5",
+      "size": 26662,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/errors.js",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9",
+      "size": 1770,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/expert-plan.schema.json",
+      "sha256": "c413a41928c1088c207f51724eda282a605a6f6eae5902ab811b24bca432d1c0",
+      "size": 1997,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/expert-prompt.js",
+      "sha256": "5937260691072859828b90c4ab0109c01bf1e72f3f316e19064ec50ef2efec97",
+      "size": 12241,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/expert-review.js",
+      "sha256": "7db505bd3b2f87aedae5038ed1e2f638133d791cc9fa56f57693d93efddea873",
+      "size": 5269,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/generation-details-fields.json",
+      "sha256": "1c2b160c886c6a8f61fdf0e2339e4a2a68d1d362149d012f4c509c9d09932b97",
+      "size": 6088,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/generation-details.js",
+      "sha256": "bda4ac361e25eb56639b3f839a356210564f285394aea678255c3cb0647b4a51",
+      "size": 15115,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/skills/aag-image-batch/handler.js",
       "sha256": "cdcf5278d319965c8cc23069f2f2ba1c63df0b69f2f7b0835ccde9e222eb7ac7",
       "size": 579,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/human-identity.js",
+      "sha256": "a9db4f226aef2f37f6ac532e2a77f19de333aa988ae76e922939104f484c6a15",
+      "size": 14828,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/identity-routing.js",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b",
+      "size": 6999,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/identity.js",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003",
+      "size": 9979,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/image.js",
+      "sha256": "782a4e0ae09e6281148d800151f98de94c2aa790bafc73fc72ec95a96be62dac",
+      "size": 8945,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/job-index.js",
+      "sha256": "c61b42bafcaaf2443570adcd85bafcd89ae7628f4586b79b2c035336c98e89ba",
+      "size": 6582,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/lifecycle.js",
+      "sha256": "e23a576c2fd47119109f859444e5c103d757cecad2253dd862ed1a57f456b9ed",
+      "size": 1214,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/ordinary-policy.js",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356",
+      "size": 2636,
       "type": "file"
     },
     {
@@ -1174,9 +1822,183 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/skills/aag-image-batch/prompt-provenance.js",
+      "sha256": "b42eb0c3966e230e2f35129f3d2c3d09989d26d485fd25b5f079266b1b8dd473",
+      "size": 9562,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/prompt-quality.js",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f",
+      "size": 9859,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/provider-batch.schema.json",
+      "sha256": "0e04e50c023428d259c3c9372c8a739d3a155a2e063659d40106846c0f42ed3c",
+      "size": 5727,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/recovery.js",
+      "sha256": "6481049b24484e4c804c7460dfa9944b6d09a5a290b10ff4b15020ae927e5c99",
+      "size": 16497,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/runtime-release.json",
+      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec",
+      "size": 105,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/runtime.js",
+      "sha256": "36a99e080f1b500e64aa8443d8a009907e29d7a9b2082a1e7b5e468ea722c183",
+      "size": 30730,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/scene-identity.js",
+      "sha256": "373d0efa20574f8b5527490ca1367a30669fa898606197ca0f65dd5e4bec2b22",
+      "size": 13252,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/scheduler.js",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d",
+      "size": 9888,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/selective-knowledge.js",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943",
+      "size": 441,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/store.js",
+      "sha256": "b64a425521917bbb2945e514f97e008efd93ce3a4fd1d9a72037ceda4c40f4ad",
+      "size": 6963,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/util.js",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93",
+      "size": 4773,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/visual-atlas.js",
+      "sha256": "851d5a8efc085c4f11929d9f8f61f0cc1bf339699cff579602f4d562d67d6e6e",
+      "size": 13015,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-batch/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/adapters.js",
+      "sha256": "c61a545f919ebc5c8146cb1b99b8257596f048b65a646cf11e14781ebf43e89a",
+      "size": 8193,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/batch.js",
+      "sha256": "b0b549400a7581635499eb0566f0e1c78788f81ed50f42a8095c379618538c9c",
+      "size": 28033,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/comfy.js",
+      "sha256": "7006f01e8bbf148722beb9446a2e7dba453765f30ba5052505b05147cb5917e5",
+      "size": 26662,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/errors.js",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9",
+      "size": 1770,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/expert-plan.schema.json",
+      "sha256": "c413a41928c1088c207f51724eda282a605a6f6eae5902ab811b24bca432d1c0",
+      "size": 1997,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/expert-prompt.js",
+      "sha256": "5937260691072859828b90c4ab0109c01bf1e72f3f316e19064ec50ef2efec97",
+      "size": 12241,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/expert-review.js",
+      "sha256": "7db505bd3b2f87aedae5038ed1e2f638133d791cc9fa56f57693d93efddea873",
+      "size": 5269,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/generation-details-fields.json",
+      "sha256": "1c2b160c886c6a8f61fdf0e2339e4a2a68d1d362149d012f4c509c9d09932b97",
+      "size": 6088,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/generation-details.js",
+      "sha256": "bda4ac361e25eb56639b3f839a356210564f285394aea678255c3cb0647b4a51",
+      "size": 15115,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/skills/aag-image-job/handler.js",
       "sha256": "c48b17718626a68e69abaf24e87aa5eb02610836a67cfa8034755d01decbc9d4",
       "size": 587,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/human-identity.js",
+      "sha256": "a9db4f226aef2f37f6ac532e2a77f19de333aa988ae76e922939104f484c6a15",
+      "size": 14828,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/identity-routing.js",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b",
+      "size": 6999,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/identity.js",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003",
+      "size": 9979,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/image.js",
+      "sha256": "782a4e0ae09e6281148d800151f98de94c2aa790bafc73fc72ec95a96be62dac",
+      "size": 8945,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/job-index.js",
+      "sha256": "c61b42bafcaaf2443570adcd85bafcd89ae7628f4586b79b2c035336c98e89ba",
+      "size": 6582,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/lifecycle.js",
+      "sha256": "e23a576c2fd47119109f859444e5c103d757cecad2253dd862ed1a57f456b9ed",
+      "size": 1214,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/ordinary-policy.js",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356",
+      "size": 2636,
       "type": "file"
     },
     {
@@ -1186,9 +2008,183 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/skills/aag-image-job/prompt-provenance.js",
+      "sha256": "b42eb0c3966e230e2f35129f3d2c3d09989d26d485fd25b5f079266b1b8dd473",
+      "size": 9562,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/prompt-quality.js",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f",
+      "size": 9859,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/provider-job.schema.json",
+      "sha256": "7ea608f456abcf5731599e71c67560196a47698582ac7d5112dca5d4d27666c2",
+      "size": 497,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/recovery.js",
+      "sha256": "6481049b24484e4c804c7460dfa9944b6d09a5a290b10ff4b15020ae927e5c99",
+      "size": 16497,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/runtime-release.json",
+      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec",
+      "size": 105,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/runtime.js",
+      "sha256": "36a99e080f1b500e64aa8443d8a009907e29d7a9b2082a1e7b5e468ea722c183",
+      "size": 30730,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/scene-identity.js",
+      "sha256": "373d0efa20574f8b5527490ca1367a30669fa898606197ca0f65dd5e4bec2b22",
+      "size": 13252,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/scheduler.js",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d",
+      "size": 9888,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/selective-knowledge.js",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943",
+      "size": 441,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/store.js",
+      "sha256": "b64a425521917bbb2945e514f97e008efd93ce3a4fd1d9a72037ceda4c40f4ad",
+      "size": 6963,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/util.js",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93",
+      "size": 4773,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/visual-atlas.js",
+      "sha256": "851d5a8efc085c4f11929d9f8f61f0cc1bf339699cff579602f4d562d67d6e6e",
+      "size": 13015,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-job/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/adapters.js",
+      "sha256": "c61a545f919ebc5c8146cb1b99b8257596f048b65a646cf11e14781ebf43e89a",
+      "size": 8193,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/batch.js",
+      "sha256": "b0b549400a7581635499eb0566f0e1c78788f81ed50f42a8095c379618538c9c",
+      "size": 28033,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/comfy.js",
+      "sha256": "7006f01e8bbf148722beb9446a2e7dba453765f30ba5052505b05147cb5917e5",
+      "size": 26662,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/errors.js",
+      "sha256": "c2fafbce0b24da4d24423a31febb52ae5cc1e9ba234829083dcd39e048cedfc9",
+      "size": 1770,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/expert-plan.schema.json",
+      "sha256": "c413a41928c1088c207f51724eda282a605a6f6eae5902ab811b24bca432d1c0",
+      "size": 1997,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/expert-prompt.js",
+      "sha256": "5937260691072859828b90c4ab0109c01bf1e72f3f316e19064ec50ef2efec97",
+      "size": 12241,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/expert-review.js",
+      "sha256": "7db505bd3b2f87aedae5038ed1e2f638133d791cc9fa56f57693d93efddea873",
+      "size": 5269,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/generation-details-fields.json",
+      "sha256": "1c2b160c886c6a8f61fdf0e2339e4a2a68d1d362149d012f4c509c9d09932b97",
+      "size": 6088,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/generation-details.js",
+      "sha256": "bda4ac361e25eb56639b3f839a356210564f285394aea678255c3cb0647b4a51",
+      "size": 15115,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/skills/aag-image-task/handler.js",
       "sha256": "a4d55b30caf3ace2042a703e511d3a85da5293c3040df491e0ae53aaccdc165e",
       "size": 1362,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/human-identity.js",
+      "sha256": "a9db4f226aef2f37f6ac532e2a77f19de333aa988ae76e922939104f484c6a15",
+      "size": 14828,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/identity-routing.js",
+      "sha256": "b1c2c4c8de7a3300e48b9628b20df1fd0b29422154f9413b47bd033a3ef4363b",
+      "size": 6999,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/identity.js",
+      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003",
+      "size": 9979,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/image.js",
+      "sha256": "782a4e0ae09e6281148d800151f98de94c2aa790bafc73fc72ec95a96be62dac",
+      "size": 8945,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/job-index.js",
+      "sha256": "c61b42bafcaaf2443570adcd85bafcd89ae7628f4586b79b2c035336c98e89ba",
+      "size": 6582,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/lifecycle.js",
+      "sha256": "e23a576c2fd47119109f859444e5c103d757cecad2253dd862ed1a57f456b9ed",
+      "size": 1214,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/ordinary-policy.js",
+      "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356",
+      "size": 2636,
       "type": "file"
     },
     {
@@ -1198,21 +2194,99 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/skills/aag-image-task/prompt-provenance.js",
+      "sha256": "b42eb0c3966e230e2f35129f3d2c3d09989d26d485fd25b5f079266b1b8dd473",
+      "size": 9562,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/prompt-quality.js",
+      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f",
+      "size": 9859,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/provider-task.schema.json",
+      "sha256": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755",
+      "size": 13661,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/recovery.js",
+      "sha256": "6481049b24484e4c804c7460dfa9944b6d09a5a290b10ff4b15020ae927e5c99",
+      "size": 16497,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/runtime-release.json",
+      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec",
+      "size": 105,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/runtime.js",
+      "sha256": "36a99e080f1b500e64aa8443d8a009907e29d7a9b2082a1e7b5e468ea722c183",
+      "size": 30730,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/scene-identity.js",
+      "sha256": "373d0efa20574f8b5527490ca1367a30669fa898606197ca0f65dd5e4bec2b22",
+      "size": 13252,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/scheduler.js",
+      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d",
+      "size": 9888,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/selective-knowledge.js",
+      "sha256": "621279845e74c80c039f6ce2cc2ee7f8b611854a178956f8d690a0e9b8b88943",
+      "size": 441,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/store.js",
+      "sha256": "b64a425521917bbb2945e514f97e008efd93ce3a4fd1d9a72037ceda4c40f4ad",
+      "size": 6963,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/util.js",
+      "sha256": "fc4732e1fd08c6eb133679c102bf017788c0bf91cb9581800e32100624bb7f93",
+      "size": 4773,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/visual-atlas.js",
+      "sha256": "851d5a8efc085c4f11929d9f8f61f0cc1bf339699cff579602f4d562d67d6e6e",
+      "size": 13015,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/skills/aag-image-task/visual-taxonomy.json",
+      "sha256": "014fc056dde8b1da9e38efbd7042f6b06d60017d17517fe154c0c2e183d5c16d",
+      "size": 29812,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/src/adapters.js",
-      "sha256": "60f196a31891eadb11a99385bc4617b85ba56ae9d22190799a1800b03b3ef442",
-      "size": 7587,
+      "sha256": "c61a545f919ebc5c8146cb1b99b8257596f048b65a646cf11e14781ebf43e89a",
+      "size": 8193,
       "type": "file"
     },
     {
       "repository_path": "image-system/src/batch.js",
-      "sha256": "014158250112f6b8f2fe3bee66adf56df500a36c08e51c2ff78f8f6183bf8d7e",
-      "size": 26217,
+      "sha256": "b0b549400a7581635499eb0566f0e1c78788f81ed50f42a8095c379618538c9c",
+      "size": 28033,
       "type": "file"
     },
     {
       "repository_path": "image-system/src/comfy.js",
-      "sha256": "76c0e5c61c482ea566b0d194a4783b1400efd6a170e6c155ce285988b3537d37",
-      "size": 25945,
+      "sha256": "7006f01e8bbf148722beb9446a2e7dba453765f30ba5052505b05147cb5917e5",
+      "size": 26662,
       "type": "file"
     },
     {
@@ -1222,9 +2296,33 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/src/expert-prompt.js",
+      "sha256": "5937260691072859828b90c4ab0109c01bf1e72f3f316e19064ec50ef2efec97",
+      "size": 12241,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/expert-review.js",
+      "sha256": "7db505bd3b2f87aedae5038ed1e2f638133d791cc9fa56f57693d93efddea873",
+      "size": 5269,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/generation-details-fields.json",
+      "sha256": "1c2b160c886c6a8f61fdf0e2339e4a2a68d1d362149d012f4c509c9d09932b97",
+      "size": 6088,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/generation-details.js",
+      "sha256": "bda4ac361e25eb56639b3f839a356210564f285394aea678255c3cb0647b4a51",
+      "size": 15115,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/src/human-identity.js",
-      "sha256": "23c05a15eee4dfefcf532ff0abce6b63ac530da9075ad5732cdba0703bc7481b",
-      "size": 14570,
+      "sha256": "a9db4f226aef2f37f6ac532e2a77f19de333aa988ae76e922939104f484c6a15",
+      "size": 14828,
       "type": "file"
     },
     {
@@ -1241,14 +2339,32 @@
     },
     {
       "repository_path": "image-system/src/image.js",
-      "sha256": "e1f765e8248a3bccfdf41aa185723d39704c0a253016c2dcd3ffad81bf6e65d9",
-      "size": 8874,
+      "sha256": "782a4e0ae09e6281148d800151f98de94c2aa790bafc73fc72ec95a96be62dac",
+      "size": 8945,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/job-index.js",
+      "sha256": "c61b42bafcaaf2443570adcd85bafcd89ae7628f4586b79b2c035336c98e89ba",
+      "size": 6582,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/lifecycle.js",
+      "sha256": "e23a576c2fd47119109f859444e5c103d757cecad2253dd862ed1a57f456b9ed",
+      "size": 1214,
       "type": "file"
     },
     {
       "repository_path": "image-system/src/ordinary-policy.js",
       "sha256": "cd44aff11aade38fa45e41c7ba4f24a169fc8f18522740526e1ccd4eae9d1356",
       "size": 2636,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/prompt-provenance.js",
+      "sha256": "b42eb0c3966e230e2f35129f3d2c3d09989d26d485fd25b5f079266b1b8dd473",
+      "size": 9562,
       "type": "file"
     },
     {
@@ -1259,20 +2375,20 @@
     },
     {
       "repository_path": "image-system/src/recovery.js",
-      "sha256": "82d80f10d562078b1d6efb1e33922bcb1b2307932109b14d59de7147833a7798",
-      "size": 13595,
+      "sha256": "6481049b24484e4c804c7460dfa9944b6d09a5a290b10ff4b15020ae927e5c99",
+      "size": 16497,
       "type": "file"
     },
     {
       "repository_path": "image-system/src/runtime.js",
-      "sha256": "b0f72343fd9091ef33d55618d063379e9622266a116d8440853119fc92144182",
-      "size": 29144,
+      "sha256": "36a99e080f1b500e64aa8443d8a009907e29d7a9b2082a1e7b5e468ea722c183",
+      "size": 30730,
       "type": "file"
     },
     {
       "repository_path": "image-system/src/scene-identity.js",
-      "sha256": "298a238aec491f0150c799bad3433e41c36c0032167b118c24b1abee0416890a",
-      "size": 13016,
+      "sha256": "373d0efa20574f8b5527490ca1367a30669fa898606197ca0f65dd5e4bec2b22",
+      "size": 13252,
       "type": "file"
     },
     {
@@ -1289,8 +2405,8 @@
     },
     {
       "repository_path": "image-system/src/store.js",
-      "sha256": "1d75e54d471c3b9567f28af7d60874cb63059a64d34dc995f13a57c0721c144f",
-      "size": 6327,
+      "sha256": "b64a425521917bbb2945e514f97e008efd93ce3a4fd1d9a72037ceda4c40f4ad",
+      "size": 6963,
       "type": "file"
     },
     {
@@ -1301,8 +2417,14 @@
     },
     {
       "repository_path": "image-system/src/visual-atlas.js",
-      "sha256": "05c2184d298dda121bbdb7cd1faa4089975dff2d9dfd855b8deae011bee2b22a",
-      "size": 13168,
+      "sha256": "851d5a8efc085c4f11929d9f8f61f0cc1bf339699cff579602f4d562d67d6e6e",
+      "size": 13015,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/anthropic-hardening.test.js",
+      "sha256": "ec68fbdbcd73e5cf1a9287e28c8a52f601dce953dad695e04a5f4ce4c68f4f47",
+      "size": 10876,
       "type": "file"
     },
     {
@@ -1312,15 +2434,45 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/artifact-file-details.test.js",
+      "sha256": "bb84c269872b845de07e019645da4eeec5726a488cbf357bf2b1f451e12d700e",
+      "size": 15154,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/artifact-naming.test.js",
+      "sha256": "4ca563a15e8a250263d6804f8d0823759e27eae6a422b743ad48c401eda7ca0d",
+      "size": 17457,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/artifact-presentation.test.js",
-      "sha256": "9d4164a1dbf26c0e1932ed04e941c87cc0e8779e64d6c9e5532fa1b801ae648f",
-      "size": 9872,
+      "sha256": "fd0eb8b0e048390fb559f5572406e5be2a8e1c856292db67bc1459872e0b10bf",
+      "size": 13849,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/artifact-prompt-access.test.js",
+      "sha256": "678feb53cc444021761886065dba4f4f514d1f25bb0918e3af78f2451c3610ec",
+      "size": 2260,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/artifact-prompt-selection.test.js",
+      "sha256": "69e5f6cd9575ba097c1107695e359128caa6bd41dcd10206c833a01ffa58c05f",
+      "size": 2748,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/artifact-result-text.test.js",
+      "sha256": "2ed2e5e95bbf1bc220c91e458ca1c8e18a339989bdb0bf8dc84222a50bcaf021",
+      "size": 5491,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/batch.test.js",
-      "sha256": "59412f3137401d04858586711f8348af119b1a66d3baeff39c1d2d32072b9823",
-      "size": 8424,
+      "sha256": "affc5ffb3fb6d17032d571f8360687cf0c6447ed843a69b48be77840e6aa61d4",
+      "size": 9822,
       "type": "file"
     },
     {
@@ -1330,9 +2482,141 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/context-window-finder.test.js",
+      "sha256": "1b3041a07ecd6ec1e62a4b3bbd5e265c54010ddc43a1a673e66e5d72937deff2",
+      "size": 1638,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/expert-prompt-preference.test.js",
+      "sha256": "108e9616bf0ae5831af7f3dc7901cb3f963aa769e5ebac711d1a3ca6b2c54b8b",
+      "size": 4370,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/expert-protected-coverage.test.js",
+      "sha256": "d82a4b508ba8766f3ee07c944d262398e5a81fb5b65285c6fad89bba56339fd3",
+      "size": 2610,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/expert-provider-neutral.test.js",
+      "sha256": "6378fbc82fba3a7840d5b30b9d5a3ab3beb4071a071a966eb61d77b47a39d450",
+      "size": 11355,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/expert-review-format.test.js",
+      "sha256": "3c7d84d313e05ba7fd5ee32ba437b3c3fd72c9470f8d4518e0d7457ce4e9279a",
+      "size": 7401,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/expert-self-contained.test.js",
+      "sha256": "1dee2c7ccb843f3e94bc5ac7f7af8e61e6515bee833b587279e9d57af5217d77",
+      "size": 13732,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/anthropic/missing-data.sse",
+      "sha256": "c273393ae036f169e54e4b3357067947f57a9241e813a4c596e146b97465ce4b",
+      "size": 28,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/artifact-formats/verified.jpg",
+      "sha256": "45c00eda90ee90b654d23c8f239c3513331cc519832f8bdb70cfedf1cc7c42ca",
+      "size": 1050,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/artifact-formats/verified.png",
+      "sha256": "b9806123574a571c4077c05d2f0d62baf03a6642f0c725d97e7c412bea43751e",
+      "size": 490,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/artifact-formats/verified.webp",
+      "sha256": "78201321ec294c72b5194b07211935911e3cc045d0f130a4a6407f16171afcf9",
+      "size": 714,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/artifact-naming.js",
+      "sha256": "63dc837b44a911c0bb2f5dd7e3f857f29d2d81c90518cc0cfd04b8cf0f1b53b3",
+      "size": 2706,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-live-motorcycle.json",
+      "sha256": "a04a912cdec701593a19a2c62e1410d73d112e7191555671f62d453074e8d9d1",
+      "size": 5183,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/genuine-lighting-conflict.json",
+      "sha256": "3994cab07290b308139a02584309d997a0f7bb287ca6db6f6ee582118c1a4929",
+      "size": 4267,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/noir-compatible.json",
+      "sha256": "928f461e72242182d67b37c7255bee6fb54a95158ed564c138de0d1bea42eae6",
+      "size": 6419,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/original-failure.json",
+      "sha256": "d110b0430b9d8104826f7f85c7253b3cd9a2b150160fdc29039c464a81b2b5f0",
+      "size": 10992,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/product-exact.json",
+      "sha256": "d016e577baaf07f2f967327e4a6130eb4c5f01115da5ca32c051fee1f13bbbb6",
+      "size": 8360,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/vector-compatible.json",
+      "sha256": "440154dcd3c45bedb00702a675fa58525bf8152a6cd85285f61d247db4016e07",
+      "size": 5455,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/expert-protected-coverage/watercolor-translation.json",
+      "sha256": "95a60b228d3d9cd7e75cc649a83144074ecdade1c8f6caecd26e7af204b14d51",
+      "size": 6634,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/legacy-cleanup-generated-images.js",
+      "sha256": "ca43011e9851f7efb30c6b918655f23ae3d4b668d50ec6b9fc2591641d4a47d9",
+      "size": 3736,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/fixtures/sqlite-test-client.py",
+      "sha256": "6fdac337e7c347de428b9d279029bf550e6ed98edda09029dc8c3d6d370524cf",
+      "size": 560,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/frontend-export-contract.test.js",
       "sha256": "9680ce7fef16732575d8c70450731c8f36db01e8616d3d51c76c5b21fa64f496",
       "size": 1780,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/generated-image-cleanup.test.js",
+      "sha256": "3e6c5ff98b74b4a30d61f8d0624ae400c626e790a85e48685c967e4fef0cab4d",
+      "size": 13340,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/generation-details.test.js",
+      "sha256": "90f5c90d86c4fc88a1423b338805d64066e350e79ad74abf97d70ee40a1b065c",
+      "size": 17362,
       "type": "file"
     },
     {
@@ -1342,15 +2626,51 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/image-composer-mode.test.js",
+      "sha256": "7535b53f662dd7b0f0837095c8a9133a31a24c4eb56397943cccc4ee791efaa9",
+      "size": 5276,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/inline-composer-integration.test.js",
-      "sha256": "8121b511d5fb0e8fed36b0b9e7d5479989cd380f926a921b96fd5b8b575e6f18",
-      "size": 24090,
+      "sha256": "9c059baa2bc39da1e90054886ef7426645fab74fd0889f20643ddeac733984dd",
+      "size": 24266,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/integration_security_test.py",
       "sha256": "8bdffda1f8d6bf3f9149539f55685939f38c9afd7ded1f8c3c9096eabc77127f",
       "size": 23725,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/job-index.test.js",
+      "sha256": "c2ce0f5def2f4b3ef7fdfda22c8c46f3068c8c1b8149f1a0f9eb9dc9ce7da992",
+      "size": 12792,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/lifecycle.test.js",
+      "sha256": "8b8ef971afc3610909df93ddf5bc06c249a4eac5632b1390ced0e6d1fb03f100",
+      "size": 5790,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/openai-responses-stream.test.js",
+      "sha256": "011bbdcdeb47d437a7b7e5615544e35c6730e05f887119e8200a2477db3acb3e",
+      "size": 11113,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/openai-termination.test.js",
+      "sha256": "86228220f1ad5ff13ecfb9ad39ab87ce4129280f9a680ba73ece2f52206c054a",
+      "size": 7055,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/ordinary-openai.test.js",
+      "sha256": "400d38b76dd85b1c18b8fb8fa72dec4dde9fd50200db167b109c2d8cefd6749d",
+      "size": 1350,
       "type": "file"
     },
     {
@@ -1361,14 +2681,26 @@
     },
     {
       "repository_path": "image-system/tests/progress-persistence.test.js",
-      "sha256": "94083efb4d325a6a7aa59e597df1696005d51a458c765be479d2863a2cf939cd",
-      "size": 11959,
+      "sha256": "59d6cceac63e12bf722a0b6e0d2d06215ed7d643d228c28e6373c3b228c0f04a",
+      "size": 12476,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/prompt-provenance.test.js",
+      "sha256": "999e5eeffea444d5944a78220775d0830b0e2fc6364310596a2637e38bbab8f0",
+      "size": 12358,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/prompt-quality.test.js",
       "sha256": "3bea95216b088dc2f251d77d7fadca3f5c9eaea505a20831e401c8d89824f9e3",
       "size": 7129,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/provider-normalization.test.js",
+      "sha256": "299b7d326dd5b8b08efdf210472ec6a6f64cd9eee575289940511f8838029ce6",
+      "size": 9714,
       "type": "file"
     },
     {
@@ -1379,8 +2711,8 @@
     },
     {
       "repository_path": "image-system/tests/runtime.test.js",
-      "sha256": "ea6509faecd01e23edd59f4d9e1587cf8aea5bd9651271e2f178542a5d635cc6",
-      "size": 48039,
+      "sha256": "3c0126a2c07cb9d80b56f837f01996f656fe77ad5c3b773a48ff2352f7248068",
+      "size": 50234,
       "type": "file"
     },
     {
@@ -1415,14 +2747,14 @@
     },
     {
       "repository_path": "image-system/tests/visual-atlas-product.test.js",
-      "sha256": "4dc1179136fe5b3ee209dffafea46d452d3bb61ea2c56798ce0dc81d05d5b876",
-      "size": 3093,
+      "sha256": "d90d2ca71d2c0e882de431066f524e00eb1f0c1b32b7a0dfbf123fda1ffba9f0",
+      "size": 2760,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/visual-atlas.test.js",
-      "sha256": "9ca494f53121d1ec21e990cfac7255914c39fd6219ac96a1d824f4cd5b87eefd",
-      "size": 7694,
+      "sha256": "a2da3b0a4c5a055fd3d4fd3db8bd7e12bc8564fc236d145197a636760e8f9946",
+      "size": 7536,
       "type": "file"
     },
     {
@@ -1439,8 +2771,8 @@
     },
     {
       "repository_path": "image-system/tools/atlas-browser-acceptance.py",
-      "sha256": "3de4146818205057e123af741b24ecc18b06fd0f660e5ecb4bc5dc22d3a7f6dc",
-      "size": 18145,
+      "sha256": "41b75a7327178ac12d8d7745c93bda65ed4ced0073984232ea75071c9ab6e282",
+      "size": 18359,
       "type": "file"
     },
     {
@@ -1468,21 +2800,33 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/atlas-token-accounting.js",
+      "sha256": "b7f0b888cadd76521ecaa49c22867319659fb6e7a227766fdd79dc388ada9699",
+      "size": 5442,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/atlas-ui-acceptance.py",
       "sha256": "7f2fda402078222036b19e3dcb117ebf1b981b46a1b575ffde0f4e5896e27c82",
       "size": 11853,
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/browser_lifecycle.py",
+      "sha256": "1b0b012c7d22b4242b854e93afdf659a5c6f383d4d6c8a220e0b96363358ada3",
+      "size": 7656,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/build-anythingllm-frontend.js",
-      "sha256": "20acd7c046a16bebac69b50df2ef7b63fdce6545803294e0039abf01568669b8",
-      "size": 18440,
+      "sha256": "1dc021ea2ac8e88b1a17b8ee0b6f91b9faf23f81e3339ceaad33127cf5638249",
+      "size": 25490,
       "type": "file"
     },
     {
       "repository_path": "image-system/tools/build.js",
-      "sha256": "4587ee302c61987d83acce43bee7ab1152780533d82634444c016d872733ae64",
-      "size": 13298,
+      "sha256": "43ec860999356b3959a5a53ad10e92e39722a4c8beb2af35f2b551939084d552",
+      "size": 18786,
       "type": "file"
     },
     {
@@ -1505,8 +2849,8 @@
     },
     {
       "repository_path": "image-system/tools/doctor.js",
-      "sha256": "1cecd658b52692e1f5ac2f5e9223f059d4474211cedb4fd460ff9b01aa975214",
-      "size": 61720,
+      "sha256": "8e563dd686e7c5b5c0d353ab35cedec53ff159b4e06cc6cea9d369d8c8f1a8e2",
+      "size": 63065,
       "type": "file"
     },
     {
@@ -1529,8 +2873,8 @@
     },
     {
       "repository_path": "image-system/tools/governed-update.js",
-      "sha256": "6bd9e8843ebac021e00354e48a087af03829946416a2585269c37eb08c84bd1c",
-      "size": 5847,
+      "sha256": "66c1d03074ad321cad65359824662176e3006f8312fb03d91cb904bbcc2d42ed",
+      "size": 6161,
       "type": "file"
     },
     {
@@ -1588,9 +2932,15 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/test_browser_lifecycle.py",
+      "sha256": "b3cd605a170f59fa87691beb081794752dae3b9208d9c27e58a09a501891db92",
+      "size": 4615,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/visual-atlas-product.js",
-      "sha256": "a375dece0ecbbf928b71df5219e6cf3ea2633166bc65f58e90575e6593397f97",
-      "size": 12969,
+      "sha256": "f02ce6b3c12b8a261daaa9172d5ee557f4a956670fdfbf9d3f5c361a85455eb9",
+      "size": 13777,
       "type": "file"
     },
     {
@@ -1613,8 +2963,8 @@
     },
     {
       "repository_path": "image-system/upscale-engine/image-hub.py",
-      "sha256": "724dfb3b26c59b21e05304bcabeb18790b4a47d075d109b1012bb84dd3613265",
-      "size": 11927,
+      "sha256": "ff3e3bc29c4584b94e2b6c29eb8fc04edbcc6e2fdae97066345c71034ed35fb0",
+      "size": 11818,
       "type": "file"
     },
     {
@@ -1631,14 +2981,14 @@
     },
     {
       "repository_path": "image-system/upscale-engine/upscale-server.py",
-      "sha256": "9a07d57a94eb6f50f76d379c594f50b43ae924e0cd5bacba2c21465ca0a99be9",
-      "size": 19779,
+      "sha256": "8b47df878d25083c2a228cc454635577129de81ca4f9f2a1e650b87f5000130b",
+      "size": 19681,
       "type": "file"
     },
     {
       "repository_path": "install.sh",
-      "sha256": "a54e37de9cbc5f06fb2432b917d7189fcb7b49941306f51e979b63b7e2fcbee7",
-      "size": 8454,
+      "sha256": "b5ae4e96eafd9e7d9f5d3fb0ae824e95e51eedc2602b13a46f163cb3482cabeb",
+      "size": 8969,
       "type": "file"
     },
     {
@@ -1667,8 +3017,8 @@
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/compatibility.py",
-      "sha256": "51a8cf6f890d470ea420575db189422cd21216af90005ccfb824ec57fc155bd0",
-      "size": 78390,
+      "sha256": "d83f0a86c2db039a484f32f7ceaf0a217b160e8e79c683421981fc4bd9a2d60e",
+      "size": 80916,
       "type": "file"
     },
     {
@@ -1702,9 +3052,15 @@
       "type": "file"
     },
     {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/expert_schema.py",
+      "sha256": "5e5fc5e55e27ba310413b161bd3089c466335c9fc94a21302cf27a91a533a310",
+      "size": 763,
+      "type": "file"
+    },
+    {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/server.py",
-      "sha256": "9550a7727e7722c7d9fc8cccfefcdcf292edfff33ce937b69fb12018680b647a",
-      "size": 66368,
+      "sha256": "0cef215c04234f16e01bf61d29f1c1e1be6de780471d50b3392936f73857e3a4",
+      "size": 77377,
       "type": "file"
     },
     {
@@ -1720,9 +3076,15 @@
       "type": "file"
     },
     {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_generation_provenance.py",
+      "sha256": "773a6c3c83f4af435b6634ec46a4a864952a27a16bcc694c5fb15d94a389d76a",
+      "size": 2685,
+      "type": "file"
+    },
+    {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_http_boundary.py",
-      "sha256": "b16faa95958041594d4591ade52d1b9b4b74819a7de8eedfc6359b4650953d02",
-      "size": 34873,
+      "sha256": "f3514e65e07adc704984480222fc1c56dfa68a340a1bbdeccd3df9594b96dfcf",
+      "size": 34553,
       "type": "file"
     },
     {
@@ -1732,9 +3094,15 @@
       "type": "file"
     },
     {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_streaming.py",
+      "sha256": "985f0c69a6ee0f14ca19020ef03f5460411c8c0d1a36f2463b8315b391437bfd",
+      "size": 15715,
+      "type": "file"
+    },
+    {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_visual_atlas.py",
-      "sha256": "40fcbd287cea3c9d39141894cee79ecd631d29a9f11aa01c6323009005598a8b",
-      "size": 7710,
+      "sha256": "ce821794769cd4c60fffb9a08ec3282d7dec8e516fe742e9961fe1cf0fadb23e",
+      "size": 7417,
       "type": "file"
     },
     {
@@ -1744,9 +3112,15 @@
       "type": "file"
     },
     {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/text_stream.py",
+      "sha256": "db33f4b7a2dd007e65be38a66d990896e1b2d8902f5cab11c78487a5738779b6",
+      "size": 6329,
+      "type": "file"
+    },
+    {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/visual_atlas.py",
-      "sha256": "eebf8ebed4d98919906ebf9a9e3c02cbd64ce149e3af252bb0e5dde2ee737699",
-      "size": 16709,
+      "sha256": "8ce1eceed4e91f7a65417473011b100d964f88bac961457a051310b778c61ca8",
+      "size": 15648,
       "type": "file"
     },
     {
@@ -1754,6 +3128,13 @@
       "sha256": "1aaf4e3f77fe7461a9fc439c0bac38e3480d0739ffab6d1f26bfcd5c2513c481",
       "size": 35065,
       "type": "file"
+    },
+    {
+      "repository_path": "integrations/expert-prompt",
+      "sha256": "c92cdb01e159fad3d77a2b33821fa518d75b526f9c1035b163846fda046783f8",
+      "size": 29,
+      "target": "../image-system/expert-prompt",
+      "type": "symlink"
     },
     {
       "repository_path": "integrations/llamacpp/aag-llama-control",
@@ -1766,6 +3147,13 @@
       "sha256": "821843f6222fddc90cb961bb3026d43e477801b89e55f1f2b66e2b603ca024a5",
       "size": 16490,
       "type": "file"
+    },
+    {
+      "repository_path": "integrations/schemas",
+      "sha256": "3e1f93d9e7a93028e48b182bf106b7b23cb34819f4f56248a8b610adc46f572f",
+      "size": 23,
+      "target": "../image-system/schemas",
+      "type": "symlink"
     },
     {
       "repository_path": "integrations/ubuntu-agent/aag_agent/__init__.py",
@@ -2645,32 +4033,50 @@
     },
     {
       "repository_path": "manifests/AAG-BUILD-PROVENANCE.json",
-      "sha256": "d55d6b848430852a5eea512696e285b4b315a87c3a361de6c72ce3078f0ed6b1",
-      "size": 921,
+      "sha256": "1c9caa8c166d2d14bc47229442bede00aed8c2aaf85d4769b1ec59f6520eb0c1",
+      "size": 1569,
+      "type": "file"
+    },
+    {
+      "repository_path": "manifests/CLOSURE-BUILD-PROVENANCE.json",
+      "sha256": "e26d389fdb4da3ba49bb9c8239e1a5494232778ac31cb4b7a2d0485305fea84d",
+      "size": 1934,
+      "type": "file"
+    },
+    {
+      "repository_path": "manifests/GOLDEN-20261005T133425Z.json",
+      "sha256": "ea5fcedb3f0ce9f4910a7bc4b3daf215368c71f78dae728c2b4aea72079ed800",
+      "size": 133377,
+      "type": "file"
+    },
+    {
+      "repository_path": "manifests/GOLDEN-INSTALL-MAP.json",
+      "sha256": "0acff142229c22e171851ecbb2bff93b17ae6eed702d8e8d3666d6bc5b656444",
+      "size": 21282,
       "type": "file"
     },
     {
       "repository_path": "manifests/LIVE-TO-REPOSITORY-MAP.csv",
-      "sha256": "8a7bda896eb485175383a842d35ed0f718e677a027644083da0826cd0cb25d11",
-      "size": 1213,
+      "sha256": "2f3d740cc5e5ee1acacde81fca4dfb75a7536f027a09cb30efb8aa2d3af963b6",
+      "size": 39358,
       "type": "file"
     },
     {
       "repository_path": "manifests/ORPHAN-UNKNOWN.md",
-      "sha256": "997931dd5f507a17773c4396fe3c00379482636ddc45ed1d79c897377dc96f76",
-      "size": 1129,
+      "sha256": "f4dd9667c6db20a90cd9c5901e0c393b04c80134dce901d58c0c89ac1b3b506b",
+      "size": 808,
       "type": "file"
     },
     {
       "repository_path": "manifests/RELEASE-STATE.json",
-      "sha256": "de6491860283f1755aa9fd2a6b904777c30c77776cd0d7bf6873f7af5d8a0408",
-      "size": 844,
+      "sha256": "53610f89025a5a9955f72fca10ec2780a60bb0b89b81a542591a78f13b7f3cf8",
+      "size": 255,
       "type": "file"
     },
     {
       "repository_path": "manifests/STAGED-MANIFEST.json",
-      "sha256": "c01bbb26637f3b55c4dcc2a2f6c5256193567fa16afcc8d1112900af973344ee",
-      "size": 51740,
+      "sha256": "306f2d8105ee450162c42e255fbb5b4a5fc7f390aa8ee47c6174d460a2b360c9",
+      "size": 14240,
       "type": "file"
     },
     {
@@ -2771,26 +4177,44 @@
     },
     {
       "repository_path": "patches/anythingllm/aagArtifactExport.js",
-      "sha256": "6598f7aac557c6243eab39a1dbae04357e9b7d7f31e073ac3a45afd3638051fc",
-      "size": 11704,
+      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4",
+      "size": 19156,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/aagArtifactFormat.js",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4",
+      "size": 2253,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/aagArtifactNaming.js",
+      "sha256": "8239e24a52df06a747d9fcb475cf4354d0b166f00b6f398a84260113cf914090",
+      "size": 13295,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagArtifactPresentation.js",
-      "sha256": "202a8477b82d1ced7ef66b269ffbc48dc1b47cf123b7422cc8416683b632d870",
-      "size": 15962,
+      "sha256": "ee51e28e47223aeb8c39f828e31ba819771e5644b5e7da356cc3e90c6d611f3a",
+      "size": 15824,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/aagArtifactText.js",
+      "sha256": "f1b020ad39c14411012ae6e4e6f8dba8742c73184b445f856603d9fc2aa67a1e",
+      "size": 4487,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagComposerHistory.js",
-      "sha256": "fe27232f8a5dfeab139d6fbd19d38ba4139daadc11e408650b4691617d007604",
-      "size": 12434,
+      "sha256": "faa0d68ae1b2b0ab0977dec31705b4559d03a5a778bcfaf91a26273b466e3196",
+      "size": 13719,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/aagComposerProxy.js",
-      "sha256": "aa51e5c84594a4d7f5c1be85574ff52970e0a7b0218f3cc3fdee8ce4e1e0e0c3",
-      "size": 9927,
+      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529",
+      "size": 12827,
       "type": "file"
     },
     {
@@ -2801,8 +4225,14 @@
     },
     {
       "repository_path": "patches/anythingllm/aagImageProgress.js",
-      "sha256": "b24a8be29a23a2e4bb3b9b4eea63f6bd07e45dae8b7dbd1a140efbc526087640",
-      "size": 15213,
+      "sha256": "3010036c80eb9c59c746105e70a8238f2bf3ba06204c6c06ac0f67c47e2e27a3",
+      "size": 18000,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/aagLifecycleProxy.js",
+      "sha256": "9cad89245265e58ad5911c399323460d1a9e8b9d5d3fa73b8c1bd2dd47fe75b8",
+      "size": 2919,
       "type": "file"
     },
     {
@@ -2819,20 +4249,26 @@
     },
     {
       "repository_path": "patches/anythingllm/aagPublicToolSchema.js",
-      "sha256": "6f267f54a44efa75f85715c89cd5d9778ebdc66b7e58685ea069281c330491ad",
-      "size": 7058,
+      "sha256": "c00e17e87e4e23c121b044ea83e8c97db31783d5f8c4d6ea1a97fae436da1d41",
+      "size": 9006,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/agentFileServer.js",
+      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281",
+      "size": 7715,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-ephemeral.js",
-      "sha256": "cc1b4ecaf43a21ef3277a25c6965bc6aa605b1b2e65469d7ea38842112b5a8e5",
-      "size": 29338,
+      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
+      "size": 30912,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-index.js",
-      "sha256": "c6ad7dec0e65e82c0b0b5862d53771943c8b90df8a9486ad954f71bd49b67231",
-      "size": 42641,
+      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
+      "size": 44091,
       "type": "file"
     },
     {
@@ -2855,8 +4291,14 @@
     },
     {
       "repository_path": "patches/anythingllm/context-window-finder.offline.js",
-      "sha256": "a746cdd5b09d86404af6bfb93f10b0c28d41349fc2afbbb6f9d2f987fef0c9f0",
-      "size": 7941,
+      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17",
+      "size": 9286,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/ephemeral.js",
+      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
+      "size": 30912,
       "type": "file"
     },
     {
@@ -2867,14 +4309,134 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/PromptInput-index.jsx",
-      "sha256": "5f74be90b1c218ca61569a2e16c9f7eba78720e7fdae8c831fb0591c0ab8efab",
-      "size": 19273,
+      "sha256": "c2c8bf31ba7ebb01d49d6782635b1edd4f7bdf08c31ff1b8e546a53a531db91f",
+      "size": 19940,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/ThreadContainer-index.jsx",
+      "sha256": "7e93305c9624fd79149db43f26fd8684f954c0d077d9978bb2a2c1dae4c36929",
+      "size": 7974,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
+      "sha256": "c381e0f44a8af36bb925c9e27742b868f0cf8d0c4ec35b0c35ee6608ee7e981b",
+      "size": 12042,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
+      "sha256": "b56b489c0494f5bd347b227be542bbfe24481a3c06cb921c4708da2a95c7eb7f",
+      "size": 11041,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
+      "sha256": "063fb3252902687e5f81a0ecad01fd3f4c77ee937966720fcd1b59cbffa1e916",
+      "size": 4477,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/jobs/aagGeneratedImageCleanup.js",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192",
+      "size": 10691,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/jobs/cleanup-generated-images.js",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c",
+      "size": 1362,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/anthropic/index.js",
+      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad",
+      "size": 13497,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/genericOpenAi/index.js",
+      "sha256": "436badcf5e29b50a271581235c02b5fcb1711aa94f61bf6f830195ff422b325d",
+      "size": 18127,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/openAi/index.js",
+      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9",
+      "size": 9526,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/index.js",
+      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c",
+      "size": 51570,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76",
+      "size": 6875,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/anthropic.js",
+      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984",
+      "size": 18150,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/gemini.js",
+      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c",
+      "size": 15118,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/ollama.js",
+      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397",
+      "size": 18419,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/openai.js",
+      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61",
+      "size": 8646,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/responses-stream.js",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d",
+      "size": 16511,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/tool-contract.js",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee",
+      "size": 3474,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/chats/commands/aagIdentity.js",
+      "sha256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a",
+      "size": 6662,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/chats/commands/aagOrdinary.js",
+      "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2",
+      "size": 9779,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/golden/server/utils/files/index.js",
+      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f",
+      "size": 33557,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/index.js",
-      "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164,
+      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
+      "size": 44091,
       "type": "file"
     },
     {
@@ -2887,6 +4449,12 @@
       "repository_path": "patches/anythingllm/toolReranker.js",
       "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
       "size": 10237,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/workspaceToolPolicy.js",
+      "sha256": "f99c1cdf52e7ebe14caded22cbca0a3221fc8e5e4c5ac1db6f9fcf4dd62ace18",
+      "size": 18400,
       "type": "file"
     },
     {
@@ -2951,14 +4519,14 @@
     },
     {
       "repository_path": "tools/build-inventory.py",
-      "sha256": "593b6ee1a4934c2edd6fc06291c06defb41b9c7a76f18f5a83aee232ec330b18",
-      "size": 1123,
+      "sha256": "f6dd888018fee702a9e01fdb4f4fb4bc56c0d8b2a19e51123ea61129dc888fcb",
+      "size": 1133,
       "type": "file"
     },
     {
       "repository_path": "tools/build-release-metadata.py",
-      "sha256": "aec4d645552a501706e8264084035f67e15bac99ba0c8c3852d5625476716d74",
-      "size": 8215,
+      "sha256": "9e739043870b627ae945bfd767416e810ff1dbd3ca72bfa30b184a87953920e8",
+      "size": 9019,
       "type": "file"
     },
     {
@@ -2980,6 +4548,12 @@
       "type": "file"
     },
     {
+      "repository_path": "tools/publication-scan.py",
+      "sha256": "ed1b0dc240e7e7dd29cefb470436bf38b6d559ed06176f4143d5d5ead833dbde",
+      "size": 2760,
+      "type": "file"
+    },
+    {
       "repository_path": "tools/render-units.py",
       "sha256": "3e5ff2339f842482fa69596f4e271c104b6e1fd6fd08a58c92f76fabc91f90bd",
       "size": 3121,
@@ -2987,8 +4561,8 @@
     },
     {
       "repository_path": "tools/sanitize.sh",
-      "sha256": "c95fb88962ef70a6a07a5211f8e3e1b8f0b8dc67f74ec63a2e4de6f83ca880dd",
-      "size": 1252,
+      "sha256": "dd403635a344691a8a663d8ba2c03ed0d2e21296f2093f19137c3182bfc053a8",
+      "size": 156,
       "type": "file"
     },
     {
@@ -3046,6 +4620,6 @@
       "type": "file"
     }
   ],
-  "generated_utc": "2026-10-02",
+  "generated_utc": "2026-10-05",
   "schema_version": 1
 }

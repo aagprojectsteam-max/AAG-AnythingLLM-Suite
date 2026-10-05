@@ -9,8 +9,18 @@ jobs:
         with: {node-version: '22'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: chmod +x doctor.sh tools/sanitize.sh
-      - run: ./doctor.sh --package
-      - run: python -m unittest discover -s image-system/integrations 2>/dev/null || true
-      - run: python -m unittest discover -s integrations/anythingllm/model-neutral-compatibility -p 'test_visual_atlas*.py'
-      - run: node --test image-system/tests/visual-atlas*.test.js image-system/tests/inline-composer-integration.test.js image-system/tests/composer-native-chat.test.js
+      - name: Package and publication gates
+        run: ./doctor.sh --package
+      - name: Portable Golden regressions
+        run: >-
+          node --test
+          image-system/tests/inline-composer-integration.test.js
+          image-system/tests/image-composer-mode.test.js
+          image-system/tests/expert-prompt-preference.test.js
+          image-system/tests/job-index.test.js
+          image-system/tests/generated-image-cleanup.test.js
+          image-system/tests/artifact-naming.test.js
+          image-system/tests/artifact-result-text.test.js
+      # Full Atlas and Expert integration suites additionally require the
+      # authorized external pixels and offline tokenizer, excluded from Git.
+      # Their Golden closure results are recorded in the release documentation.

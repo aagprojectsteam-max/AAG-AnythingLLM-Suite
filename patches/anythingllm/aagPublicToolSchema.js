@@ -4,6 +4,18 @@ const fs = require("fs");
 const path = require("path");
 
 const MAX_SCHEMA_BYTES = 64 * 1024;
+function expertPublicSchema(schema, plugin, runtime = {}, options = {}) {
+  if (!runtime.AAG_EXPERT_ENVELOPE || !["aag-image-task", "aag-image-batch"].includes(plugin.name)) return schema;
+  const root = path.resolve(options.pluginsRoot || process.env.STORAGE_DIR || "/app/server/storage", "plugins", "agent-skills", plugin.name);
+  const plan = JSON.parse(fs.readFileSync(path.join(root, "expert-plan.schema.json"), "utf8"));
+  const expanded = JSON.parse(JSON.stringify(schema));
+  const item = plugin.name === "aag-image-task" ? expanded : expanded.properties.items.items;
+  item.properties.prompt.maxLength = 8000;
+  item.properties.prompt.description += " Expert ON: author useful detailed prose within 512 exact image-encoder tokens including envelope; author one self-contained image prompt, preserving user requirements semantically in protected P1/P2 prose. Never mechanically prepend the source request or its wrapper; source_text belongs only in the plan. Required visible text remains exact. No truncation.";
+  item.properties.expert_plan = plan;
+  item.required = [...item.required, "expert_plan"];
+  return expanded;
+}
 
 function sameValue(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
@@ -105,10 +117,20 @@ function withPublicToolSchema(plugin, configuredPlugin, options = {}) {
     originalSetup.call(this, aibitat);
     const registered = aibitat.functions.get(plugin.name);
     if (!registered) throw new Error("Imported skill was not registered before public schema installation.");
-    registered.parameters = JSON.parse(JSON.stringify(schema));
+    const baseSchema = JSON.parse(JSON.stringify(schema));
+    Object.defineProperty(registered, "parameters", { configurable: true, enumerable: true,
+      get: () => expertPublicSchema(baseSchema, plugin, registered.runtimeArgs, options) });
+    // Private callback to the already selected provider. Never exposed in tool
+    // arguments/schema, never an independent provider selector.
+    if (["aag-image-task", "aag-image-batch"].includes(plugin.name) && registered.runtimeArgs) {
+      registered.runtimeArgs.AAG_EXPERT_REVIEW = messages => aibitat.reviewExpertPrompt(messages);
+    }
     const originalHandler = registered.handler;
     if (typeof originalHandler !== "function") throw new Error("Imported skill does not expose a callable handler.");
     registered.handler = async function closedPublicSchemaHandler(args) {
+      if (registered.runtimeArgs) registered.runtimeArgs.AAG_PROMPT_AUTHORING_IDENTITY =
+        aibitat.activeProviderIdentity ? {...aibitat.activeProviderIdentity} : null;
+      const schema = expertPublicSchema(baseSchema, plugin, registered.runtimeArgs, options);
       const validation = validatePublicArguments(schema, args);
       if (!validation.valid) {
         aibitat.skipHandleExecution = true;
@@ -123,4 +145,4 @@ function withPublicToolSchema(plugin, configuredPlugin, options = {}) {
   return configuredPlugin;
 }
 
-module.exports = { MAX_SCHEMA_BYTES, loadPublicSchema, publicSchemaFailure, validatePublicArguments, withPublicToolSchema };
+module.exports = { expertPublicSchema, MAX_SCHEMA_BYTES, loadPublicSchema, publicSchemaFailure, validatePublicArguments, withPublicToolSchema };

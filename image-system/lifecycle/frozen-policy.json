@@ -1,0 +1,94 @@
+{
+  "schema": "aag.frozen-policy.v1",
+  "baseline": "baseline-doctor.log passed 2026-10-04; existing accepted contracts",
+  "files": [
+    {
+      "path": "image-agent/expert-prompt/engine-budget-profile.json",
+      "sha256": "490f9829a81dd2e29fe49dfbd3bdf721dd5284d910201490f0d97bed1a924c25"
+    },
+    {
+      "path": "image-agent/human-identity-scene/bin/process_inbox.py",
+      "sha256": "6a4cc72f5b16b0916fd205e28e5a6944661e67233c6c9d46633bb68bd81abee4"
+    },
+    {
+      "path": "image-agent/human-identity-scene/config/PRODUCTION-CONFIG.json",
+      "sha256": "fdc5b1cd5dde0c51687dac82d71e7f548f7b46dd0e32f880ff3be906262b03ce"
+    },
+    {
+      "path": "image-agent/human-identity-scene/config/SCENE-CONTRACT.json",
+      "sha256": "09c8869e0f9d7099ee4a8b2bce6c8c041e449becb5924240a950352a14b18de6"
+    },
+    {
+      "path": "image-agent/human-identity-scene/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "image-agent/human-identity-scene/runtime/quality_gate.py",
+      "sha256": "588559aa3e52b929c5a26ff42d99debc9d71f63dcc2c883075c78955faebd7d6"
+    },
+    {
+      "path": "image-agent/human-identity-scene/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "image-agent/human-identity-scene/runtime/scene_worker.py",
+      "sha256": "a59168c1e14179cb86a7f43707efd7ecaf36ec84ad07e8af8d00ef18031bb2b5"
+    },
+    {
+      "path": "image-agent/human-identity-scene/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "image-agent/human-identity/bin/process_inbox.py",
+      "sha256": "d06068a911998b4f4f5b22072b7ef280ce2a9ec1a6bcaf972dd8ca9e80f30137"
+    },
+    {
+      "path": "image-agent/human-identity/config/CANDIDATE-ASSET-MANIFEST.json",
+      "sha256": "c58d0e0cf336814c481475ec8e15b91d01b7425417cf77ccbb68b1645fa458a5"
+    },
+    {
+      "path": "image-agent/human-identity/config/CANDIDATE-SBOM.json",
+      "sha256": "aff54a0ae53323ff61a57a5b96349c723a6abda4a8fd57be777b1359590f59ca"
+    },
+    {
+      "path": "image-agent/human-identity/config/CONTRACT-B-FREEZE.json",
+      "sha256": "d362463e47bed1622b52f7e928e07b92634133810d69785c7ff61bf0bad5e0b4"
+    },
+    {
+      "path": "image-agent/human-identity/config/PRODUCTION-CONFIG.json",
+      "sha256": "a36d9a695b3ef13648945d4ff420fea71fdfa67a10493e21c98ef2d4d7e07ff2"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/composition_contract.py",
+      "sha256": "799a6a24595f99f8e37a024a7a3b54deae2f4e391fc43ff8c91390d23e81e872"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/evaluator_core.py",
+      "sha256": "f244e9233ab5169644a09afdf5a639d258233a413f60aaa5ab5a44e3911cc4eb"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/pulid_worker.py",
+      "sha256": "2b130be8522115262e72eedac4ae9184688687030375b3d88794d9d6e7900a3f"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/quality_gate.py",
+      "sha256": "97ceb63ff2ada46ea4fe89248aaee2f9c32b67f34403ed65914d6f0ca8c9fa52"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/reference_validator.py",
+      "sha256": "95b2b270bd11ee4ae9dcf5637994b8f8a049c6234fbcc4670abd3281d43cdf59"
+    },
+    {
+      "path": "image-agent/human-identity/runtime/validate_reference_cli.py",
+      "sha256": "e60936f1a66ea6f4a1fd0681527ce62934e4312bf111427dcfc315bb3a2a1f61"
+    },
+    {
+      "path": "image-agent/ordinary-generation/config/ORDINARY-RECIPE.json",
+      "sha256": "5e8163e7f143c627e1e9ea9b20ab5527dc1ba39fa575a61780a5638d8762ea24"
+    },
+    {
+      "path": "image-agent/registry/workflows.json",
+      "sha256": "94ae85e1a42a9263a8363f54e6633dc7b215783a85cfda3415f266eecba9ca17"
+    }
+  ]
+}

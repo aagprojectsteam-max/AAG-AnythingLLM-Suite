@@ -1,0 +1,10 @@
+{
+ "$schema":"http://json-schema.org/draft-07/schema#",
+ "title":"Expert authored VisualPlan",
+ "type":"object","additionalProperties":false,"required":["facts","fragments","conflicts"],
+ "properties":{
+  "facts":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["dimension","classification","text","source_text"],"properties":{"dimension":{"enum":["subjects","count","attributes_ownership","actions_poses","relationships_contact","required_objects","forbidden_objects","environment","foreground","midground","background","composition_focal_hierarchy","viewpoint_perspective_depth","lighting","palette","materials_textures","atmosphere","style_constraints","text_requirements","structural_risks","exclusions"]},"classification":{"enum":["USER_REQUIRED","USER_PREFERRED","SAFE_INFERENCE","OPTIONAL_ENRICHMENT","DO_NOT_INVENT"]},"text":{"type":"string","minLength":1,"maxLength":8000},"source_text":{"type":"string","maxLength":4000}}}},
+  "fragments":{"description":"Protect ALL explicit user content in P1, regardless of dimension: subjects, lighting, background, framing, colors, materials and exclusions. Prefer one complete P1 paragraph covering the whole request, plus P2 selected-style traits. P3/P4 contain only unrequested compatible additions. Before submission, verify every USER_REQUIRED fact remains represented if P3/P4 are removed. Never demote required content to optional art direction.","type":"array","minItems":2,"maxItems":24,"items":{"type":"object","additionalProperties":false,"required":["id","priority","text"],"properties":{"id":{"type":"string","pattern":"^[a-z][a-z0-9-]{0,63}$"},"priority":{"description":"1 = required user content (all dimensions), 2 = protected selected-style traits, 3/4 = unrequested compatible additions only. Priority follows necessity, not topic.","type":"integer","minimum":1,"maximum":4},"text":{"type":"string","minLength":1,"maxLength":8000}}}},
+  "conflicts":{"type":"array","maxItems":0}
+ }
+}

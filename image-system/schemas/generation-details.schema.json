@@ -1,0 +1,429 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:aag:generation-details:v1",
+  "title": "Immutable per-artifact generation details",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "job_id",
+    "child_job_id",
+    "artifact_id",
+    "artifact_sha256",
+    "artifact_index",
+    "recorded_at",
+    "source",
+    "fields",
+    "sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "aag.generation-details.v1"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "job_id": {
+      "type": "string"
+    },
+    "child_job_id": {
+      "type": "string"
+    },
+    "artifact_id": {
+      "type": "string"
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact_index": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recorded_at": {
+      "type": "string"
+    },
+    "source": {
+      "const": "execution-capture"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "composer_mode",
+        "intended_use",
+        "quantity",
+        "artifact_index",
+        "requested_aspect",
+        "requested_dimensions",
+        "base_dimensions",
+        "generated_dimensions",
+        "pre_upscale_dimensions",
+        "post_upscale_dimensions",
+        "final_dimensions",
+        "final_aspect",
+        "format",
+        "mime",
+        "file_size",
+        "color_profile",
+        "engine",
+        "engine_version",
+        "image_model",
+        "model_family",
+        "text_encoder",
+        "vae",
+        "adapters",
+        "controlnet",
+        "requested_quality",
+        "normalized_quality",
+        "resolved_quality",
+        "requested_output_quality",
+        "resolved_output_quality",
+        "requested_family",
+        "requested_subfamily",
+        "requested_atlas_mode",
+        "resolved_family",
+        "resolved_style",
+        "background",
+        "visible_text",
+        "language",
+        "expert",
+        "authoring_provider",
+        "authoring_model",
+        "semantic_review",
+        "review_provider",
+        "review_model",
+        "seed",
+        "steps",
+        "sampler",
+        "scheduler",
+        "guidance",
+        "denoise",
+        "batch_size",
+        "upscaling",
+        "upscaler",
+        "upscale_factor",
+        "processing_stages",
+        "reference_mode",
+        "reference_count",
+        "reference_role",
+        "reference_type",
+        "identity_mode",
+        "constraints",
+        "generated_at",
+        "evidence_source",
+        "checkpoint",
+        "workflow_id",
+        "workflow_version",
+        "workflow_hash",
+        "resolved_route",
+        "style_id",
+        "family_id",
+        "subfamily_id",
+        "atlas_version",
+        "atlas_profile",
+        "job_id",
+        "artifact_id",
+        "source_artifact_id",
+        "artifact_hash",
+        "aag_release",
+        "runtime_release",
+        "composer_version",
+        "schema_version"
+      ],
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/field"
+        },
+        "composer_mode": {
+          "$ref": "#/$defs/field"
+        },
+        "intended_use": {
+          "$ref": "#/$defs/field"
+        },
+        "quantity": {
+          "$ref": "#/$defs/field"
+        },
+        "artifact_index": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_aspect": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "base_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "generated_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "pre_upscale_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "post_upscale_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "final_dimensions": {
+          "$ref": "#/$defs/field"
+        },
+        "final_aspect": {
+          "$ref": "#/$defs/field"
+        },
+        "format": {
+          "$ref": "#/$defs/field"
+        },
+        "mime": {
+          "$ref": "#/$defs/field"
+        },
+        "file_size": {
+          "$ref": "#/$defs/field"
+        },
+        "color_profile": {
+          "$ref": "#/$defs/field"
+        },
+        "engine": {
+          "$ref": "#/$defs/field"
+        },
+        "engine_version": {
+          "$ref": "#/$defs/field"
+        },
+        "image_model": {
+          "$ref": "#/$defs/field"
+        },
+        "model_family": {
+          "$ref": "#/$defs/field"
+        },
+        "text_encoder": {
+          "$ref": "#/$defs/field"
+        },
+        "vae": {
+          "$ref": "#/$defs/field"
+        },
+        "adapters": {
+          "$ref": "#/$defs/field"
+        },
+        "controlnet": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_quality": {
+          "$ref": "#/$defs/field"
+        },
+        "normalized_quality": {
+          "$ref": "#/$defs/field"
+        },
+        "resolved_quality": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_output_quality": {
+          "$ref": "#/$defs/field"
+        },
+        "resolved_output_quality": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_family": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_subfamily": {
+          "$ref": "#/$defs/field"
+        },
+        "requested_atlas_mode": {
+          "$ref": "#/$defs/field"
+        },
+        "resolved_family": {
+          "$ref": "#/$defs/field"
+        },
+        "resolved_style": {
+          "$ref": "#/$defs/field"
+        },
+        "background": {
+          "$ref": "#/$defs/field"
+        },
+        "visible_text": {
+          "$ref": "#/$defs/field"
+        },
+        "language": {
+          "$ref": "#/$defs/field"
+        },
+        "expert": {
+          "$ref": "#/$defs/field"
+        },
+        "authoring_provider": {
+          "$ref": "#/$defs/field"
+        },
+        "authoring_model": {
+          "$ref": "#/$defs/field"
+        },
+        "semantic_review": {
+          "$ref": "#/$defs/field"
+        },
+        "review_provider": {
+          "$ref": "#/$defs/field"
+        },
+        "review_model": {
+          "$ref": "#/$defs/field"
+        },
+        "seed": {
+          "$ref": "#/$defs/field"
+        },
+        "steps": {
+          "$ref": "#/$defs/field"
+        },
+        "sampler": {
+          "$ref": "#/$defs/field"
+        },
+        "scheduler": {
+          "$ref": "#/$defs/field"
+        },
+        "guidance": {
+          "$ref": "#/$defs/field"
+        },
+        "denoise": {
+          "$ref": "#/$defs/field"
+        },
+        "batch_size": {
+          "$ref": "#/$defs/field"
+        },
+        "upscaling": {
+          "$ref": "#/$defs/field"
+        },
+        "upscaler": {
+          "$ref": "#/$defs/field"
+        },
+        "upscale_factor": {
+          "$ref": "#/$defs/field"
+        },
+        "processing_stages": {
+          "$ref": "#/$defs/field"
+        },
+        "reference_mode": {
+          "$ref": "#/$defs/field"
+        },
+        "reference_count": {
+          "$ref": "#/$defs/field"
+        },
+        "reference_role": {
+          "$ref": "#/$defs/field"
+        },
+        "reference_type": {
+          "$ref": "#/$defs/field"
+        },
+        "identity_mode": {
+          "$ref": "#/$defs/field"
+        },
+        "constraints": {
+          "$ref": "#/$defs/field"
+        },
+        "generated_at": {
+          "$ref": "#/$defs/field"
+        },
+        "evidence_source": {
+          "$ref": "#/$defs/field"
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/field"
+        },
+        "workflow_id": {
+          "$ref": "#/$defs/field"
+        },
+        "workflow_version": {
+          "$ref": "#/$defs/field"
+        },
+        "workflow_hash": {
+          "$ref": "#/$defs/field"
+        },
+        "resolved_route": {
+          "$ref": "#/$defs/field"
+        },
+        "style_id": {
+          "$ref": "#/$defs/field"
+        },
+        "family_id": {
+          "$ref": "#/$defs/field"
+        },
+        "subfamily_id": {
+          "$ref": "#/$defs/field"
+        },
+        "atlas_version": {
+          "$ref": "#/$defs/field"
+        },
+        "atlas_profile": {
+          "$ref": "#/$defs/field"
+        },
+        "job_id": {
+          "$ref": "#/$defs/field"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/field"
+        },
+        "source_artifact_id": {
+          "$ref": "#/$defs/field"
+        },
+        "artifact_hash": {
+          "$ref": "#/$defs/field"
+        },
+        "aag_release": {
+          "$ref": "#/$defs/field"
+        },
+        "runtime_release": {
+          "$ref": "#/$defs/field"
+        },
+        "composer_version": {
+          "$ref": "#/$defs/field"
+        },
+        "schema_version": {
+          "$ref": "#/$defs/field"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "field": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "state",
+            "value"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "const": "RECORDED"
+            },
+            "value": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "UNKNOWN",
+                "NOT_RECORDED",
+                "NOT_APPLICABLE"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

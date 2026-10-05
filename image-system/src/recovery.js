@@ -119,11 +119,8 @@ function commitRecovered(root, parent, child, artifact, runtime) {
   return store.read(root, parent.job_id);
 }
 
-async function recoverIdentityResponses(root, options = {}) {
-  const runtime = options.runtime || require("./runtime");
-  const deps = options.deps || {};
-  const recovered = [];
-  const bridges = options.identityBridges || [
+function identityBridges(options = {}) {
+  return options.identityBridges || [
     {
       workflow: "transform.human.identity.scene.v1",
       bridge: adapters.sceneIdentity,
@@ -135,9 +132,19 @@ async function recoverIdentityResponses(root, options = {}) {
       stateRoot: adapters.humanIdentity.STATE_ROOT,
     },
   ];
+}
+
+async function recoverIdentityResponses(root, options = {}) {
+  const runtime = options.runtime || require("./runtime");
+  const deps = options.deps || {};
+  const recovered = [];
+  const bridges = identityBridges(options);
   for (const item of bridges) {
     const responseRoot = path.join(item.stateRoot, "responses");
-    for (const name of listJson(responseRoot)) {
+    const candidates = options.jobs?.filter(job => !job.parent_job_id && job.status === "RUNNING" && job.workflow_id === item.workflow && recoveryEligible(job, options.createdBefore));
+    if (candidates && !candidates.length) continue;
+    const names = options.responseIndex ? options.responseIndex.names(item, candidates) : listJson(responseRoot);
+    for (const name of names) {
       const requestId = name.slice(0, -5);
       if (existsRegular(path.join(item.stateRoot, "acks", name))) continue;
       let parent;
@@ -150,6 +157,7 @@ async function recoverIdentityResponses(root, options = {}) {
           path.join(item.stateRoot, "process", requestId, "identity_worker.json"),
           root
         );
+        if (candidates && !candidates.some(job => job.job_id === parentId)) continue;
         parent = store.read(root, parentId);
         if (!recoveryEligible(parent, options.createdBefore)) continue;
         if (parent.workflow_id !== item.workflow) continue;
@@ -209,7 +217,7 @@ async function recoverComfyJobs(root, options = {}) {
   const runtime = options.runtime || require("./runtime");
   const deps = options.deps || {};
   const recovered = [];
-  for (const parent of store.listJobs(root).filter((job) =>
+  for (const candidate of (options.jobs || store.listJobs(root)).filter((job) =>
     !job.parent_job_id &&
     job.status === "RUNNING" &&
     recoveryEligible(job, options.createdBefore) &&
@@ -218,6 +226,8 @@ async function recoverComfyJobs(root, options = {}) {
   )) {
     let lease;
     try {
+      const parent = store.read(root, candidate.job_id);
+      if (!recoveryEligible(parent, options.createdBefore) || parent.workflow_id !== candidate.workflow_id || parent.operation === "multi_generate") continue;
       const child = exactRunnableChild(root, parent);
       const promptId = String(child.engine?.prompt_id || "");
       if (!/^[A-Za-z0-9-]{8,128}$/.test(promptId)) continue;
@@ -254,12 +264,56 @@ async function recoverComfyJobs(root, options = {}) {
       const artifact = await maybeEnhanceRecovered({ root, parent, child, artifact: base, leaseToken: lease.token, deps });
       recovered.push(commitRecovered(root, parent, child, artifact, runtime));
     } catch (error) {
-      options.logger?.(`[AAG-IMAGE] Comfy recovery skipped ${parent.job_id}: ${String(error?.code || error?.message || error)}`);
+      options.logger?.(`[AAG-IMAGE] Comfy recovery skipped ${candidate.job_id}: ${String(error?.code || error?.message || error)}`);
     } finally {
       try { lease?.release(); } catch {}
     }
   }
   return recovered;
+}
+
+// Index exact worker evidence once, then inspect only responses belonging to
+// interrupted active parents. New response renames wake the reconciler.
+function createResponseIndex(root, options = {}) {
+  const { watchDirectory } = require("./job-index");
+  const trackers = new Map();
+  return {
+    names(item, candidates) {
+      if (!trackers.has(item.stateRoot)) {
+        const byParent = new Map(), parents = new Map();
+        const forget = (name) => {
+          const parent = parents.get(name);
+          byParent.get(parent)?.delete(name); parents.delete(name);
+          if (!byParent.get(parent)?.size) byParent.delete(parent);
+        };
+        const read = (name) => {
+          if (!name.endsWith(".json") || !REQUEST_ID_RE.test(name.slice(0, -5))) return;
+          forget(name);
+          if (!existsRegular(path.join(item.stateRoot, "responses", name)) || existsRegular(path.join(item.stateRoot, "acks", name))) return;
+          try {
+            const parent = parentIdFromProcess(path.join(item.stateRoot, "process", name.slice(0, -5), "identity_worker.json"), root);
+            parents.set(name, parent);
+            if (!byParent.has(parent)) byParent.set(parent, new Set());
+            byParent.get(parent).add(name);
+          } catch (error) { options.logger?.(`[AAG-IMAGE] response index skipped ${name}: ${error.code || error.message}`); }
+        };
+        const resync = () => {
+          byParent.clear(); parents.clear();
+          for (const name of listJson(path.join(item.stateRoot, "responses"))) read(name);
+          options.onChange?.();
+        };
+        const watcher = watchDirectory(path.join(item.stateRoot, "responses"), {
+          logger: options.logger, resync,
+          change(name) { read(name); options.onChange?.(); },
+        });
+        trackers.set(item.stateRoot, { byParent, watcher });
+        resync();
+      }
+      const tracker = trackers.get(item.stateRoot);
+      return (candidates || []).flatMap(job => [...(tracker.byParent.get(job.job_id) || [])]);
+    },
+    close() { for (const tracker of trackers.values()) tracker.watcher.close(); trackers.clear(); },
+  };
 }
 
 async function recoverCompletedJobs(root, options = {}) {
@@ -318,6 +372,7 @@ function progressSnapshot(job, children = []) {
 }
 
 module.exports = {
+  createResponseIndex,
   listJson,
   existsRegular,
   parentIdFromProcess,

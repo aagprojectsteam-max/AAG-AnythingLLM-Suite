@@ -127,6 +127,7 @@ async function execute(task, normalized, leaseToken, deps = {}) {
   };
   if (!/^[0-9a-f-]{36}$/i.test(message.lease_token)) throw new AagError("XPU_LEASE_LOST", "The delegated XPU lease token is invalid.", true);
   for (const directory of ["inbox", "responses", "acks"]) ensureDirectory(path.join(STATE_ROOT, directory));
+  deps.onFinalPrompt?.({prompt:message.prompt,boundary:"scene.encode_prompt.prompt"});
   try { atomicJson(path.join(STATE_ROOT, "inbox", `${requestId}.json`), message); }
   catch (error) {
     try { fs.unlinkSync(staged); } catch {}
@@ -142,6 +143,7 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     throw new AagError("SCENE_IDENTITY_QUALITY_REJECTED", "The scene artifact did not pass the locked identity and structural contract.");
   }
   pendingAcknowledgements.set(filename, { requestId });
+  deps.onExecutionDetails?.({...require('./generation-details').identityExecution(STATE_ROOT,requestId,response,CONTRACT_SHA256),route:ADAPTER_ID});
   deps.onEngineMetadata?.({
     adapter: ADAPTER_ID, prompt_id: requestId, completed_at: response.completed_at,
     elapsed_seconds: Number(response.total_latency_seconds || 0), model: "Juggernaut XL V9 + PuLID v1.1",

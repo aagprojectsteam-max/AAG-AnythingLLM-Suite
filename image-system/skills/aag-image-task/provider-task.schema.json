@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AAG Image Task public provider contract",
+  "description": "Create exactly one governed image task. operation, prompt, source_policy, and preservation are required on every call so the intent and source decision are explicit. All enum values are closed technical values: use an exact listed value and never invent another. QUALITY FIELD DECISION: first decide whether the user explicitly expressed a TECHNICAL speed-versus-generation-quality preference. If not, select quality=auto for the governed default (omitting quality is canonically equivalent and valid). Never use balanced as a normal/default choice, and never use quality as a synonym for a well-made, detailed, polished, beautiful, or professional creative result. Only explicit speed, quick-output, low-latency, or fastest-supported intent selects fast; only explicit maximum/best/highest generation quality or quality-over-speed intent selects quality; only an explicit compromise between speed and quality selects balanced. Creative descriptions such as 3D, cinematic, detailed, polished, professional, realistic, storybook, watercolor, beautiful, or highly detailed remain prompt semantics and MUST NOT alone select any non-auto quality mode. Semantic counterexample: a request for a cinematic, detailed, polished 3D illustration with no speed-versus-quality preference requires auto/default, NOT quality. Determine the user's expressed preference by meaning rather than a provider-specific keyword rule. There is deliberately no structured style field because style is creative engine conditioning, not technical routing. For generate/transform prompt is the required workspace LLM-authored creative description; keep illustration, cartoon, photorealism, coloring-page constraints, 3D, animated-film, hand-drawn, watercolor, cinematic, lighting, materials, rendering, composition, and all other art direction there. For upscale, prompt is a concise faithful instruction to upscale the selected source without creative alteration; it does not change the governed upscale route. SOURCE DECISION: interpret what image the user means before calling. Use current_attachment only for an image attached to the CURRENT user turn. Use previous_artifact for the most recently returned AAG image in this conversation, including after generate, transform, or upscale, even if the user calls it the last image, previous image, or image just created. Use auto only when the user did not identify the source; never use auto instead of an explicit source category. Selecting a specific non-latest older thread artifact is not currently a public capability: do not invent thread_reference or guess another source; ask the user to attach the intended older image. Valid combinations: generate must use source_policy auto and preservation none; transform requires current_attachment or previous_artifact plus preservation subject or identity; upscale requires an approved source, preservation none, count 1, and may use scale. Omit other fields that do not apply.",
+  "type": "object",
+  "required": ["operation", "prompt", "source_policy", "preservation"],
+  "additionalProperties": false,
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": ["generate", "transform", "upscale"],
+      "description": "REQUIRED closed technical enum. generate creates a new image without a source; transform edits a current or scoped prior image; upscale enlarges while preserving content. COMPLETE-CALL CHECKLIST BEFORE EMITTING JSON: include the workspace-LLM-authored rich prompt for generate/transform, and when the user expresses a technical speed-versus-quality preference ALWAYS include the matching quality field; explicit speed/fastest intent MUST emit quality=fast and must never be omitted. A routing-only call without prompt is invalid. Use exactly one listed value. Do not invent additional values. Call this tool at most once per user turn; after any result, including failure, do not call it again until new user input."
+    },
+    "request": {
+      "type": "string",
+      "maxLength": 4000,
+      "description": "Optional faithful summary of the user's request. Normally omit it because the trusted current user invocation is authoritative. This does not replace prompt."
+    },
+    "prompt": {
+      "type": "string",
+      "maxLength": 1800,
+      "description": "NON-NEGOTIABLE REQUIRED JSON ARGUMENT for every call. Never make a routing-only generate/transform call. For generate and transform, author the rich free-form creative prompt before calling because AAG never creates missing prompt text. Preserve the user's subjects, exact important counts, actions, objects, relationships, environment, requested style and identity. Write a rich self-contained production prompt with useful composition, spatial coherence, visual detail, lighting, color/material/texture and camera/rendering direction where appropriate. For identity transform, explicitly describe the same recognizable person and the requested portrait or scene. Put creative substyles such as 3D, animated-film, hand-drawn, watercolor, cinematic, children's-book, flat vector, clay render or pencil sketch here. For upscale, provide a concise faithful instruction to upscale the selected source without creative alteration; AAG still uses only the governed upscale route. AAG validates and passes creative content unchanged; AAG does not author or enrich it."
+    },
+    "source_policy": {
+      "type": "string",
+      "enum": ["auto", "current_attachment", "previous_artifact"],
+      "default": "auto",
+      "description": "REQUIRED CLOSED TECHNICAL ENUM on every call. Decide from the user's reference before calling. current_attachment means an image supplied on the CURRENT user message/turn; choose it for references to an attached image or this attached image, and NEVER merely because an image exists earlier in the conversation. It requires at least one current image attachment and fails closed without one. previous_artifact means the single most recently returned eligible AAG image in this same conversation, whether produced by generate, transform, or upscale; choose it when the user refers semantically to the last/previous image or the image just made. It ignores current attachments and fails closed if no eligible prior AAG artifact exists. auto is only for an unspecified source: it chooses a current image attachment when present, otherwise the most recent eligible AAG artifact; ambiguity or absence fails closed. Do not use auto when the user explicitly distinguishes attached versus previous. A specific non-latest older thread artifact cannot currently be selected by a public policy; do not invent thread_reference or silently substitute the latest artifact. Generate must use auto. Use exactly one listed value; do not invent additional values."
+    },
+    "source_index": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8,
+      "description": "Optional ONE-BASED index, 1..8, into only the image attachments on the CURRENT user message/turn (non-image attachments are not indexed). Valid only when source_policy is current_attachment. Required when multiple current image attachments exist and the user identifies one; optional for exactly one current image attachment. Omit for auto, previous_artifact, generate, and whenever no selection is needed. It never indexes prior artifacts or thread history. Invalid, missing, or out-of-range selection fails closed; AAG does not substitute another source."
+    },
+    "preservation": {
+      "type": "string",
+      "enum": ["auto", "identity", "subject", "none"],
+      "description": "REQUIRED CLOSED TECHNICAL ENUM on every call and deliberately has no default. Every transform must explicitly choose identity or subject. identity is exclusively for governed preservation of the same recognizable HUMAN PERSON from exactly one trusted current human attachment; it requires current_attachment and count 1. Never use identity for animals, objects, products, logos, scenery, or ordinary same-image/content editing. subject means preserve ordinary non-human subject, object, content, layout, or composition while applying the requested edit; use it for normal image-to-image transforms, including keeping the same objects or scene. none is required for generate and upscale, and is invalid for transform. auto does not decide identity versus subject for transform and therefore remains fail-closed when that semantic choice is required; never select auto for generate or upscale. Use exactly one listed value; do not invent values, misuse identity as generic content preservation, or downgrade genuine same-person identity work to subject."
+    },
+    "quality": {
+      "type": "string",
+      "enum": ["auto", "fast", "balanced", "quality"],
+      "default": "auto",
+      "description": "Optional CLOSED TECHNICAL ENUM for the user's EXPLICIT technical speed-versus-generation-quality preference. DEFAULT DECISION IS auto: when no such preference exists, select auto; omission is equivalent and accepted. Before selecting any non-auto value, identify the user's explicit technical preference. Never infer fast, balanced, or quality from general creative intent. SELECTION PRIORITY: (1) fast when the user explicitly prioritizes speed, quick output, low latency, or the fastest available supported generation; (2) quality ONLY when the user explicitly requests maximum, best, or highest generation quality, says speed does not matter in favor of quality, or explicitly prefers quality over speed; (3) balanced ONLY when the user explicitly requests a compromise or balance between speed and quality. A technical balance request belongs in this structured field, not in prompt. Apply the same semantic rule in every language: for example, the Hebrew request 'איזון מפורש בין מהירות לאיכות ההפקה' selects balanced. balanced is NOT the normal/default mode. quality is NOT a label for detailed, polished, professional, realistic, beautiful, or otherwise well-made art; it selects a technical route only after explicit quality-over-speed intent. Creative art-direction words such as 3D, cinematic, detailed, highly detailed, polished, professional, realistic, storybook, watercolor, beautiful, or similar aesthetic language MUST NOT by themselves select quality or any other non-auto mode; keep them only in prompt. Counterexample: cinematic detailed 3D illustration, without an explicit technical preference, maps to auto and never to quality. Interpret meaning in any user language rather than matching a provider-specific phrase list. Identity routes choose their validated profile internally. Use exactly one listed value and do not invent enum values such as maximum, ultra, or high."
+    },
+    "final_output_quality": {
+      "type": "string",
+      "enum": ["standard", "enhanced_2x"],
+      "default": "standard",
+      "description": "Optional governed delivery-stage quality. standard returns the verified generation artifact. enhanced_2x runs the validated 2x postprocess only after the base artifact has passed its governing workflow. It never changes prompt authorship, generation quality routing, identity recipe, source authorization, or semantic validation. Upscale operations must use standard because their dedicated scale already defines the output enlargement. Use exactly one listed value; do not invent additional values."
+    },
+    "aspect_ratio": {
+      "type": "string",
+      "enum": ["auto", "1:1", "16:9", "9:16", "4:3", "3:2", "landscape", "portrait"],
+      "default": "auto",
+      "description": "Optional CLOSED TECHNICAL ENUM and semantic framing hint. Use an exact ratio when explicitly requested; landscape/portrait for explicit orientation; auto otherwise. Identity framing is safely canonicalized to its supported portrait/scene profile and rejects incompatible square or conflicting hints. Use exactly one listed value; do not invent additional ratios."
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 2048,
+      "description": "Optional semantic width hint in pixels, 256..2048. When specifying dimensions, normally provide both width and height. Identity routes use these only as orientation hints and select validated internal dimensions. Omit when aspect_ratio or auto framing is sufficient."
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 2048,
+      "description": "Optional semantic height hint in pixels, 256..2048. When specifying dimensions, normally provide both width and height. Identity routes use these only as orientation hints and select validated internal dimensions. Omit when aspect_ratio or auto framing is sufficient."
+    },
+    "scale": {
+      "type": "integer",
+      "enum": [2, 3, 4],
+      "default": 4,
+      "description": "Optional CLOSED NUMERIC ENUM for upscale only: exact enlargement factor 2, 3 or 4. Defaults to 4 for upscale. Omit for generate and transform; do not invent additional values."
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2,
+      "default": 1,
+      "description": "Optional output count, 1 or 2. Defaults to 1. Identity and upscale accept exactly 1. Two ordinary generation/subject-transform outputs execute sequentially under one governed parent task."
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647,
+      "description": "Optional deterministic seed, integer 0..2147483647. Preserve an explicit user-provided seed; otherwise omit it so AAG chooses one."
+    }
+  }
+}

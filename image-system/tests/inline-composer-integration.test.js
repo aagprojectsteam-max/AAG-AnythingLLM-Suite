@@ -192,7 +192,7 @@ test("Atlas UX v2 provides persistent presentation-only responsive sizing", () =
   assert.match(styles, /--aag-atlas-card-min: 112px/);
   assert.match(styles, /--aag-atlas-card-min: 148px/);
   assert.match(styles, /--aag-atlas-card-min: 200px/);
-  assert.match(styles, /--aag-atlas-card-min: 360px/);
+  assert.match(styles, /data-thumbnail-size="xlarge"[^}]*--aag-atlas-card-min: 360px/);
   assert.match(styles, /repeat\(auto-fill/);
   assert.match(source, /matches\.slice\(0, limit\)/);
   assert.match(source, /<AtlasImage[\s\S]*?lazy/);
@@ -462,6 +462,8 @@ test("pinned frontend build augments the native chat submit without replacing it
     2
   );
   assert.doesNotMatch(buildSource, /composerPanelRef\.current\?\.submit\(\)/);
-  assert.match(buildSource, /isImageGenerator/);
+  assert.match(buildSource, /isImageComposerEnabledForCurrentWorkspace/);
+  assert.match(buildSource, /useImageComposerMode/);
+  assert.match(buildSource, /patchThreadContainer\(checkout\)/);
   assert.match(serverSource, /aagComposerProxyEndpoints\(apiRouter\)/);
 });

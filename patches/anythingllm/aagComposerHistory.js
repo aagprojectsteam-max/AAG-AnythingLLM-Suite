@@ -108,13 +108,17 @@ function visibleComposerPrompt(prompt) {
  * Return trusted runtime request text or stop before a governed tool can load.
  * A malformed reserved envelope is never promoted to authoritative user text.
  */
-function composerInvocationPrompt(prompt) {
+function composerInvocationPrompt(prompt, runtime = null) {
   const inspection = inspectComposerPrompt(prompt);
   if (inspection.kind === "invalid") {
     const error = new Error("Signed Composer envelope validation failed.");
     error.code = "AAG_COMPOSER_ENVELOPE_INVALID";
     throw error;
   }
+  if (runtime) runtime.AAG_EXPERT_ENVELOPE =
+    inspection.kind === "valid" && inspection.intent?.expert_prompt?.schema === "aag.expert.context.v1"
+      ? prompt : null;
+  if (runtime) runtime.AAG_COMPOSER_ENVELOPE = inspection.kind === "valid" ? prompt : null;
   return inspection.visiblePrompt;
 }
 
@@ -137,8 +141,29 @@ function composerModelAttachments(prompt, attachments = []) {
  * without mutating AIbitat's native message objects. The native objects retain
  * their attachments for normal AnythingLLM persistence and visible history.
  */
+function isExpertComposerPrompt(prompt) {
+  const context = {};
+  composerInvocationPrompt(String(prompt || ""), context);
+  return Boolean(context.AAG_EXPERT_ENVELOPE);
+}
+function installExpertModelRouting(aibitat, resolveCurrentSelection, { followActiveModel = false } = {}) {
+  const original = aibitat.resolveRoute?.bind(aibitat);
+  let previousExpert = false;
+  aibitat.resolveRoute = async (prompt) => {
+    const expert = isExpertComposerPrompt(prompt);
+    if (followActiveModel || expert || previousExpert) {
+      const selected = await resolveCurrentSelection(prompt);
+      previousExpert = expert;
+      return selected;
+    }
+    return original ? original(prompt) : null;
+  };
+}
 function composerModelHistory(messages = []) {
   if (!Array.isArray(messages)) return [];
+  const lastUser = messages.findLastIndex(message => message?.role === "user");
+  if (lastUser >= 0 && isExpertComposerPrompt(messages[lastUser].content))
+    messages = messages.filter((message, index) => message?.role === "system" || index >= lastUser);
   return messages.map((message) => {
     if (
       message?.role !== "user" ||
@@ -322,6 +347,8 @@ module.exports = {
   composerInvocationPrompt,
   composerModelAttachments,
   composerModelHistory,
+  isExpertComposerPrompt,
+  installExpertModelRouting,
   composerRuntimeAttachments,
   installComposerFailurePersistence,
   installComposerHistoryPersistence,

@@ -205,6 +205,7 @@ async function execute(task, normalized, leaseToken, deps = {}) {
   ensureDirectory(path.join(STATE_ROOT, "inbox"));
   ensureDirectory(path.join(STATE_ROOT, "responses"));
   ensureDirectory(path.join(STATE_ROOT, "acks"));
+  deps.onFinalPrompt?.({prompt:message.prompt,boundary:"pulid.encode_prompt.prompt"});
   try { atomicJson(path.join(STATE_ROOT, "inbox", `${requestId}.json`), message); }
   catch (error) { try { fs.unlinkSync(staged); } catch {} try { fs.unlinkSync(stagedProvenanceFile(requestId)); } catch {} throw error; }
   const response = await waitForResponse(requestId);
@@ -216,6 +217,7 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     throw new AagError("IDENTITY_QUALITY_REJECTED", "The identity artifact did not pass the locked quality contract.");
   }
   pendingAcknowledgements.set(filename, { requestId, responseFile: responseFile(requestId) });
+  deps.onExecutionDetails?.({...require('./generation-details').identityExecution(STATE_ROOT,requestId,response,CONTRACT_SHA256),route:'local-pulid-v1.1-contract-b-v1'});
   deps.onEngineMetadata?.({
     adapter: "local-pulid-v1.1-contract-b-v1",
     prompt_id: requestId,
