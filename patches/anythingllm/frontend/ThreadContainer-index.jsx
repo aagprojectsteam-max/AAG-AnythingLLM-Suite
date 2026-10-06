@@ -1,3 +1,4 @@
+import { threadOrder } from "@/utils/aagThreadOrder";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
@@ -75,18 +76,7 @@ export default function ThreadContainer({
   };
 
   function removeThread(threadId) {
-    setThreads((prev) =>
-      prev.map((_t) => {
-        if (_t.id !== threadId) return _t;
-        return { ..._t, deleted: true };
-      })
-    );
-
-    // Show thread was deleted, but then remove from threads entirely so it will
-    // not appear in bulk-selection.
-    setTimeout(() => {
-      setThreads((prev) => prev.filter((t) => !t.deleted));
-    }, 500);
+    setThreads(prev => prev.filter(thread => thread.id !== threadId));
   }
 
   function getActiveThreadIdx() {
@@ -100,6 +90,10 @@ export default function ThreadContainer({
     if (!threadSlug && defaultThreadHasChats) return 0;
     return -1;
   }
+
+  useEffect(() => {
+    if (!loading) threadOrder.publish(workspace.slug, threads);
+  }, [workspace.slug, threads, loading]);
 
   if (loading) {
     return (
@@ -137,6 +131,7 @@ export default function ThreadContainer({
       {threads.map((thread, i) => (
         <ThreadItem
           key={thread.slug}
+          visibleOrdinal={i + 1}
           idx={i + (defaultThreadHasChats ? 1 : 0)}
           ctrlPressed={ctrlPressed}
           toggleMarkForDeletion={toggleForDeletion}

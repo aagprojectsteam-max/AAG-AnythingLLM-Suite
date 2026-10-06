@@ -43,7 +43,7 @@ function displayArtifactText(content, outputs = [], role = "assistant", translat
     let key = "imageResultUnavailable", message = "Image generation status is unavailable.";
     if (status === "completed") {
       if (hasImage) continue;
-      key = "imageResultCompleted"; message = "Image generation completed.";
+      key = "imageResultReturning"; message = "Returning image to chat…";
     } else if (status === "failed" || status === "error") {
       key = "imageResultFailed"; message = "The image could not be generated.";
       if (code.startsWith("EXPERT_")) {

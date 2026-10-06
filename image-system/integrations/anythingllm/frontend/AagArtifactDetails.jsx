@@ -5,6 +5,7 @@ import { desktopArtifacts, resolveDesktopFile, revealCurrentFile, fileGroup } fr
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import { loadUiLanguage } from "@/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/localization";
+import useAagThreadNumber from "@/utils/useAagThreadNumber";
 
 const labels={
  en:{show:"Show details",title:"Generation details",subtitle:"Recorded settings and execution facts for this image.",copy:"Copy details",copied:"Copied",close:"Close",technical:"Technical details",missing:"Not recorded",unknown:"Unknown",na:"Not applicable",unavailable:"Generation details are unavailable.",historical:"Historical image: only facts saved with this artifact are shown. Missing values were not reconstructed.",loading:"Loading details…",retry:"Try again",copyFailed:"Copy failed. You can select and copy the details.",yes:"On",no:"Off"},
@@ -12,12 +13,14 @@ const labels={
 };
 Object.assign(labels.en,{fileNotFound:"File not found",fileChanged:"File changed; original artifact could not be verified",notAvailable:"Not available",copyHash:"Copy complete SHA-256",localUnavailable:"File reveal is unavailable on this device.",revealFailed:"Could not reveal the current file.",openLocation:"Open file location",generationMissing:"Generation settings were not recorded or could not be verified."});
 Object.assign(labels.he,{fileNotFound:"הקובץ לא נמצא",fileChanged:"הקובץ השתנה; לא ניתן לאמת את התוצר המקורי",notAvailable:"לא זמין",copyHash:"העתק SHA-256 מלא",localUnavailable:"הצגת הקובץ בתיקייה אינה זמינה במכשיר זה.",revealFailed:"לא ניתן להציג את מיקום הקובץ הנוכחי.",openLocation:"פתח את מיקום הקובץ",generationMissing:"הגדרות היצירה לא נשמרו או שלא ניתן לאמת אותן."});
-const groupsHe={FILE:"קובץ",IMAGE:"תמונה","MODEL & ENGINE":"מודל ומנוע",QUALITY:"איכות",STYLE:"סגנון",GENERATION:"יצירה",PROCESSING:"עיבוד",PROVENANCE:"מקור הנתונים"};
+const groupsHe={CONVERSATION:"שיחה",FILE:"קובץ",IMAGE:"תמונה","MODEL & ENGINE":"מודל ומנוע",QUALITY:"איכות",STYLE:"סגנון",GENERATION:"יצירה",PROCESSING:"עיבוד",PROVENANCE:"מקור הנתונים"};
 const actionClass="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white text-xs text-white light:text-slate-700 hover:bg-zinc-800 light:hover:bg-slate-100 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
 const format=(row,text)=>row.state==="RECORDED"?typeof row.value==="boolean"?row.value?text.yes:text.no:String(row.value):row.state==="UNKNOWN"?text.unknown:row.state==="NOT_APPLICABLE"?text.na:text.missing;
 export default function AagArtifactDetails({artifact,children,onFileResolved}){
  const [language,setLanguage]=useState(loadUiLanguage),[open,setOpen]=useState(false),[value,setValue]=useState(null),[loading,setLoading]=useState(false),[copied,setCopied]=useState(false),[copyError,setCopyError]=useState(false),[technical,setTechnical]=useState(false),[hashCopied,setHashCopied]=useState(false);
  const [currentFile,setCurrentFile]=useState(null),[revealing,setRevealing]=useState(false),[revealError,setRevealError]=useState("");
+ const threadReference=value?.threadReference;
+ const currentThread=useAagThreadNumber(threadReference?.workspaceSlug,threadReference?.threadSlug);
  const dialog=useRef(null),trigger=useRef(null),press=useRef(null),request=useRef(null),id=useId(),text=labels[language]||labels.en;
  useEffect(()=>{const sync=e=>setLanguage(e.detail?.language||loadUiLanguage());window.addEventListener("aag-composer-language",sync);window.addEventListener("storage",sync);return()=>{window.removeEventListener("aag-composer-language",sync);window.removeEventListener("storage",sync);};},[]);
  useEffect(()=>{setValue(null);setCurrentFile(null);setOpen(false);setTechnical(false);setRevealError("");if(artifact?.storageFilename)load();return()=>request.current?.abort();},[artifact?.storageFilename,artifact?.jobId,artifact?.artifactId]);
@@ -42,7 +45,12 @@ export default function AagArtifactDetails({artifact,children,onFileResolved}){
  function end(event){const p=press.current;press.current=null;if(p&&!p.dragged&&p.id===event.pointerId&&event.button===0&&outside(event)&&Math.hypot(event.clientX-p.x,event.clientY-p.y)<=4)close();}
  function keyboard(event){if(event.key!=="Tab")return;const items=Array.from(dialog.current.querySelectorAll('button:not([disabled]),summary,[tabindex="0"]'));const first=items[0],last=items.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
  const title=g=>language==="he"?groupsHe[g.id]||text.technical:g.id;
- const displayGroups=value?.available?[fileGroup(currentFile,text),...value.groups]:[];
+ const threadNumber=currentThread.known&&threadReference?.threadSlug?currentThread.ordinal:threadReference?.ordinal;
+ const threadGroups=threadReference?[{id:"CONVERSATION",rows:[
+  {id:"current_thread_number",label:{en:"Current thread number",he:"מספר השיחה הנוכחי"},state:"RECORDED",value:threadNumber || (language==="he"?(threadReference.state==="DEFAULT"?"שיחת ברירת מחדל":"השיחה נמחקה"):(threadReference.state==="DEFAULT"?"Default conversation":"Thread deleted"))},
+  {id:"thread_number_at_creation",label:{en:"Thread number at creation (filename unchanged)",he:"מספר השיחה בעת היצירה (שם הקובץ נשמר)"},state:threadReference.creationOrdinal?"RECORDED":"NOT_RECORDED",value:threadReference.creationOrdinal},
+ ]}]:[];
+ const displayGroups=value?.available?[fileGroup(currentFile,text),...threadGroups,...value.groups]:[];
  async function copy(){try{const lines=displayGroups.filter(g=>g.id!=="TECHNICAL"||technical).map(g=>`${title(g)}\n`+g.rows.map(r=>`${r.label[language]||r.label.en}: ${format(r,text)}`).join("\n"));await navigator.clipboard.writeText(lines.join("\n\n"));setCopied(true);setCopyError(false);}catch{setCopyError(true);}}
  async function copyHash(hash){try{await navigator.clipboard.writeText(hash);setHashCopied(true);setCopyError(false);}catch{setCopyError(true);}}
  const renderGroup=g=><section key={g.id} aria-label={title(g)} className="rounded-lg border border-zinc-700 light:border-slate-200 p-3" style={{minWidth:0}}>

@@ -23,10 +23,10 @@ function database(file) {
 async function fixture(parsed, options={}) {
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),"aag-name-db-")),db=database(path.join(dir,"test.db"));
   await db.$executeRawUnsafe("CREATE TABLE workspaces(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
-  await db.$executeRawUnsafe("CREATE TABLE workspace_threads(id INTEGER PRIMARY KEY AUTOINCREMENT, workspace_id INTEGER, name TEXT)");
+  await db.$executeRawUnsafe("CREATE TABLE workspace_threads(id INTEGER PRIMARY KEY AUTOINCREMENT, workspace_id INTEGER, name TEXT, user_id INTEGER DEFAULT NULL)");
   await db.$executeRawUnsafe("CREATE TABLE workspace_chats(id INTEGER, workspaceId INTEGER, response TEXT)");
   for(const id of [3,4])await db.$executeRawUnsafe("INSERT INTO workspaces VALUES(?, 'workspace')",id);
-  for(const [id,w] of [[5,3],[9,4],[21,3]])await db.$executeRawUnsafe("INSERT INTO workspace_threads VALUES(?, ?, 'thread')",id,w);
+  for(const [id,w] of [[5,3],[9,4],[21,3]])await db.$executeRawUnsafe("INSERT INTO workspace_threads(id,workspace_id,name) VALUES(?, ?, 'thread')",id,w);
   if (options.initialize !== false) await require("../../integrations/anythingllm/aagArtifactNaming").initializeSerials(db, {workspaceIds:[3,4],threads:[{workspaceId:3,threadIds:[5,21]},{workspaceId:4,threadIds:[9]}]});
   const job={job_id:parsed.jobId,owner:{workspace_id:3,thread_id:21},artifacts:parsed.artifacts.map(a=>({artifact_id:a.artifactId,sha256:a.sha256,width:a.width,height:a.height,format:"png",verified_at:"2026-10-05T04:02:15.123Z"})),...options.job};
   return {database:db,job,dir,resolveTimezone:async()=>"Asia/Jerusalem",async close(){await db.$disconnect();fs.rmSync(dir,{recursive:true,force:true});}};

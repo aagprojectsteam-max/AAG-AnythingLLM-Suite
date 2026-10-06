@@ -588,6 +588,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "docs/RELEASE-GOLDEN-20261005T211028Z.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "docs/ROLLBACK.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1158,12 +1163,27 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/aagLiveArtifacts.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagThreadOrder.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/atlas-prompt-disclosure.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
       "path": "image-system/integrations/anythingllm/frontend/useAagArtifactText.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/useAagThreadNumber.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2118,6 +2138,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/fixtures/anythingllm-agent-07bd65f.js.txt",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "image-system/tests/fixtures/artifact-formats/verified.jpg",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2228,6 +2253,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/live-artifact-completion.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tests/openai-responses-stream.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2299,6 +2329,11 @@
     },
     {
       "path": "image-system/tests/test_scene_identity_bridge.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/thread-numbering.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2434,6 +2469,16 @@
     },
     {
       "path": "image-system/tools/multi-image-registration-audit.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-live-artifacts.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-thread-numbering.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -3388,6 +3433,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "manifests/GOLDEN-20261005T211028Z.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "manifests/GOLDEN-INSTALL-MAP.json",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -3613,6 +3663,11 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
@@ -3623,7 +3678,27 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/models/workspaceThread.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/aagLiveArtifacts.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/aagThreadOrder.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/chat/agent.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },

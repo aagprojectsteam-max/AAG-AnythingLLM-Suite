@@ -19,6 +19,7 @@ import { openImageLightbox } from "@/components/ImageLightbox";
 import { PASTE_ATTACHMENT_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
 import { PROMPT_INPUT_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput";
 import { exportArtifactsAsPdf } from "@/utils/aagArtifactExport";
+import { ARTIFACT_PRESENTED_EVENT } from "@/utils/aagLiveArtifacts";
 import { artifactFilename } from "@/utils/aagArtifactText";
 
 /**
@@ -160,6 +161,13 @@ function ImageGenerationCard({ props }) {
           <div className="relative group rounded-xl overflow-hidden bg-zinc-800 max-w-max">
             <img
               src={objectUrl}
+              onLoad={() => {
+                if (props.content?.artifactId && actualFilename) window.dispatchEvent(
+                  new CustomEvent(ARTIFACT_PRESENTED_EVENT, {detail: {
+                    artifactId: props.content.artifactId, jobId: props.content.jobId, filename: actualFilename,
+                  }}));
+              }}
+              onError={() => setStatus("failed")}
               alt={prompt || t("imageGeneration.card.alt-text")}
               role="button"
               tabIndex={0}

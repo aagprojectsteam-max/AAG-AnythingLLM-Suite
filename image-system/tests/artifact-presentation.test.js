@@ -321,7 +321,7 @@ test("historical display hides protocol while preserving prose, user text and ra
   assert.equal(displayArtifactText(original,outputs),"Here is your image.\nEnjoy.");
   assert.equal(displayArtifactText("AAG_IMAGE_RESULT status=completed job_id=private sha256=private",outputs),"");
   assert.equal(displayArtifactText(original,outputs,"user"),original);
-  assert.equal(displayArtifactText(original,[]),"Here is your image.\nImage generation completed.\nEnjoy.");
+  assert.equal(displayArtifactText(original,[]),"Here is your image.\nReturning image to chat…\nEnjoy.");
   assert.equal(displayArtifactText("Documentation: AAG_IMAGE_RESULT is the protocol",outputs),"Documentation: AAG_IMAGE_RESULT is the protocol");
   assert.equal(JSON.stringify({content:original,outputs}),saved);
 });

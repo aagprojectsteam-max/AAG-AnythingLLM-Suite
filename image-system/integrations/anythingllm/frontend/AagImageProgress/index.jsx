@@ -6,6 +6,7 @@ import {
   UI_LANGUAGE_KEY,
   loadUiLanguage,
 } from "../AagImageComposerPanel/localization";
+import { ARTIFACT_PRESENTED_EVENT, presentationProgress } from "@/utils/aagLiveArtifacts";
 import "./styles.css";
 
 const LABELS = Object.freeze({
@@ -81,9 +82,19 @@ function StageIcon({ state }) {
   return <span aria-hidden="true">○</span>;
 }
 
-export default function AagImageProgress({ workspaceSlug, threadSlug }) {
+export default function AagImageProgress({ workspaceSlug, threadSlug, history = [] }) {
   const [language, setLanguage] = useState(() => loadUiLanguage());
-  const [progress, setProgress] = useState(null);
+  const [serverProgress, setProgress] = useState(null);
+  const [presented, setPresented] = useState(() => new Set());
+  const progress = presentationProgress(serverProgress, history, presented);
+  useEffect(() => {
+    setPresented(new Set());
+    const onPresented = event => {
+      if (event.detail?.artifactId) setPresented(previous => new Set([...previous, event.detail.artifactId]));
+    };
+    window.addEventListener(ARTIFACT_PRESENTED_EVENT, onPresented);
+    return () => window.removeEventListener(ARTIFACT_PRESENTED_EVENT, onPresented);
+  }, [threadSlug, workspaceSlug]);
   const [, setClock] = useState(0);
 
   useEffect(() => {

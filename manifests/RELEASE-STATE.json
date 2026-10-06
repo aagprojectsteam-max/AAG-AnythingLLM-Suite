@@ -1,8 +1,8 @@
 {
   "schema": "aag.release-state.v2",
-  "golden_version": "20261005T133425Z",
+  "golden_version": "20261005T211028Z",
   "status": "PRODUCTION_VALIDATED_HEALTHY",
-  "manifest": "GOLDEN-20261005T133425Z.json",
+  "manifest": "GOLDEN-20261005T211028Z.json",
   "source_release": "0.9.0-preview.13",
   "production_changed_during_closure": false
 }

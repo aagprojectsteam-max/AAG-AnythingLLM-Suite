@@ -6,10 +6,14 @@ The filename contains no prompt, title, provider, or internal UUID. The extensio
 
 Workspace numbers are persistent user-facing AAG serials in
 `aag_workspace_serials`, separate from native database workspace IDs. The first
-allocation uses an authenticated sidebar snapshot. Thread numbers are persistent
-per-workspace AAG serials in `aag_visible_thread_serials`, initialized from that
-same validated snapshot. Later unseen workspaces/threads append after the stored
-maximum; deletion and reordering never renumber or reuse prior allocations.
+allocation uses an authenticated sidebar snapshot. A new artifact's thread number
+is the current one-based ordinal in the authenticated, ordered visible thread
+list, using additive display positions in `aag_thread_display_order`. Deletion
+and reorder immediately change current display numbers; native IDs remain stable
+for persistence, ownership, sockets and recovery. Each filename records the
+ordinal at creation permanently. Show Details distinguishes the current ordinal
+from the immutable creation ordinal. Earlier serial tables remain for historical
+compatibility; they do not define the current visible thread number.
 The native unthreaded conversation retains reserved thread serial **0**.
 `aag_artifact_serials` preserves the artifact's workspace binding. The earlier
 `aag_thread_serials` and filename ledger continue to resolve historical names.

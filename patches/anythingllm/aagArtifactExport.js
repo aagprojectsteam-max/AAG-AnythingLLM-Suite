@@ -281,12 +281,17 @@ function aagArtifactExportEndpoints(app) {
       catch { value = {available:false}; }
       if (kind === "details") {
         const file = await currentArtifact(resolved, request);
+        let threadReference=null;
+        try {
+          const naming=require('/app/server/storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactNaming.js');
+          threadReference=await naming.artifactThreadReference(require('../utils/prisma'),output.payload.artifactId);
+        } catch { /* Historical artifacts without a filename ledger remain readable. */ }
         if (!value.available) value = {available:true, schema:"aag.generation-details.v1", schema_version:1,
           artifact_id:output.payload.artifactId || null, job_id:output.payload.jobId || null,
           source:"historical-persisted-evidence", generationAvailable:false, groups:[]};
         // Avoid repeating current file facts as if they were historical facts.
         const currentIds = new Set(["format","mime","file_size","artifact_hash"]);
-        value = {...value, file, groups:value.groups.map(group => ({...group, rows:group.rows.filter(row => !currentIds.has(row.id))})).filter(group => group.rows.length)};
+        value = {...value, file, threadReference, groups:value.groups.map(group => ({...group, rows:group.rows.filter(row => !currentIds.has(row.id))})).filter(group => group.rows.length)};
       }
       return response.status(200).json(value);
     } catch (error) {

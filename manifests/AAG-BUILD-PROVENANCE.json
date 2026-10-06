@@ -12,8 +12,14 @@
     "aagArtifactExport.js",
     "aagArtifactFile.js",
     "aagArtifactSerials.js",
+    "aagThreadOrder.js",
+    "useAagThreadNumber.js",
+    "models/workspaceThread.js (current visible order)",
+    "ThreadItem/index.jsx (visible ordinal label)",
     "aagArtifactText.js (shared presentation function)",
     "useAagArtifactText.js",
+    "aagLiveArtifacts.js",
+    "utils/chat/agent.js (structured live output hydration)",
     "useImageComposerMode.js",
     "useExpertPromptMode.js",
     "AagImageComposerPanel/index.jsx",
@@ -28,9 +34,9 @@
     "ChatHistory/index.jsx (artifact result presentation)",
     "HistoricalMessage/index.jsx (native output memo hydration)"
   ],
-  "overlayTreeSha256": "148bc335b3b135c36409e0bc94f625d4046669998af388eb6e330b6a55141620",
-  "buildToolSha256": "1dc021ea2ac8e88b1a17b8ee0b6f91b9faf23f81e3339ceaad33127cf5638249",
+  "overlayTreeSha256": "cba16337c2c3b5bd1476495c0d7de430a177ba69c9ab8407852e147820073b5e",
+  "buildToolSha256": "c0ba9d899bf7c66f1190ae696f977fac5ee80b59a648a3f590ced1ee619083b9",
   "publicFiles": 255,
-  "publicTreeSha256": "0444503e17b4fccdfb0e24882eadfd1cd551fdd926af93780feade17794ea2dd",
-  "builtAt": "2026-10-05T11:12:47.690Z"
+  "publicTreeSha256": "7ba5dea8a9ec06ece9e739f442d56ff0af431d340b0c9c5ac23d1a446d6b4e1b",
+  "builtAt": "2026-10-05T21:08:15.377Z"
 }

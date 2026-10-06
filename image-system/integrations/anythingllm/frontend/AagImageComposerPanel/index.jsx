@@ -1,3 +1,4 @@
+import useAagThreadNumber from "@/utils/useAagThreadNumber";
 import {
   forwardRef,
   useCallback,
@@ -81,6 +82,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
   { mode, onModeChange, prompt, history = [], threadSlug = null, workspaceSlug = "image-generator", disabled = false, composerEnabled = true },
   ref
 ) {
+  const currentThread = useAagThreadNumber(workspaceSlug, threadSlug);
   const { enabled: expertEnabled, setEnabled: setExpertEnabled } = useExpertPromptMode(workspaceSlug, mode);
   const [settings, setSettings] = useState({ ...INITIAL });
   const [taxonomy, setTaxonomy] = useState(null);
@@ -775,6 +777,10 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
       <div className="aag-composer-bar">
         <div className="aag-composer-identity">
           <span>AAG IMAGE</span>
+          <span data-testid="aag-current-thread" data-thread-ordinal={currentThread.ordinal || undefined}>
+            {language === "he" ? "שיחה נוכחית: " : "Current thread: "}
+            {currentThread.ordinal ? `${language === "he" ? "שיחה" : "Thread"} ${currentThread.ordinal}` : !threadSlug ? (language === "he" ? "שיחה חדשה" : "New thread") : "…"}
+          </span>
           <small>Composer UI V1.3</small>
         </div>
         <div

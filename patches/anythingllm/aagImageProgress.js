@@ -124,6 +124,15 @@ async function presentationBinding(job, server) {
 }
 
 async function bindCompletedJob(job, core, server, options = {}) {
+  const publish = () => bindCompletedJobLocked(job, core, server, options);
+  // Production callers share the exact presentation module used by AgentHandler.
+  // Injected test adapters without a publisher retain the prior contract.
+  return server.presentation?.withArtifactPublication
+    ? server.presentation.withArtifactPublication(job.job_id, publish)
+    : publish();
+}
+
+async function bindCompletedJobLocked(job, core, server, options = {}) {
   if (
     job.parent_job_id ||
     !["COMPLETED", "PARTIAL"].includes(job.status) ||

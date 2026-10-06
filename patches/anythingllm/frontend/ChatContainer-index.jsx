@@ -38,6 +38,7 @@ import WorkspaceModelPicker from "./WorkspaceModelPicker";
 import { ChatSidebarProvider } from "./ChatSidebar";
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
+import { hasMessageContent } from "@/utils/aagLiveArtifacts";
 
 // Binary attachments cannot be serialized through sessionStorage: Brave
 // enforces a quota below the encoded size of a valid Composer reference. Keep
@@ -450,7 +451,7 @@ export default function ChatContainer({
             pendingResetRef.current = false;
           } else {
             setChatHistory((prev) => [
-              ...prev.filter((msg) => !!msg.content),
+              ...prev.filter(hasMessageContent),
               {
                 uuid: v4(),
                 type: "statusResponse",
@@ -479,7 +480,7 @@ export default function ChatContainer({
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
       } catch (e) {
         setChatHistory((prev) => [
-          ...prev.filter((msg) => !!msg.content),
+          ...prev.filter(hasMessageContent),
           {
             uuid: v4(),
             type: "abort",

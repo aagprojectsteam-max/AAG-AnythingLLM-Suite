@@ -38,6 +38,7 @@ additive = {
     "patches/anythingllm/aagPublicToolSchema.js",
 }
 anythingllm_derived = {
+    "image-system/tests/fixtures/anythingllm-agent-07bd65f.js.txt",
     "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
     "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
 }

@@ -238,7 +238,7 @@ test("reconciler binds an existing verified artifact to the exact pending native
   const naming = await require("./fixtures/artifact-naming").fixture(presentation.parseAagImageResult(runtime.resultEnvelope(job)));
   t.after(() => naming.close());
   await naming.database.$executeRawUnsafe("INSERT INTO workspaces VALUES(10, 'recovery workspace')");
-  await naming.database.$executeRawUnsafe("INSERT INTO workspace_threads VALUES(224, 10, 'recovery thread')");
+  await naming.database.$executeRawUnsafe("INSERT INTO workspace_threads(id,workspace_id,name) VALUES(224, 10, 'recovery thread')");
   const bound = await progress.bindCompletedJob(
     job,
     { runtime, store: { write() { writeCount += 1; } } },

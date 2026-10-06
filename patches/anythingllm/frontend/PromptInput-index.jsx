@@ -355,6 +355,7 @@ export default function PromptInput({
               <AagImageProgress
                 workspaceSlug={activeWorkspaceSlug}
                 threadSlug={threadSlug}
+                history={history}
               />
             )}
             {(isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator") && (

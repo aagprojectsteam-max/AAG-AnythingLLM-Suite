@@ -4,7 +4,7 @@ import { baseHeaders } from "@/utils/request";
 
 let pending = null;
 // Capture the same unfiltered order used by the native sidebar. The server
-// assigns only previously unseen identities; later sorting cannot renumber them.
+// preserves workspace identities and records the latest ordered thread list.
 export async function ensureArtifactSerials(workspaceSlug) {
   if (workspaceSlug !== "image-generator") return;
   if (pending) return pending;

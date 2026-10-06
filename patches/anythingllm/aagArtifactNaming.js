@@ -49,6 +49,9 @@ function localStamp(timestamp, timezone) {
   return stamp;
 }
 async function schema(db) {
+  await db.$executeRawUnsafe(`CREATE TABLE IF NOT EXISTS aag_thread_display_order (
+    workspace_id INTEGER NOT NULL, thread_id INTEGER NOT NULL, position INTEGER NOT NULL,
+    PRIMARY KEY(workspace_id, thread_id))`);
   await db.$executeRawUnsafe(`CREATE TABLE IF NOT EXISTS aag_workspace_serials (
     workspace_id INTEGER PRIMARY KEY, serial INTEGER NOT NULL UNIQUE)`);
   await db.$executeRawUnsafe(`CREATE TABLE IF NOT EXISTS aag_visible_thread_serials (
@@ -64,8 +67,8 @@ async function schema(db) {
     thread_id INTEGER NOT NULL, thread_serial INTEGER NOT NULL, sha256 TEXT NOT NULL,
     generated_at TEXT NOT NULL, timezone TEXT NOT NULL, filename TEXT NOT NULL UNIQUE)`);
 }
-// Separate forward-only mappings: the old filename ledger and its thread serials
-// continue to describe historical artifacts. Native identities are never changed.
+// Workspace serials and historical filename assignments remain stable. Current
+// thread numbers are ranks in the current visible list, not identity allocations.
 async function allocateWorkspace(tx, workspaceId) {
   await tx.$executeRawUnsafe(`INSERT OR IGNORE INTO aag_workspace_serials(workspace_id, serial)
     SELECT ?, COALESCE(MAX(serial), 0) + 1 FROM aag_workspace_serials`, workspaceId);
@@ -90,9 +93,11 @@ async function initializeSerials(db, snapshot) {
       const workspaceId = workspaceIds[i], group = snapshot.threads[i];
       if (group?.workspaceId !== workspaceId || !(await tx.$queryRawUnsafe("SELECT id FROM workspaces WHERE id = ?", workspaceId)).length) fail();
       await allocateWorkspace(tx, workspaceId);
-      for (const threadId of orderedIds(group.threadIds)) {
+      for (const [position, threadId] of orderedIds(group.threadIds).entries()) {
         if (!(await tx.$queryRawUnsafe("SELECT id FROM workspace_threads WHERE id = ? AND workspace_id = ?", threadId, workspaceId)).length) fail();
         await allocateThread(tx, workspaceId, threadId);
+        await tx.$executeRawUnsafe(`INSERT INTO aag_thread_display_order(workspace_id,thread_id,position)
+          VALUES(?,?,?) ON CONFLICT(workspace_id,thread_id) DO UPDATE SET position=excluded.position`, workspaceId, threadId, position);
       }
     }
     return { initialized: true };
@@ -107,15 +112,40 @@ async function forwardSerials(tx, workspaceId, threadId) {
   await allocateWorkspace(tx, workspaceId);
   if (threadId !== 0) {
     if (!(await tx.$queryRawUnsafe("SELECT id FROM workspace_threads WHERE id = ? AND workspace_id = ?", threadId, workspaceId)).length) fail();
-    // New threads can be created during native navigation after the snapshot.
-    // Append them by creation identity; never revisit any assigned serial.
-    const missing = await tx.$queryRawUnsafe(`SELECT id FROM workspace_threads WHERE workspace_id = ? AND id NOT IN
-      (SELECT thread_id FROM aag_visible_thread_serials WHERE workspace_id = ?) ORDER BY id`, workspaceId, workspaceId);
-    for (const row of missing) await allocateThread(tx, workspaceId, Number(row.id));
   }
   const workspace = (await tx.$queryRawUnsafe("SELECT serial FROM aag_workspace_serials WHERE workspace_id = ?", workspaceId))[0];
-  const thread = threadId === 0 ? {serial:0} : (await tx.$queryRawUnsafe("SELECT serial FROM aag_visible_thread_serials WHERE workspace_id = ? AND thread_id = ?", workspaceId, threadId))[0];
-  return { workspaceSerial: positive(workspace.serial), threadSerial: threadId === 0 ? 0 : positive(thread?.serial) };
+  const thread = await currentThreadReference(tx, workspaceId, threadId);
+  return { workspaceSerial: positive(workspace.serial), threadSerial: threadId === 0 ? 0 : positive(thread?.ordinal) };
+}
+
+async function currentThreadReference(db, workspaceId, threadId) {
+  if (!threadId) return {ordinal:null, state:"DEFAULT"};
+  workspaceId=positive(workspaceId);threadId=positive(threadId);
+  // Filter against live native rows before ranking: deleted reservations never
+  // leave holes. User scope matches the native sidebar's own-thread list.
+  // New native rows absent from the last snapshot append in native creation
+  // order. IDs are comparison keys only; they are never the displayed number.
+  const hasOrder=(await db.$queryRawUnsafe("SELECT name FROM sqlite_master WHERE type='table' AND name='aag_thread_display_order'")).length>0;
+  const rows=await db.$queryRawUnsafe(`SELECT t.id FROM workspace_threads t
+    ${hasOrder ? "LEFT JOIN aag_thread_display_order o ON o.workspace_id=t.workspace_id AND o.thread_id=t.id" : ""}
+    WHERE t.workspace_id=? AND t.user_id IS
+      (SELECT user_id FROM workspace_threads WHERE workspace_id=? AND id=?)
+    ORDER BY ${hasOrder ? "CASE WHEN o.position IS NULL THEN 1 ELSE 0 END, o.position," : ""} t.id`, workspaceId,workspaceId,threadId);
+  const index=rows.findIndex(row=>Number(row.id)===threadId);
+  return {ordinal:index<0?null:index+1,state:index<0?"DELETED":"CURRENT"};
+}
+
+async function artifactThreadReference(db, artifactId) {
+  if (!new RegExp(`^artifact-${UUID}$`).test(artifactId || "")) return null;
+  const rows=await db.$queryRawUnsafe(`SELECT f.workspace_id,f.thread_id,f.thread_serial,
+    w.slug AS workspace_slug,t.slug AS thread_slug FROM aag_artifact_filenames f
+    JOIN workspaces w ON w.id=f.workspace_id
+    LEFT JOIN workspace_threads t ON t.workspace_id=f.workspace_id AND t.id=f.thread_id
+    WHERE f.artifact_id=?`, artifactId);
+  if (!rows.length) return null;
+  const row=rows[0], current=await currentThreadReference(db, Number(row.workspace_id), Number(row.thread_id));
+  return {workspaceSlug:row.workspace_slug,threadSlug:row.thread_slug || null,
+    ...current,creationOrdinal:Number(row.thread_serial)>0?Number(row.thread_serial):null};
 }
 function writeExclusive(target, bytes) {
   const fd = fs.openSync(target, fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL | fs.constants.O_NOFOLLOW, 0o600);
@@ -190,4 +220,4 @@ async function persist({ generatedImagesPath, bytes, parsed, artifact, stateRoot
     return { storageFilename: filename, fileSize: bytes.length, generatedAt: timestamp, workspaceSerial, threadSerial: serial, filenameTimezone: timezone };
   }, { maxWait: 30000, timeout: 30000 });
 }
-module.exports = { persist, NAME, schema, initializeSerials, hostTimezone, localStamp };
+module.exports = { persist, NAME, schema, initializeSerials, currentThreadReference, artifactThreadReference, hostTimezone, localStamp };

@@ -1,5 +1,12 @@
 # Changelog
 
+## Production 20261005T211028Z — 2026-10-06
+
+- Present completed image artifacts live without refreshing, including structured responses with empty text.
+- Preserve one artifact through stream updates, retransmission, recovery and reload; serialize publication per job.
+- Resolve visible Thread numbers from the current ordered list while retaining stable backend IDs and historical filenames.
+- Add pinned-upstream reducer, SQLite publication and ordinal-numbering regressions.
+
 ## Unreleased — current Visual Atlas V2
 
 - Publish sanitized bindings for the 493 existing V2 images; pixels remain external.

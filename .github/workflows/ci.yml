@@ -21,6 +21,10 @@ jobs:
           image-system/tests/generated-image-cleanup.test.js
           image-system/tests/artifact-naming.test.js
           image-system/tests/artifact-result-text.test.js
+          image-system/tests/artifact-presentation.test.js
+          image-system/tests/progress-persistence.test.js
+          image-system/tests/live-artifact-completion.test.js
+          image-system/tests/thread-numbering.test.js
       # Full Atlas and Expert integration suites additionally require the
       # authorized external pixels and offline tokenizer, excluded from Git.
       # Their Golden closure results are recorded in the release documentation.

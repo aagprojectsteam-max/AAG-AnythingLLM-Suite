@@ -80,7 +80,7 @@ function patchPromptInput(checkoutRoot) {
   source = replaceOnce(
     source,
     '          <div className="relative w-[95vw] md:w-[750px]">\n            <ToolsMenu',
-    '          <div className="relative w-[95vw] md:w-[750px]">\n            {isImageComposerEnabledForCurrentWorkspace && (\n              <AagImageProgress\n                workspaceSlug={activeWorkspaceSlug}\n                threadSlug={threadSlug}\n              />\n            )}\n            {(isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator") && (\n              <AagImageComposerPanel\n                composerEnabled={isImageComposerEnabledForCurrentWorkspace}\n                ref={composerPanelRef}\n                mode={composerMode}\n                onModeChange={setComposerMode}\n                prompt={promptInput}\n                history={history}\n                threadSlug={threadSlug}\n                workspaceSlug={activeWorkspaceSlug}\n                disabled={isStreaming || isDisabled}\n              />\n            )}\n            <ToolsMenu',
+    '          <div className="relative w-[95vw] md:w-[750px]">\n            {isImageComposerEnabledForCurrentWorkspace && (\n              <AagImageProgress\n                workspaceSlug={activeWorkspaceSlug}\n                threadSlug={threadSlug}\n                history={history}\n              />\n            )}\n            {(isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator") && (\n              <AagImageComposerPanel\n                composerEnabled={isImageComposerEnabledForCurrentWorkspace}\n                ref={composerPanelRef}\n                mode={composerMode}\n                onModeChange={setComposerMode}\n                prompt={promptInput}\n                history={history}\n                threadSlug={threadSlug}\n                workspaceSlug={activeWorkspaceSlug}\n                disabled={isStreaming || isDisabled}\n              />\n            )}\n            <ToolsMenu',
     "PromptInput render"
   );
   fs.writeFileSync(promptPath, source);
@@ -170,6 +170,8 @@ function patchChatContainer(checkoutRoot) {
     "                  attachments={files}\n                  history={chatHistory}\n                  threadSlug={activeThreadSlug}\n                  centered={false}",
     "ChatContainer thread Composer history"
   );
+  source = source.replace('import MemoriesSidebar from "./MemoriesSidebar";', 'import MemoriesSidebar from "./MemoriesSidebar";\nimport { hasMessageContent } from "@/utils/aagLiveArtifacts";')
+    .replaceAll('prev.filter((msg) => !!msg.content)', 'prev.filter(hasMessageContent)');
   fs.writeFileSync(chatPath, source);
 }
 
@@ -300,6 +302,11 @@ try {
   copy(path.join(overlay, "AagArtifactDetails.jsx"), path.join(checkout, "frontend", "src", "components", "WorkspaceChat", "ChatContainer", "ChatHistory", "AagArtifactDetails.jsx"));
   copy(path.join(overlay, "aagArtifactExport.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactExport.js"));
   copy(path.join(overlay, "aagArtifactFile.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactFile.js"));
+  const threadSource = fs.readFileSync(path.join(overlay, "aagThreadOrder.js"), "utf8");
+  fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagThreadOrder.js"), threadSource.replace(
+    "module.exports = { threadOrdinal, threadLabel, createThreadOrderStore, threadOrder };",
+    "export { threadOrdinal, threadLabel, createThreadOrderStore, threadOrder };"));
+  copy(path.join(overlay, "useAagThreadNumber.js"), path.join(checkout, "frontend/src/utils/useAagThreadNumber.js"));
   copy(path.join(overlay, "aagArtifactSerials.js"), path.join(checkout, "frontend", "src", "utils", "aagArtifactSerials.js"));
   const displaySource = fs.readFileSync(path.join(root,"integrations/anythingllm/aagArtifactText.js"),"utf8");
   fs.writeFileSync(path.join(checkout,"frontend/src/utils/aagArtifactText.js"),displaySource.replace('module.exports = { displayArtifactText, artifactFilename };','export { displayArtifactText, artifactFilename };'));
@@ -312,6 +319,13 @@ try {
   patchChatContainer(checkout);
   patchThreadContainer(checkout);
   patchArtifactText(checkout);
+  require("./patch-thread-numbering").patchThreadNumbering(checkout);
+  const liveSource = fs.readFileSync(path.join(overlay, "aagLiveArtifacts.js"), "utf8");
+  fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagLiveArtifacts.js"), liveSource.replace(
+    "module.exports = { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };",
+    "export { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };"));
+  const agentPath = path.join(checkout, "frontend/src/utils/chat/agent.js");
+  fs.writeFileSync(agentPath, require("./patch-live-artifacts").patchLiveArtifacts(fs.readFileSync(agentPath, "utf8")));
 
   // Release engineering can materialize the two deterministic stock-file
   // transformations without installing frontend dependencies or building a
@@ -358,8 +372,14 @@ try {
       "aagArtifactExport.js",
       "aagArtifactFile.js",
       "aagArtifactSerials.js",
+      "aagThreadOrder.js",
+      "useAagThreadNumber.js",
+      "models/workspaceThread.js (current visible order)",
+      "ThreadItem/index.jsx (visible ordinal label)",
       "aagArtifactText.js (shared presentation function)",
       "useAagArtifactText.js",
+      "aagLiveArtifacts.js",
+      "utils/chat/agent.js (structured live output hydration)",
       "useImageComposerMode.js",
       "useExpertPromptMode.js",
       "AagImageComposerPanel/index.jsx",

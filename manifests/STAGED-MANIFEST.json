@@ -1,6 +1,6 @@
 {
   "schema": "aag.public-stage.v1",
-  "golden_version": "20261005T133425Z",
+  "golden_version": "20261005T211028Z",
   "version": "0.9.0-preview.13",
   "modules": [
     "generation-details.js",
@@ -32,7 +32,7 @@
   "provider_files": [
     {
       "path": "aag-image-task/runtime-release.json",
-      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec"
+      "sha256": "f39a65916a3f24473999c05284a5cf4c2622f517f8754ffe6ff84bfbc7cf79ac"
     },
     {
       "path": "aag-image-task/plugin.json",
@@ -156,7 +156,7 @@
     },
     {
       "path": "aag-image-batch/runtime-release.json",
-      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec"
+      "sha256": "f39a65916a3f24473999c05284a5cf4c2622f517f8754ffe6ff84bfbc7cf79ac"
     },
     {
       "path": "aag-image-batch/plugin.json",
@@ -280,7 +280,7 @@
     },
     {
       "path": "aag-image-job/runtime-release.json",
-      "sha256": "8c238f4fff7b98b9464d44c14232544e8aed245e122e9263dd55f60abd2a81ec"
+      "sha256": "f39a65916a3f24473999c05284a5cf4c2622f517f8754ffe6ff84bfbc7cf79ac"
     },
     {
       "path": "aag-image-job/plugin.json",
@@ -404,6 +404,6 @@
     }
   ],
   "install_map": "GOLDEN-INSTALL-MAP.json",
-  "source_manifest": "GOLDEN-20261005T133425Z.json",
+  "source_manifest": "GOLDEN-20261005T211028Z.json",
   "private_build_context_included": false
 }

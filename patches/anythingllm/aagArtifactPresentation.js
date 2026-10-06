@@ -319,6 +319,24 @@ function batchPresentationPlan(args) {
   return { collectionBrief: String(value.collection_brief || ""), prompts };
 }
 
+// The live tool and event-driven recovery can observe the same terminal job.
+// Serialize only that job's verification/naming/chat publication, across both
+// callers. Otherwise overlapping SQLite transactions can make the live upsert
+// fail while recovery succeeds silently. Entries retire after the last waiter.
+const publicationTails = new Map();
+async function withArtifactPublication(jobId, publish) {
+  const previous = publicationTails.get(jobId) || Promise.resolve();
+  let release;
+  const current = new Promise(resolve => { release = resolve; });
+  publicationTails.set(jobId, current);
+  await previous;
+  try { return await publish(); }
+  finally {
+    release();
+    if (publicationTails.get(jobId) === current) publicationTails.delete(jobId);
+  }
+}
+
 function installAagArtifactPresentation({
   aibitat,
   generatedImagesPath,
@@ -343,26 +361,28 @@ function installAagArtifactPresentation({
       const result = await originalHandler(args);
       const parsed = parseAagImageResult(result);
       if (!parsed) return result;
-      const expertPrompts = task.runtimeArgs?.AAG_EXPERT_VALIDATED_PROMPTS || [];
-      const prompt = expertPrompts.length && typeof args?.prompt === "string" ? args.prompt : semanticPrompt(args);
-      const plan = batchPresentationPlan(args);
-      const outputs = await buildPresentationOutputs({
-        parsed,
-        prompt,
-        promptsByLogicalIndex: plan.prompts,
-        expertPrompts,
-        collectionBrief: plan.collectionBrief,
-        generatedImagesPath,
-        fetchImpl,
-        naming: { ...naming, stateRoot: task.runtimeArgs?.AAG_IMAGE_AGENT_STATE_ROOT || naming.stateRoot },
+      return withArtifactPublication(parsed.jobId, async () => {
+        const expertPrompts = task.runtimeArgs?.AAG_EXPERT_VALIDATED_PROMPTS || [];
+        const prompt = expertPrompts.length && typeof args?.prompt === "string" ? args.prompt : semanticPrompt(args);
+        const plan = batchPresentationPlan(args);
+        const outputs = await buildPresentationOutputs({
+          parsed,
+          prompt,
+          promptsByLogicalIndex: plan.prompts,
+          expertPrompts,
+          collectionBrief: plan.collectionBrief,
+          generatedImagesPath,
+          fetchImpl,
+          naming: { ...naming, stateRoot: task.runtimeArgs?.AAG_IMAGE_AGENT_STATE_ROOT || naming.stateRoot },
+        });
+        if (typeof authorizeOutputs === "function") await authorizeOutputs(outputs);
+        appendUniqueOutputs(aibitat, outputs);
+        aibitat._aagPresentedArtifactUrls = [
+          ...new Set([...aibitat._aagPresentedArtifactUrls, ...parsed.artifacts.map((artifact) => artifact.url)]),
+        ];
+        log(`Registered ${outputs.length} verified AAG artifact card(s) for job ${parsed.jobId}`);
+        return result;
       });
-      if (typeof authorizeOutputs === "function") await authorizeOutputs(outputs);
-      appendUniqueOutputs(aibitat, outputs);
-      aibitat._aagPresentedArtifactUrls = [
-        ...new Set([...aibitat._aagPresentedArtifactUrls, ...parsed.artifacts.map((artifact) => artifact.url)]),
-      ];
-      log(`Registered ${outputs.length} verified AAG artifact card(s) for job ${parsed.jobId}`);
-      return result;
     };
   }
 
@@ -383,6 +403,7 @@ function installAagArtifactPresentation({
         // History hydration reads `outputs` directly, which is why persistence
         // could succeed while the active browser ignored this same message.
         type: "imageGenerationCard",
+        chatId: aibitat.trackedChatId || message.chatId || null,
         content: normalizeFinalText(
           message.content,
           aibitat._aagPresentedArtifactUrls
@@ -396,6 +417,7 @@ function installAagArtifactPresentation({
 }
 
 module.exports = {
+  withArtifactPublication,
   presentationPrompt,
   AAG_IMAGE_PROVIDER_POLICY: "OPEN_BY_CAPABILITY",
   parseAagImageResult,

@@ -1,6 +1,6 @@
 {
   "schema": "aag.golden-install-map.v1",
-  "golden_version": "20261005T133425Z",
+  "golden_version": "20261005T211028Z",
   "upstream_revision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
   "entries": [
     {
@@ -11,7 +11,7 @@
     {
       "target": "server/endpoints/aagArtifactExport.js",
       "source": "patches/anythingllm/aagArtifactExport.js",
-      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4"
+      "sha256": "9faa5dcc0c356efe069209fa7919fba0edeab5b3a17d0f6113194a06512c727b"
     },
     {
       "target": "server/endpoints/aagArtifactFormat.js",
@@ -151,7 +151,7 @@
     {
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactNaming.js",
       "source": "patches/anythingllm/aagArtifactNaming.js",
-      "sha256": "8239e24a52df06a747d9fcb475cf4354d0b166f00b6f398a84260113cf914090"
+      "sha256": "7969177861fa73e09d728e8c9ded9b308d3ced1ad412709d21d22d7ed59da21d"
     },
     {
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/index.js",
@@ -166,12 +166,12 @@
     {
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactPresentation.js",
       "source": "patches/anythingllm/aagArtifactPresentation.js",
-      "sha256": "ee51e28e47223aeb8c39f828e31ba819771e5644b5e7da356cc3e90c6d611f3a"
+      "sha256": "080f55ca293766e29661a23b7fdd03c6c0e9cffd031de130299fb7b0b2eb89b9"
     },
     {
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagArtifactText.js",
       "source": "patches/anythingllm/aagArtifactText.js",
-      "sha256": "f1b020ad39c14411012ae6e4e6f8dba8742c73184b445f856603d9fc2aa67a1e"
+      "sha256": "1d57fe701a388a27a4b355c182347c75f8c5c7f54a2faf2b8074160d7d5ba9e0"
     },
     {
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/aagComposerHistory.js",
@@ -186,12 +186,12 @@
     {
       "target": "frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx",
       "source": "patches/anythingllm/frontend/ThreadContainer-index.jsx",
-      "sha256": "7e93305c9624fd79149db43f26fd8684f954c0d077d9978bb2a2c1dae4c36929"
+      "sha256": "21423ce6023626240e2d570b87fb8ab1c1f3dad1ceb4f076fd9cba783c77fc99"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactDetails.jsx",
       "source": "image-system/integrations/anythingllm/frontend/AagArtifactDetails.jsx",
-      "sha256": "3596659467a916a549679f33306607a4b6e404e72e2277cf8e8525c1871847c1"
+      "sha256": "3214cc34e682d6dea71402294fdb38765b0e4169a1461dfed3722dc9171edd01"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/AagArtifactPrompt.jsx",
@@ -216,7 +216,7 @@
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/ImageGenerationCard/index.jsx",
       "source": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
-      "sha256": "936fc6d05bf0d8fcf47b5626a14d3edd3cba49987341131cd63da37e702f2259"
+      "sha256": "41db645a1f868ce249375e72be438cf0f1a9864362a721e95478d3401c781ab0"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
@@ -231,12 +231,12 @@
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/index.jsx",
       "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
-      "sha256": "60b5d6704c5da4e455a9225f0f29975eb288d5ea8fbbcb511b2e6f8d2d5790cb"
+      "sha256": "0a3b1d6636e54bdd9cdf9fccccc500dabca3a876bef99fdf11046e58411dcd02"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/localization.js",
       "source": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
-      "sha256": "116103536c9dce853be6b47ea160a9d6d42e351bd74fd08e4abb41a635b446cd"
+      "sha256": "78241aad50ff15d451e800ac26113777ed5a9ff7650549304e3980c820b82eb4"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageComposerPanel/styles.css",
@@ -246,7 +246,7 @@
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress/index.jsx",
       "source": "image-system/integrations/anythingllm/frontend/AagImageProgress/index.jsx",
-      "sha256": "be29569fc1a5ba3f17701fff4d55aa6b33f63762ebedfd5a15c7353c2b1d3f28"
+      "sha256": "442de2b6e57d10d82ec9950a99497b5230b3428226a3b6c192c5ff61ca56c3e3"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AagImageProgress/styles.css",
@@ -256,12 +256,12 @@
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/index.jsx",
       "source": "patches/anythingllm/frontend/PromptInput-index.jsx",
-      "sha256": "c2c8bf31ba7ebb01d49d6782635b1edd4f7bdf08c31ff1b8e546a53a531db91f"
+      "sha256": "3831ca101ee5bbf11021ad18c49b4b8c2671f11aee11a6902afa7cc074250786"
     },
     {
       "target": "frontend/src/components/WorkspaceChat/ChatContainer/index.jsx",
       "source": "patches/anythingllm/frontend/ChatContainer-index.jsx",
-      "sha256": "7df74d00c2ee977d7b54abeae8e364c79cdabc281a625ad9364aa107879a1d16"
+      "sha256": "4a0d0e256c35c6aef7b0de558e2ad634463e800cc054cf68652d13775e4b825c"
     },
     {
       "target": "frontend/src/utils/aagArtifactExport.js",
@@ -276,12 +276,12 @@
     {
       "target": "frontend/src/utils/aagArtifactSerials.js",
       "source": "image-system/integrations/anythingllm/frontend/aagArtifactSerials.js",
-      "sha256": "bdbe3f03eba9135a7f21ac2bb19f34d686c7b32516c14949590adf561ed60708"
+      "sha256": "261cde888f22bda8bb3ff5ba99849703926600c19082d61b786678d12a0dbbc3"
     },
     {
       "target": "frontend/src/utils/aagArtifactText.js",
       "source": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
-      "sha256": "063fb3252902687e5f81a0ecad01fd3f4c77ee937966720fcd1b59cbffa1e916"
+      "sha256": "146a3025010fc947695d312eaf96a636632b0a06b88219b2d115905915a0a917"
     },
     {
       "target": "frontend/src/utils/useAagArtifactText.js",
@@ -386,7 +386,7 @@
     {
       "target": "storage/aag-image-agent-integration/multi-image-export/server/aagImageProgress.js",
       "source": "image-system/integrations/anythingllm/aagImageProgress.js",
-      "sha256": "3010036c80eb9c59c746105e70a8238f2bf3ba06204c6c06ac0f67c47e2e27a3"
+      "sha256": "a2c07481bced34ec8419018d585638d1f67aa8ad5f1272adee443429fd2c8b9e"
     },
     {
       "target": "storage/aag-image-agent-integration/multi-image-export/server/aagPdfAssembler.js",
@@ -396,7 +396,7 @@
     {
       "target": "storage/aag-image-agent-integration/multi-image-export/server/aagArtifactExport.js",
       "source": "image-system/integrations/anythingllm/aagArtifactExport.js",
-      "sha256": "8f0973c8a37850b03b1abaa8636ba198f7a51054afc9144cc689ac3eaa400db4"
+      "sha256": "9faa5dcc0c356efe069209fa7919fba0edeab5b3a17d0f6113194a06512c727b"
     },
     {
       "target": "storage/aag-image-agent-integration/multi-image-export/server/index.js",
@@ -407,6 +407,36 @@
       "target": "storage/aag-image-agent-integration/runtime-context-bridge/workspaceToolPolicy.js",
       "source": "patches/anythingllm/workspaceToolPolicy.js",
       "sha256": "f99c1cdf52e7ebe14caded22cbca0a3221fc8e5e4c5ac1db6f9fcf4dd62ace18"
+    },
+    {
+      "target": "frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem/index.jsx",
+      "source": "patches/anythingllm/frontend/golden/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem/index.jsx",
+      "sha256": "dbff80d7c43c3fb85e2c6dd666f0d9839a931b8c603c02916ec4c8b4c463412e"
+    },
+    {
+      "target": "frontend/src/models/workspaceThread.js",
+      "source": "patches/anythingllm/frontend/golden/src/models/workspaceThread.js",
+      "sha256": "9a82338d2bf2d353bdd0ab4d0d22b6adc34d6593a966d6bc51ce48dac83c6761"
+    },
+    {
+      "target": "frontend/src/utils/aagLiveArtifacts.js",
+      "source": "patches/anythingllm/frontend/golden/src/utils/aagLiveArtifacts.js",
+      "sha256": "bdd71b82f9d4950807deda4f1340eba957c25bea48d7c6ed9a34ea4da2dd0167"
+    },
+    {
+      "target": "frontend/src/utils/aagThreadOrder.js",
+      "source": "patches/anythingllm/frontend/golden/src/utils/aagThreadOrder.js",
+      "sha256": "5d8ca342d5141526d32607de90c2f10c57d35f3be1e46300901f9975e2e7ffa4"
+    },
+    {
+      "target": "frontend/src/utils/chat/agent.js",
+      "source": "patches/anythingllm/frontend/golden/src/utils/chat/agent.js",
+      "sha256": "1e93d0a0bf1144d3ad44d48c00ada7cac5069fbc8661f2042a86ae08faf9f98a"
+    },
+    {
+      "target": "frontend/src/utils/useAagThreadNumber.js",
+      "source": "image-system/integrations/anythingllm/frontend/useAagThreadNumber.js",
+      "sha256": "a0ab6902544d51dc3d5a500cb72d698a6bd77de1679526e01c639d5e29439588"
     }
   ]
 }

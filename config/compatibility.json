@@ -31,7 +31,10 @@
         "server/utils/agents/aibitat/providers/gemini.js": "418b3d636c7889a79520968bf3e24e4add9fc2530c5ffcb142fe670e0a203f18",
         "server/utils/agents/aibitat/providers/ollama.js": "d037b4e2dcbceb1932086a0a47070d43f68f208c319693fb79c8aed37101ff17",
         "server/utils/agents/aibitat/providers/openai.js": "51306e02a5f0eb4924f7cc848b8e629fc8307583467ffdf392fe4b3895e1fdc6",
-        "server/utils/files/index.js": "dd5b8ea35834b2389b4fbedb6047e0e08c3c2498b8bfe2ce1504b52215d8ae22"
+        "server/utils/files/index.js": "dd5b8ea35834b2389b4fbedb6047e0e08c3c2498b8bfe2ce1504b52215d8ae22",
+        "frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem/index.jsx": "8c2dc056b66a70a7f7403f3870cf5e20b8d1a0b82e10e97d384c3f01d59fee38",
+        "frontend/src/models/workspaceThread.js": "839f14f24babc66b44569f53a7e679c04a0da3aadc62b6cd7cc180d0b4ad1ea5",
+        "frontend/src/utils/chat/agent.js": "8496f88e98b780c3b4d8066dfabd573f1608414777b61eacc3329ff99a2ba9bc"
       }
     }
   ]

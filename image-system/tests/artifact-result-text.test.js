@@ -2,7 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {displayArtifactText}=require('../integrations/anythingllm/aagArtifactText');
 const cases=[
- ['completed','', 'Image generation completed.'],
+ ['completed','', 'Returning image to chat…'],
  ['failed','EXPERT_SEMANTIC_REVIEW_FAILED','The image prompt could not be validated. Review your request and the selected style.'],
  ['failed','ENGINE_TIMEOUT','Image generation could not finish. Please try again later.'],
  ['failed','INVALID_STYLE_ID','The image request could not be validated. Check the selected settings and your request.'],

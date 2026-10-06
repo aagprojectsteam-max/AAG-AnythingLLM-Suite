@@ -9,6 +9,7 @@ export const UI_LANGUAGES = Object.freeze([
 
 const HE_UI = Object.freeze({
   imageResultUnavailable: "מצב יצירת התמונה אינו זמין.",
+  imageResultReturning: "מחזיר את התמונה לצ׳אט…",
   imageResultCompleted: "יצירת התמונה הושלמה.",
   imageResultFailed: "לא ניתן היה ליצור את התמונה.",
   imageResultExpertFailed: "לא ניתן היה לאמת את הפרומפט לתמונה. יש לבדוק את הבקשה ואת הסגנון שנבחר.",
