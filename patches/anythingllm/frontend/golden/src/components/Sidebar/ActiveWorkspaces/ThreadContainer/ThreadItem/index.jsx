@@ -70,10 +70,10 @@ export default function ThreadItem({
       {/* Curved line inline placeholder for spacing - not visible */}
       <div
         style={{ width: THREAD_CALLOUT_DETAIL_WIDTH + 8 }}
-        className="h-full"
+        className="h-full shrink-0"
       />
       <div
-        className={`flex w-full items-center justify-between pr-2 group/thread relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[4px]`}
+        className={`flex flex-1 min-w-0 items-center justify-between pr-2 group/thread relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[4px]`}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
@@ -106,22 +106,24 @@ export default function ThreadItem({
             data-testid="aag-thread-link"
             data-thread-ordinal={visibleOrdinal || undefined}
             data-thread-slug={thread.slug || undefined}
-            className="w-full pl-2 py-1 overflow-hidden"
+            className="flex-1 min-w-0 pl-2 py-1 overflow-hidden"
+            aria-label={threadLabel(visibleOrdinal, thread.name)}
             aria-current={isActive ? "page" : ""}
           >
             <p
-              className={`text-left text-sm truncate max-w-[150px] ${
+              className={`aag-ordinal-label text-sm ${
                 isActive
                   ? "font-semibold text-theme-text-primary light:text-blue-900"
                   : "text-theme-text-primary font-medium light:text-slate-800"
               }`}
             >
-              {threadLabel(visibleOrdinal, thread.name)}
+              {visibleOrdinal && <span className="aag-ordinal-number" data-testid="aag-thread-number" dir="ltr">{visibleOrdinal} -</span>}
+              <bdi className="aag-ordinal-title" data-testid="aag-thread-title" dir="auto">{thread.name}</bdi>
             </p>
           </Link>
         )}
         {!!thread.slug && !thread.deleted && !thread.virtual && (
-          <div ref={optionsContainer} className="flex items-center">
+          <div ref={optionsContainer} className="flex shrink-0 items-center">
             {" "}
             {/* Added flex and items-center */}
             {ctrlPressed ? (

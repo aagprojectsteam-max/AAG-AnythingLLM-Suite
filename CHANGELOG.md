@@ -1,5 +1,12 @@
 # Changelog
 
+## Production 20261006T050300Z — 2026-10-06
+
+- Label workspaces and threads `N - NAME` using their current visible order; preserve stable IDs/slugs and historical filenames.
+- Resize the sidebar from 260–520px, with a 292px default and a locally persisted preference.
+- Keep ordinal prefixes visible, ellipsize titles only, and expose complete titles on hover/focus with Hebrew/English direction support.
+- Preserve chat reflow and navigation alignment; add portable width, numbering and safe browser-checkpoint regressions.
+
 ## Production 20261005T211028Z — 2026-10-06
 
 - Present completed image artifacts live without refreshing, including structured responses with empty text.

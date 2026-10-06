@@ -64,7 +64,7 @@ test('details distinguish current ordinal from filename creation ordinal and inc
 test('sidebar, current-thread switching, deletion and reorder derive display numbers from the same array',()=>{
  const store=createThreadOrderStore(),rows=[101,217,309,444].map(id=>({id,slug:'opaque-'+id,name:'Thread'}));let calls=0;store.subscribe(()=>calls++);
  store.publish('a',[]);assert.equal(threadOrdinal(store.get('a'),'opaque-101'),null);
- store.publish('a',rows);assert.equal(threadOrdinal(store.get('a'),'opaque-309'),3);assert.equal(threadLabel(3,'Thread'),'Thread 3');
+ store.publish('a',rows);assert.equal(threadOrdinal(store.get('a'),'opaque-309'),3);assert.equal(threadLabel(3,'Thread'),'3 - Thread');
  store.remove('a',['opaque-217']);assert.equal(threadOrdinal(store.get('a'),'opaque-309'),2);assert.equal(threadOrdinal(store.get('a'),'opaque-444'),3);assert.equal(threadOrdinal(store.get('a'),'opaque-101'),1);
  store.publish('a',[rows[3],rows[0],rows[2]]);assert.equal(threadOrdinal(store.get('a'),'opaque-309'),3);
  assert.deepEqual(rows.map(r=>r.id),[101,217,309,444]);assert.equal(threadOrdinal(store.get('b'),'opaque-309'),null);assert.equal(calls,4);

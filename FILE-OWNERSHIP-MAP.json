@@ -593,6 +593,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "docs/RELEASE-GOLDEN-20261006T050300Z.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "docs/ROLLBACK.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1138,6 +1143,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/AagSidebarResize.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
@@ -1164,6 +1174,16 @@
     },
     {
       "path": "image-system/integrations/anythingllm/frontend/aagLiveArtifacts.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagSidebar.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagSidebarWidth.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2318,6 +2338,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/sidebar-presentation.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tests/stall-recovery.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2398,6 +2423,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/browser_profile_checkpoint.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/build-anythingllm-frontend.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2474,6 +2504,11 @@
     },
     {
       "path": "image-system/tools/patch-live-artifacts.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-sidebar-presentation.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -3438,6 +3473,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "manifests/GOLDEN-20261006T050300Z.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "manifests/GOLDEN-INSTALL-MAP.json",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -3668,12 +3708,32 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/components/Sidebar/ActiveWorkspaces/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/Sidebar/SidebarToggle/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/Sidebar/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
       "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/models/workspace.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
@@ -3689,6 +3749,11 @@
     },
     {
       "path": "patches/anythingllm/frontend/golden/src/utils/aagLiveArtifacts.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/aagSidebarWidth.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },

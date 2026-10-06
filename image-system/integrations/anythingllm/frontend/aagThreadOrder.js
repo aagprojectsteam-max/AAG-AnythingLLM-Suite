@@ -7,7 +7,7 @@ function threadOrdinal(threads, slug) {
 }
 function threadLabel(ordinal, name = "") {
   if (!ordinal) return name;
-  return `Thread ${ordinal}${name && name !== "Thread" ? ` · ${name}` : ""}`;
+  return `${ordinal} - ${name}`;
 }
 function createThreadOrderStore() {
   const lists = new Map(), listeners = new Set(), empty = Object.freeze([]);

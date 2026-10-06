@@ -25,6 +25,10 @@ jobs:
           image-system/tests/progress-persistence.test.js
           image-system/tests/live-artifact-completion.test.js
           image-system/tests/thread-numbering.test.js
+          image-system/tests/sidebar-presentation.test.js
+      - name: Safe browser checkpoint regression
+        working-directory: image-system/tools
+        run: python3 -B -m unittest test_browser_lifecycle.BrowserLifecycleTests.test_checkpoint_rejects_unowned_and_nonempty_destinations
       # Full Atlas and Expert integration suites additionally require the
       # authorized external pixels and offline tokenizer, excluded from Git.
       # Their Golden closure results are recorded in the release documentation.

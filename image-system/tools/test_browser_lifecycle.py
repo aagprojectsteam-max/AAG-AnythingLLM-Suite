@@ -7,8 +7,10 @@ import sys
 import tempfile
 import time
 import unittest
+import shutil
 
 from browser_lifecycle import OwnedBrowser, profile_processes
+from browser_profile_checkpoint import checkpoint_command, owned_directory, MARKER
 
 
 class BrowserLifecycleTests(unittest.TestCase):
@@ -105,6 +107,44 @@ time.sleep(60)
                 time.sleep(.05)
             self.assertGreaterEqual(len(profile_processes(profile)), 2)
         self.clean(profile)
+
+    def test_checkpoint_rejects_unowned_and_nonempty_destinations(self):
+        source, destination = self.profile(), self.profile()
+        try:
+            with self.assertRaises(ValueError):
+                owned_directory(Path.home())
+            with self.assertRaises(ValueError):
+                checkpoint_command(self.args(source), source)
+            (destination / 'preserved').write_text('Do not overwrite')
+            with self.assertRaises(ValueError):
+                checkpoint_command(self.args(source), destination)
+            self.assertEqual((destination / 'preserved').read_text(), 'Do not overwrite')
+        finally:
+            shutil.rmtree(source); shutil.rmtree(destination)
+
+    def test_checkpoint_launcher_abort_remains_owned(self):
+        profile, destination = self.profile(), self.profile()
+        with self.assertRaises(AssertionError):
+            with OwnedBrowser(checkpoint_command(self.args(profile), destination), resources=[destination]) as owned:
+                owned.target()
+                raise AssertionError('Abort before clean browser shutdown')
+        self.clean(profile); self.clean(destination)
+
+    def test_checkpoint_after_clean_browser_shutdown(self):
+        import json
+        import websocket
+        profile, destination = self.profile(), self.profile()
+        try:
+            with OwnedBrowser(checkpoint_command(self.args(profile), destination)) as owned:
+                socket = owned.attach(websocket.create_connection(owned.target()['webSocketDebuggerUrl'], origin='http://127.0.0.1'))
+                socket.send(json.dumps({'id':1, 'method':'Browser.close'}))
+                self.assertEqual(json.loads(socket.recv())['id'], 1)
+                owned.wait(timeout=20)
+                self.assertTrue((destination / MARKER).is_file())
+                self.assertTrue((destination / 'Default').is_dir())
+            self.clean(profile)
+        finally:
+            shutil.rmtree(destination, ignore_errors=True)
 
 
 if __name__ == '__main__':

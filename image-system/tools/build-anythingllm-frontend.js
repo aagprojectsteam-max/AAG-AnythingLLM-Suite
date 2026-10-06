@@ -320,6 +320,12 @@ try {
   patchThreadContainer(checkout);
   patchArtifactText(checkout);
   require("./patch-thread-numbering").patchThreadNumbering(checkout);
+  const widthSource = fs.readFileSync(path.join(overlay, "aagSidebarWidth.js"), "utf8");
+  fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagSidebarWidth.js"), widthSource.replace("module.exports =", "export"));
+  for (const name of ["AagSidebarResize.jsx", "aagSidebar.css"]) {
+    copy(path.join(overlay, name), path.join(checkout, "frontend/src/components/Sidebar", name));
+  }
+  require("./patch-sidebar-presentation").patchSidebarPresentation(checkout);
   const liveSource = fs.readFileSync(path.join(overlay, "aagLiveArtifacts.js"), "utf8");
   fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagLiveArtifacts.js"), liveSource.replace(
     "module.exports = { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };",
@@ -374,6 +380,13 @@ try {
       "aagArtifactSerials.js",
       "aagThreadOrder.js",
       "useAagThreadNumber.js",
+      "aagSidebarWidth.js",
+      "AagSidebarResize.jsx",
+      "aagSidebar.css",
+      "Sidebar/index.jsx (resizable desktop layout)",
+      "SidebarToggle/index.jsx (fluid alignment)",
+      "ActiveWorkspaces/index.jsx (current visible workspace ordinals)",
+      "models/workspace.js (confirmed-deletion presentation notification)",
       "models/workspaceThread.js (current visible order)",
       "ThreadItem/index.jsx (visible ordinal label)",
       "aagArtifactText.js (shared presentation function)",

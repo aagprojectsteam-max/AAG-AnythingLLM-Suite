@@ -14,6 +14,13 @@
     "aagArtifactSerials.js",
     "aagThreadOrder.js",
     "useAagThreadNumber.js",
+    "aagSidebarWidth.js",
+    "AagSidebarResize.jsx",
+    "aagSidebar.css",
+    "Sidebar/index.jsx (resizable desktop layout)",
+    "SidebarToggle/index.jsx (fluid alignment)",
+    "ActiveWorkspaces/index.jsx (current visible workspace ordinals)",
+    "models/workspace.js (confirmed-deletion presentation notification)",
     "models/workspaceThread.js (current visible order)",
     "ThreadItem/index.jsx (visible ordinal label)",
     "aagArtifactText.js (shared presentation function)",
@@ -34,9 +41,9 @@
     "ChatHistory/index.jsx (artifact result presentation)",
     "HistoricalMessage/index.jsx (native output memo hydration)"
   ],
-  "overlayTreeSha256": "cba16337c2c3b5bd1476495c0d7de430a177ba69c9ab8407852e147820073b5e",
-  "buildToolSha256": "c0ba9d899bf7c66f1190ae696f977fac5ee80b59a648a3f590ced1ee619083b9",
-  "publicFiles": 255,
-  "publicTreeSha256": "7ba5dea8a9ec06ece9e739f442d56ff0af431d340b0c9c5ac23d1a446d6b4e1b",
-  "builtAt": "2026-10-05T21:08:15.377Z"
+  "overlayTreeSha256": "7d230509dffe5b2462f7e8910555e3f8e0d33851849595a2946a1babd26e6421",
+  "buildToolSha256": "07e1eae162f628359a402e7698ef5a632d72e3a5be7a59a1f7efaa528aacd605",
+  "publicFiles": 256,
+  "publicTreeSha256": "d092468b6dc644a1775fdca22e6216440fd7d9927ba887fa86deca11d509ab27",
+  "builtAt": "2026-10-06T04:55:39.228Z"
 }
