@@ -1,0 +1,104 @@
+/* Physical placement is deliberately independent of text direction. */
+[data-aag-chat-layout] { min-width: 0; }
+[data-aag-composer-docked="left"], [data-aag-composer-docked="right"] { direction: ltr; }
+[data-aag-chat-surface] { min-width: 0; }
+.aag-composer-dock-slot { flex: 0 0 auto; min-width: 0; height: 100%; position: relative; order: 2; border-radius: 16px; background: #18181b; border: 1px solid #3f3f46; }
+.aag-composer-dock-slot[hidden] { display: none; }
+.aag-composer-dock-slot[data-side="left"] { order: -1; margin-right: 12px; }
+.aag-composer-dock-slot[data-side="right"] { margin-left: 12px; }
+.light .aag-composer-dock-slot { background: #fff; border-color: #cbd5e1; }
+.aag-composer-dock-slot > div { height: 100%; }
+.aag-composer-outlet[data-docked="true"] { height: 0; padding: 0; pointer-events: none; }
+.aag-composer-outlet > div { width: 100%; min-width: 0; max-width: 750px; }
+.aag-composer-presentation { min-width: 0; width: 100%; color: #e4e4e7; }
+.light .aag-composer-presentation { color: #334155; }
+.aag-composer-native-form, .aag-composer-native-form > form, .aag-composer-native-form > form > div, .aag-composer-native-form > form > div > div { width: 100%; min-width: 0; max-width: 100%; }
+.aag-composer-presentation[data-placement="popup"] { padding-inline: 8px; }
+.aag-composer-presentation[data-placement="popup"] .aag-composer-layout-bar,
+.aag-composer-presentation[data-placement="popup"] .aag-composer-layout-note,
+.aag-composer-presentation[data-placement="popup"] .aag-composer-launcher-row { background: #18181b; }
+.light .aag-composer-presentation[data-placement="popup"] .aag-composer-layout-bar,
+.light .aag-composer-presentation[data-placement="popup"] .aag-composer-layout-note,
+.light .aag-composer-presentation[data-placement="popup"] .aag-composer-launcher-row { background: #fff; }
+.aag-composer-presentation[data-placement="popup"] .aag-composer-layout-bar,
+.aag-composer-presentation[data-placement="popup"] .aag-composer-launcher-row { border-radius: 10px 10px 0 0; }
+.aag-composer-layout-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 6px 10px; font-size: 11px; }
+.aag-composer-layout-bar label { display: flex; align-items: center; gap: 6px; }
+.aag-composer-layout-bar select { max-width: 110px; padding: 4px 5px; border: 1px solid #52525b; background: #27272a; color: #e4e4e7; border-radius: 6px; font-size: 12px; }
+.light .aag-composer-layout-bar select { background: #f8fafc; color: #334155; border-color: #cbd5e1; }
+.aag-composer-layout-spacer { flex: 1; }
+.aag-composer-layout-actions { display: flex; flex-shrink: 0; gap: 4px; }
+.aag-composer-layout-bar button, .aag-composer-launcher-row button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 6px; padding: 6px; }
+.aag-composer-layout-bar button:hover, .aag-composer-launcher-row button:hover { background: #80808020; }
+.aag-composer-layout-actions [data-testid="aag-composer-dock-toggle"] { border: 1px solid #64748b66; }
+.aag-composer-layout-actions [aria-pressed="true"] { background: #10b98118; }
+.aag-composer-layout-bar :focus-visible, .aag-composer-launcher-row :focus-visible, .aag-composer-resizer:focus-visible { outline: 2px solid #10b981; outline-offset: 2px; }
+.aag-composer-layout-note { font-size: 11px; line-height: 1.5; padding: 0 12px 6px; color: #64748b; }
+.aag-composer-launcher-row { display: flex; justify-content: flex-end; padding: 4px 8px; font-size: 12px; }
+.aag-composer-presentation[data-closed="true"] .aag-inline-composer { display: none; }
+.aag-composer-presentation[data-placement="panel"] { height: 100%; position: relative; }
+.aag-composer-presentation[data-placement="panel"] > .aag-composer-scroll { height: 100%; display: flex; flex-direction: column; min-height: 0; padding: 0 10px 10px; border-radius: 16px; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-native-form { flex: 1; min-height: 0; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-native-form > form,
+.aag-composer-presentation[data-placement="panel"] .aag-composer-native-form > form > div { height: 100%; margin-bottom: 0; }
+.aag-composer-presentation[data-placement="panel"] [data-aag-native-input-stack] { height: 100%; display: flex; flex-direction: column; }
+.aag-composer-presentation[data-placement="panel"] .aag-inline-composer { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.aag-composer-presentation[data-placement="panel"] [data-aag-native-editor] { flex-shrink: 0; }
+.aag-composer-presentation[data-placement="panel"] [data-aag-native-editor] textarea { max-height: 150px !important; }
+.aag-composer-presentation[data-placement="panel"] .aag-image-progress { flex-shrink: 0; max-height: 30%; overflow-y: auto; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-layout-bar { position: sticky; top: 0; z-index: 12; background: #18181b; padding: 10px 0; }
+.light .aag-composer-presentation[data-placement="panel"] .aag-composer-layout-bar { background: white; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-layout-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; flex-shrink: 0; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-layout-bar > label { grid-column: 1; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-layout-actions { grid-column: 2; grid-row: 1; align-self: center; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-layout-spacer { display: none; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-controls { max-height: none; overflow: visible; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-bar { flex-wrap: wrap; gap: 10px; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-identity { flex: 1 1 100%; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-grid,
+.aag-composer-presentation[data-placement="panel"] .aag-composer-grid.two-column,
+.aag-composer-presentation[data-placement="panel"] .aag-composer-capabilities { grid-template-columns: minmax(0, 1fr); }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-actions { flex-wrap: wrap; }
+.aag-composer-presentation[data-placement="panel"] .aag-inline-composer { margin-bottom: 12px; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-field { min-width: 0; }
+.aag-composer-presentation[data-placement="panel"] .aag-composer-field select { width: 100%; min-width: 0; }
+.aag-composer-resizer { position: absolute; top: 12px; bottom: 12px; width: 10px; left: -11px; cursor: col-resize; touch-action: none; z-index: 20; border-radius: 4px; }
+.aag-composer-resizer::after { content: ""; position: absolute; top: 35%; bottom: 35%; left: 4px; width: 2px; border-radius: 2px; background: #94a3b8; }
+.aag-composer-resizer:hover::after, .aag-composer-resizer:focus-visible::after { background: #10b981; }
+[data-side="left"] > .aag-composer-resizer { left: auto; right: -11px; }
+/* Container width, rather than viewport direction, governs compact controls. */
+.aag-composer-scroll { container-type: inline-size; }
+@container (max-width: 650px) {
+  .aag-composer-presentation .aag-composer-bar { flex-wrap: wrap; }
+  .aag-composer-presentation .aag-composer-grid,
+  .aag-composer-presentation .aag-composer-grid.two-column { grid-template-columns: minmax(0, 1fr); }
+}
+/* A temporary Popup fallback must leave room to read the conversation. This
+   caps only the visible scroll area; expanded state and controls stay intact. */
+.aag-composer-presentation[data-constrained="true"] .aag-composer-controls { max-height: min(20dvh, 200px); }
+.aag-composer-presentation[data-constrained="true"] .aag-composer-grid,
+.aag-composer-presentation[data-constrained="true"] .aag-composer-grid.two-column { grid-template-columns: minmax(0, 1fr); }
+.aag-composer-presentation[data-constrained="true"] [data-aag-native-editor] textarea { max-height: 120px !important; }
+
+/* The central surface owns its header and a single bounded message viewport.
+   Gutters belong to that viewport, not individual images or message types. */
+[data-aag-chat-surface] { display: flex; flex-direction: column; min-height: 0; container-type: inline-size; --aag-chat-gutter: clamp(16px, 3cqi, 32px); }
+[data-aag-chat-surface] > [data-aag-chat-body] { flex: 1; min-height: 0; height: auto; margin-top: 0; }
+[data-aag-chat-body] > .flex { min-height: 0; }
+[data-aag-chat-surface] #chat-history { flex: 1 1 0; min-height: 0; height: auto; padding-inline: var(--aag-chat-gutter); padding-top: 16px; overflow-y: auto; overflow-x: hidden; }
+[data-aag-message-column] { min-width: 0; flex-shrink: 0; }
+[data-testid="aag-artifact-actions"] > button { flex-shrink: 0; white-space: nowrap; max-width: 100%; }
+.aag-composer-collapse svg { transform: none; }
+.aag-chat-header { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; min-width: 0; min-height: 52px; padding: 8px var(--aag-chat-gutter); border-bottom: 1px solid #3f3f46; background: #18181b; position: relative; z-index: 30; direction: ltr; }
+.light .aag-chat-header { background: #fff; border-color: #e2e8f0; }
+.aag-chat-header-settings { position: relative; flex-shrink: 0; }
+.aag-chat-header-settings.aag-reserve-user-icon { margin-right: 44px; }
+.aag-chat-model-picker { position: relative; flex: 1; min-width: 0; z-index: 30; }
+.aag-chat-model-picker > button { max-width: 100%; min-width: 0; text-align: start; }
+.aag-chat-model-label { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 600; color: #f1f5f9; }
+.light .aag-chat-model-label { color: #1e293b; }
+.aag-chat-model-tooltip { display: none; position: absolute; top: calc(100% + 6px); left: 0; max-width: 100%; padding: 7px 10px; background: #0f172a; color: #fff; border: 1px solid #64748b; border-radius: 6px; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; pointer-events: none; box-shadow: 0 4px 12px #0003; }
+.aag-chat-model-picker > button:hover + .aag-chat-model-tooltip,
+.aag-chat-model-picker > button:focus-visible + .aag-chat-model-tooltip { display: block; }
+.aag-chat-model-picker > button:focus-visible { outline: 2px solid #10b981; outline-offset: 2px; }
+.aag-chat-model-menu { width: min(620px, 100%); max-height: min(70dvh, 650px); overflow-y: auto; }

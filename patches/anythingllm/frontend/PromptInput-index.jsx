@@ -1,3 +1,5 @@
+import AagComposerDock from "./AagComposerDock";
+import useAagComposerDraft from "@/utils/useAagComposerDraft";
 import { useState, useRef, useEffect } from "react";
 import debounce from "lodash.debounce";
 import { ArrowUp, At } from "@phosphor-icons/react";
@@ -60,8 +62,8 @@ export default function PromptInput({
   const formRef = useRef(null);
   const textareaRef = useRef(null);
   const composerPanelRef = useRef(null);
-  const [composerMode, setComposerMode] = useState("auto");
   const activeWorkspaceSlug = workspace?.slug || workspaceSlug;
+  const [composerMode, setComposerMode] = useAagComposerDraft(activeWorkspaceSlug, threadSlug, "mode", "auto");
   const { enabled: isImageComposerEnabledForCurrentWorkspace } =
     useImageComposerMode(activeWorkspaceSlug);
   const [_, setFocused] = useState(false);
@@ -74,6 +76,8 @@ export default function PromptInput({
   usePromptInputStorage({
     promptInput,
     setPromptInput,
+    workspaceSlug: activeWorkspaceSlug,
+    threadSlug,
   });
 
   /*
@@ -331,8 +335,9 @@ export default function PromptInput({
   }
 
   return (
-    <div
-      id="prompt-input-wrapper"
+    <AagComposerDock
+      enabled={isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator"}
+      workspaceSlug={activeWorkspaceSlug} threadSlug={threadSlug}
       className={
         centered
           ? "w-full relative flex justify-center items-center"
@@ -350,7 +355,7 @@ export default function PromptInput({
         <div
           className={`flex items-center rounded-lg md:w-full ${centered ? "mb-0" : "mb-4"}`}
         >
-          <div className="relative w-[95vw] md:w-[750px]">
+          <div data-aag-native-input-stack="true" className="relative w-[95vw] md:w-[750px]">
             {isImageComposerEnabledForCurrentWorkspace && (
               <AagImageProgress
                 workspaceSlug={activeWorkspaceSlug}
@@ -380,7 +385,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="bg-zinc-800 light:bg-white light:border light:border-slate-300 rounded-[20px] pwa:rounded-3xl flex flex-col px-5 overflow-hidden">
+            <div data-aag-native-editor="true" className="bg-zinc-800 light:bg-white light:border light:border-slate-300 rounded-[20px] pwa:rounded-3xl flex flex-col px-5 overflow-hidden">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <textarea
@@ -442,7 +447,7 @@ export default function PromptInput({
           </div>
         </div>
       </form>
-    </div>
+    </AagComposerDock>
   );
 }
 

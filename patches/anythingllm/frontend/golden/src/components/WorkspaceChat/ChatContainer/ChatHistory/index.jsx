@@ -163,7 +163,7 @@ export default forwardRef(function (
           ref={chatHistoryRef}
           {...scrollHandlers}
         >
-          <div className="w-full max-w-[750px]">
+          <div data-aag-message-column="true" className="w-full max-w-[750px]">
             {compiledHistory.map((item, index) =>
               Array.isArray(item) ? renderStatusResponse(item, index) : item
             )}

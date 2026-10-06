@@ -126,16 +126,16 @@ function ImageGenerationCard({ props }) {
   };
 
   return (
-    <div className="my-2">
-      <div className="inline-block" style={{maxWidth:"100%",minWidth:0}}>
+    <div className="my-2" data-testid="aag-image-card" style={{minWidth:0,maxWidth:"100%"}}>
+      <div style={{width:"min(500px,100%)",minWidth:0}}>
         <div data-testid="aag-artifact-filename" data-artifact-id={props.content?.artifactId || ""}
           title={actualFilename || undefined} dir="ltr"
           className="mb-2 text-sm text-zinc-300 light:text-slate-700"
-          style={{maxWidth:"min(500px,80vw)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",userSelect:"text"}}>
+          style={{maxWidth:"100%",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",userSelect:"text"}}>
           {actualFilename || "Generated image"}
         </div>
         {status !== "ready" && (
-          <div className="relative rounded-xl overflow-hidden bg-zinc-800 aspect-square w-[280px]">
+          <div className="relative rounded-xl overflow-hidden bg-zinc-800 aspect-square w-[280px] max-w-full">
             {status === "loading" && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <CircleNotch
@@ -158,7 +158,7 @@ function ImageGenerationCard({ props }) {
         )}
 
         {status === "ready" && (
-          <div className="relative group rounded-xl overflow-hidden bg-zinc-800 max-w-max">
+          <div className="relative group rounded-xl overflow-hidden bg-zinc-800" style={{width:"fit-content",maxWidth:"100%"}}>
             <img
               src={objectUrl}
               onLoad={() => {
@@ -184,7 +184,8 @@ function ImageGenerationCard({ props }) {
                   ]);
                 }
               }}
-              className="max-h-[280px] max-w-[500px] object-contain cursor-pointer"
+              className="max-h-[280px] object-contain cursor-pointer"
+              style={{display:"block",maxWidth:"100%",height:"auto"}}
             />
 
             {/* Copy — bottom left */}
@@ -235,7 +236,7 @@ function ImageGenerationCard({ props }) {
           </div>
         )}
         {(
-          <div data-testid="aag-artifact-actions" dir="ltr" className="flex items-center gap-2 mt-2" style={{direction:"ltr",flexWrap:"nowrap",overflowX:"auto",maxWidth:"100%"}}>
+          <div data-testid="aag-artifact-actions" dir="ltr" className="flex items-center gap-2 mt-2" style={{direction:"ltr",flexWrap:"wrap",maxWidth:"100%"}}>
             <AagArtifactDetails artifact={props.content} onFileResolved={setResolvedFile}>
             <button
               type="button"

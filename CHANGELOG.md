@@ -1,5 +1,13 @@
 # Changelog
 
+## Production 20261006T134320Z — 2026-10-06
+
+- Dock and undock Image Composer between Popup and a left or right resizable side panel; preserve draft and Composer state.
+- Persist panel width and side, reserve a safe chat gutter, and keep historical images and action rows responsive.
+- Remove the Display Mode dropdown and correct the controls disclosure direction.
+- Keep the dynamic active-model header visible while conversation history scrolls.
+- Preserve sidebar ordinals, internal identities, historical filenames and live artifact presentation; include portable layout regressions.
+
 ## Production 20261006T050300Z — 2026-10-06
 
 - Label workspaces and threads `N - NAME` using their current visible order; preserve stable IDs/slugs and historical filenames.

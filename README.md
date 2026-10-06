@@ -1,6 +1,6 @@
 # AAG AnythingLLM Suite
 
-Current production Golden: **20261006T050300Z**. See the [release closure and exact source manifest](docs/RELEASE-GOLDEN-20261006T050300Z.md) for approved features, external dependencies and validation.
+Current production Golden: **20261006T134320Z**. See the [release closure and exact source manifest](docs/RELEASE-GOLDEN-20261006T134320Z.md) for approved features, external dependencies and validation.
 
 The current [Visual Atlas V2 implementation](docs/VISUAL-ATLAS-V2.md) includes exact per-image prompt disclosure, compact icon actions, responsive prompt scrolling and XLarge cards. Pixels remain external under the existing publication policy.
 

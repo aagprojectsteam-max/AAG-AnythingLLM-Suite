@@ -1,5 +1,5 @@
 {
-  "file_count": 797,
+  "file_count": 811,
   "files": [
     {
       "repository_path": ".env.example",
@@ -9,8 +9,8 @@
     },
     {
       "repository_path": ".github/workflows/ci.yml",
-      "sha256": "5db9a8a98c408faecad129f7a3477c0213cc1215c17deaaf72b8d02c218eb8cc",
-      "size": 1590,
+      "sha256": "88cafa6abd3bbbaae701b6b04e4d528def0ba8f4fad6f7a37863838d92661a63",
+      "size": 1643,
       "type": "file"
     },
     {
@@ -45,8 +45,8 @@
     },
     {
       "repository_path": "CHANGELOG.md",
-      "sha256": "53ac60a68e7327c3816684f467f8b956aea13cd0b719f0dbad97df2f7542d733",
-      "size": 2725,
+      "sha256": "4e711ba1caf54daa9adb8815c1f7b64addf0b6f1660219603862072fd38525ca",
+      "size": 3317,
       "type": "file"
     },
     {
@@ -75,8 +75,8 @@
     },
     {
       "repository_path": "FILE-OWNERSHIP-MAP.json",
-      "sha256": "2068b0b3ec9e4df955d46feebaeb06b67bc8bbffe013b6d0b80fcf7698d21032",
-      "size": 167148,
+      "sha256": "96138dc10e55f11ed33f62c81d50eceeaacb54219d87e046a607a271a160e985",
+      "size": 170289,
       "type": "file"
     },
     {
@@ -213,8 +213,8 @@
     },
     {
       "repository_path": "PATCH-MANIFEST.yaml",
-      "sha256": "f5ab370924096326a45b45806f3f410c127ca1f1ee1fdb2570fafac5322279fb",
-      "size": 58691,
+      "sha256": "67e1593da4d166c8ab7d7eef47a2b6684944bb97ef913510b9a5d7ded1b18c27",
+      "size": 63766,
       "type": "file"
     },
     {
@@ -225,7 +225,7 @@
     },
     {
       "repository_path": "README.md",
-      "sha256": "a82ac91e1cea611a67c54136d53a6988695a2cc354bd70fa1a4299d0957d4efe",
+      "sha256": "957e79c71d41c40ddce01e466af8e6938c4ca48d6de511ca66e92ade5b5cc78c",
       "size": 5896,
       "type": "file"
     },
@@ -543,8 +543,8 @@
     },
     {
       "repository_path": "config/compatibility.json",
-      "sha256": "185e3788bc99f9b140241baff77510c942603a7cf8374af8508ff9c45dd393bf",
-      "size": 4433,
+      "sha256": "a27bcb55d9e608b00cb2cf97f0bdf28e4969420f8ee1142f741db369247c09d4",
+      "size": 5028,
       "type": "file"
     },
     {
@@ -695,6 +695,12 @@
       "repository_path": "docs/RELEASE-GOLDEN-20261006T050300Z.md",
       "sha256": "3bd886e25a4e44b5e899d4e99d4d0422321fc2175039110cf5370d9afe461bee",
       "size": 3426,
+      "type": "file"
+    },
+    {
+      "repository_path": "docs/RELEASE-GOLDEN-20261006T134320Z.md",
+      "sha256": "1329b4315d09db6e6d43261b2e13d74daa9cc118c74cadc132ae0e0c83421a22",
+      "size": 3431,
       "type": "file"
     },
     {
@@ -1311,6 +1317,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/integrations/anythingllm/frontend/AagComposerDock.jsx",
+      "sha256": "dd5559d117ba7446c66b907ede9a04854972e4332e2823118649a91323e75ad7",
+      "size": 8844,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
       "sha256": "e7d5244f4b8d7a04a37b4a206d6bd7c911916cf538ce533c8db8ba94abfb5f4c",
       "size": 3278,
@@ -1324,8 +1336,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
-      "sha256": "0a3b1d6636e54bdd9cdf9fccccc500dabca3a876bef99fdf11046e58411dcd02",
-      "size": 92760,
+      "sha256": "8abba860918e215f06c9145d143458041c391c2c87debf04b9672c69a5d71a0f",
+      "size": 93023,
       "type": "file"
     },
     {
@@ -1366,8 +1378,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
-      "sha256": "41db645a1f868ce249375e72be438cf0f1a9864362a721e95478d3401c781ab0",
-      "size": 10685,
+      "sha256": "e1128b8ec30783350e1271dd1b649a4271d75125f8672258fef59b7e6481a4f8",
+      "size": 10807,
       "type": "file"
     },
     {
@@ -1386,6 +1398,18 @@
       "repository_path": "image-system/integrations/anythingllm/frontend/aagArtifactSerials.js",
       "sha256": "261cde888f22bda8bb3ff5ba99849703926600c19082d61b786678d12a0dbbc3",
       "size": 1366,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagComposerDock.css",
+      "sha256": "2f1716bac40694fc85cffab380232a98a09c8a6490a1bf20824fb3fdd19a5a34",
+      "size": 10417,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagComposerLayout.js",
+      "sha256": "207e00ecd2f6c40288f538756ffc9283a86fc80d2b76f9e0992a23c9799744be",
+      "size": 2000,
       "type": "file"
     },
     {
@@ -1422,6 +1446,12 @@
       "repository_path": "image-system/integrations/anythingllm/frontend/useAagArtifactText.js",
       "sha256": "6cd43c5aca26b5d8a9eed22fb35d04ba2ec42eb3ffd60e773fbcc0c9027e568f",
       "size": 858,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/useAagComposerDraft.js",
+      "sha256": "078c51d276a0d1d9592976929f1a75f242e5286f8808c6d4884484f5c4cb8649",
+      "size": 1049,
       "type": "file"
     },
     {
@@ -1895,7 +1925,7 @@
     },
     {
       "repository_path": "image-system/skills/aag-image-batch/runtime-release.json",
-      "sha256": "acc8de77ceefaff5a8dac8205b56d4c4d10f3aec3007a761e058f6347d453c12",
+      "sha256": "d797dc161bad57f1fe23ccba542065ce329d89662e116adb1f4e6b16cf6b6f16",
       "size": 105,
       "type": "file"
     },
@@ -2081,7 +2111,7 @@
     },
     {
       "repository_path": "image-system/skills/aag-image-job/runtime-release.json",
-      "sha256": "acc8de77ceefaff5a8dac8205b56d4c4d10f3aec3007a761e058f6347d453c12",
+      "sha256": "d797dc161bad57f1fe23ccba542065ce329d89662e116adb1f4e6b16cf6b6f16",
       "size": 105,
       "type": "file"
     },
@@ -2267,7 +2297,7 @@
     },
     {
       "repository_path": "image-system/skills/aag-image-task/runtime-release.json",
-      "sha256": "acc8de77ceefaff5a8dac8205b56d4c4d10f3aec3007a761e058f6347d453c12",
+      "sha256": "d797dc161bad57f1fe23ccba542065ce329d89662e116adb1f4e6b16cf6b6f16",
       "size": 105,
       "type": "file"
     },
@@ -2521,6 +2551,12 @@
       "repository_path": "image-system/tests/batch.test.js",
       "sha256": "affc5ffb3fb6d17032d571f8360687cf0c6447ed843a69b48be77840e6aa61d4",
       "size": 9822,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/composer-layout.test.js",
+      "sha256": "4465625b749e011883cd82fe701c7fd0d3da7ac86ac9ea2edeba653ed14a51cb",
+      "size": 2828,
       "type": "file"
     },
     {
@@ -2897,8 +2933,8 @@
     },
     {
       "repository_path": "image-system/tools/build-anythingllm-frontend.js",
-      "sha256": "07e1eae162f628359a402e7698ef5a632d72e3a5be7a59a1f7efaa528aacd605",
-      "size": 28077,
+      "sha256": "c0303a40dbae7102294888f80132a71a7c8e5a393713d36aed30990630d47bce",
+      "size": 29152,
       "type": "file"
     },
     {
@@ -2983,6 +3019,18 @@
       "repository_path": "image-system/tools/multi-image-registration-audit.js",
       "sha256": "96b1eb7e73dcd1af338c94a307b4a55a2e55f044548cc33bd4535f5310d4a465",
       "size": 5504,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/patch-chat-presentation.js",
+      "sha256": "d1fa1e77e54a94239f8071fa35dd2805d9f633f4be070e6230709fc879a22c2e",
+      "size": 4572,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/patch-composer-dock.js",
+      "sha256": "183540febd7b0cf4bc6e076f69b59f5ef20efa420bf9d5cbb5da0d7e87b5f392",
+      "size": 3843,
       "type": "file"
     },
     {
@@ -4129,13 +4177,13 @@
     },
     {
       "repository_path": "manifests/AAG-BUILD-PROVENANCE.json",
-      "sha256": "93580ed3284d8edaf10cb0b4f90ab5741efd875112d9a87dc3660f3d1954087b",
-      "size": 2143,
+      "sha256": "f5c8d3ca7d5bc024ce9430425e53f0c51d6b278244d8764093d6dbd71f792838",
+      "size": 2513,
       "type": "file"
     },
     {
       "repository_path": "manifests/CLOSURE-BUILD-PROVENANCE.json",
-      "sha256": "557870908f6cc45f68e30abcddfb0c6527aa1b72446ff6a5e73af4d65872db10",
+      "sha256": "b33267ec5345fe36d09a8650c99479acf428b3b70a4481e74db07ddb6cf58264",
       "size": 478,
       "type": "file"
     },
@@ -4158,15 +4206,21 @@
       "type": "file"
     },
     {
+      "repository_path": "manifests/GOLDEN-20261006T134320Z.json",
+      "sha256": "d0acf0dc38a3231e631124bb4b164a4a37588be373eb24e51735072a2e6854a4",
+      "size": 134744,
+      "type": "file"
+    },
+    {
       "repository_path": "manifests/GOLDEN-INSTALL-MAP.json",
-      "sha256": "ddcb74a0298d817db9edd803aabcfac7b8f89263d8d2b3c608ea6e05bdb3740c",
-      "size": 24558,
+      "sha256": "3260322d0fe4855b95c5f5c25eb579433249822507c360cdd978126dc5f25dbb",
+      "size": 26817,
       "type": "file"
     },
     {
       "repository_path": "manifests/LIVE-TO-REPOSITORY-MAP.csv",
-      "sha256": "ea1db8205155bf2a52fd8e6bf2dad72d541bcfb04fd8a0758a6cb96a66df3925",
-      "size": 42490,
+      "sha256": "ab3579644f80c5b9450738239d3c2f8326f4199991cfd3eb7f6e07c3b8491b63",
+      "size": 43900,
       "type": "file"
     },
     {
@@ -4177,13 +4231,13 @@
     },
     {
       "repository_path": "manifests/RELEASE-STATE.json",
-      "sha256": "633c7557818dc4594be2ea662c8253082488ef7f1a1298c4ec3bca84ecb069cf",
+      "sha256": "0c4593d82e6942819ab950221ce2b2dfac27868648eb281ea86b6dc654493fd1",
       "size": 255,
       "type": "file"
     },
     {
       "repository_path": "manifests/STAGED-MANIFEST.json",
-      "sha256": "452126dd176637c594c1c64c744c06cdf65c140a59da1ca2988c894e8f473330",
+      "sha256": "634edccce6109756794ea7b614501e67bcd7b1bf852be15c3871225a7faa32b5",
       "size": 14240,
       "type": "file"
     },
@@ -4411,14 +4465,14 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/ChatContainer-index.jsx",
-      "sha256": "4a0d0e256c35c6aef7b0de558e2ad634463e800cc054cf68652d13775e4b825c",
-      "size": 22610,
+      "sha256": "db6956cef5cba385ed06ab622b5e2ddf7d673cbe9271cdef0f4d0d13a484b1b7",
+      "size": 22828,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/PromptInput-index.jsx",
-      "sha256": "3831ca101ee5bbf11021ad18c49b4b8c2671f11aee11a6902afa7cc074250786",
-      "size": 19974,
+      "sha256": "312b1efd872119818da96350207b4471283d51a3b8bea41ed3c90de4abae8c0b",
+      "size": 20420,
       "type": "file"
     },
     {
@@ -4459,8 +4513,32 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
-      "sha256": "b56b489c0494f5bd347b227be542bbfe24481a3c06cb921c4708da2a95c7eb7f",
-      "size": 11041,
+      "sha256": "0f369409785aafc5c7f0e03ba263703865624cde293182df456d86f8eecd0f6b",
+      "size": 11072,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatSettingsMenu/index.jsx",
+      "sha256": "9f9e040237c9e1b27e2f91c71120b8e519660472e967411f66120c00d8f1f680",
+      "size": 2499,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/DnDWrapper/index.jsx",
+      "sha256": "c2f5ad86f94889ad649d936fb579820b421e147fa48030085725a40dd3c7ce5d",
+      "size": 15493,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker/index.jsx",
+      "sha256": "0b2374dcc1f6d3484d7f714e604009ec980132092c54cf08669ef436f7341eb2",
+      "size": 5087,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/hooks/usePromptInputStorage.js",
+      "sha256": "da4936cfe2f852147a016e46ed1c5af4c75ac300a3625ddab784141491d8c794",
+      "size": 2575,
       "type": "file"
     },
     {
@@ -4479,6 +4557,12 @@
       "repository_path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
       "sha256": "146a3025010fc947695d312eaf96a636632b0a06b88219b2d115905915a0a917",
       "size": 4476,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/utils/aagComposerLayout.js",
+      "sha256": "9f41ab0fddaa6cae7e9437429fc44ed63500f87c2e81f8fedb1e092113a2c423",
+      "size": 1990,
       "type": "file"
     },
     {

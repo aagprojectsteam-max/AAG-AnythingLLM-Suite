@@ -1,3 +1,4 @@
+import useAagComposerDraft from "@/utils/useAagComposerDraft";
 import useAagThreadNumber from "@/utils/useAagThreadNumber";
 import {
   forwardRef,
@@ -84,16 +85,16 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
 ) {
   const currentThread = useAagThreadNumber(workspaceSlug, threadSlug);
   const { enabled: expertEnabled, setEnabled: setExpertEnabled } = useExpertPromptMode(workspaceSlug, mode);
-  const [settings, setSettings] = useState({ ...INITIAL });
+  const [settings, setSettings] = useAagComposerDraft(workspaceSlug, threadSlug, "settings", { ...INITIAL });
   const [taxonomy, setTaxonomy] = useState(null);
   const [language, setLanguage] = useState(() => loadUiLanguage());
-  const [files, setFiles] = useState([]);
-  const [sourceIndex, setSourceIndex] = useState("1");
+  const [files, setFiles] = useAagComposerDraft(workspaceSlug, threadSlug, "files", []);
+  const [sourceIndex, setSourceIndex] = useAagComposerDraft(workspaceSlug, threadSlug, "sourceIndex", "1");
   const [previewUrls, setPreviewUrls] = useState([]);
   const [previousArtifactPreviewUrl, setPreviousArtifactPreviewUrl] =
     useState(null);
   const [previousArtifactBlob, setPreviousArtifactBlob] = useState(null);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useAagComposerDraft(workspaceSlug, threadSlug, "expanded", true);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState(null);
   const [recents, setRecents] = useState(() => loadRecents());
@@ -841,7 +842,7 @@ const AagImageComposerPanel = forwardRef(function AagImageComposerPanel(
             aria-label={expanded ? tr("hideControls", "Hide controls") : tr("showControls", "Show controls")}
             onClick={() => setExpanded((value) => !value)}
           >
-            {expanded ? <CaretDown size={18} aria-hidden="true" data-disclosure-icon="down" /> : <CaretUp size={18} aria-hidden="true" data-disclosure-icon="up" />}
+            {expanded ? <CaretUp size={18} aria-hidden="true" data-disclosure-icon="up" /> : <CaretDown size={18} aria-hidden="true" data-disclosure-icon="down" />}
           </button>
         )}
       </div>

@@ -26,6 +26,7 @@ jobs:
           image-system/tests/live-artifact-completion.test.js
           image-system/tests/thread-numbering.test.js
           image-system/tests/sidebar-presentation.test.js
+          image-system/tests/composer-layout.test.js
       - name: Safe browser checkpoint regression
         working-directory: image-system/tools
         run: python3 -B -m unittest test_browser_lifecycle.BrowserLifecycleTests.test_checkpoint_rejects_unowned_and_nonempty_destinations

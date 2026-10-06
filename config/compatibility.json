@@ -38,7 +38,11 @@
         "frontend/src/components/Sidebar/ActiveWorkspaces/index.jsx": "806691fe2dff5ef91a1e67ad5007c01a97aa06ae7a3d679fb451c9937e4130e9",
         "frontend/src/components/Sidebar/SidebarToggle/index.jsx": "012b9a75d7650f16f9caf1d5279c849e7952765cde699a60c24de7f38fb4cde9",
         "frontend/src/components/Sidebar/index.jsx": "91041ad836bd8fb1f2c9515ac3a00348ca7831ade12d35c375085db5423e8878",
-        "frontend/src/models/workspace.js": "d967d5f248850810f6e81d8f5ed1b88174acc19d832a7029ef31c4de1d739c09"
+        "frontend/src/models/workspace.js": "d967d5f248850810f6e81d8f5ed1b88174acc19d832a7029ef31c4de1d739c09",
+        "frontend/src/components/WorkspaceChat/ChatContainer/ChatSettingsMenu/index.jsx": "728fe171f8018ce72ec9fbcbd046156ce1307e33a116c010953bd1f33ae94624",
+        "frontend/src/components/WorkspaceChat/ChatContainer/DnDWrapper/index.jsx": "2f2a41b7f541704d8522918978de74d46efb44327f4a0ecfd98a709cff86103c",
+        "frontend/src/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker/index.jsx": "cdf7726d30dc41656353e3062b86b9a561f3ce6345e5ac9bdb67acc364ee4df8",
+        "frontend/src/hooks/usePromptInputStorage.js": "38412cffce31da21ae30d6e91f4e76f95a9a1dabbfb192c48624c0f000b56f91"
       }
     }
   ]

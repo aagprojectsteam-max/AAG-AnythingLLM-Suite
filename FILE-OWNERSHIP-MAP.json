@@ -598,6 +598,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "docs/RELEASE-GOLDEN-20261006T134320Z.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "docs/ROLLBACK.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1108,6 +1113,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/AagComposerDock.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/AagImageCollection.jsx",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1173,6 +1183,16 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/aagComposerDock.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagComposerLayout.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/aagLiveArtifacts.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1199,6 +1219,11 @@
     },
     {
       "path": "image-system/integrations/anythingllm/frontend/useAagArtifactText.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/useAagComposerDraft.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2118,6 +2143,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/composer-layout.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tests/composer-native-chat.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2499,6 +2529,16 @@
     },
     {
       "path": "image-system/tools/multi-image-registration-audit.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-chat-presentation.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-composer-dock.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -3478,6 +3518,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "manifests/GOLDEN-20261006T134320Z.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "manifests/GOLDEN-INSTALL-MAP.json",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -3733,6 +3778,26 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatSettingsMenu/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/DnDWrapper/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/hooks/usePromptInputStorage.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/models/workspace.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
@@ -3744,6 +3809,11 @@
     },
     {
       "path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/aagComposerLayout.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },

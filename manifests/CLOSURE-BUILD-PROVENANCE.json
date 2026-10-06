@@ -1,6 +1,6 @@
 {
-  "golden_version": "20261006T050300Z",
-  "approved_manifest_sha256": "29300261f385559d3e8fbe2e31383d35451cf70c837f080d44ba4aba555a9c74",
+  "golden_version": "20261006T134320Z",
+  "approved_manifest_sha256": "f80dad87da21a3ecaa87b4932b273a2f7b69d7ec85064b36b670d4bddc937db3",
   "frontend_build_provenance": "AAG-BUILD-PROVENANCE.json",
   "compiled_tree_published": false,
   "source_matches_golden": true,

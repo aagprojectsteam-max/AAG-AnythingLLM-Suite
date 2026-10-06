@@ -326,6 +326,14 @@ try {
     copy(path.join(overlay, name), path.join(checkout, "frontend/src/components/Sidebar", name));
   }
   require("./patch-sidebar-presentation").patchSidebarPresentation(checkout);
+  for (const name of ["AagComposerDock.jsx", "aagComposerDock.css"]) {
+    copy(path.join(overlay, name), path.join(checkout, "frontend/src/components/WorkspaceChat/ChatContainer/PromptInput", name));
+  }
+  copy(path.join(overlay, "useAagComposerDraft.js"), path.join(checkout, "frontend/src/utils/useAagComposerDraft.js"));
+  const layoutSource = fs.readFileSync(path.join(overlay, "aagComposerLayout.js"), "utf8");
+  fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagComposerLayout.js"), layoutSource.replace("module.exports =", "export"));
+  require("./patch-composer-dock").patchComposerDock(checkout);
+  require("./patch-chat-presentation").patchChatPresentation(checkout);
   const liveSource = fs.readFileSync(path.join(overlay, "aagLiveArtifacts.js"), "utf8");
   fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagLiveArtifacts.js"), liveSource.replace(
     "module.exports = { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };",
@@ -381,6 +389,14 @@ try {
       "aagThreadOrder.js",
       "useAagThreadNumber.js",
       "aagSidebarWidth.js",
+      "AagComposerDock.jsx",
+      "aagComposerDock.css",
+      "WorkspaceModelPicker/index.jsx (native model label in stable chat header)",
+      "ChatSettingsMenu/index.jsx (header control alignment)",
+      "DnDWrapper/index.jsx (bounded message region)",
+      "aagComposerLayout.js",
+      "useAagComposerDraft.js",
+      "hooks/usePromptInputStorage.js (displayed stable scope)",
       "AagSidebarResize.jsx",
       "aagSidebar.css",
       "Sidebar/index.jsx (resizable desktop layout)",

@@ -15,6 +15,14 @@
     "aagThreadOrder.js",
     "useAagThreadNumber.js",
     "aagSidebarWidth.js",
+    "AagComposerDock.jsx",
+    "aagComposerDock.css",
+    "WorkspaceModelPicker/index.jsx (native model label in stable chat header)",
+    "ChatSettingsMenu/index.jsx (header control alignment)",
+    "DnDWrapper/index.jsx (bounded message region)",
+    "aagComposerLayout.js",
+    "useAagComposerDraft.js",
+    "hooks/usePromptInputStorage.js (displayed stable scope)",
     "AagSidebarResize.jsx",
     "aagSidebar.css",
     "Sidebar/index.jsx (resizable desktop layout)",
@@ -41,9 +49,9 @@
     "ChatHistory/index.jsx (artifact result presentation)",
     "HistoricalMessage/index.jsx (native output memo hydration)"
   ],
-  "overlayTreeSha256": "7d230509dffe5b2462f7e8910555e3f8e0d33851849595a2946a1babd26e6421",
-  "buildToolSha256": "07e1eae162f628359a402e7698ef5a632d72e3a5be7a59a1f7efaa528aacd605",
+  "overlayTreeSha256": "e9f21d4aa509dbbd8cfca275e98366c5c121ecb3fcd2841b731bf7406ebdc082",
+  "buildToolSha256": "c0303a40dbae7102294888f80132a71a7c8e5a393713d36aed30990630d47bce",
   "publicFiles": 256,
-  "publicTreeSha256": "d092468b6dc644a1775fdca22e6216440fd7d9927ba887fa86deca11d509ab27",
-  "builtAt": "2026-10-06T04:55:39.228Z"
+  "publicTreeSha256": "6c02845a28c5bd4b7cd9fccc2d65de73a2c54eff5aed22f196b6a4d25fb53e28",
+  "builtAt": "2026-10-06T11:43:44.448Z"
 }
