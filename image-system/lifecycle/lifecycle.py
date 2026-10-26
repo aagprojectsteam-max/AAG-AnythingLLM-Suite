@@ -171,6 +171,13 @@ def host_release(host):
  after=mem_available_mb()
  report.update({'memory_available_before_mb':before,'memory_available_after_mb':after,'freed_mb':(after-before) if before is not None and after is not None else None,'seconds':round(time.monotonic()-started,1),'completed_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())})
  return report
+def work_snapshot():
+ """What the panel needs to warn before a release/stop: is owned engine work running?"""
+ queue=get('http://127.0.0.1:8188/queue') or {}
+ up=get('http://127.0.0.1:18191/health') or {}
+ running=len(queue.get('queue_running') or []);pending=len(queue.get('queue_pending') or [])
+ lease=(STORAGE/'aag-image-agent-state/scheduler/lease').is_dir()
+ return {'active':bool(running or pending or up.get('busy') or lease),'comfy_running':running,'comfy_pending':pending,'upscale_busy':bool(up.get('busy')),'lease_present':lease}
 def target_reached(components,target):
  return bool(components) and all(v['state']==target for v in components.values() if target!='OFF' or v.get('owned',True))
 class Manager:
@@ -186,6 +193,7 @@ class Manager:
   else:
    state='ERROR';failed=next((k for k,v in components.items() if v['state']!='READY'),'system');error=Failure('COMPONENT_UNAVAILABLE','A required image component is unavailable.',failed).safe()
   result={'schema':'aag.image.lifecycle.v1','state':state,'updated_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'components':components,'operation':operation,'error':error}
+  result['work']=work_snapshot() if state in ('READY','ERROR','RELEASING') else {'active':False}
   if isinstance(phase.get('last_release'),dict):result['last_release']=phase['last_release']
   if isinstance(phase.get('last_stop'),dict):result['last_stop']=phase['last_stop']
   return result

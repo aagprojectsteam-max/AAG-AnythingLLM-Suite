@@ -52,6 +52,7 @@ class ReleaseTests(unittest.TestCase):
                 result = manager.operate("release")
             self.assertEqual(result["state"], "READY")
             self.assertEqual(result["last_release"]["freed_mb"], 1)
+            self.assertIn("work", result)
             self.assertEqual(json.loads((Path(root) / "operation.json").read_text())["state"], "READY")
             with self.assertRaises(lifecycle.Failure):
                 manager.operate("purge")
@@ -86,3 +87,13 @@ class ForcedStopTests(unittest.TestCase):
             with self.assertRaises(lifecycle.Failure) as ctx:
                 host.stop()
         self.assertEqual(ctx.exception.code, "IMAGE_WORK_ACTIVE")
+
+
+class WorkSnapshotTests(unittest.TestCase):
+    def test_work_snapshot_reports_active_engine_work(self):
+        with mock.patch.object(lifecycle, "get", lambda url: {"queue_running": [["j"]], "queue_pending": []} if "queue" in url else {"busy": False}), \
+             mock.patch("pathlib.Path.is_dir", lambda self: False):
+            snap = lifecycle.work_snapshot()
+        self.assertTrue(snap["active"]); self.assertEqual(snap["comfy_running"], 1)
+        with mock.patch.object(lifecycle, "get", lambda url: None), mock.patch("pathlib.Path.is_dir", lambda self: False):
+            self.assertFalse(lifecycle.work_snapshot()["active"])

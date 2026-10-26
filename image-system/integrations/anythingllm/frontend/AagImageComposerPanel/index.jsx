@@ -2298,17 +2298,29 @@ function LifecycleControl({ api, request, language, composerEnabled }) {
       : `Released${release.restarted ? " (engine restarted)" : ""}: ${release.freed_mb != null ? (release.freed_mb >= 0 ? "+" : "") + (release.freed_mb / 1024).toFixed(1) + " GB available" : ""} in ${release.seconds}s`)
     : "";
   const canRelease = !transitioning && ["READY","ERROR"].includes(value.state);
+  const showRelease = ["READY","ERROR","RELEASING"].includes(value.state);
+  const workActive = Boolean(value.work?.active);
+  function releaseWithConfirmation() {
+    if (!canRelease) return;
+    if (workActive) {
+      const ok = window.confirm(language === "he"
+        ? "יש עבודת תמונה פעילה כרגע. שחרור יבטל אותה ויפרוק את המודלים מהזיכרון. להמשיך?"
+        : "Image work is running right now. Releasing will cancel it and unload the models. Continue?");
+      if (!ok) return;
+    }
+    change("release");
+  }
   const statusText = `AAG Image System — ${labels[value.state] || labels.UNKNOWN}${value.error?.message ? " " + value.error.message : ""}`;
   return <div className="aag-lifecycle" data-testid="aag-lifecycle" data-state={value.state}>
     <span className="aag-lifecycle-light" aria-hidden="true" />
     <strong>AAG Image System</strong>
     <span className="aag-lifecycle-state" aria-hidden="true">{(labels[value.state] || labels.UNKNOWN).split(".")[0]}</span>
-    <button type="button" className="aag-lifecycle-release" data-testid="aag-lifecycle-release" disabled={!canRelease}
-      onClick={() => change("release")}
+    {showRelease && <button type="button" className="aag-lifecycle-release" data-testid="aag-lifecycle-release" disabled={!canRelease} data-work-active={workActive ? "true" : undefined}
+      onClick={releaseWithConfirmation}
       title={language === "he" ? "שחרור זיכרון ותהליכים תקועים של מנוע התמונות. המנוע נשאר מוכן; אם יש עבודה תקועה הוא יופעל מחדש." : "Free engine memory and stuck image work. The engine stays ready; stuck work triggers an owned restart."}
       aria-label={language === "he" ? "שחרר זיכרון ותהליכים" : "Release memory and processes"}>
-      {language === "he" ? "שחרר" : "Release"}
-    </button>
+      {workActive ? (language === "he" ? "שחרר (עבודה פעילה)" : "Release (work active)") : (language === "he" ? "שחרר" : "Release")}
+    </button>}
     {releaseText && <span className="aag-lifecycle-release-report" data-testid="aag-lifecycle-release-report" title={releaseText}>{releaseText}</span>}
     <span className="aag-composer-passive-status" dir="ltr" data-testid="aag-image-composer-status" role="status" aria-live="polite"
       aria-label={language === "he" ? `Image Composer ${composerEnabled ? "פעיל" : "כבוי"}.` : `Image Composer is ${composerEnabled ? "on" : "off"}.`}>

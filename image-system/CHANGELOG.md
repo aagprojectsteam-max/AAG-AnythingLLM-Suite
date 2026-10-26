@@ -2,6 +2,9 @@
 
 # 0.9.0-preview.13 (2026-10-26 maintenance + colorize)
 
+- Release button: hidden when the engine is off, highlighted when work is active,
+  and asks for confirmation before cancelling running image work (status now
+  carries a `work` snapshot: ComfyUI queue, upscale busy, scheduler lease).
 - Lifecycle stop now drains owned engine work (interrupt, clear pending, bounded
   wait) instead of refusing with IMAGE_WORK_ACTIVE; only unowned reference-identity
   work can still block a stop. The drain outcome is recorded as `last_stop`.

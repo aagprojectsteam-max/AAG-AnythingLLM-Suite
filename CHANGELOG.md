@@ -1,5 +1,9 @@
 # Changelog
 
+## Production 20261026T171752Z — 2026-10-26
+
+- Release button: hidden when the engine is off, highlighted when work is active, and asks for confirmation before cancelling running image work. Lifecycle status now carries a `work` snapshot (ComfyUI queue, upscale busy, scheduler lease).
+
 ## Production 20261026T164226Z — 2026-10-26
 
 - Lifecycle stop drains owned engine work (interrupt, clear pending, bounded wait) instead of refusing with IMAGE_WORK_ACTIVE; only unowned reference-identity work can block a stop.

@@ -43,7 +43,7 @@ test('release is a fixed CSRF-guarded control action wired through proxy, routes
   const proxy=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/aagComposerProxy.js'),'utf8');assert.ok(proxy.includes("lifecycle/release', guards"));
   const launcher=fs.readFileSync(path.join(__dirname,'../integrations/launchers/aag-image-release'),'utf8');assert.ok(launcher.includes('lifecycle.py release')&&launcher.includes('accepts no arguments'));
   const panel=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx'),'utf8');
-  for(const t of ['data-testid="aag-lifecycle-release"','change("release")','RELEASING','aag-lifecycle-release-report'])assert.ok(panel.includes(t),t);
+  for(const t of ['data-testid="aag-lifecycle-release"','change("release")','RELEASING','aag-lifecycle-release-report','window.confirm','releaseWithConfirmation','value.work?.active','showRelease &&'])assert.ok(panel.includes(t),t);
   const py=fs.readFileSync(path.join(__dirname,'../lifecycle/lifecycle.py'),'utf8');
   for(const t of ["'/release'","def host_release","8188/free","8188/interrupt","'RELEASING'","last_release","ENGINE_OFF"])assert.ok(py.includes(t),t);
 });

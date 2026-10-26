@@ -967,7 +967,8 @@
 .aag-lifecycle {position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.35rem .65rem;border-bottom:1px solid #63708055;font-size:.82rem;}
 .aag-lifecycle-release {font-size:.72rem;padding:.1rem .55rem;border-radius:999px;border:1px solid #3f3f46;background:transparent;color:#d4d4d8;cursor:pointer;}
 .aag-lifecycle-release:hover:not(:disabled) {border-color:#4ade80;color:#4ade80;}
-.aag-lifecycle-release:disabled {opacity:.45;cursor:not-allowed;}
+.aag-lifecycle-release:disabled {opacity:.45;cursor:default;}
+.aag-lifecycle-release[data-work-active="true"] {border-color:#fb923c;color:#fb923c;}
 .light .aag-lifecycle-release {border-color:#cbd5e1;color:#334155;}
 .aag-lifecycle-release-report {font-size:.7rem;color:#a1a1aa;max-width:14rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .light .aag-lifecycle-release-report {color:#64748b;}
