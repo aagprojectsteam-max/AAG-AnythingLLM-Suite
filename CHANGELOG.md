@@ -1,5 +1,14 @@
 # Changelog
 
+## Production 20261026T123451Z — 2026-10-26
+
+- Structural scaffold: the workspace LLM authors a strict-subset SVG line drawing for requests with exact counts, symmetry or layout; the agent validates, re-emits and rasterizes it and the engine restyles it through the reference path (exact structure, e.g. a nine-candle hanukkiah). See `image-system/docs/STRUCTURAL-SCAFFOLD.md`.
+- New `colorize` operation: black-and-white photo restoration with DDColor on the local ComfyUI/XPU engine, preserved dimensions, no engine prompt, fast/quality tiers, Composer entry. See `image-system/docs/COLORIZE.md`.
+- Compatibility proxy: unified 32 MiB request limit on `/v1/*` (closes the historical HTTP 413 on vision payloads), configurable upstream timeout, size-based audit-log rotation, markup-aware argument sanity for scaffolds.
+- Engine endpoints centralized in `src/endpoints.js` (validated, ENV-overridable private URLs).
+- Composer UI: single-line header, info glyph instead of repeated guidance badges, shorter helper texts, visible engine state chip, primary Download action, correct RTL ellipsis on thread titles; removed the duplicated inline Atlas prompt-disclosure script.
+- Includes the 2026-10-20 production releases that were not yet published (chat-body-fix, tool-keepalive, shared-plan-authoring, token-usage).
+
 ## Production 20261006T134320Z — 2026-10-06
 
 - Dock and undock Image Composer between Popup and a left or right resizable side panel; preserve draft and Composer state.

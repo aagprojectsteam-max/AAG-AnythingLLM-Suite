@@ -352,15 +352,39 @@ def tool_map(tools: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {tool["function"]["name"]: tool["function"]["parameters"] for tool in normalized}
 
 
-def validate_argument_text_sanity(value: Any) -> None:
+MARKUP_ARGUMENT_KEYS = frozenset({"scaffold"})
+MAX_MARKUP_ARGUMENT_CHARS = 24_000
+
+
+def markup_argument_sanity(value: str) -> TextSanity:
+    """Structural scaffold arguments are SVG markup, not prose: repetition of
+    element names is expected there, so the prose repetition heuristic does not
+    apply. Every protocol-level check still does, plus a markup shape check;
+    the image agent then re-validates the subset strictly before rendering."""
+    digest = sha256_text(value)
+    if len(value) > MAX_MARKUP_ARGUMENT_CHARS:
+        return TextSanity(False, "OUTPUT_TOO_LARGE", len(value), digest)
+    stripped = value.strip()
+    if not stripped:
+        return TextSanity(True, "EMPTY_ALLOWED", 0, digest)
+    if RAW_UNUSED_RE.search(value) or RAW_CONTROL_RE.search(value) or GENERIC_INTERNAL_RE.search(value):
+        return TextSanity(False, "TOOL_CONTROL_TOKEN_LEAK", len(value), digest)
+    if "\x00" in value or any(ord(char) < 9 for char in value):
+        return TextSanity(False, "BINARY_CONTROL_OUTPUT", len(value), digest)
+    if not stripped.lower().startswith("<svg") or not stripped.endswith(">"):
+        return TextSanity(False, "MARKUP_ARGUMENT_INVALID", len(value), digest)
+    return TextSanity(True, "SANE_MARKUP", len(value), digest)
+
+
+def validate_argument_text_sanity(value: Any, key: str | None = None) -> None:
     """Reject protocol garbage in any nested tool argument before execution."""
     if isinstance(value, str):
-        sanity = text_sanity(value, allow_empty=True)
+        sanity = markup_argument_sanity(value) if key in MARKUP_ARGUMENT_KEYS else text_sanity(value, allow_empty=True)
         if not sanity.ok:
             raise CompatibilityError(sanity.code, "Tool arguments contain protocol-level or unusable output.")
     elif isinstance(value, dict):
-        for item in value.values():
-            validate_argument_text_sanity(item)
+        for item_key, item in value.items():
+            validate_argument_text_sanity(item, item_key if isinstance(item_key, str) else None)
     elif isinstance(value, list):
         for item in value:
             validate_argument_text_sanity(item)
@@ -930,7 +954,7 @@ def _load_composer_taxonomy() -> tuple[dict[str, Any], dict[str, dict[str, str]]
 
 COMPOSER_TAXONOMY, COMPOSER_SUBFAMILIES = _load_composer_taxonomy()
 COMPOSER_ENUMS = {
-    "operation": {"generate", "transform", "upscale"},
+    "operation": {"generate", "transform", "upscale", "colorize"},
     "edit_mode": {"not_applicable", "preserve", "restyle"},
     "reference_purpose": {"not_applicable", "identity", "general_visual"},
     "reference_source": {"not_applicable", "current_upload", "latest_thread_artifact"},
@@ -1004,6 +1028,7 @@ def _composer_semantics(
         + (["seed"] if count == 1 else []),
         "transform": ["edit_mode", "source_policy", "source_index", "preservation"],
         "upscale": ["source_policy", "source_index", "scale"],
+        "colorize": ["source_policy", "source_index", "quality"],
     }[operation]
     control = {
         **values,
@@ -1068,6 +1093,12 @@ def _composer_semantics(
     elif operation == "upscale":
         semantics["source_preservation"] = {
             "mode": "upscale_preserve_appearance",
+            "preserve_unspecified_source_properties": True,
+            "style_change_authorized": False,
+        }
+    elif operation == "colorize":
+        semantics["source_preservation"] = {
+            "mode": "colorize_restore_natural_color",
             "preserve_unspecified_source_properties": True,
             "style_change_authorized": False,
         }
@@ -1257,6 +1288,25 @@ def compose_request(data: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
                     raise CompatibilityError("REFERENCE_IMAGE_INVALID", "Latest-thread reference failed its integrity check.")
             elif reference_artifact_sha256 != "none":
                 raise CompatibilityError("REFERENCE_IMAGE_INVALID", "Uploaded reference cannot claim a thread-artifact hash.")
+    elif values["operation"] == "colorize":
+        if values["edit_mode"] != "not_applicable":
+            raise CompatibilityError("COMPOSER_INPUT_INVALID", "Colorize does not accept an Edit mode.")
+        if reference_creation or values["reference_source"] != "not_applicable" or reference_artifact_sha256 != "none":
+            raise CompatibilityError("COMPOSER_INPUT_INVALID", "Colorize does not accept reference-creation controls.")
+        if values["source_policy"] not in {"current_attachment", "previous_artifact"} or values["preservation"] != "none":
+            raise CompatibilityError("COMPOSER_INPUT_INVALID", "Colorize requires an approved source and preservation none.")
+        if scale != "none" or count != 1 or seed != "auto":
+            raise CompatibilityError("COMPOSER_INPUT_INVALID", "Colorize requires one output and no upscale factor.")
+        if values["source_policy"] == "previous_artifact":
+            if clean_attachments or source_index != "none":
+                raise CompatibilityError("COMPOSER_INPUT_INVALID", "Previous-artifact colorize cannot include current uploads.")
+        else:
+            if not clean_attachments:
+                raise CompatibilityError("COMPOSER_SOURCE_REQUIRED", "Colorize requires at least one current source image.")
+            if source_index == "none":
+                source_index = 1 if len(clean_attachments) == 1 else source_index
+            if source_index == "none" or source_index > len(clean_attachments):
+                raise CompatibilityError("COMPOSER_INPUT_INVALID", "Select one available current source image.")
     else:
         if values["edit_mode"] != "not_applicable":
             raise CompatibilityError("COMPOSER_INPUT_INVALID", "Upscale does not accept an Edit mode.")
@@ -1298,6 +1348,15 @@ def compose_request(data: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
         raise CompatibilityError("COMPOSER_INPUT_INVALID", "Upscale contains settings that do not apply.")
     if values["operation"] == "upscale" and values["final_output_quality"] != "standard":
         raise CompatibilityError("COMPOSER_INPUT_INVALID", "Upscale cannot add a second final-output enhancement.")
+    if values["operation"] == "colorize" and (
+        values["visual_family"] != "auto"
+        or subfamily != "auto"
+        or values["aspect_ratio"] != "auto"
+        or values["batch_relationship"] != "auto"
+        or any(values[field] != "auto" for field in ("output_purpose", "background", "visible_text"))
+        or bool(source_instruction.strip())
+    ):
+        raise CompatibilityError("COMPOSER_INPUT_INVALID", "Colorize contains settings that do not apply.")
     if values["background"] == "preserve_source" and values["operation"] != "transform":
         raise CompatibilityError("COMPOSER_INPUT_INVALID", "Preserve-source background applies only to Edit / transform.")
 
@@ -1443,6 +1502,7 @@ def composer_preview(data: dict[str, Any]) -> dict[str, Any]:
         "generate": "Create" if intent["count"] == 1 else "Batch / series",
         "transform": "Create from reference" if reference_creation else "Edit / transform",
         "upscale": "Upscale / enhance",
+        "colorize": "Colorize black-and-white photo",
     }
     ratio_labels = {"auto": "Auto", "1:1": "1:1 Square", "4:3": "4:3 Landscape classic", "3:2": "3:2 Photography landscape", "16:9": "16:9 Widescreen", "9:16": "9:16 Vertical / phone", "landscape": "Automatic landscape", "portrait": "Automatic portrait"}
     quality_labels = {"auto": "Auto", "fast": "Fast", "balanced": "Balanced", "quality": "Maximum technical quality"}
@@ -1493,6 +1553,9 @@ def composer_preview(data: dict[str, Any]) -> dict[str, Any]:
         lines.append(f"Preservation: {'Recognizable person' if intent['preservation'] == 'identity' else 'Subject / content'}")
     if intent["operation"] == "upscale":
         lines.append(f"Upscale: {'Auto (backend default)' if intent['scale'] == 'auto' else str(intent['scale']) + '×'}")
+    if intent["operation"] == "colorize":
+        lines.append(f"Colorize model tier: {quality_labels[intent['quality']]}")
+        lines.append("Colorize: restore natural color only; no creative changes, keep the source content and dimensions")
     if intent["seed"] != "auto":
         lines.append(f"Seed: {intent['seed']}")
     hint_labels = {

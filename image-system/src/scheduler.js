@@ -5,6 +5,7 @@ const path = require("path");
 const crypto = require("crypto");
 const { AagError } = require("./errors");
 const { atomicJson, ensureDirectory, readJson, sleep } = require("./util");
+const endpoints = require("./endpoints");
 
 const DEFAULT_WAIT_MS = 30 * 60 * 1000;
 const DEFAULT_STALE_MS = 2 * 60 * 1000;
@@ -73,7 +74,7 @@ function pidAlive(pid) {
 async function defaultEngineActivity() {
   const activity = { comfy_running: 0, comfy_pending: 0, upscale_busy: false, checked_at: new Date().toISOString(), reachable: {} };
   try {
-    const response = await fetch("http://172.18.0.1:18188/queue", { signal: AbortSignal.timeout(3000) });
+    const response = await fetch(`${endpoints.COMFY}/queue`, { signal: AbortSignal.timeout(3000) });
     if (response.ok) {
       const body = await response.json();
       activity.comfy_running = Array.isArray(body.queue_running) ? body.queue_running.length : 0;
@@ -82,7 +83,7 @@ async function defaultEngineActivity() {
     }
   } catch { activity.reachable.comfyui = false; }
   try {
-    const response = await fetch("http://172.18.0.1:18191/health", { signal: AbortSignal.timeout(3000) });
+    const response = await fetch(`${endpoints.UPSCALE_INTERNAL}/health`, { signal: AbortSignal.timeout(3000) });
     if (response.ok) {
       const body = await response.json();
       activity.upscale_busy = Boolean(body.busy);

@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, "..");
 const version = fs.readFileSync(path.join(root, "VERSION"), "utf8").trim();
 const out = path.join(root, "releases", "staged", version);
 const deployedSkills = "/mnt/data/AI/Apps/AnythingLLM/storage/plugins/agent-skills";
-const modules = ["generation-details.js", "generation-details-fields.json","expert-review.js","prompt-provenance.js","lifecycle.js","expert-prompt.js", "runtime.js", "batch.js", "errors.js", "util.js", "image.js", "store.js", "job-index.js", "scheduler.js", "identity.js", "human-identity.js", "identity-routing.js", "scene-identity.js", "ordinary-policy.js", "prompt-quality.js", "visual-atlas.js", "selective-knowledge.js", "comfy.js", "adapters.js", "recovery.js"];
+const modules = ["endpoints.js", "colorize.js", "scaffold.js", "generation-details.js", "generation-details-fields.json","expert-review.js","prompt-provenance.js","lifecycle.js","expert-prompt.js", "runtime.js", "batch.js", "errors.js", "util.js", "image.js", "store.js", "job-index.js", "scheduler.js", "identity.js", "human-identity.js", "identity-routing.js", "scene-identity.js", "ordinary-policy.js", "prompt-quality.js", "visual-atlas.js", "selective-knowledge.js", "comfy.js", "adapters.js", "recovery.js"];
 const humanIdentityPaths = [
   "human-identity/runtime/composition_contract.py",
   "human-identity/runtime/evaluator_core.py",
@@ -173,7 +173,7 @@ for (const name of ["aag-image-task", "aag-image-batch", "aag-image-job"]) {
 const sourcePaths = [
   "VERSION", "package.json", "README.md", "CHANGELOG.md",
   "docs/MIGRATION.md", "docs/ROLLBACK.md", "docs/SECURITY.md", "docs/PROMPT-QUALITY-ARCHITECTURE.md", "docs/PROVIDER-NEUTRAL-BOUNDARY.md", "docs/AAG-ARTIFACT-EXPORT.md", "docs/VISUAL-ATLAS-COMPOSER.md", "docs/VISUAL-ATLAS-PACKAGING.md",
-  "registry/workflows.json", "schemas/provider-task.schema.json", "schemas/provider-batch.schema.json", "schemas/provider-job.schema.json",
+  "registry/workflows.json", "registry/workflows-extensions.json", "schemas/provider-task.schema.json", "schemas/provider-batch.schema.json", "schemas/provider-job.schema.json",
   "skills/aag-image-task/plugin.json", "skills/aag-image-task/handler.js",
   "skills/aag-image-batch/plugin.json", "skills/aag-image-batch/handler.js",
   "skills/aag-image-job/plugin.json", "skills/aag-image-job/handler.js",
@@ -181,7 +181,7 @@ const sourcePaths = [
   ...["png","jpg","webp"].map(ext => `tests/fixtures/artifact-formats/verified.${ext}`),
   "tests/artifact-naming.test.js", "tests/fixtures/artifact-naming.js", "tests/fixtures/sqlite-test-client.py", "docs/ARTIFACT-FILENAMES.md",
   "tests/generated-image-cleanup.test.js", "tests/fixtures/legacy-cleanup-generated-images.js", "docs/GENERATED-IMAGE-CLEANUP.md",
-  "tests/runtime.test.js", "tests/scheduler.test.js", "tests/security.test.js", "tests/prompt-quality.test.js", "tests/public-tool-schema.test.js", "tests/integration_security_test.py", "tests/composer-native-chat.test.js", "tests/inline-composer-integration.test.js", "tests/progress-persistence.test.js", "tests/stall-recovery.test.js",
+  "tests/runtime.test.js", "tests/endpoints.test.js", "tests/colorize.test.js", "tests/scaffold.test.js", "tests/scheduler.test.js", "tests/security.test.js", "tests/prompt-quality.test.js", "tests/public-tool-schema.test.js", "tests/integration_security_test.py", "tests/composer-native-chat.test.js", "tests/inline-composer-integration.test.js", "tests/progress-persistence.test.js", "tests/stall-recovery.test.js",
   "tests/expert-provider-neutral.test.js", "tests/visual-atlas.test.js", "tests/governed-update.test.js", "tests/image-composer-mode.test.js",
   "tests/test_human_identity_bridge.py", "tests/test_scene_identity_bridge.py", "tests/ordinary-policy.test.js", "tests/artifact-presentation.test.js", "tests/batch.test.js", "tests/artifact-export.test.js", "tests/frontend-export-contract.test.js",
   "tools/build.js", "tools/governed-update.js", "tools/build-anythingllm-frontend.js", "tools/doctor.js", "tools/atlas-token-accounting.js", "tools/atlas-integrity-evidence.js", "tools/atlas-final-evidence.js", "tools/atlas-browser-acceptance.py", "tools/atlas-endpoint-regression.js", "tools/visual-atlas-product.js", "tools/atlas-live-acceptance.js", "tools/candidate-e2e.js", "tools/dynamic-identity-live-acceptance.js", "tools/scene-identity-live-acceptance.js", "tools/quality-semantics-live.js", "tools/multi-image-registration-audit.js", "tools/multi-image-provider-validation.js",
@@ -216,6 +216,8 @@ const sourcePaths = [
   "integrations/model-neutral-compatibility/test_http_boundary.py",
   "integrations/model-neutral-compatibility/test_visual_atlas.py",
   "integrations/model-neutral-compatibility/test_generation_provenance.py",
+  "integrations/model-neutral-compatibility/test_audit_rotation.py",
+  "integrations/model-neutral-compatibility/test_composer_colorize.py",
   "integrations/model-neutral-compatibility/aag-model-compatibility.service",
   "integrations/model-neutral-compatibility/composer/index.html",
   "integrations/model-neutral-compatibility/composer/app.css",

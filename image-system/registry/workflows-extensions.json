@@ -1,0 +1,36 @@
+{
+  "schema": "aag.workflow-registry-extensions.v1",
+  "note": "Workflows added after the frozen registry baseline (registry/workflows.json, frozen-policy 2026-10-04). Merging into the frozen registry requires an explicit frozen-policy migration approved by the owner.",
+  "colorize.restore.auto.v1": {
+    "operation": "colorize",
+    "engine": "comfyui",
+    "adapter": "comfy-colorize-v1",
+    "node": "DDColor_Colorize",
+    "custom_node": "ComfyUI-DDColor (kijai, archive main, installed 2026-10-26)",
+    "profiles": {
+      "fast": {
+        "checkpoint": "ddcolor_paper_tiny.pth",
+        "input_size": 512
+      },
+      "quality": {
+        "checkpoint": "ddcolor_modelscope.pth",
+        "input_size": 1024
+      }
+    },
+    "checkpoint_root": "/mnt/data/AI/Models/Checkpoints/DDColor",
+    "prompt_policy": "none-restoration-only",
+    "preserves_dimensions": true,
+    "max_source_megapixels": 4.0,
+    "acceptance": "isolated XPU test 2026-10-26: tiny@512 4.2s/1.1GB, modelscope@512 4.7s/1.8GB, modelscope@1024 2.2s warm/4.2GB"
+  },
+  "generation.scaffold.fast.v1": {
+    "operation": "generate",
+    "engine": "comfyui",
+    "adapter": "comfy-scaffold-v1",
+    "profile": "fast (forced: 9B reference path stalls on this XPU, fp8 emulation, observed 2026-10-26)",
+    "source": "workspace-LLM-authored strict-subset SVG scaffold, validated and re-emitted by src/scaffold.js, rasterized by sharp (librsvg) inside the AnythingLLM container",
+    "graph": "generalGraph (LoadImage -> ImageScaleToTotalPixels 0.6MP -> VAEEncode -> ReferenceLatent) with prompt = creative prompt + structural preservation suffix",
+    "acceptance": "hanukkiah experiment 2026-10-26: exact 9 candles, 4+4+shamash, kid style, 87 s on 4B; the same request without a scaffold produced 7 and 5 candles",
+    "prompt_policy": "workspace-llm-authored-validation-only-v1 + scaffold.ENGINE_SUFFIX"
+  }
+}

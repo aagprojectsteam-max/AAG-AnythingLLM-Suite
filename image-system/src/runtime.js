@@ -15,7 +15,8 @@ const selectiveKnowledge = require("./selective-knowledge");
 
 const VERSION = "0.9.0-preview.13";
 const PROVIDER_POLICY = "OPEN_BY_CAPABILITY";
-const TASK_KEYS = new Set(["operation", "request", "prompt", "source_policy", "source_index", "preservation", "quality", "final_output_quality", "aspect_ratio", "width", "height", "scale", "count", "seed"]);
+const TASK_KEYS = new Set(["operation", "request", "prompt", "source_policy", "source_index", "preservation", "quality", "final_output_quality", "aspect_ratio", "width", "height", "scale", "count", "seed", "scaffold"]);
+const scaffold = require("./scaffold");
 
 function normalizeTask(args = {}, runtime = {}) {
   if (!args || typeof args !== "object" || Array.isArray(args)) throw new AagError("INVALID_ARGUMENT", "The image task arguments are invalid.");
@@ -24,8 +25,8 @@ function normalizeTask(args = {}, runtime = {}) {
   const owner = scope(runtime);
   const attachmentCount = images.imageAttachments(runtime).length;
   const operation = args.operation === undefined || args.operation === null || args.operation === ""
-    ? (attachmentCount === 0 ? "generate" : one(args.operation, ["generate", "transform", "upscale"]))
-    : one(args.operation, ["generate", "transform", "upscale"]);
+    ? (attachmentCount === 0 ? "generate" : one(args.operation, ["generate", "transform", "upscale", "colorize"]))
+    : one(args.operation, ["generate", "transform", "upscale", "colorize"]);
   // The server-injected current invocation is authoritative. Provider-written
   // request/prompt fields are proposals and may improve visual language, but
   // cannot replace the user's semantic request.
@@ -58,14 +59,30 @@ function normalizeTask(args = {}, runtime = {}) {
     if (task.source_policy !== "auto" || ["identity", "subject"].includes(task.preservation)) throw new AagError("INVALID_ARGUMENT", "Generate cannot select or preserve a source image.");
     if (args.scale !== undefined || args.source_index !== undefined) throw new AagError("INVALID_ARGUMENT", "Generate contains an argument that belongs to a source-image operation.");
     task.preservation = "none";
+    if (args.scaffold !== undefined && args.scaffold !== null && args.scaffold !== "") {
+      // Structural scaffold: validated now (fail fast, before any job exists) and rendered at source resolution.
+      const parsed = scaffold.parse(String(args.scaffold));
+      task.scaffold = String(args.scaffold);
+      task._aag_scaffold = { elements: parsed.elements.length, kinds: scaffold.summarize(parsed.elements) };
+    }
   } else if (operation === "upscale") {
+    if (args.scaffold !== undefined) throw new AagError("INVALID_ARGUMENT", "A structural scaffold applies only to generate.");
     if (task.final_output_quality !== "standard") throw new AagError("INVALID_ARGUMENT", "Upscale uses its dedicated scale and cannot add a second final enhancement.");
     if (!["auto", "none"].includes(task.preservation)) throw new AagError("INVALID_ARGUMENT", "Upscale preserves content and cannot request generative preservation.");
     task.preservation = "none";
     task.scale = integer(args.scale, 4, 2, 4);
     if (![2, 3, 4].includes(task.scale)) throw new AagError("INVALID_ARGUMENT", "Upscale scale must be 2, 3, or 4.");
     if (task.count !== 1) throw new AagError("INVALID_ARGUMENT", "Upscale accepts one output per task.");
+  } else if (operation === "colorize") {
+    // Restoration: luminance and dimensions come from the source; nothing creative is requested.
+    if (args.scaffold !== undefined) throw new AagError("INVALID_ARGUMENT", "A structural scaffold applies only to generate.");
+    if (args.scale !== undefined) throw new AagError("INVALID_ARGUMENT", "Colorize cannot specify an upscale factor.");
+    if (!["auto", "none"].includes(task.preservation)) throw new AagError("INVALID_ARGUMENT", "Colorize preserves the source and cannot request generative preservation.");
+    task.preservation = "none";
+    if (task.width !== undefined || task.height !== undefined || task.aspect_ratio !== "auto") throw new AagError("INVALID_ARGUMENT", "Colorize keeps the source dimensions and cannot take framing hints.");
+    if (task.count !== 1) throw new AagError("INVALID_ARGUMENT", "Colorize accepts one output per task.");
   } else {
+    if (args.scaffold !== undefined) throw new AagError("INVALID_ARGUMENT", "A structural scaffold applies only to generate.");
     if (args.scale !== undefined) throw new AagError("INVALID_ARGUMENT", "Transform cannot specify an upscale factor.");
     if (task.preservation === "none") throw new AagError("INVALID_ARGUMENT", "Transform requires identity or subject preservation.");
   }
@@ -77,8 +94,10 @@ function normalizeTask(args = {}, runtime = {}) {
 }
 
 function workflow(task) {
+  if (task.operation === "generate" && task.scaffold) return "generation.scaffold.fast.v1";
   if (task.operation === "generate") return task.quality === "quality" ? "generation.text.quality.v1" : "generation.text.fast.v1";
   if (task.operation === "upscale") return "upscale.preserve.auto.v1";
+  if (task.operation === "colorize") return require("./colorize").WORKFLOW_ID;
   if (task.preservation === "identity") return task._aag_identity_contract === identityRouting.SCENE ? "transform.human.identity.scene.v1" : "transform.human.identity.portrait.v1";
   if (task.preservation === "auto") throw new AagError("SOURCE_AMBIGUOUS", "Choose identity or subject preservation for a transform.");
   return task.quality === "quality" ? "transform.general.quality.v1" : "transform.general.fast.v1";
@@ -116,6 +135,11 @@ async function fetchPrevious(task, runtime, root, deps = {}) {
 }
 
 async function resolveSource(task, runtime, root, deps = {}) {
+  if (task.operation === "generate" && task.scaffold) {
+    const rendered = await scaffold.render(task.scaffold, deps);
+    const source = { kind: "structural_scaffold", scaffold_sha256: rendered.scaffold.sha256, scaffold_elements: rendered.scaffold.elements, scaffold_kinds: rendered.scaffold.kinds, scaffold_canvas: rendered.scaffold.canvas, width: rendered.width, height: rendered.height, format: "png", normalized_sha256: sha256(rendered.bytes) };
+    return { source, normalized: rendered, runtime: { ...runtime, AAG_INVOCATION_ATTACHMENTS: [] } };
+  }
   if (task.operation === "generate") return { source: null, normalized: null, runtime: { ...runtime, AAG_INVOCATION_ATTACHMENTS: [] } };
   const current = images.imageAttachments(runtime);
   if (task.source_policy === "current_attachment" || (task.source_policy === "auto" && current.length)) return images.currentAttachment(task, runtime, deps);

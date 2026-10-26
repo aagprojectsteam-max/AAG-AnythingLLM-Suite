@@ -26,7 +26,7 @@ const HE_UI = Object.freeze({
   hideControls: "הסתר פקדים",
   showControls: "הצג פקדים",
   intro:
-    "הגדירו כאן אילוצי הפקה, והשאירו את הבקשה בשפה טבעית בתיבת ההודעה שלמטה.",
+    "אילוצים אופציונליים. את הבקשה עצמה כותבים בתיבת ההודעה.",
   whatToCreate: "מה ליצור",
   operation: "פעולה",
   editMode: "מצב עריכה",
@@ -44,7 +44,7 @@ const HE_UI = Object.freeze({
   seriesRelationship: "הקשר בין תמונות הסדרה",
   styleAppearance: "סגנון ומראה",
   styleNote:
-    "הסגנון מנחה את הפרומפט שהמודל מחבר. כל התוצרים נשארים בפורמט רסטר, גם בבחירות דמויות וקטור, לוגו, מפה, אינפוגרפיקה או דוגמה.",
+    "הסגנון מנחה את הפרומפט. התוצר תמיד תמונת רסטר.",
   visualFamily: "משפחת סגנון",
   visualSubfamily: "תת־משפחת סגנון",
   familyCountSuffix: "משפחות זמינות",
@@ -165,6 +165,7 @@ const HE_OPTIONS = Object.freeze({
   "operation.reference": "יצירה מתמונת ייחוס",
   "operation.transform": "עריכה / שינוי",
   "operation.upscale": "הגדלה / שיפור",
+  "operation.colorize": "צביעת תמונת שחור-לבן",
   "editMode.preserve": "שימור המראה הנוכחי",
   "editMode.restyle": "שינוי סגנון התמונה",
   "referencePurpose.identity": "שימור זהות האדם",

@@ -4,14 +4,14 @@
   "name": "AAG Image Task",
   "version": "0.9.0-preview.13",
   "same_turn_retry": "forbidden",
-  "description": "Create exactly one governed AAG image task. COMPLETE THE JSON BEFORE CALLING: always include exact documented operation, prompt, source_policy, and preservation values; for generate use operation=generate, source_policy=auto, preservation=none, and author a rich production prompt. For transform, author a rich prompt and include the explicit approved source/preservation choice. For upscale, include a concise faithful prompt to upscale without creative alteration. Then apply the user's TECHNICAL speed-versus-generation-quality preference: explicit speed, quick output, low latency, or fastest intent MUST include quality=fast; explicit maximum/best/highest generation quality or quality over speed MUST include quality=quality; an explicit compromise MUST include quality=balanced; no technical preference uses quality=auto or omission. Creative words such as 3D, cinematic, detailed, polished, professional, realistic, storybook, watercolor, beautiful, or highly detailed stay only in prompt and never select quality. There is no structured style field; all art direction belongs in prompt. current_attachment is only a current-turn attachment; previous_artifact is the most recently returned AAG image; do not invent an older-thread selector. identity is only for same-person preservation of one recognizable human from one trusted current human attachment; ordinary content uses subject. AAG's provider-neutral validator authoritatively rejects unknown, missing, invalid, or unsafe arguments before execution; provider grammar is optional defense in depth. AAG never authors or retries prompt text. Return artifact_N_url values and never report success without the artifact URL; call this task at most once per user request, including after failure.",
+  "description": "Create exactly one governed AAG image task. COMPLETE THE JSON BEFORE CALLING: always include exact documented operation, prompt, source_policy, and preservation values; for generate use operation=generate, source_policy=auto, preservation=none, and author a rich production prompt. For transform, author a rich prompt and include the explicit approved source/preservation choice. For upscale, include a concise faithful prompt to upscale without creative alteration. For colorize (black-and-white to color), use operation=colorize, source_policy=current_attachment or previous_artifact, preservation=none, count=1, a concise prompt such as 'colorize this photo naturally', and quality=fast or quality=quality for the model tier. Then apply the user's TECHNICAL speed-versus-generation-quality preference: explicit speed, quick output, low latency, or fastest intent MUST include quality=fast; explicit maximum/best/highest generation quality or quality over speed MUST include quality=quality; an explicit compromise MUST include quality=balanced; no technical preference uses quality=auto or omission. Creative words such as 3D, cinematic, detailed, polished, professional, realistic, storybook, watercolor, beautiful, or highly detailed stay only in prompt and never select quality. There is no structured style field; all art direction belongs in prompt. current_attachment is only a current-turn attachment; previous_artifact is the most recently returned AAG image; do not invent an older-thread selector. identity is only for same-person preservation of one recognizable human from one trusted current human attachment; ordinary content uses subject. AAG's provider-neutral validator authoritatively rejects unknown, missing, invalid, or unsafe arguments before execution; provider grammar is optional defense in depth. AAG never authors or retries prompt text. Return artifact_N_url values and never report success without the artifact URL; call this task at most once per user request, including after failure. STRUCTURE RULE: when the user's request has exact counts, symmetry, grids or diagram-like parts, also author the scaffold argument (a minimal strict SVG line drawing laying out every element exactly), because the image engine cannot count on its own.",
   "public_schema": "provider-task.schema.json",
   "entrypoint": {
     "file": "handler.js",
     "params": {
       "operation": {
         "type": "string",
-        "description": "REQUIRED closed enum: generate, transform, or upscale. Use one exact value; do not invent values."
+        "description": "REQUIRED closed enum: generate, transform, upscale, or colorize. Use one exact value; do not invent values. colorize = restore natural color to a black-and-white or faded source photo (no creative prompt is used)."
       },
       "request": {
         "type": "string",
@@ -31,7 +31,7 @@
       },
       "preservation": {
         "type": "string",
-        "description": "REQUIRED closed enum on every call: auto, identity, subject, or none. Transform must explicitly use identity only for the same recognizable human person from one trusted current attachment, or subject for ordinary non-human/content preservation. Never use identity as generic same-image preservation; generate/upscale must use none."
+        "description": "REQUIRED closed enum on every call: auto, identity, subject, or none. Transform must explicitly use identity only for the same recognizable human person from one trusted current attachment, or subject for ordinary non-human/content preservation. Never use identity as generic same-image preservation; generate/upscale/colorize must use none."
       },
       "quality": {
         "type": "string",
@@ -64,6 +64,10 @@
       "seed": {
         "type": "number",
         "description": "Optional non-negative deterministic seed."
+      },
+      "scaffold": {
+        "type": "string",
+        "description": "Optional, generate only: a strict-subset SVG line drawing (viewBox 0 0 1000 1000; rect/circle/ellipse/line/polyline/polygon/path only; no text/images/links/styles) that fixes the exact count, symmetry and layout of structural elements. Use it whenever the request names exact counts, symmetry, grids or diagram-like objects (for example a hanukkiah with eight branches and a central shamash). Compute positions deliberately. The engine preserves the layout and applies the prompt's style."
       }
     }
   },

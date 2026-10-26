@@ -4,20 +4,14 @@ New AAG presentation artifacts are stored physically as
 `AAG-Image-WORKSPACE-THREAD-YYYYMMDD-HHMMSS.ext`, then `-2.png`, `-3.png`, etc. on collision.
 The filename contains no prompt, title, provider, or internal UUID. The extension follows the validated format: PNG → `.png`, JPEG → `.jpg`, WebP → `.webp`. Storage and downloads retain the original bytes. Non-PNG images are decoded to PNG only inside on-demand PDF assembly.
 
-Workspace numbers are persistent user-facing AAG serials in
-`aag_workspace_serials`, separate from native database workspace IDs. The first
-allocation uses an authenticated sidebar snapshot. A new artifact's thread number
-is the current one-based ordinal in the authenticated, ordered visible thread
-list, using additive display positions in `aag_thread_display_order`. Deletion
-and reorder immediately change current display numbers; native IDs remain stable
-for persistence, ownership, sockets and recovery. Each filename records the
-ordinal at creation permanently. Show Details distinguishes the current ordinal
-from the immutable creation ordinal. Earlier serial tables remain for historical
-compatibility; they do not define the current visible thread number.
-The native unthreaded conversation retains reserved thread serial **0**.
-`aag_artifact_serials` preserves the artifact's workspace binding. The earlier
-`aag_thread_serials` and filename ledger continue to resolve historical names.
-No historical artifact is renamed and no native identity is rewritten.
+`workspaces.id` is the native SQLite AUTOINCREMENT workspace serial. Thread IDs
+are globally numbered in AnythingLLM, so `aag_thread_serials` adds a dedicated
+per-workspace mapping. On first allocation for a workspace, its existing threads
+receive serials by ascending immutable `workspace_threads.id`. Subsequent unseen
+threads append after the stored maximum. Names and UI order are never consulted.
+Mappings survive deletion and have no cascading foreign key, so deleted serials
+are never reused. The native unthreaded workspace conversation uses reserved
+serial **0**; persistent threads start at **1**. No native records are rewritten.
 
 The authoritative time is the persisted artifact's `verified_at` event, created
 by `src/adapters.js` after the engine output passes decoding and hash validation.
@@ -39,7 +33,7 @@ persisted name; Details and reveal measure the same physical file through the
 existing authoritative resolver. Internal publisher filenames and identities
 remain internal and unchanged.
 
-The additive mapping tables are created idempotently in the existing AnythingLLM SQLite
+The two small tables are created idempotently in the existing AnythingLLM SQLite
 database through its existing Prisma client. There are no changes to Prisma's
 native models, workspace/thread/chat rows, or unrelated persistence. Rollback to
 an older application can leave these additive tables in place safely. Do not

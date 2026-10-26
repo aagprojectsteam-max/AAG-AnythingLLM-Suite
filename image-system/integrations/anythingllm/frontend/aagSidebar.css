@@ -17,6 +17,6 @@
 .aag-sidebar-resizer.is-dragging::after { opacity: .7; }
 .aag-desktop-sidebar:has(.is-dragging) { user-select: none; }
 .aag-ordinal-label { display: flex; align-items: baseline; min-width: 0; gap: .3em; direction: ltr; }
-.aag-ordinal-number { flex: 0 0 auto; white-space: nowrap; unicode-bidi: isolate; }
-.aag-ordinal-title { display: block; flex: 1 1 0%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: start; unicode-bidi: isolate; }
+.aag-ordinal-number { flex: 0 0 auto; white-space: nowrap; unicode-bidi: plaintext; }
+.aag-ordinal-title { display: block; flex: 1 1 0%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: start; unicode-bidi: plaintext; }
 #workspace-name, #workspace-thread-name { max-width: min(420px, calc(100vw - 32px)); overflow-wrap: anywhere; white-space: normal; }

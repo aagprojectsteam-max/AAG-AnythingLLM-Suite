@@ -147,7 +147,8 @@ function validate({ authoritative, proposal, identityScene = false } = {}) {
 }
 
 function applyToTask(task) {
-  if (!task || task.operation === "upscale") return task;
+  // Restoration operations carry no creative prompt; nothing to measure or preserve.
+  if (!task || task.operation === "upscale" || task.operation === "colorize") return task;
   if (task.operation === "transform" && task.preservation === "identity" && task._aag_identity_contract !== "scene-c") return task;
   const result = validate({ authoritative: task._aag_authoritative_request || task.request, proposal: task.prompt, identityScene: task.operation === "transform" && task.preservation === "identity" });
   task._aag_prompt_contract = result.contract;

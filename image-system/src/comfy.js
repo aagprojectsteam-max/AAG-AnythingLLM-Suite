@@ -4,9 +4,9 @@ const crypto = require("crypto");
 const path = require("path");
 const { AagError } = require("./errors");
 const ordinaryPolicy = require("./ordinary-policy");
+const scaffoldPolicy = require("./scaffold");
 
-const COMFY = "http://172.18.0.1:18188";
-const HUB = "http://172.18.0.1:18190";
+const { COMFY, HUB_INTERNAL: HUB } = require("./endpoints");
 const PROFILES = Object.freeze({
   fast: {
     name: "fast", unet: "flux-2-klein-4b-fp8.safetensors", unet_sha256: "97ed34fe0567e436200f2faee3939b88f2b5d99f8af2a4dc16532c4245c0ccb6",
@@ -30,6 +30,8 @@ const STALL_PROFILES = Object.freeze({
   quality: Object.freeze({ load: 600_000, sample: 360_000, output: 240_000, default: 600_000 }),
   identity: Object.freeze({ load: 600_000, sample: 600_000, output: 300_000, default: 600_000 }),
   upscale: Object.freeze({ load: 180_000, sample: 180_000, output: 180_000, default: 180_000 }),
+  // DDColor acceptance on XPU: 4-5 s cold, ~2 s warm (2026-10-26); limits stay far above that.
+  colorize: Object.freeze({ load: 300_000, sample: 180_000, output: 180_000, default: 300_000 }),
 });
 const HISTORY_POLL_MS = 5_000;
 const INTERRUPT_GRACE_MS = 45_000;
@@ -194,13 +196,14 @@ function clock(deps = {}) { return typeof deps.now === "function" ? Number(deps.
 
 function workflowClass(task = {}) {
   if (task.operation === "upscale") return "upscale";
+  if (task.operation === "colorize") return "colorize";
   if (task.preservation === "identity") return "identity";
   return task.quality === "quality" ? "quality" : "fast";
 }
 
 function enginePhase(progress = {}) {
   const className = String(progress.current_engine_node_class || "");
-  if (/Sampler|KSampler/i.test(className)) return "sample";
+  if (/Sampler|KSampler|DDColor|Colorize/i.test(className)) return "sample";
   if (/VAEDecode|SaveImage|PreviewImage|Output/i.test(className)) return "output";
   if (/Loader|LoadImage|Scale|Encode|Conditioning|ReferenceLatent|Scheduler|Noise|Latent/i.test(className)) return "load";
   return "default";
@@ -398,8 +401,12 @@ async function importImage(image, kind, leaseToken, deps) {
 
 async function execute(task, normalized, leaseToken, deps = {}) {
   const started = Date.now();
-  const model = task.quality === "quality" ? PROFILES.quality : PROFILES.fast;
-  const transform = task.operation === "transform";
+  // A structural scaffold runs on the fast profile: the 9B reference path is not
+  // viable on this XPU (fp8 emulation stall observed 2026-10-26), and layout is
+  // already fixed by the scaffold, so the larger model adds nothing structural.
+  const scaffolded = task.operation === "generate" && Boolean(task.scaffold);
+  const model = task.quality === "quality" && !scaffolded ? PROFILES.quality : PROFILES.fast;
+  const transform = task.operation === "transform" || scaffolded;
   await verifyRuntime(model, transform, leaseToken, deps);
   const size = transform ? productionDimensions(task) : ordinaryDimensions(task);
   let graph, kind, finalEnginePrompt;
@@ -408,18 +415,20 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     graph = generationGraph({ model, prompt: finalEnginePrompt, seed: task.seed, width: size.width, height: size.height, prefix: `GEN-H2-${new Date().toISOString().replace(/[:.]/g,"-")}-${task.seed}` });
     kind = "GEN";
   } else {
-    const referenceMegapixels = task.quality === "quality" ? 1.0 : task.quality === "fast" ? 0.25 : 0.5;
+    const referenceMegapixels = scaffolded ? 0.6 : task.quality === "quality" ? 1.0 : task.quality === "fast" ? 0.25 : 0.5;
     const engineReference = await prepareGeneralReference(normalized, referenceMegapixels, deps);
     const referenceName = await upload(engineReference, leaseToken, deps);
     const base = String(task.prompt || task.request).trim().replace(/[.\s]+$/, "");
-    if (task._aag_prompt_contract?.id === "aag.expert.prompt.v1") {
+    if (scaffolded) {
+      finalEnginePrompt = `${base}. ${scaffoldPolicy.ENGINE_SUFFIX}`;
+    } else if (task._aag_prompt_contract?.id === "aag.expert.prompt.v1") {
       finalEnginePrompt = task.prompt;
       if (crypto.createHash("sha256").update(finalEnginePrompt).digest("hex") !== task._aag_prompt_contract.final_prompt_sha256)
         throw new AagError("EXPERT_PROMPT_CHANGED", "Expert prompt changed at the image-engine boundary.");
     } else {
     finalEnginePrompt = `${base}. Use the supplied authorized reference as the visual source for the main subject. Preserve the subject's recognizable shape, proportions, colors, markings, materials, texture, design, and distinctive details unless explicitly requested otherwise. Apply the requested action, scene, setting, and composition faithfully.`;
     }
-    graph = generalGraph({ model, referenceName, prompt: finalEnginePrompt, seed: task.seed, width: size.width, height: size.height, referenceMegapixels, prefix: `REF-H2-subject-${new Date().toISOString().replace(/[:.]/g,"-")}-${task.seed}` });
+    graph = generalGraph({ model, referenceName, prompt: finalEnginePrompt, seed: task.seed, width: size.width, height: size.height, referenceMegapixels, prefix: `${scaffolded ? "SCAF-H2-structure" : "REF-H2-subject"}-${new Date().toISOString().replace(/[:.]/g,"-")}-${task.seed}` });
     kind = "REF";
   }
   const promptNode = transform ? "7" : "4";
@@ -438,7 +447,8 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     final_prompt_sha256: crypto.createHash("sha256").update(String(finalEnginePrompt || "")).digest("hex"),
   };
   const metadata = transform ? {
-    adapter: "comfy-subject-v1", prompt_id: promptId, submitted_at: new Date().toISOString(), model: model.name, ...promptMetadata,
+    adapter: scaffolded ? "comfy-scaffold-v1" : "comfy-subject-v1", prompt_id: promptId, submitted_at: new Date().toISOString(), model: model.name, ...promptMetadata,
+    ...(scaffolded ? { scaffold_sha256: task._aag_source?.scaffold_sha256, scaffold_elements: task._aag_source?.scaffold_elements } : {}),
   } : {
     adapter: "comfy-generation-v2", prompt_id: promptId, submitted_at: new Date().toISOString(), model: model.name,
     recipe_id: ordinaryPolicy.RECIPE_ID,
@@ -453,7 +463,8 @@ async function execute(task, normalized, leaseToken, deps = {}) {
     ...promptMetadata,
   };
   deps.onEngineMetadata?.(metadata);
-  deps.onExecutionDetails?.({...require('./generation-details').executionFromGraph(graph,{model_family:'FLUX.2 Klein',resolved_quality:model.name,workflow_revision:'comfy.klein.v2'}),route:metadata.adapter});
+  deps.onExecutionDetails?.({...require('./generation-details').executionFromGraph(graph,{model_family:'FLUX.2 Klein',resolved_quality:model.name,workflow_revision:scaffolded?'comfy.scaffold.v1':'comfy.klein.v2'}),route:metadata.adapter,
+    ...(scaffolded ? { structural_scaffold: 'yes', scaffold_elements: `${task._aag_source?.scaffold_elements ?? task._aag_scaffold?.elements} (${task._aag_source?.scaffold_kinds ?? task._aag_scaffold?.kinds})`, scaffold_canvas: task._aag_source?.scaffold_canvas } : {})});
   deps.onEngineProgress?.({
     engine_progress_source: "comfy-websocket-bridge",
     last_engine_progress_at: new Date().toISOString(),

@@ -75,3 +75,6 @@ generated-images/
 !image-system/tests/fixtures/artifact-formats/verified.jpg
 !image-system/tests/fixtures/artifact-formats/verified.png
 !image-system/tools/atlas-token-accounting.js
+
+# AAG-owned build tool; the generic *token* rule above must not hide it
+!image-system/tools/patch-token-usage.js

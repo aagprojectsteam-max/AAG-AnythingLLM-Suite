@@ -242,7 +242,8 @@ function ImageGenerationCard({ props }) {
               type="button"
               onClick={handleDownload}
               disabled={status !== "ready"}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white text-xs text-white light:text-slate-700 hover:bg-zinc-800 light:hover:bg-slate-100"
+              data-aag-primary="true"
+              className="aag-artifact-primary inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white text-xs text-white light:text-slate-700 hover:bg-zinc-800 light:hover:bg-slate-100"
             >
               <DownloadSimple size={14} weight="bold" /> Download
             </button>

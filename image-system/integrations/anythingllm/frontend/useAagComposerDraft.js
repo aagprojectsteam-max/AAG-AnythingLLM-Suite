@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useReducer } from "react";
+import { composerDrafts } from "@/utils/aagComposerDraftStore";
 
-// Bounded, page-memory UI drafts keyed by stable slugs. Never persisted job
-// state. Existing native prompt storage and Expert preferences stay authoritative.
-const drafts = new Map();
+// Home has a temporary presentation scope, distinct from a real default
+// conversation. It is never passed to APIs, sockets or artifact metadata.
+const DraftScope = createContext(null);
+export const AagComposerDraftScope = DraftScope.Provider;
 export default function useAagComposerDraft(workspaceSlug, threadSlug, field, initial) {
-  const key = JSON.stringify([workspaceSlug || null, threadSlug || null]);
-  const [value, setValue] = useState(() => {
-    const saved = drafts.get(key);
-    return saved && Object.prototype.hasOwnProperty.call(saved, field)
-      ? saved[field] : typeof initial === "function" ? initial() : initial;
-  });
-  // Native ChatContainer is keyed by the stable workspace/thread pair. Docking
-  // never changes that key. Returning to a scope restores its UI selections.
-  useEffect(() => {
-    const saved = drafts.get(key) || {};
-    drafts.delete(key); drafts.set(key, { ...saved, [field]: value });
-    while (drafts.size > 24) drafts.delete(drafts.keys().next().value);
-  }, [key, field, value]);
-  return [value, setValue];
+  const temporary = useContext(DraftScope);
+  const draft = useMemo(() => composerDrafts.acquire(workspaceSlug, threadSlug, temporary),
+    [workspaceSlug, threadSlug, temporary]);
+  if (!Object.prototype.hasOwnProperty.call(draft.values, field)) {
+    composerDrafts.write(draft, field, typeof initial === "function" ? initial() : initial);
+  }
+  const [, render] = useReducer(count => count + 1, 0);
+  const setValue = useCallback(next => {
+    // Save synchronously with the selection, before a submit/navigation can
+    // unmount this form. No passive effect can overwrite a migrated draft.
+    if (composerDrafts.write(draft, field, next)) render();
+  }, [draft, field]);
+  return [draft.values[field], setValue];
 }

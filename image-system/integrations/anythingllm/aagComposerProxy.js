@@ -188,6 +188,36 @@ function proxyComposer(request, response, route) {
 }
 
 function aagComposerProxyEndpoints(app) {
+  // Read-only metadata for every workspace. Reuse native authentication and
+  // membership checks; expose no credentials, prompts or provider endpoints.
+  app.get("/aag-usage/:slug", [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (_request, response) => {
+      const workspace = response.locals.workspace;
+      const { getLLMProviderClass, getBaseLLMProviderModel } = require("../utils/helpers");
+      const provider = workspace.chatProvider || process.env.LLM_PROVIDER || null;
+      const model = workspace.chatModel || getBaseLLMProviderModel({ provider }) || null;
+      let contextLimit = null;
+      try {
+        const Provider = getLLMProviderClass({ provider });
+        const value = Provider?.promptWindowLimit?.(model);
+        // Do not start inference or fetch remote account/model data for a meter.
+        if (Number.isSafeInteger(value) && value > 0) contextLimit = value;
+      } catch { /* Unconfigured/unknown provider is an explicit unknown. */ }
+      // This is the actual ordinary Generic OpenAI request cap. Other adapters
+      // may choose a cap dynamically; unknown is safer than a guessed model cap.
+      const genericOutput = Number(process.env.GENERIC_OPEN_AI_MAX_TOKENS || 1024);
+      const outputLimit = provider === "generic-openai" &&
+        Number.isSafeInteger(genericOutput) && genericOutput > 0 ? genericOutput : null;
+      response.setHeader("Cache-Control", "no-store");
+      response.setHeader("X-Content-Type-Options", "nosniff");
+      return response.json({
+        schema: "aag.token-usage.v1", provider, model, contextLimit, outputLimit,
+        contextSource: contextLimit === null ? "unavailable" : "application-configuration",
+        historyMessages: Number.isSafeInteger(workspace.openAiHistory) ? workspace.openAiHistory : 20,
+        quota: { status: "unavailable", reason: "chat-adapter-does-not-expose-account-allowance" },
+      });
+    });
+
   const guards = [
     validatedRequest,
     imageWorkspaceOnly,

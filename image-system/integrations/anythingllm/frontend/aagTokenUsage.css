@@ -1,0 +1,21 @@
+.aag-token-usage{width:100%;margin:6px 0 9px;padding:9px 12px;border:1px solid #3f4858;border-radius:12px;background:#232833;color:#e4e9f0;font-size:11px;line-height:1.45}
+.aag-token-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.aag-token-heading strong{font-size:12px;font-weight:600}
+.aag-token-heading button{font:inherit;color:#aebccd;border:0;background:transparent;cursor:pointer;padding:2px 4px;border-radius:4px}
+.aag-token-heading button:focus-visible{outline:2px solid #38bdf8;outline-offset:2px}
+.aag-token-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+.aag-token-cell{min-width:0;display:flex;flex-direction:column;gap:2px}
+.aag-token-cell>span,.aag-token-cell small{color:#acb9ca;font-size:10px}
+.aag-token-cell>b{font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.aag-token-track{height:5px;border-radius:5px;background:#435064;overflow:hidden;margin:3px 0}
+.aag-token-track span{display:block;height:100%;min-width:2px;background:#4fc6a0;border-radius:5px;transition:width .18s}
+.aag-token-track.near span{background:#e3b44b}.aag-token-track.full span{background:#ee7171}
+.aag-token-details{margin-top:9px;padding-top:8px;border-top:1px solid #435064;line-height:1.6;color:#bdc9d9;font-size:11px}
+.aag-token-details p{margin:5px 0}.aag-token-warning{color:#f6ac68}
+.light .aag-token-usage{background:#f8fafc;border-color:#dce4ee;color:#26364a}
+.light .aag-token-heading button,.light .aag-token-cell>span,.light .aag-token-cell small{color:#64748b}
+.light .aag-token-track{background:#e2e8f0}.light .aag-token-track span{background:#26a37b}
+.light .aag-token-track.near span{background:#c58b13}.light .aag-token-track.full span{background:#d95757}
+.light .aag-token-details{color:#52657a;border-color:#dce4ee}.light .aag-token-warning{color:#a34c13}
+@media(max-width:480px){.aag-token-usage{padding:8px}.aag-token-grid{gap:8px}.aag-token-cell>b{font-size:10px}.aag-token-cell small{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.aag-token-track span{transition:none}}

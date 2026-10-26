@@ -4,8 +4,7 @@ const crypto = require("crypto");
 const path = require("path");
 const { AagError } = require("./errors");
 
-const COMFY = "http://172.18.0.1:18188";
-const HUB = "http://172.18.0.1:18190";
+const { COMFY, HUB_INTERNAL: HUB } = require("./endpoints");
 const MODELS = Object.freeze({
   unet: "flux-2-klein-9b-fp8.safetensors",
   clip: "qwen_3_8b_fp8mixed.safetensors",

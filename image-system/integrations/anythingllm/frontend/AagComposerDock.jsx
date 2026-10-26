@@ -14,8 +14,10 @@ export default function AagComposerDock({ children, className, enabled, workspac
   const current = useRef(layout); current.current = layout;
   const [available, setAvailable] = useState(0);
   const route = useParams();
-  const scopeReady = (!route.slug || route.slug === workspaceSlug) &&
-    (route.threadSlug || null) === (threadSlug || null);
+  // Home may already own an attachment-created thread before navigation.
+  // On workspace routes, keep blocking the previous form while history loads.
+  const scopeReady = !route.slug || (route.slug === workspaceSlug &&
+    (route.threadSlug || null) === (threadSlug || null));
   const geometry = panelGeometry(layout, available);
   const docked = enabled && layout.mode === "panel" && layout.open && geometry.fits;
   const closed = enabled && layout.mode === "panel" && !layout.open;

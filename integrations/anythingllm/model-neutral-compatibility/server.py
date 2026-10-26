@@ -67,8 +67,28 @@ from visual_atlas import AtlasError, get_visual_atlas
 from text_stream import encode_event, read_events, validated_text_events
 
 
-MAX_CHAT_BODY = 4 * 1024 * 1024
+def _bounded_env(name: str, default: float, low: float, high: float) -> float:
+    try:
+        value = float(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        return float(default)
+    return min(high, max(low, value))
+
+
+# Upstream (non-stream) response bodies the boundary is willing to parse.
+MAX_UPSTREAM_RESPONSE_BODY = 4 * 1024 * 1024
+# Request bodies accepted on /v1/chat/completions and forwarded /v1/* routes.
+# One limit for both: a vision request with base64 attachments previously hit
+# HTTP 413 (REQUEST_SIZE_INVALID) because the forward path kept a 4 MiB cap.
+MAX_CHAT_REQUEST_BODY = 32 * 1024 * 1024
+MAX_FORWARD_BODY = MAX_CHAT_REQUEST_BODY
 MAX_COMPOSER_BODY = 24 * 1024 * 1024
+TOOL_KEEPALIVE_SECONDS = 15.0
+# Slow local models (observed ~2 tok/s) exceed a fixed 120 s completion timeout.
+UPSTREAM_COMPLETION_TIMEOUT_SECONDS = _bounded_env("AAG_COMPAT_UPSTREAM_TIMEOUT_SECONDS", 120, 30, 1800)
+# Audit log rotation: size-based, keeps a bounded number of previous files.
+AUDIT_MAX_BYTES = int(_bounded_env("AAG_COMPAT_AUDIT_MAX_BYTES", 32 * 1024 * 1024, 1024 * 1024, 1024 * 1024 * 1024))
+AUDIT_KEEP_FILES = int(_bounded_env("AAG_COMPAT_AUDIT_KEEP_FILES", 5, 1, 50))
 DEFAULT_UPSTREAM = "http://127.0.0.1:8080"
 DEFAULT_STATE_DIR = f"/run/user/{os.getuid()}/aag-llama/server"
 DEFAULT_EXPECTED_EXECUTABLE = "/mnt/data/AI/Apps/llama.cpp/build-sycl/bin/llama-server"
@@ -122,6 +142,7 @@ class AuditLog:
         }
         encoded = (stable_json(record) + "\n").encode("utf-8")
         with self.lock:
+            self._rotate_if_needed()
             flags = os.O_WRONLY | os.O_CREAT | os.O_APPEND
             if hasattr(os, "O_NOFOLLOW"):
                 flags |= os.O_NOFOLLOW
@@ -131,6 +152,24 @@ class AuditLog:
                 os.fsync(descriptor)
             finally:
                 os.close(descriptor)
+
+
+    def _rotate_if_needed(self) -> None:
+        """Size-based rotation under the write lock: audit.ndjson -> .1 -> .2 ... up to AUDIT_KEEP_FILES."""
+        try:
+            size = os.lstat(self.path).st_size
+        except FileNotFoundError:
+            return
+        if size < AUDIT_MAX_BYTES:
+            return
+        oldest = self.path.with_name(f"{self.path.name}.{AUDIT_KEEP_FILES}")
+        if oldest.exists() or oldest.is_symlink():
+            oldest.unlink()
+        for index in range(AUDIT_KEEP_FILES - 1, 0, -1):
+            source = self.path.with_name(f"{self.path.name}.{index}")
+            if source.exists() or source.is_symlink():
+                os.replace(source, self.path.with_name(f"{self.path.name}.{index + 1}"))
+        os.replace(self.path, self.path.with_name(f"{self.path.name}.1"))
 
 
 class RuntimeSession:
@@ -359,7 +398,7 @@ class CapabilityManager:
         }
         started = time.monotonic()
         try:
-            response = self.upstream.json(payload, timeout=120)
+            response = self.upstream.json(payload, timeout=UPSTREAM_COMPLETION_TIMEOUT_SECONDS)
             validate_ordinary_response(response)
             text = response["choices"][0]["message"].get("content") or ""
             sanity = text_sanity(text)
@@ -391,7 +430,7 @@ class CapabilityManager:
         }
         started = time.monotonic()
         try:
-            response = self.upstream.json(payload, timeout=120)
+            response = self.upstream.json(payload, timeout=UPSTREAM_COMPLETION_TIMEOUT_SECONDS)
             validate_ordinary_response(response)
             text = response["choices"][0]["message"].get("content") or ""
             sanity = text_sanity(text)
@@ -434,7 +473,7 @@ class CapabilityManager:
         }
         started = time.monotonic()
         try:
-            response = self.upstream.json(payload, timeout=120)
+            response = self.upstream.json(payload, timeout=UPSTREAM_COMPLETION_TIMEOUT_SECONDS)
             calls = validate_native_tool_response(response, tools)
             if calls[0].arguments != {"nonce": nonce}:
                 raise CompatibilityError("PROBE_NONCE_MISMATCH", "Native probe nonce changed.")
@@ -457,7 +496,7 @@ class CapabilityManager:
         }
         started = time.monotonic()
         try:
-            response = self.upstream.json(build_adapter_payload(payload, tools), timeout=120)
+            response = self.upstream.json(build_adapter_payload(payload, tools), timeout=UPSTREAM_COMPLETION_TIMEOUT_SECONDS)
             validate_ordinary_response(response)
             text = response["choices"][0]["message"].get("content")
             if not isinstance(text, str):
@@ -972,16 +1011,13 @@ class BoundaryHandler(BaseHTTPRequestHandler):
         else:
             status, code = 422, error.code
         APP.audit.write("request_rejected", code=code, status=status, path=self.path.split("?", 1)[0])
-        self._json(
-            status,
-            {
-                "error": {
-                    "message": str(error),
-                    "type": "aag_compatibility_error",
-                    "code": code,
-                }
-            },
-        )
+        value = {"error": {"message": str(error), "type": "aag_compatibility_error", "code": code}}
+        if getattr(self, "_tool_stream_started", False):
+            self.wfile.write(encode_event(value))
+            self.wfile.flush()
+            self.close_connection = True
+        else:
+            self._json(status, value)
 
     def _read_json(self, limit: int) -> dict[str, Any]:
         raw_length = self.headers.get("Content-Length")
@@ -1204,7 +1240,7 @@ class BoundaryHandler(BaseHTTPRequestHandler):
 
     def _forward(self) -> None:
         length = int(self.headers.get("Content-Length") or "0")
-        if length < 0 or length > MAX_CHAT_BODY:
+        if length < 0 or length > MAX_FORWARD_BODY:
             raise BoundaryError(413, "REQUEST_SIZE_INVALID", "Forwarded request is too large.")
         body = self.rfile.read(length) if length else None
         headers = {
@@ -1240,8 +1276,8 @@ class BoundaryHandler(BaseHTTPRequestHandler):
         try:
             with APP.upstream.open_stream(upstream_payload) as upstream:
                 if upstream.headers.get_content_type() != "text/event-stream":
-                    raw = upstream.read(MAX_CHAT_BODY + 1)
-                    if len(raw) > MAX_CHAT_BODY:
+                    raw = upstream.read(MAX_UPSTREAM_RESPONSE_BODY + 1)
+                    if len(raw) > MAX_UPSTREAM_RESPONSE_BODY:
                         raise BoundaryError(502, "UPSTREAM_RESPONSE_INVALID", "The upstream response is too large.")
                     try:
                         response = json.loads(raw)
@@ -1297,7 +1333,7 @@ class BoundaryHandler(BaseHTTPRequestHandler):
             self.close_connection = True
 
     def _chat_completion(self) -> None:
-        payload = self._read_json(MAX_CHAT_BODY)
+        payload = self._read_json(MAX_CHAT_REQUEST_BODY)
         payload = APP.unpack_composer_transport(payload)
         messages = payload.get("messages")
         if not isinstance(payload.get("model"), str) or not isinstance(messages, list) or not messages:
@@ -1328,6 +1364,34 @@ class BoundaryHandler(BaseHTTPRequestHandler):
             self._stream_text(payload)
             return
 
+        with self._tool_keepalive(stream_requested):
+            response, mode = self._buffered_completion(payload, composer_intent, expert_context, validate_output)
+
+        if composer_intent is not None:
+            APP.audit.write(
+                "composer_intent_validated",
+                session_sha256=APP.capabilities.session_sha256,
+                intent_sha256=sha256_text(composer_canonical_json(composer_intent)),
+                mode=mode,
+            )
+        APP.audit.write(
+            "completion_validated",
+            session_sha256=APP.capabilities.session_sha256,
+            mode=mode,
+            stream_requested=stream_requested,
+            response_sha256=sha256_text(stable_json(response)),
+        )
+        if stream_requested:
+            self._open_tool_stream()
+            for event in openai_sse_events(response):
+                self.wfile.write(event)
+                self.wfile.flush()
+            self.close_connection = True
+        else:
+            self._json(200, response)
+
+
+    def _buffered_completion(self, payload, composer_intent, expert_context, validate_output):
         upstream_payload = dict(payload)
         upstream_payload["stream"] = False
         tools = payload.get("tools")
@@ -1474,33 +1538,44 @@ class BoundaryHandler(BaseHTTPRequestHandler):
             response = APP.upstream.json(upstream_payload)
             validate_output(response)
 
-        if composer_intent is not None:
-            APP.audit.write(
-                "composer_intent_validated",
-                session_sha256=APP.capabilities.session_sha256,
-                intent_sha256=sha256_text(composer_canonical_json(composer_intent)),
-                mode=mode,
-            )
-        APP.audit.write(
-            "completion_validated",
-            session_sha256=APP.capabilities.session_sha256,
-            mode=mode,
-            stream_requested=stream_requested,
-            response_sha256=sha256_text(stable_json(response)),
-        )
-        if stream_requested:
-            self.send_response(200)
-            self.send_header("Content-Type", "text/event-stream; charset=utf-8")
-            self.send_header("Cache-Control", "no-store")
-            self.send_header("Connection", "close")
-            self.send_header("X-Accel-Buffering", "no")
-            self.end_headers()
-            for event in openai_sse_events(response):
-                self.wfile.write(event)
-                self.wfile.flush()
-            self.close_connection = True
-        else:
-            self._json(200, response)
+        return response, mode
+
+    def _open_tool_stream(self) -> None:
+        if getattr(self, "_tool_stream_started", False):
+            return
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Connection", "close")
+        self.send_header("X-Accel-Buffering", "no")
+        self.end_headers()
+        self._tool_stream_started = True
+        self.close_connection = True
+
+    @contextmanager
+    def _tool_keepalive(self, enabled):
+        # Comments carry no model content or executable calls. Validation stays
+        # synchronous and complete before any completion events are emitted.
+        if not enabled:
+            yield
+            return
+        stopped = threading.Event()
+        def heartbeat():
+            while not stopped.wait(TOOL_KEEPALIVE_SECONDS):
+                try:
+                    self._open_tool_stream()
+                    self.wfile.write(b": processing\n\n")
+                    self.wfile.flush()
+                except (OSError, ConnectionError):
+                    return
+        worker = threading.Thread(target=heartbeat, daemon=True)
+        worker.start()
+        try:
+            yield
+        finally:
+            stopped.set()
+            worker.join()
+
 
 
 class ReusableThreadingHTTPServer(ThreadingHTTPServer):
@@ -1529,7 +1604,7 @@ def parse_args() -> argparse.Namespace:
     # and all three allowed Image schemas. Keep the transport bounded while
     # allowing measured long-context ingestion plus tool-call decoding.
     # Behavioral probes continue to pass their own strict 120-second timeout.
-    parser.add_argument("--upstream-timeout", type=int, default=900)
+    parser.add_argument("--upstream-timeout", type=int, default=1800)
     parser.add_argument("--composer-timeout", type=int, default=1800)
     return parser.parse_args()
 

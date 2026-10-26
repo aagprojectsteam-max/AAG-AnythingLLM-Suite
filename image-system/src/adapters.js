@@ -8,9 +8,7 @@ const humanIdentity = require("./human-identity");
 const sceneIdentity = require("./scene-identity");
 const comfy = require("./comfy");
 
-const HUB_INTERNAL = "http://172.18.0.1:18190";
-const HUB_PUBLIC = "http://127.0.0.1:18190";
-const UPSCALE_INTERNAL = "http://172.18.0.1:18191";
+const { HUB_INTERNAL, HUB_PUBLIC, UPSCALE_INTERNAL } = require("./endpoints");
 
 function publicArtifactUrl(filename) {
   if (!/^[A-Za-z0-9][A-Za-z0-9._~-]{0,239}$/.test(String(filename || "")) || String(filename).includes("..")) {
@@ -54,6 +52,13 @@ async function verifyArtifact(filename, jobId, childId, source, operation, scale
     if (operation === "upscale" && source?.width && source?.height) {
       if (decoded.width !== source.width * scale || decoded.height !== source.height * scale) {
         throw new AagError("OUTPUT_INVALID", "The upscale artifact dimensions do not match the declared scale.");
+      }
+    }
+    if (operation === "colorize" && source?.width && source?.height) {
+      // Only oversized sources are downscaled before the engine; otherwise dimensions must be preserved exactly.
+      const bounded = source.width * source.height > require("./colorize").MAX_SOURCE_MEGAPIXELS * 1_000_000;
+      if (!bounded && (decoded.width !== source.width || decoded.height !== source.height)) {
+        throw new AagError("OUTPUT_INVALID", "The colorized artifact dimensions do not match the source.");
       }
     }
     verified = true;
@@ -143,6 +148,7 @@ async function finalOutputPostprocess(filename, finalOutputQuality, leaseToken, 
 async function execute(task, normalized, runtime, context, leaseToken, deps = {}) {
   if (deps.execute) return deps.execute(task, normalized, runtime, context, leaseToken, deps);
   if (task.operation === "upscale") return upscale(task, normalized, leaseToken, deps);
+  if (task.operation === "colorize") return require("./colorize").execute(task, normalized, leaseToken, deps);
   if (task.operation === "transform" && task.preservation === "identity") {
     return task._aag_identity_contract === "scene-c" ? sceneIdentity.execute(task, normalized, leaseToken, deps) : humanIdentity.execute(task, normalized, leaseToken, deps);
   }

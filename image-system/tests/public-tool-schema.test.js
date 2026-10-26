@@ -12,7 +12,7 @@ const batchPlugin = require("../skills/aag-image-batch/plugin.json");
 const { loadPublicSchema, validatePublicArguments, withPublicToolSchema } = require("../integrations/anythingllm/aagPublicToolSchema");
 
 const EXPECTED = Object.freeze({
-  operation: ["generate", "transform", "upscale"],
+  operation: ["generate", "transform", "upscale", "colorize"],
   source_policy: ["auto", "current_attachment", "previous_artifact"],
   preservation: ["auto", "identity", "subject", "none"],
   quality: ["auto", "fast", "balanced", "quality"],
@@ -45,7 +45,7 @@ test("public task schema publishes the complete closed enum contract", () => {
 
 test("public contract documents every supported operation without exposing internals", () => {
   const visible = JSON.stringify({ description: plugin.description, schema });
-  for (const term of ["generate", "transform", "upscale", "current_attachment", "previous_artifact", "identity", "subject", "coloring-page", "photorealism", "fast", "balanced", "quality", "16:9", "portrait"]) assert.match(visible, new RegExp(term.replace(":", "\\:"), "i"));
+  for (const term of ["generate", "transform", "upscale", "colorize", "current_attachment", "previous_artifact", "identity", "subject", "coloring-page", "photorealism", "fast", "balanced", "quality", "16:9", "portrait"]) assert.match(visible, new RegExp(term.replace(":", "\\:"), "i"));
   for (const hidden of ["lease_token", "model_sha256", "checkpoint", "sampler", "scheduler", "CFG", "steps", "workflow_id", "contract_sha256"]) assert.doesNotMatch(visible, new RegExp(hidden, "i"));
 });
 
@@ -217,7 +217,7 @@ test("execution adapter rejects unknown, missing, and invalid fields before the 
 });
 
 test("canonical schema structurally requires prompt for every governed operation", () => {
-  for (const operation of ["generate", "transform", "upscale"]) {
+  for (const operation of ["generate", "transform", "upscale", "colorize"]) {
     const validation = validatePublicArguments(schema, {
       operation,
       source_policy: operation === "generate" ? "auto" : "previous_artifact",

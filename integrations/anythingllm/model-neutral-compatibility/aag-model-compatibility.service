@@ -4,7 +4,7 @@ After=network.target docker.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/integrations/model-neutral-compatibility/server.py
+ExecStart=/usr/bin/python3 /mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/releases/approved/current/runtime/image-agent/integrations/model-neutral-compatibility/server.py
 Restart=on-failure
 RestartSec=2
 NoNewPrivileges=true
@@ -25,6 +25,11 @@ Environment=AAG_COMPAT_STORAGE=/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-n
 Environment=AAG_COMPAT_TOKEN_FILE=/mnt/data/AI/Apps/AnythingLLM/storage/aag-model-neutral-compatibility/proxy.token
 Environment=AAG_ANYTHINGLLM_DB=/mnt/data/AI/Apps/AnythingLLM/storage/anythingllm.db
 Environment=AAG_ANYTHINGLLM_API=http://127.0.0.1:3000/api
+
+
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=AAG_IMAGE_PROJECT_ROOT=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System
+Environment=AAG_VISUAL_ATLAS_ROOT=/mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/visual-atlas
 
 [Install]
 WantedBy=default.target

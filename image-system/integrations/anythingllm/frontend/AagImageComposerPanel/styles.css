@@ -33,19 +33,13 @@
 }
 
 .aag-composer-identity span {
-  color: #8af0c5;
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.aag-composer-identity small {
-  margin-top: 4px;
   color: #a1a1aa;
-  font-size: 0.68rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-.light .aag-composer-identity small { color: #64748b; }
+.light .aag-composer-identity span { color: #64748b; }
 
 .aag-composer-language {
   display: inline-flex;
@@ -639,14 +633,23 @@
 
 .aag-composer-field.wide { margin-top: 12px; }
 
-.aag-composer-field em {
+.aag-composer-field em.aag-field-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
   margin-left: 4px;
+  border-radius: 50%;
+  border: 1px solid #8cbcff;
   color: #8cbcff;
-  font-size: 0.57rem;
+  font-size: 0.6rem;
   font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: help;
 }
 
 .aag-composer-field small {
@@ -962,6 +965,10 @@
 
 /* Backend lifecycle state; no persisted UI power state. */
 .aag-lifecycle {position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.35rem .65rem;border-bottom:1px solid #63708055;font-size:.82rem;}
+.aag-lifecycle-state {font-size:.72rem;color:#a1a1aa;padding:.05rem .45rem;border-radius:999px;border:1px solid #3f3f46;}
+.light .aag-lifecycle-state {color:#64748b;border-color:#cbd5e1;}
+.aag-lifecycle[data-state="READY"] .aag-lifecycle-state {color:#4ade80;border-color:#4ade8066;}
+.aag-lifecycle[data-state="ERROR"] .aag-lifecycle-state {color:#f87171;border-color:#f8717166;}
 .aag-lifecycle-light {width:.6rem;height:.6rem;flex-shrink:0;border-radius:50%;background:#94a3b8;box-shadow:0 0 0 2px #94a3b822;}
 .aag-lifecycle[data-state="READY"] .aag-lifecycle-light {background:#4ade80;box-shadow:0 0 0 2px #4ade8022;}
 .aag-lifecycle[data-state="STARTING"] .aag-lifecycle-light {background:#facc15;animation:aag-lifecycle-pulse 1.4s ease-in-out infinite;}

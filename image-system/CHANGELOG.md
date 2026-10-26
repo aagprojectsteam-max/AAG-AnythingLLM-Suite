@@ -1,5 +1,28 @@
 # Changelog
 
+# 0.9.0-preview.13 (2026-10-26 maintenance + colorize)
+
+- Added the structural scaffold: the workspace LLM authors a strict-subset
+  SVG line drawing for requests with exact counts/symmetry/layout; the engine
+  restyles it through the reference path, so structure is exact. See
+  `docs/STRUCTURAL-SCAFFOLD.md`.
+- Added the `colorize` operation (DDColor on the local ComfyUI/XPU engine):
+  black-and-white restoration with preserved dimensions, no engine prompt,
+  fast/quality model tiers, Composer operation entry, closed-contract tests.
+  See `docs/COLORIZE.md`.
+- Engine endpoints moved to `src/endpoints.js` (ENV-overridable, validated
+  private http URLs); no hard-coded Docker gateway addresses in runtime code.
+- Compatibility proxy: unified 32 MiB request limit on `/v1/*` (closes the
+  historical HTTP 413 on vision payloads), configurable upstream timeout,
+  size-based rotation of `audit.ndjson`.
+- Composer UI: single-line header, info glyph instead of repeated
+  "MODEL GUIDANCE", shorter helper texts, visible engine state chip, primary
+  Download action, correct RTL ellipsis on thread titles.
+- Removed the duplicated inline Atlas prompt-disclosure script from the
+  panel bundle (it was loaded twice in production with the standalone file).
+- `aag-llama-control`: per-model tuning moved to `aag-llama-model-overrides.json`
+  so the launcher logic stays model-neutral (release gate requirement).
+
 # 0.9.0-preview.13
 
 - Fixed Production Visual Atlas thumbnails and large previews by replacing

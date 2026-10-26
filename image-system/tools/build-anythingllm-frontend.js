@@ -334,12 +334,17 @@ try {
   fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagComposerLayout.js"), layoutSource.replace("module.exports =", "export"));
   require("./patch-composer-dock").patchComposerDock(checkout);
   require("./patch-chat-presentation").patchChatPresentation(checkout);
+  const draftStore = fs.readFileSync(path.join(overlay, "aagComposerDraftStore.js"), "utf8");
+  fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagComposerDraftStore.js"), draftStore.replace("module.exports =", "export"));
+  require("./patch-new-thread-composer").patchNewThreadComposer(checkout);
   const liveSource = fs.readFileSync(path.join(overlay, "aagLiveArtifacts.js"), "utf8");
   fs.writeFileSync(path.join(checkout, "frontend/src/utils/aagLiveArtifacts.js"), liveSource.replace(
     "module.exports = { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };",
     "export { ARTIFACT_PRESENTED_EVENT, hasImageOutputs, hasMessageContent, mergeImageMessage, presentationProgress };"));
   const agentPath = path.join(checkout, "frontend/src/utils/chat/agent.js");
   fs.writeFileSync(agentPath, require("./patch-live-artifacts").patchLiveArtifacts(fs.readFileSync(agentPath, "utf8")));
+
+  require("./patch-token-usage").patchTokenUsage(checkout, overlay);
 
   // Release engineering can materialize the two deterministic stock-file
   // transformations without installing frontend dependencies or building a
@@ -396,6 +401,8 @@ try {
       "DnDWrapper/index.jsx (bounded message region)",
       "aagComposerLayout.js",
       "useAagComposerDraft.js",
+      "aagComposerDraftStore.js",
+      "pages/Main/Home/index.jsx (empty-thread layout and once-only Composer handoff)",
       "hooks/usePromptInputStorage.js (displayed stable scope)",
       "AagSidebarResize.jsx",
       "aagSidebar.css",
