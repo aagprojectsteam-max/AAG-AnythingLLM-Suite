@@ -965,6 +965,13 @@
 
 /* Backend lifecycle state; no persisted UI power state. */
 .aag-lifecycle {position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.35rem .65rem;border-bottom:1px solid #63708055;font-size:.82rem;}
+.aag-lifecycle-release {font-size:.72rem;padding:.1rem .55rem;border-radius:999px;border:1px solid #3f3f46;background:transparent;color:#d4d4d8;cursor:pointer;}
+.aag-lifecycle-release:hover:not(:disabled) {border-color:#4ade80;color:#4ade80;}
+.aag-lifecycle-release:disabled {opacity:.45;cursor:not-allowed;}
+.light .aag-lifecycle-release {border-color:#cbd5e1;color:#334155;}
+.aag-lifecycle-release-report {font-size:.7rem;color:#a1a1aa;max-width:14rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.light .aag-lifecycle-release-report {color:#64748b;}
+.aag-lifecycle[data-state="RELEASING"] .aag-lifecycle-light {background:#facc15;box-shadow:0 0 0 3px #facc1533;}
 .aag-lifecycle-state {font-size:.72rem;color:#a1a1aa;padding:.05rem .45rem;border-radius:999px;border:1px solid #3f3f46;}
 .light .aag-lifecycle-state {color:#64748b;border-color:#cbd5e1;}
 .aag-lifecycle[data-state="READY"] .aag-lifecycle-state {color:#4ade80;border-color:#4ade8066;}

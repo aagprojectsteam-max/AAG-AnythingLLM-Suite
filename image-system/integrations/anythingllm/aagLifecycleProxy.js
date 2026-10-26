@@ -16,7 +16,7 @@ function exchange(socketPath, path, method, headers = {}, body = null) {
 function lifecycleProxy({composerSocket, sessionCookie, csrf, transport = exchange}) {
   return async function route(request, response, action) {
     response.setHeader('Cache-Control', 'no-store');
-    if (!['status','start','stop'].includes(action) || request.method !== (action === 'status' ? 'GET' : 'POST')) return response.status(404).json({error:{code:'INVALID_ACTION'}});
+    if (!['status','start','stop','release'].includes(action) || request.method !== (action === 'status' ? 'GET' : 'POST')) return response.status(404).json({error:{code:'INVALID_ACTION'}});
     if (Object.keys(request.query || {}).length || (action !== 'status' && (request.body === null || Array.isArray(request.body) || typeof request.body !== 'object' || Object.keys(request.body).length))) return response.status(400).json({error:{code:'ARGUMENTS_FORBIDDEN',message:'Lifecycle actions accept no arguments.'}});
     try {
       if (action !== 'status') {

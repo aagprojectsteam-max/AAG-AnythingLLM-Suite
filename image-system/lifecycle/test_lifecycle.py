@@ -55,16 +55,19 @@ class LifecycleTests(unittest.TestCase):
   serialized=json.dumps(calls)
   for shared in l.SHARED:self.assertNotIn(shared,[arg for call in calls for arg in call])
   self.assertNotIn('kill',serialized);self.assertNotIn('shell',serialized)
- def test_queue_and_lease_guards_fail_closed(self):
+ def test_only_unowned_reference_identity_work_blocks_stop(self):
+  # Policy since 2026-10-26: owned engine work (ComfyUI queue, scheduler lease) is drained by
+  # the stop itself; only reference-identity work in separate worker units can block it.
   h=l.Host();h.units=lambda user,names:{name:'inactive' for name in names}
   with patch.object(l,'STORAGE',Path(self.tmp.name)),patch.object(l,'get',return_value={'queue_running':[],'queue_pending':[],'busy':False}):
    h.busy()
    lease=Path(self.tmp.name)/'aag-image-agent-state/scheduler/lease';lease.mkdir(parents=True)
-   with self.assertRaises(l.Failure):h.busy()
+   h.busy()
    lease.rmdir();inbox=Path(self.tmp.name)/'aag-human-identity-state/inbox';inbox.mkdir(parents=True);(inbox/'queued.json').write_text('{}')
-   with self.assertRaises(l.Failure):h.busy()
- def test_missing_idle_telemetry_blocks_stop(self):
-  h=l.Host();h.units=lambda user,names:{name:'active' if name==l.USER_UNITS['comfy'] else 'inactive' for name in names}
+   with self.assertRaises(l.Failure) as error:h.busy()
+  self.assertEqual(error.exception.code,'IMAGE_WORK_QUEUED')
+ def test_unverifiable_reference_worker_blocks_stop(self):
+  h=l.Host();h.units=lambda user,names:{name:'unavailable' for name in names}
   with patch.object(l,'STORAGE',Path(self.tmp.name)),patch.object(l,'get',return_value=None):
    with self.assertRaises(l.Failure) as error:h.busy()
   self.assertEqual(error.exception.code,'QUEUE_STATUS_UNAVAILABLE')

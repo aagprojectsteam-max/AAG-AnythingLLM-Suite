@@ -2263,7 +2263,7 @@ function LifecycleControl({ api, request, language, composerEnabled }) {
         if (active && generation === epoch.current) setValue({state:"ERROR",error:{component:"control",message:language === "he" ? "בקרת השירות אינה זמינה. אפשר לנסות שוב." : "Lifecycle control is unavailable. Retry shortly.",retryable:true}});
       } finally {
         inFlight = false; window.clearTimeout(abortTimer);
-        if (active) { window.clearTimeout(timer); timer = window.setTimeout(poll, ["STARTING","STOPPING"].includes(next?.state) ? 1000 : 5000); }
+        if (active) { window.clearTimeout(timer); timer = window.setTimeout(poll, ["STARTING","STOPPING","RELEASING"].includes(next?.state) ? 1000 : 5000); }
       }
     }
     refreshRef.current = () => { window.clearTimeout(timer); poll(); };
@@ -2272,13 +2272,14 @@ function LifecycleControl({ api, request, language, composerEnabled }) {
     return () => { active = false; alive.current = false; epoch.current += 1; controller?.abort(); actionAbort.current?.abort(); window.clearTimeout(timer); window.clearTimeout(abortTimer); window.removeEventListener("focus",wake); document.removeEventListener("visibilitychange",wake); };
   }, [api, language]);
   async function change(action) {
-    if (locked.current || ["STARTING","STOPPING"].includes(value.state)) return;
+    if (locked.current || ["STARTING","STOPPING","RELEASING"].includes(value.state)) return;
     locked.current = true; epoch.current += 1; setPending(true);
-    setValue({state:action === "start" ? "STARTING" : "STOPPING"});
+    setValue({state:action === "start" ? "STARTING" : action === "release" ? "RELEASING" : "STOPPING"});
     const controller = new AbortController(); actionAbort.current = controller;
     let deadline;
     try {
-      const timeout = new Promise((_, reject) => { deadline = window.setTimeout(() => { controller.abort(); reject(new Error("Lifecycle request timed out")); }, 20000); });
+      // Release may restart the owned engine session; it reports 202 and the poller follows the transition.
+      const timeout = new Promise((_, reject) => { deadline = window.setTimeout(() => { controller.abort(); reject(new Error("Lifecycle request timed out")); }, action === "release" ? 30000 : 20000); });
       const actual = await Promise.race([requestRef.current("lifecycle/"+action, {}, controller.signal), timeout]);
       if (alive.current) setValue(actual);
     }
@@ -2286,15 +2287,29 @@ function LifecycleControl({ api, request, language, composerEnabled }) {
     finally { window.clearTimeout(deadline); actionAbort.current = null; locked.current = false; if (alive.current) {setPending(false); refreshRef.current?.();} }
   }
   const labels = language === "he"
-    ? {UNKNOWN:"בודק מצב…",OFF:"כבוי.",STARTING:"מפעיל…",READY:"מוכן. כל הרכיבים הנדרשים תקינים.",STOPPING:"מכבה…",ERROR:"תקלה."}
-    : {UNKNOWN:"Checking…",OFF:"Off.",STARTING:"Starting…",READY:"Ready. All required components are healthy.",STOPPING:"Stopping…",ERROR:"Error."};
-  const transitioning = pending || ["UNKNOWN","STARTING","STOPPING"].includes(value.state);
-  const on = value.state === "READY" || value.state === "STOPPING";
+    ? {UNKNOWN:"בודק מצב…",OFF:"כבוי.",STARTING:"מפעיל…",READY:"מוכן. כל הרכיבים הנדרשים תקינים.",STOPPING:"מכבה…",RELEASING:"משחרר…",ERROR:"תקלה."}
+    : {UNKNOWN:"Checking…",OFF:"Off.",STARTING:"Starting…",READY:"Ready. All required components are healthy.",STOPPING:"Stopping…",RELEASING:"Releasing…",ERROR:"Error."};
+  const transitioning = pending || ["UNKNOWN","STARTING","STOPPING","RELEASING"].includes(value.state);
+  const on = value.state === "READY" || value.state === "STOPPING" || value.state === "RELEASING";
+  const release = value.last_release;
+  const releaseText = release
+    ? (language === "he"
+      ? `שוחרר${release.restarted ? " (המנוע הופעל מחדש)" : ""}: ${release.freed_mb != null ? (release.freed_mb >= 0 ? "+" : "") + (release.freed_mb / 1024).toFixed(1) + " GB זמינים" : ""} ב-${release.seconds} שניות`
+      : `Released${release.restarted ? " (engine restarted)" : ""}: ${release.freed_mb != null ? (release.freed_mb >= 0 ? "+" : "") + (release.freed_mb / 1024).toFixed(1) + " GB available" : ""} in ${release.seconds}s`)
+    : "";
+  const canRelease = !transitioning && ["READY","ERROR"].includes(value.state);
   const statusText = `AAG Image System — ${labels[value.state] || labels.UNKNOWN}${value.error?.message ? " " + value.error.message : ""}`;
   return <div className="aag-lifecycle" data-testid="aag-lifecycle" data-state={value.state}>
     <span className="aag-lifecycle-light" aria-hidden="true" />
     <strong>AAG Image System</strong>
     <span className="aag-lifecycle-state" aria-hidden="true">{(labels[value.state] || labels.UNKNOWN).split(".")[0]}</span>
+    <button type="button" className="aag-lifecycle-release" data-testid="aag-lifecycle-release" disabled={!canRelease}
+      onClick={() => change("release")}
+      title={language === "he" ? "שחרור זיכרון ותהליכים תקועים של מנוע התמונות. המנוע נשאר מוכן; אם יש עבודה תקועה הוא יופעל מחדש." : "Free engine memory and stuck image work. The engine stays ready; stuck work triggers an owned restart."}
+      aria-label={language === "he" ? "שחרר זיכרון ותהליכים" : "Release memory and processes"}>
+      {language === "he" ? "שחרר" : "Release"}
+    </button>
+    {releaseText && <span className="aag-lifecycle-release-report" data-testid="aag-lifecycle-release-report" title={releaseText}>{releaseText}</span>}
     <span className="aag-composer-passive-status" dir="ltr" data-testid="aag-image-composer-status" role="status" aria-live="polite"
       aria-label={language === "he" ? `Image Composer ${composerEnabled ? "פעיל" : "כבוי"}.` : `Image Composer is ${composerEnabled ? "on" : "off"}.`}>
       Image Composer: {composerEnabled ? "ON" : "OFF"}

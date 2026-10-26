@@ -267,6 +267,7 @@ function aagComposerProxyEndpoints(app) {
   app.get('/aag-composer/:slug/lifecycle/status', guards, (req, res) => lifecycle(req, res, 'status'));
   app.post('/aag-composer/:slug/lifecycle/start', guards, (req, res) => lifecycle(req, res, 'start'));
   app.post('/aag-composer/:slug/lifecycle/stop', guards, (req, res) => lifecycle(req, res, 'stop'));
+  app.post('/aag-composer/:slug/lifecycle/release', guards, (req, res) => lifecycle(req, res, 'release'));
   startImageReconciler({
     logger: (message) => console.log(message),
   });

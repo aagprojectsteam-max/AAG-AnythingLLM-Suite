@@ -64,7 +64,7 @@ def create():
    if p.suffix not in ('.py','.json','.tsv','.html','.js','.css'):continue
    copy(p,'runtime/image-agent/'+str(p.relative_to(A)))
  for name in ['lifecycle.py','artifact_files.py','release_gate.py','release_closure.py']:copy(A/'lifecycle'/name,'control/'+name,P/'image-agent/releases/runtime-control'/name,0o600)
- for action in ['start','stop','status']:copy(A/'integrations/launchers'/('aag-image-'+action),'control/aag-image-'+action,P/'bin'/('aag-image-'+action),0o755)
+ for action in ['start','stop','status','release']:copy(A/'integrations/launchers'/('aag-image-'+action),'control/aag-image-'+action,P/'bin'/('aag-image-'+action),0o755)
  for unit,source in [('aag-model-compatibility.service',A/'integrations/model-neutral-compatibility/aag-model-compatibility.service'),('aag-image-lifecycle.service',A/'lifecycle/aag-image-lifecycle.service')]:copy(source,'units/'+unit,Path.home()/'.config/systemd/user'/unit,0o644)
  # Fixed helpers/units are executable runtime dependencies; source edits must not silently change them.
  helpers=['bin/aag-ai-start','bin/aag-reference-status','bin/aag-upscale-start','bin/aag-upscale-stop','libexec/aag-image-hub-control','libexec/aag-upscale-control']

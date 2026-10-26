@@ -36,3 +36,14 @@ test('compact lifecycle row has accessible switch, hidden status, focus tooltip 
  const css=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/frontend/AagImageComposerPanel/styles.css'),'utf8');
  for(const t of ['[data-state="READY"]','[data-state="STARTING"]','[data-state="STOPPING"]','[data-state="ERROR"]','[dir="rtl"]','.aag-lifecycle button:focus-visible','prefers-reduced-motion','background:#94a3b8'])assert.ok(css.includes(t),t);
 });
+
+test('release is a fixed CSRF-guarded control action wired through proxy, routes, launcher and panel',async()=>{
+  const h=harness(),r=response();await h.route(request(),r,'release');assert.equal(r.code,200);assert.deepEqual(h.calls.map(c=>c[1]),['/composer/authorize','/release']);
+  const denied=harness(false),d=response();await denied.route(request(),d,'release');assert.equal(d.code,403);assert.equal(denied.calls.length,0);
+  const proxy=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/aagComposerProxy.js'),'utf8');assert.ok(proxy.includes("lifecycle/release', guards"));
+  const launcher=fs.readFileSync(path.join(__dirname,'../integrations/launchers/aag-image-release'),'utf8');assert.ok(launcher.includes('lifecycle.py release')&&launcher.includes('accepts no arguments'));
+  const panel=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx'),'utf8');
+  for(const t of ['data-testid="aag-lifecycle-release"','change("release")','RELEASING','aag-lifecycle-release-report'])assert.ok(panel.includes(t),t);
+  const py=fs.readFileSync(path.join(__dirname,'../lifecycle/lifecycle.py'),'utf8');
+  for(const t of ["'/release'","def host_release","8188/free","8188/interrupt","'RELEASING'","last_release","ENGINE_OFF"])assert.ok(py.includes(t),t);
+});

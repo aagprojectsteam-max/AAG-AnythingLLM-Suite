@@ -187,6 +187,7 @@ const sourcePaths = [
   "tools/build.js", "tools/governed-update.js", "tools/build-anythingllm-frontend.js", "tools/doctor.js", "tools/atlas-token-accounting.js", "tools/atlas-integrity-evidence.js", "tools/atlas-final-evidence.js", "tools/atlas-browser-acceptance.py", "tools/atlas-endpoint-regression.js", "tools/visual-atlas-product.js", "tools/atlas-live-acceptance.js", "tools/candidate-e2e.js", "tools/dynamic-identity-live-acceptance.js", "tools/scene-identity-live-acceptance.js", "tools/quality-semantics-live.js", "tools/multi-image-registration-audit.js", "tools/multi-image-provider-validation.js",
   "ordinary-generation/config/ORDINARY-RECIPE.json",
   "integrations/launchers/aag-image-start",
+  "integrations/launchers/aag-image-release",
   "integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
   "integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
   "integrations/anythingllm/frontend/AagImageCollection.jsx",

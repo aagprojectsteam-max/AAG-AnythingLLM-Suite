@@ -2,6 +2,12 @@
 
 # 0.9.0-preview.13 (2026-10-26 maintenance + colorize)
 
+- Lifecycle stop now drains owned engine work (interrupt, clear pending, bounded
+  wait) instead of refusing with IMAGE_WORK_ACTIVE; only unowned reference-identity
+  work can still block a stop. The drain outcome is recorded as `last_stop`.
+- Lifecycle `release` action and Composer "Release" button: ComfyUI interrupt +
+  model unload/free; stuck work escalates to an owned ComfyUI session restart;
+  the panel reports freed memory and whether a restart was needed.
 - Added the structural scaffold: the workspace LLM authors a strict-subset
   SVG line drawing for requests with exact counts/symmetry/layout; the engine
   restyles it through the reference path, so structure is exact. See

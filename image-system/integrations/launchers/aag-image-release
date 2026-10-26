@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+if [[ $# -ne 0 ]]; then echo "This command accepts no arguments." >&2; exit 2; fi
+exec /usr/bin/python3 -I /mnt/data/AI/Apps/AnythingLLM/AAG-Image-System/image-agent/releases/runtime-control/lifecycle.py release

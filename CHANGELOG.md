@@ -1,5 +1,10 @@
 # Changelog
 
+## Production 20261026T164226Z — 2026-10-26
+
+- Lifecycle stop drains owned engine work (interrupt, clear pending, bounded wait) instead of refusing with IMAGE_WORK_ACTIVE; only unowned reference-identity work can block a stop.
+- Lifecycle `release` action and Composer "Release" button: ComfyUI interrupt + model unload/free; stuck work escalates to an owned ComfyUI session restart; the panel reports freed memory.
+
 ## Production 20261026T123451Z — 2026-10-26
 
 - Structural scaffold: the workspace LLM authors a strict-subset SVG line drawing for requests with exact counts, symmetry or layout; the agent validates, re-emits and rasterizes it and the engine restyles it through the reference path (exact structure, e.g. a nine-candle hanukkiah). See `image-system/docs/STRUCTURAL-SCAFFOLD.md`.

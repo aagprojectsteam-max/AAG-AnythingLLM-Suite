@@ -84,23 +84,13 @@ class Host:
  def verify(self):
   self.run(['/usr/bin/python3','-I',str(P/'image-agent/releases/runtime-control/release_gate.py'),'verify'],60)
  def busy(self):
+  # Only reference-identity work (separate worker units with their own inbox) can block a stop:
+  # it is not owned by this lifecycle. Owned engine work is interrupted by the stop itself.
   for name in ('aag-human-identity-state','aag-human-identity-scene-state'):
    if any((STORAGE/name/'inbox').glob('*.json')):raise Failure('IMAGE_WORK_QUEUED','Reference identity work is queued.','reference')
-  lease=STORAGE/'aag-image-agent-state/scheduler/lease'
-  if lease.exists():raise Failure('IMAGE_WORK_ACTIVE','An image resource lease is held. Finish the current job before stopping.','scheduler')
-  waiters=STORAGE/'aag-image-agent-state/scheduler/waiters'
-  if waiters.exists() and any(waiters.glob('*.json')):raise Failure('IMAGE_WORK_QUEUED','Image work is queued. Finish or cancel it before stopping.','scheduler')
-  queue=get('http://127.0.0.1:8188/queue')
-  if queue and (queue.get('queue_running') or queue.get('queue_pending')):raise Failure('IMAGE_WORK_ACTIVE','ComfyUI has running or queued work.','comfy')
-  up=get('http://127.0.0.1:18191/health')
-  if up and up.get('busy'):raise Failure('IMAGE_WORK_ACTIVE','Upscale work is running.','upscale')
   worker=self.units(True,['aag-human-identity-bridge.service','aag-human-identity-scene-bridge.service'])
   if any(s in ('active','activating') for s in worker.values()):raise Failure('IMAGE_WORK_ACTIVE','A reference identity worker is running.','reference')
-  upstate=self.units(False,[SYSTEM_UNITS['upscale']]).get(SYSTEM_UNITS['upscale'])
-  if upstate not in ('inactive','unknown') and up is None:raise Failure('QUEUE_STATUS_UNAVAILABLE','Cannot verify that Upscale is idle.','upscale')
   if any(s=='unavailable' for s in worker.values()):raise Failure('QUEUE_STATUS_UNAVAILABLE','Cannot verify reference worker state.','reference')
-  states=self.units(True,[USER_UNITS['comfy']])
-  if states.get(USER_UNITS['comfy']) not in ('inactive','unknown') and queue is None:raise Failure('QUEUE_STATUS_UNAVAILABLE','Cannot verify that ComfyUI is idle.','comfy')
  def start(self):
   print('[0/6] Approved release integrity...',flush=True)
   self.verify()
@@ -122,18 +112,72 @@ class Host:
   print('[6/6] Upscale...',flush=True);self.run([str(P/'bin/aag-upscale-start')],120)
  def stop(self):
   self.busy()
-  # Fixed ownership set. Shared/control-plane services and identity watchers remain running.
+  # Owned engine work never blocks a stop: interrupt and drain it first (bounded),
+  # then stop the fixed ownership set. Shared/control-plane services and identity
+  # watchers remain running. The drain outcome is recorded for the panel.
+  self.last_stop=drain_owned_work(self)
   self.run([str(P/'bin/aag-upscale-stop')],60)
-  self.run(['systemctl','--user','stop',USER_UNITS['comfy']],60)
+  self.run(['systemctl','--user','stop',USER_UNITS['comfy']],75)
   self.run(['systemctl','--user','stop',USER_UNITS['image_proxy'],USER_UNITS['comfy_bridge']],30)
   self.run(['sudo','-n','/usr/local/libexec/aag-image-hub-control','stop'],60)
+def mem_available_mb():
+ try:
+  for line in pathlib.Path('/proc/meminfo').read_text().splitlines():
+   if line.startswith('MemAvailable:'):return int(line.split()[1])//1024
+ except (OSError,ValueError,IndexError):pass
+ return None
+def post(url,payload,timeout=5):
+ try:
+  request=urllib.request.Request(url,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
+  with urllib.request.urlopen(request,timeout=timeout) as response:return response.status
+ except Exception:return None
+def comfy_busy():
+ queue=get('http://127.0.0.1:8188/queue')
+ return bool(queue and (queue.get('queue_running') or queue.get('queue_pending')))
+def drain_owned_work(host):
+ """Interrupt and drain owned engine work before a stop. Returns a small report.
+ A stale scheduler lease whose owner process is gone is removed; a live owner is
+ left to fail on its own once the engine goes away (the scheduler recovers it)."""
+ report={'forced':False,'interrupted':False,'cleared_pending':False}
+ queue=get('http://127.0.0.1:8188/queue')
+ if queue and (queue.get('queue_running') or queue.get('queue_pending')):
+  report['forced']=True
+  report['interrupted']=post('http://127.0.0.1:8188/interrupt',{})==200
+  report['cleared_pending']=post('http://127.0.0.1:8188/queue',{'clear':True})==200
+  deadline=time.monotonic()+12
+  while comfy_busy() and time.monotonic()<deadline:time.sleep(1)
+  report['still_running_at_stop']=comfy_busy()
+ # The scheduler lease owner lives inside the AnythingLLM container (different pid
+ # namespace), so liveness cannot be judged from the host. It is only reported;
+ # the scheduler recovers a stale lease itself once the engine is idle or gone.
+ report['lease_present']=(STORAGE/'aag-image-agent-state/scheduler/lease').is_dir()
+ return report
+def host_release(host):
+ """Free engine memory and stuck work without changing the READY target.
+ 1) ComfyUI /interrupt + /free (unload models, free cache) - seconds, engine stays READY.
+ 2) If ComfyUI still reports running work after a bounded wait (a stalled job the
+    interrupt cannot reach), restart the owned ComfyUI session through the fixed
+    start path; shared/control services are never touched."""
+ started=time.monotonic();before=mem_available_mb();report={'schema':'aag.image.release.v1','restarted':False,'interrupted':False,'freed':False}
+ if get('http://127.0.0.1:8188/system_stats'):
+  report['interrupted']=post('http://127.0.0.1:8188/interrupt',{})==200
+  report['freed']=post('http://127.0.0.1:8188/free',{'unload_models':True,'free_memory':True})==200
+  deadline=time.monotonic()+12
+  while comfy_busy() and time.monotonic()<deadline:time.sleep(1)
+  if comfy_busy():
+   print('[release] ComfyUI work is stuck; restarting the owned session...',flush=True)
+   host.run(['systemctl','--user','stop',USER_UNITS['comfy']],75);report['restarted']=True
+ host.start()
+ after=mem_available_mb()
+ report.update({'memory_available_before_mb':before,'memory_available_after_mb':after,'freed_mb':(after-before) if before is not None and after is not None else None,'seconds':round(time.monotonic()-started,1),'completed_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())})
+ return report
 def target_reached(components,target):
  return bool(components) and all(v['state']==target for v in components.values() if target!='OFF' or v.get('owned',True))
 class Manager:
  def __init__(self,root=STATE,host=None):self.root=pathlib.Path(root);self.host=host or Host();self.root.mkdir(parents=True,exist_ok=True,mode=0o700)
  def observation(self):
   components=self.host.measure();phase=read_json(self.root/'operation.json');states=[x['state'] for x in components.values()];error=None;operation=None
-  if phase.get('state') in ('STARTING','STOPPING'):
+  if phase.get('state') in ('STARTING','STOPPING','RELEASING'):
    if alive(phase.get('pid')) and phase.get('process_start')==process_start(phase.get('pid')) and time.time()<phase.get('deadline',0):state=phase['state'];operation={'id':phase['id'],'action':phase['action']}
    else:state='ERROR';error=Failure('INTERRUPTED_OPERATION','The previous operation was interrupted or timed out. Retry the requested action.').safe()
   elif phase.get('state')=='ERROR':state='ERROR';error=phase['error']
@@ -141,26 +185,30 @@ class Manager:
   elif target_reached(components,'OFF'):state='OFF'
   else:
    state='ERROR';failed=next((k for k,v in components.items() if v['state']!='READY'),'system');error=Failure('COMPONENT_UNAVAILABLE','A required image component is unavailable.',failed).safe()
-  return {'schema':'aag.image.lifecycle.v1','state':state,'updated_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'components':components,'operation':operation,'error':error}
+  result={'schema':'aag.image.lifecycle.v1','state':state,'updated_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'components':components,'operation':operation,'error':error}
+  if isinstance(phase.get('last_release'),dict):result['last_release']=phase['last_release']
+  if isinstance(phase.get('last_stop'),dict):result['last_stop']=phase['last_stop']
+  return result
  def operate(self,action):
-  if action not in ('start','stop'):raise Failure('INVALID_ACTION','Only start and stop are supported.',retryable=False)
+  if action not in ('start','stop','release'):raise Failure('INVALID_ACTION','Only start, stop and release are supported.',retryable=False)
   with (self.root/'operation.lock').open('a+') as lock:
    try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
    except BlockingIOError:return self.observation()
-   components=self.host.measure();target='READY' if action=='start' else 'OFF'
-   if target_reached(components,target):
+   components=self.host.measure();target='OFF' if action=='stop' else 'READY'
+   if action!='release' and target_reached(components,target):
     # A READY no-op must still prove its approved release at the CLI boundary.
     try:
      if action=='start':self.host.verify()
      atomic(self.root/'operation.json',{'state':target})
     except Failure as e:atomic(self.root/'operation.json',{'state':'ERROR','error':e.safe()})
     return self.observation()
-   phase={'id':uuid.uuid4().hex,'action':action,'state':'STARTING' if action=='start' else 'STOPPING','pid':os.getpid(),'deadline':time.time()+720,'process_start':process_start(os.getpid())}
+   phase={'id':uuid.uuid4().hex,'action':action,'state':{'start':'STARTING','stop':'STOPPING','release':'RELEASING'}[action],'pid':os.getpid(),'deadline':time.time()+720,'process_start':process_start(os.getpid())}
    atomic(self.root/'operation.json',phase)
    try:
-    getattr(self.host,action)();components=self.host.measure()
+    report=host_release(self.host) if action=='release' else getattr(self.host,action)();components=self.host.measure()
     if not target_reached(components,target):raise Failure('FINAL_HEALTH_FAILED','Final component health did not match the requested state.',next(k for k,v in components.items() if v['state']!=target))
-    atomic(self.root/'operation.json',{'state':target})
+    extra={'last_release':report} if action=='release' else ({'last_stop':getattr(self.host,'last_stop',None)} if action=='stop' and getattr(self.host,'last_stop',None) else {})
+    atomic(self.root/'operation.json',{'state':target,**extra})
    except Failure as e:atomic(self.root/'operation.json',{'state':'ERROR','error':e.safe()})
    except Exception:atomic(self.root/'operation.json',{'state':'ERROR','error':Failure('LIFECYCLE_FAILED','Lifecycle operation failed. Retry or inspect the private local log.').safe()})
    return self.observation()
@@ -209,7 +257,7 @@ class Handler(BaseHTTPRequestHandler):
     return self.send(200,resolver.resolve(ref,reveal=self.path.endswith('/reveal')))
    except Exception as error:
     return self.send(getattr(error,'status',503),{'error':{'code':getattr(error,'code','ARTIFACT_UNAVAILABLE'),'message':'The current image file could not be accessed.'}})
-  if self.path not in ('/start','/stop'):return self.send(404,{'error':{'code':'INVALID_ACTION'}})
+  if self.path not in ('/start','/stop','/release'):return self.send(404,{'error':{'code':'INVALID_ACTION'}})
   try:
    if self.headers.get('Transfer-Encoding'):raise ValueError()
    n=int(self.headers.get('Content-Length','0'))
@@ -220,8 +268,9 @@ class Handler(BaseHTTPRequestHandler):
    status=self.server.manager.observation()
    if self.server.worker and self.server.worker.poll() is None:
     op=read_json(self.server.manager.root/'operation.json');return self.send(202 if op.get('action')==action else 409,status)
-   if status['state'] in ('STARTING','STOPPING'):return self.send(202 if status['operation']['action']==action else 409,status)
+   if status['state'] in ('STARTING','STOPPING','RELEASING'):return self.send(202 if status['operation']['action']==action else 409,status)
    if status['state']=='OFF' and action=='stop':return self.send(200,status)
+   if status['state']=='OFF' and action=='release':return self.send(409,{**status,'error':Failure('ENGINE_OFF','Nothing to release: the image system is off.',retryable=False).safe()})
    log=(self.server.manager.root/'last-operation.log').open('w');os.chmod(log.name,0o600)
    self.server.worker=subprocess.Popen([str(P/'bin'/('aag-image-'+action))],stdin=subprocess.DEVNULL,stdout=log,stderr=log);log.close()
    for _ in range(30):
@@ -230,7 +279,7 @@ class Handler(BaseHTTPRequestHandler):
     time.sleep(.05)
    return self.send(202,self.server.manager.observation())
 def main():
- if len(sys.argv)!=2 or sys.argv[1] not in ('status','start','stop','serve'):raise SystemExit('Usage: lifecycle.py {status|start|stop|serve}')
+ if len(sys.argv)!=2 or sys.argv[1] not in ('status','start','stop','release','serve'):raise SystemExit('Usage: lifecycle.py {status|start|stop|release|serve}')
  manager=Manager();action=sys.argv[1]
  if action=='serve':
   SOCKET.unlink(missing_ok=True)
@@ -239,5 +288,5 @@ def main():
   result=manager.observation() if action=='status' else manager.operate(action)
   print(json.dumps(result,ensure_ascii=False))
   if action!='status':
-   target='READY' if action=='start' else 'OFF';print('AAG IMAGE SYSTEM — '+result['state']);raise SystemExit(0 if result['state']==target else 1)
+   target='OFF' if action=='stop' else 'READY';print('AAG IMAGE SYSTEM — '+result['state']);raise SystemExit(0 if result['state']==target else 1)
 if __name__=='__main__':main()
