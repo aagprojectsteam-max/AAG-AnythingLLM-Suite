@@ -1,0 +1,148 @@
+{
+  "upstream_tag": "v1.19.0",
+  "image_digest": "sha256:daf5a6ae9d363ed578e7d41e2d0668c7eaa604bd90b0ff27435f893b0906833e",
+  "base_revision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "status": "candidate-not-released",
+  "files": [
+    {
+      "target": "server/endpoints/aagArtifactExport.js",
+      "origin": "aag-only",
+      "sha256": "9faa5dcc0c356efe069209fa7919fba0edeab5b3a17d0f6113194a06512c727b"
+    },
+    {
+      "target": "server/endpoints/aagArtifactFormat.js",
+      "origin": "aag-only",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4"
+    },
+    {
+      "target": "server/endpoints/aagComposerProxy.js",
+      "origin": "aag-only",
+      "sha256": "55124a12dbb1670af39731cb72a97566e4cdf1457d41e24e28482d5f27d58aaa"
+    },
+    {
+      "target": "server/endpoints/aagPdfAssembler.js",
+      "origin": "aag-only",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca"
+    },
+    {
+      "target": "server/endpoints/agentFileServer.js",
+      "origin": "clean-merge",
+      "sha256": "1558bdb3b908839559e2114f842272835c347622bd65d4d742d5a275fa5d322b"
+    },
+    {
+      "target": "server/index.js",
+      "origin": "clean-merge",
+      "sha256": "cc2a6c1c54e1b76b69d559ec93c86ffbf628d6c72efc80453169ebfdeadfbebb"
+    },
+    {
+      "target": "server/jobs/aagGeneratedImageCleanup.js",
+      "origin": "aag-only",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192"
+    },
+    {
+      "target": "server/jobs/cleanup-generated-images.js",
+      "origin": "upstream-unchanged",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c"
+    },
+    {
+      "target": "server/utils/AiProviders/anthropic/index.js",
+      "origin": "clean-merge",
+      "sha256": "3b9aeb6bd2e5eee75744a30bd00b7d79d7d7d0771a3a4a55f48ca503df2b5d95"
+    },
+    {
+      "target": "server/utils/AiProviders/genericOpenAi/index.js",
+      "origin": "clean-merge",
+      "sha256": "34904e3e5ef6bb9ef40dcab2f3113bd9d635e35ccbcfdf722773e423bf33cc96"
+    },
+    {
+      "target": "server/utils/AiProviders/modelMap/index.js",
+      "origin": "clean-merge",
+      "sha256": "2b0cd965c31121d235b9f58bda5ad2b1735475e07fc90026e730951ff6927756"
+    },
+    {
+      "target": "server/utils/AiProviders/openAi/index.js",
+      "origin": "resolved",
+      "sha256": "36e688baa61d4a73f3bc0a5d404dd3411aa0f2c15b5cb6907dfcf5db2b6d6a34"
+    },
+    {
+      "target": "server/utils/agents/aibitat/index.js",
+      "origin": "clean-merge",
+      "sha256": "eb7024b11f6d1daa766cfe22cb5d7f236a42423eedbffacd45194a3c7a1099d1"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "origin": "aag-only",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/anthropic.js",
+      "origin": "resolved",
+      "sha256": "1b9f318da7dda02edc8cc5e3a4ee1cca6a869f337f3a1404502ba7ddffc8974f"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/gemini.js",
+      "origin": "resolved",
+      "sha256": "22fb2c6d34e61645a947738afd396b9b201b121b2a3a6a60f730c97c9c4ab093"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/ollama.js",
+      "origin": "resolved",
+      "sha256": "5e491cc7088184a5f41a95386d66c611bf75151f768bc62f49ed0031201c411c"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/openai.js",
+      "origin": "resolved",
+      "sha256": "881e5428a0d04b46bbbf2d5e486c0310d920bf65178a56324e61e216e190d0b9"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/responses-stream.js",
+      "origin": "aag-only",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d"
+    },
+    {
+      "target": "server/utils/agents/aibitat/providers/tool-contract.js",
+      "origin": "aag-only",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee"
+    },
+    {
+      "target": "server/utils/agents/aibitat/utils/toolReranker.js",
+      "origin": "resolved",
+      "sha256": "efdfd46ecf0ed7eb2513ad4353ddc798c55ed45d140faf2e70359bb578440164"
+    },
+    {
+      "target": "server/utils/agents/ephemeral.js",
+      "origin": "clean-merge",
+      "sha256": "595ee3a6c85ad386c2e7aed381aa13ff382e6e7eca1eb705a8f177243ef15311"
+    },
+    {
+      "target": "server/utils/agents/index.js",
+      "origin": "resolved",
+      "sha256": "2533cf5188ad6cc35b6b0ac3b997ec4c04e4f9c3407ea8e9143abd511b9b10fe"
+    },
+    {
+      "target": "server/utils/chats/apiChatHandler.js",
+      "origin": "clean-merge",
+      "sha256": "e78ba6c4ec2f08919b9dad7fe561ee67cde3a71e6c77f30def404d7a34f8f29b"
+    },
+    {
+      "target": "server/utils/chats/commands/aagIdentity.js",
+      "origin": "aag-only",
+      "sha256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a"
+    },
+    {
+      "target": "server/utils/chats/commands/aagOrdinary.js",
+      "origin": "aag-only",
+      "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2"
+    },
+    {
+      "target": "server/utils/chats/index.js",
+      "origin": "clean-merge",
+      "sha256": "f170202975ac73d72dae2035639a6284c25446ecc477a63377525b14d63b8bf6"
+    },
+    {
+      "target": "server/utils/files/index.js",
+      "origin": "clean-merge",
+      "sha256": "e329c72700e311079dba5f5a8de07903f56d00756ce4727ecd60ae31ca662a5b"
+    }
+  ]
+}

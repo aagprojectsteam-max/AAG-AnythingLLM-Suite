@@ -1,3 +1,4 @@
+import { composerDrafts, aagNativeSubmission } from "@/utils/aagComposerDraftStore";
 import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import ChatHistory from "./ChatHistory";
 import { CLEAR_ATTACHMENTS_EVENT, DndUploaderContext } from "./DnDWrapper";
@@ -28,8 +29,9 @@ import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderM
 import useChatContainerQuickScroll from "@/hooks/useChatContainerQuickScroll";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 import { clearPromptInputDraft } from "@/hooks/usePromptInputStorage";
+import { getSessionReasoningEffort } from "@/utils/chat/reasoningEffort";
 import { safeJsonParse } from "@/utils/request";
-import { useTranslation } from "react-i18next";
+import useGreeting from "@/hooks/useGreeting";
 import paths from "@/utils/paths";
 import QuickActions from "@/components/lib/QuickActions";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
@@ -44,7 +46,8 @@ import { hasMessageContent } from "@/utils/aagLiveArtifacts";
 // enforces a quota below the encoded size of a valid Composer reference. Keep
 // the one-navigation handoff in page memory; the native chat request then
 // places it in AnythingLLM's private per-invocation attachment cache.
-let aagPendingNativeSubmission = null;
+// Shared with the native Home → first-thread handoff.
+import ActiveGenerationGuard from "./ActiveGenerationGuard";
 
 export default function ChatContainer({
   workspace,
@@ -52,7 +55,7 @@ export default function ChatContainer({
   knownHistory = [],
 }) {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const greeting = useGreeting();
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState(knownHistory);
   const [socketId, setSocketId] = useState(null);
@@ -129,7 +132,8 @@ export default function ChatContainer({
     if (!activeThreadSlug && chatHistory.length === 0) {
       const { thread } = await Workspace.threads.new(workspace.slug);
       if (thread) {
-        aagPendingNativeSubmission = {
+        composerDrafts.handoff(workspace.slug, thread.slug);
+        aagNativeSubmission.current = {
           message: currentMessage,
           modelMessage,
           attachments: outgoingAttachments,
@@ -228,7 +232,8 @@ export default function ChatContainer({
     if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {
       const { thread } = await Workspace.threads.new(workspace.slug);
       if (thread) {
-        aagPendingNativeSubmission = {
+        composerDrafts.handoff(workspace.slug, thread.slug);
+        aagNativeSubmission.current = {
           message: text,
           modelMessage: executionMessage,
           attachments,
@@ -320,11 +325,11 @@ export default function ChatContainer({
     if (pendingMessageChecked.current || !workspace?.slug) return;
     pendingMessageChecked.current = true;
 
-    const memoryPending = aagPendingNativeSubmission;
+    const memoryPending = aagNativeSubmission.current;
     const pending =
       memoryPending ||
       safeJsonParse(sessionStorage.getItem(PENDING_HOME_MESSAGE));
-    aagPendingNativeSubmission = null;
+    aagNativeSubmission.current = null;
     if (pending?.message) {
       setTimeout(() => {
         sessionStorage.removeItem(PENDING_HOME_MESSAGE);
@@ -358,6 +363,14 @@ export default function ChatContainer({
       // Override hook for new messages to now go to agents until the connection closes
       if (!!websocket) {
         if (!promptMessage || !promptMessage?.userMessage) return false;
+
+        // Session start re-triggers this effect (setLoadingResponse(true) in
+        // handleWSS) while the socket is still CONNECTING. The server already
+        // begins working on the invocation prompt itself on connect, so there
+        // is no feedback to relay yet - sending here would both throw
+        // (InvalidStateError) and duplicate the opening prompt.
+        if (websocket.readyState !== WebSocket.OPEN) return;
+
         const attachments = promptMessage?.attachments ?? parseAttachments();
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
         websocket.send(
@@ -365,6 +378,10 @@ export default function ChatContainer({
             type: "awaitingFeedback",
             feedback: promptMessage?.userMessage,
             attachments,
+            reasoningEffort: getSessionReasoningEffort(
+              workspace.slug,
+              activeThreadSlug
+            ),
           })
         );
 
@@ -397,6 +414,10 @@ export default function ChatContainer({
             setSocketId
           ),
         attachments,
+        reasoningEffort: getSessionReasoningEffort(
+          workspace.slug,
+          activeThreadSlug
+        ),
       });
       return;
     }
@@ -406,6 +427,13 @@ export default function ChatContainer({
   // TODO: Simplify this WSS stuff
   useEffect(() => {
     let socket = null;
+    let onAbortStream = null;
+
+    function removeAbortListener() {
+      if (!onAbortStream) return;
+      window.removeEventListener(ABORT_STREAM_EVENT, onAbortStream);
+      onAbortStream = null;
+    }
 
     function handleWSS() {
       try {
@@ -415,12 +443,13 @@ export default function ChatContainer({
         );
         socket.supportsAgentStreaming = false;
 
-        window.addEventListener(ABORT_STREAM_EVENT, () => {
+        onAbortStream = () => {
           setAgentSessionActive(false);
           setAgentSessionSocket(null);
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
           socket?.close();
-        });
+        };
+        window.addEventListener(ABORT_STREAM_EVENT, onAbortStream);
 
         socket.addEventListener("message", (event) => {
           try {
@@ -442,6 +471,7 @@ export default function ChatContainer({
         });
 
         socket.addEventListener("close", (_event) => {
+          removeAbortListener();
           setAgentSessionActive(false);
           setAgentSessionSocket(null);
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
@@ -501,6 +531,7 @@ export default function ChatContainer({
     handleWSS();
 
     return () => {
+      removeAbortListener();
       if (socket) {
         setAgentSessionActive(false);
         window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
@@ -526,8 +557,8 @@ export default function ChatContainer({
             <DnDFileUploaderWrapper>
               <div className="flex flex-col h-full w-full items-center justify-center">
                 <div className="flex flex-col items-center w-full max-w-[750px]">
-                  <h1 className="text-white text-xl md:text-2xl mb-11 text-center">
-                    {t("main-page.greeting")}
+                  <h1 className="text-white text-2xl md:text-[32px] md:leading-10 mb-11 text-center">
+                    {greeting}
                   </h1>
                   <PromptInput
                     workspace={workspace}
@@ -570,6 +601,7 @@ export default function ChatContainer({
 
   return (
     <ChatSidebarProvider>
+      <ActiveGenerationGuard isGenerating={loadingResponse} />
       <div
         style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
         data-aag-chat-layout="true" className="relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full h-full z-[2]"

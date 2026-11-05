@@ -11,7 +11,7 @@ const args={operation:'generate',prompt,expert_plan:{facts},source_policy:'auto'
 const validate=async()=>({arguments:structuredClone(args),results:[record()]});
 function agent(){
  const module={exports:{}};const dependencies={'./providers/tool-contract.js':contract,events:require('node:events'),'./error.js':{APIError:class extends Error{}},'./providers/index.js':{},'../../../models/telemetry.js':{Telemetry:{sendTelemetry(){}}},uuid:{v4:()=> 'fixture-id'},'./utils/toolReranker.js':{ToolReranker:class{}}};
- vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming/aibitat.js'),'utf8'),{module,process:{env:{}},console:{error(){}},AbortController,require:n=>{assert.ok(n in dependencies,n);return dependencies[n];}});return new module.exports();
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming/aibitat.js'),'utf8'),{module,process:{env:{}},console:{error(){}},AbortController,require:n=>{Object.assign(dependencies,require('./support/anythingllm-1.19-stubs').aibitat);assert.ok(n in dependencies,n);return dependencies[n];}});return new module.exports();
 }
 function runtime(review){return {AAG_INVOCATION_PROMPT:request,AAG_EXPERT_ENVELOPE:'signed-local-fixture',AAG_EXPERT_REVIEW:review};}
 test('NEW final prompt passes without source prefix only after independent hash-bound semantic review',async()=>{

@@ -2,7 +2,7 @@
   "schema": "aag.anythingllm-frontend-build.v1",
   "aagRelease": "0.9.0-preview.13",
   "anythingllmSource": "https://github.com/Mintplex-Labs/anything-llm.git",
-  "anythingllmRevision": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "anythingllmRevision": "9b1fcab141000eaba9f78ed131151de04904454b",
   "overlayFiles": [
     "ImageGenerationCard/index.jsx",
     "HistoricalOutputs/index.jsx",
@@ -22,6 +22,8 @@
     "DnDWrapper/index.jsx (bounded message region)",
     "aagComposerLayout.js",
     "useAagComposerDraft.js",
+    "aagComposerDraftStore.js",
+    "pages/Main/Home/index.jsx (empty-thread layout and once-only Composer handoff)",
     "hooks/usePromptInputStorage.js (displayed stable scope)",
     "AagSidebarResize.jsx",
     "aagSidebar.css",
@@ -49,9 +51,9 @@
     "ChatHistory/index.jsx (artifact result presentation)",
     "HistoricalMessage/index.jsx (native output memo hydration)"
   ],
-  "overlayTreeSha256": "e9f21d4aa509dbbd8cfca275e98366c5c121ecb3fcd2841b731bf7406ebdc082",
-  "buildToolSha256": "c0303a40dbae7102294888f80132a71a7c8e5a393713d36aed30990630d47bce",
-  "publicFiles": 256,
-  "publicTreeSha256": "6c02845a28c5bd4b7cd9fccc2d65de73a2c54eff5aed22f196b6a4d25fb53e28",
-  "builtAt": "2026-10-06T11:43:44.448Z"
+  "overlayTreeSha256": "c0b4f25bb9b63d73e20a5b60062b51136617e47e2721c3e57da15491aeb403a2",
+  "buildToolSha256": "1b13588caa6d4a6e373d2e602bf44ee74c8c2c4a082e46d2430865586d60294a",
+  "publicFiles": 262,
+  "publicTreeSha256": "16d42fd8f2de4f8f0f1c85b311a76d2a642e62cfed19c13c5daf5a0dbcf15105",
+  "builtAt": "2026-11-05T23:10:04.559Z"
 }

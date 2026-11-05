@@ -8,7 +8,7 @@ const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const version = fs.readFileSync(path.join(root, "VERSION"), "utf8").trim();
-const revision = "07bd65f80b3d9ba3031ed7afb8786627326bd134";
+const revision = "9b1fcab141000eaba9f78ed131151de04904454b"; // v1.19.0
 const sourceUrl = "https://github.com/Mintplex-Labs/anything-llm.git";
 const localSource = process.env.AAG_ANYTHINGLLM_SOURCE_DIR
   ? path.resolve(process.env.AAG_ANYTHINGLLM_SOURCE_DIR)
@@ -61,8 +61,8 @@ function patchPromptInput(checkoutRoot) {
   );
   source = replaceOnce(
     source,
-    "  threadSlug = null,\n}) {",
-    "  threadSlug = null,\n  history = [],\n}) {",
+    "  reasoningSessionSlug = null,\n}) {",
+    "  reasoningSessionSlug = null,\n  history = [],\n}) {",
     "PromptInput structured history prop"
   );
   source = replaceOnce(
@@ -365,6 +365,9 @@ try {
       path.join(checkout, "frontend", "src", "components", "Sidebar", "ActiveWorkspaces", "ThreadContainer", "index.jsx"),
       path.join(patchOutput, "ThreadContainer-index.jsx")
     );
+    // The whole patched source lets release engineering refresh every golden
+    // frontend overlay from one reconstruction.
+    fs.cpSync(path.join(checkout, "frontend", "src"), path.join(patchOutput, "src"), { recursive: true, force: true });
     console.log(`FRONTEND_PATCH_RECONSTRUCTION=PASS output=${patchOutput}`);
     return;
   }

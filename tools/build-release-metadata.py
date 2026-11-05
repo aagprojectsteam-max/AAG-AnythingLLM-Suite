@@ -8,7 +8,7 @@ import pathlib
 import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-UPSTREAM = "07bd65f80b3d9ba3031ed7afb8786627326bd134"
+UPSTREAM = "9b1fcab141000eaba9f78ed131151de04904454b"
 
 
 def sha(path: pathlib.Path) -> str:

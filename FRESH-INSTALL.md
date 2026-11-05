@@ -1,7 +1,7 @@
 # Fresh Install
 
 1. Install Git, Bash, Python 3 and Node.js.
-2. Check out AnythingLLM at `07bd65f80b3d9ba3031ed7afb8786627326bd134`.
+2. Check out AnythingLLM at `9b1fcab141000eaba9f78ed131151de04904454b`.
 3. Clone this repository and run:
 
 ```bash

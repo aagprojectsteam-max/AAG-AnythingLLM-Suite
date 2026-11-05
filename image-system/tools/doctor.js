@@ -429,7 +429,7 @@ function verifyMultiImageExportIntegration() {
   if (fs.existsSync(provenancePath)) {
     const provenance = JSON.parse(fs.readFileSync(provenancePath, "utf8"));
     const actual = directoryTreeHash(stagedPublic);
-    assertCheck("AnythingLLM frontend exact source revision", provenance.anythingllmRevision === "07bd65f80b3d9ba3031ed7afb8786627326bd134", JSON.stringify(provenance));
+    assertCheck("AnythingLLM frontend exact source revision", provenance.anythingllmRevision === "9b1fcab141000eaba9f78ed131151de04904454b", JSON.stringify(provenance));
     assertCheck("AnythingLLM frontend staged tree provenance", provenance.publicTreeSha256 === actual.sha256 && provenance.publicFiles === actual.files, JSON.stringify({ provenance, actual }));
   }
   const client = fs.readFileSync(path.join(root, "integrations/anythingllm/frontend/aagArtifactExport.js"), "utf8");

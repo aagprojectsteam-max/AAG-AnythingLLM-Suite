@@ -12,7 +12,7 @@ function patchComposerDock(checkout) {
   source = once(source, '  const [composerMode, setComposerMode] = useState("auto");\n  const activeWorkspaceSlug = workspace?.slug || workspaceSlug;', '  const activeWorkspaceSlug = workspace?.slug || workspaceSlug;\n  const [composerMode, setComposerMode] = useAagComposerDraft(activeWorkspaceSlug, threadSlug, "mode", "auto");');
   source = once(source, '    <div\n      id="prompt-input-wrapper"', '    <AagComposerDock\n      enabled={isImageComposerEnabledForCurrentWorkspace || activeWorkspaceSlug === "image-generator"}\n      workspaceSlug={activeWorkspaceSlug} threadSlug={threadSlug}');
   source = once(source, '      </form>\n    </div>', '      </form>\n    </AagComposerDock>');
-  source = once(source, '    setPromptInput,\n  });', '    setPromptInput,\n    workspaceSlug: activeWorkspaceSlug,\n    threadSlug,\n  });');
+  source = once(source, '    workspaceSlug: workspaceSlug ?? workspace?.slug,\n    threadSlug,\n  });', '    workspaceSlug: activeWorkspaceSlug,\n    threadSlug,\n  });');
   source = once(source, '<div className="relative w-[95vw] md:w-[750px]">', '<div data-aag-native-input-stack="true" className="relative w-[95vw] md:w-[750px]">');
   source = once(source, '<div className="bg-zinc-800 light:bg-white light:border', '<div data-aag-native-editor="true" className="bg-zinc-800 light:bg-white light:border');
   fs.writeFileSync(input, source);
@@ -23,7 +23,9 @@ function patchComposerDock(checkout) {
   const hook = path.join(checkout, "frontend/src/hooks/usePromptInputStorage.js");
   source = fs.readFileSync(hook, "utf8");
   source = once(source, 'import { useParams } from "react-router-dom";\n', '');
-  source = once(source, 'export default function usePromptInputStorage({ promptInput, setPromptInput }) {\n  const { threadSlug = null, slug: workspaceSlug } = useParams();', 'export default function usePromptInputStorage({ promptInput, setPromptInput, workspaceSlug, threadSlug = null }) {');
+  // 1.19.0 added these props but still falls back to the route, which is the
+  // exact stale-write path this patch closes, so the route lookup stays out.
+  source = once(source, '  const params = useParams();\n  const storageKey =\n    threadSlug ?? params.threadSlug ?? workspaceSlug ?? params.slug ?? null;', '  const storageKey = threadSlug ?? workspaceSlug ?? null;');
   fs.writeFileSync(hook, source);
   const chat = path.join(root, "index.jsx");
   source = fs.readFileSync(chat, "utf8");

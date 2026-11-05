@@ -436,7 +436,7 @@ test("production Atlas endpoint regression validates browser-consumable bytes", 
 test("pinned frontend build augments the native chat submit without replacing it", () => {
   const buildSource = fs.readFileSync(build, "utf8");
   const serverSource = fs.readFileSync(server, "utf8");
-  assert.match(buildSource, /07bd65f80b3d9ba3031ed7afb8786627326bd134/);
+  assert.match(buildSource, /9b1fcab141000eaba9f78ed131151de04904454b/);
   assert.match(buildSource, /patchPromptInput\(checkout\)/);
   assert.match(buildSource, /patchChatContainer\(checkout\)/);
   assert.match(buildSource, /composerMode === \\"advanced\\"/);

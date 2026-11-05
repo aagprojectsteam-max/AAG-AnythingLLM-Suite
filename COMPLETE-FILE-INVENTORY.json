@@ -1,5 +1,5 @@
 {
-  "file_count": 811,
+  "file_count": 879,
   "files": [
     {
       "repository_path": ".env.example",
@@ -15,14 +15,14 @@
     },
     {
       "repository_path": ".gitignore",
-      "sha256": "8cb65b2b2a3b156bf01f6d9942fc994ceb18808bad4228967708ed45ec077871",
-      "size": 1638,
+      "sha256": "9206777219e0664fad93c53fa60f345d1c2208139224623934dc3dbe1396316b",
+      "size": 1752,
       "type": "file"
     },
     {
       "repository_path": "ANYTHINGLLM-COMPATIBILITY.md",
-      "sha256": "d93daf0b6e91d334b444418e17fcf351e48c2cd7fb0dd25a655c7004478dad8d",
-      "size": 531,
+      "sha256": "749e5d693381b54433152fa95d9c1c0a28e93a25602e4066ed71c8104ab60da7",
+      "size": 717,
       "type": "file"
     },
     {
@@ -45,14 +45,14 @@
     },
     {
       "repository_path": "CHANGELOG.md",
-      "sha256": "4e711ba1caf54daa9adb8815c1f7b64addf0b6f1660219603862072fd38525ca",
-      "size": 3317,
+      "sha256": "b9793a6c6fd58f4ea88601ff98cf1c7b9c1afaeb3659dcbb3c429f572e931aea",
+      "size": 5346,
       "type": "file"
     },
     {
       "repository_path": "CLEAN-INSTALL-ACCEPTANCE.md",
-      "sha256": "1ca3160f582e18e312ca4268e3ec625f9557ac8d238437778dcf899cb5a0beeb",
-      "size": 1342,
+      "sha256": "e4b47287e2e7ca27d080633033134d5373294081def9c43b5daf1770273fe7a4",
+      "size": 2483,
       "type": "file"
     },
     {
@@ -75,8 +75,8 @@
     },
     {
       "repository_path": "FILE-OWNERSHIP-MAP.json",
-      "sha256": "96138dc10e55f11ed33f62c81d50eceeaacb54219d87e046a607a271a160e985",
-      "size": 170289,
+      "sha256": "84862da00e8186a2ee028acc711ea4c0551c4fd680d0f3479f483ace83702a17",
+      "size": 185205,
       "type": "file"
     },
     {
@@ -177,7 +177,7 @@
     },
     {
       "repository_path": "FRESH-INSTALL.md",
-      "sha256": "4dc0faa95bf8a725ab151566724c3e9c83e26dd58a56dbc76e50d41bc7e3db80",
+      "sha256": "1b79fe77117e9929caa6105aa444baef7c2cb5b7f63795adc390bf65d489c861",
       "size": 685,
       "type": "file"
     },
@@ -213,8 +213,8 @@
     },
     {
       "repository_path": "PATCH-MANIFEST.yaml",
-      "sha256": "67e1593da4d166c8ab7d7eef47a2b6684944bb97ef913510b9a5d7ded1b18c27",
-      "size": 63766,
+      "sha256": "cf2d072fd2434a1329e46dbedfa684230941074c073365e45620ac5dd855ce37",
+      "size": 66888,
       "type": "file"
     },
     {
@@ -225,8 +225,8 @@
     },
     {
       "repository_path": "README.md",
-      "sha256": "957e79c71d41c40ddce01e466af8e6938c4ca48d6de511ca66e92ade5b5cc78c",
-      "size": 5896,
+      "sha256": "6c9dc16999af36864abd531b57b33be28a201ae96458ee9fbbea41a202e39de2",
+      "size": 5913,
       "type": "file"
     },
     {
@@ -261,7 +261,7 @@
     },
     {
       "repository_path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "ebb4af3677e786bfcbbf07c99a1eeb752a4142168072836308b0ee101cfa02dc",
+      "sha256": "f1a2ad9acda13154954495aca2d042bfa0c2f4b81c8d4a40b7720577a73b0877",
       "size": 1177,
       "type": "file"
     },
@@ -543,8 +543,8 @@
     },
     {
       "repository_path": "config/compatibility.json",
-      "sha256": "a27bcb55d9e608b00cb2cf97f0bdf28e4969420f8ee1142f741db369247c09d4",
-      "size": 5028,
+      "sha256": "79d310e796ac2e093546a2384ef1b09913522b998e933ba59af28fcd7cacfce2",
+      "size": 5147,
       "type": "file"
     },
     {
@@ -585,7 +585,7 @@
     },
     {
       "repository_path": "docs/ANYTHINGLLM-PATCHES.md",
-      "sha256": "5b97411a474324501485c548bcb63575b68ff58502b8e87376077a10d9877548",
+      "sha256": "d51a12e7e045f89feb6fed8314053e676285dcfb57a92e5d888b323a639545df",
       "size": 1086,
       "type": "file"
     },
@@ -633,7 +633,7 @@
     },
     {
       "repository_path": "docs/LICENSING.md",
-      "sha256": "74c7ba78567d814bfde5c37947d8c24dc7020ac7aac8c52e20bd3939ff41aca9",
+      "sha256": "28f0249936037faeb074b72a4a5bd73a19fc2b50f44d38fa2d8598a17b53b2ce",
       "size": 1634,
       "type": "file"
     },
@@ -735,8 +735,8 @@
     },
     {
       "repository_path": "docs/UPSTREAM-COMPATIBILITY.md",
-      "sha256": "31e5c1e3a906f7710f5ec9303d2e9e1784cf1e07918000ffa0d3e4650a2cceb7",
-      "size": 1189,
+      "sha256": "468919bf8061c9e262d23580536823f52f5973d6ef3bbaa3f9383ae50c178e03",
+      "size": 1216,
       "type": "file"
     },
     {
@@ -765,8 +765,8 @@
     },
     {
       "repository_path": "doctor.sh",
-      "sha256": "ef346bd5e5bb2e5586d37f046620fd1c3480d1169803dd771aae3842c777d68a",
-      "size": 6564,
+      "sha256": "591fdc3cf4aae08ae262cc4fafc22b01ca1f65fb33f520b313fa0b786b1cfd8b",
+      "size": 6987,
       "type": "file"
     },
     {
@@ -778,8 +778,8 @@
     },
     {
       "repository_path": "image-system/CHANGELOG.md",
-      "sha256": "6c92ad57e5cd2778be78b2d22ac4f1726a79021dac31953e31a1c669f29dfc93",
-      "size": 12279,
+      "sha256": "d7aec4712cc1feef48d9534d0fc4d276c7cb14fe57450ae4c4526cd6b8e07440",
+      "size": 14395,
       "type": "file"
     },
     {
@@ -898,8 +898,20 @@
     },
     {
       "repository_path": "image-system/docs/ARTIFACT-FILENAMES.md",
-      "sha256": "caf4a1ee51a683e4de69e0d289e781f64e87a519104553b35028d917c4019642",
-      "size": 5092,
+      "sha256": "542d68bf4bbce5e3a68fb8558469a5e9112a6d09a56a4bf8a3375cc0bab575bd",
+      "size": 4658,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/COLORIZE.md",
+      "sha256": "d51b9398fa3f037037c7e8208e58dacd3df4aae12580dba2b14ace0217fa805f",
+      "size": 2866,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/COMPOSER-SIDE-PANEL.md",
+      "sha256": "cda3a7a3a2dd89b810e137d071edaf06a8cefa04bd3ca99e6218650d6282a80f",
+      "size": 6335,
       "type": "file"
     },
     {
@@ -942,6 +954,18 @@
       "repository_path": "image-system/docs/SECURITY.md",
       "sha256": "56f4be1c2f9519a7296fe9690449e9f9a050c33b524d22f23d70b7a1ab85be8b",
       "size": 6051,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/STRUCTURAL-SCAFFOLD.md",
+      "sha256": "7c6c6478ef073b7acd1e77849d70af147108f8ad7284a537a74c29b5fe8143b6",
+      "size": 2220,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/docs/TOKEN-USAGE.md",
+      "sha256": "2e023273cd939b9f1c825b9c60d22927a4777aae6c37e23df7fe3c8131709e14",
+      "size": 3219,
       "type": "file"
     },
     {
@@ -1246,8 +1270,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagComposerProxy.js",
-      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529",
-      "size": 12827,
+      "sha256": "55124a12dbb1670af39731cb72a97566e4cdf1457d41e24e28482d5f27d58aaa",
+      "size": 14879,
       "type": "file"
     },
     {
@@ -1264,8 +1288,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagLifecycleProxy.js",
-      "sha256": "9cad89245265e58ad5911c399323460d1a9e8b9d5d3fa73b8c1bd2dd47fe75b8",
-      "size": 2919,
+      "sha256": "390dfc887304530f4b634b1c0f6fecc765c610a9bda911bf28047b40121bc9c3",
+      "size": 2929,
       "type": "file"
     },
     {
@@ -1282,14 +1306,14 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/aagPublicToolSchema.js",
-      "sha256": "c00e17e87e4e23c121b044ea83e8c97db31783d5f8c4d6ea1a97fae436da1d41",
-      "size": 9006,
+      "sha256": "ebc707f8d7ef8ff93e0bc932936c418ec5ebed6b366b688803158b1730d2f9d3",
+      "size": 12260,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/apiChatHandler.js",
-      "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268,
+      "sha256": "e78ba6c4ec2f08919b9dad7fe561ee67cde3a71e6c77f30def404d7a34f8f29b",
+      "size": 30945,
       "type": "file"
     },
     {
@@ -1300,8 +1324,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/context-window-finder.offline.js",
-      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17",
-      "size": 9286,
+      "sha256": "2b0cd965c31121d235b9f58bda5ad2b1735475e07fc90026e730951ff6927756",
+      "size": 9327,
       "type": "file"
     },
     {
@@ -1318,8 +1342,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagComposerDock.jsx",
-      "sha256": "dd5559d117ba7446c66b907ede9a04854972e4332e2823118649a91323e75ad7",
-      "size": 8844,
+      "sha256": "c15ed9419bc9d9d8635dbe1d07cba0c588a1d071e33ff3cc2b4da1b908cfa7cb",
+      "size": 8997,
       "type": "file"
     },
     {
@@ -1336,20 +1360,20 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/index.jsx",
-      "sha256": "8abba860918e215f06c9145d143458041c391c2c87debf04b9672c69a5d71a0f",
-      "size": 93023,
+      "sha256": "6e98df8c08b37d416f8da67a2d5b900892ca79561c52e8be9e1da9cd4354fd50",
+      "size": 88955,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/localization.js",
-      "sha256": "78241aad50ff15d451e800ac26113777ed5a9ff7650549304e3980c820b82eb4",
-      "size": 14554,
+      "sha256": "d8872f57ab5f0a0bc6aee6d4df271f6a1a33da4b943c182d781780be6dcc5ef5",
+      "size": 14451,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/AagImageComposerPanel/styles.css",
-      "sha256": "1d739aa5355a62e37891341566f00516e7efd7fd890e7ed56ae2c07bfdbfc574",
-      "size": 27392,
+      "sha256": "35a6dfb04a3a884c4823cf85e5fb6d7e376a2b85048b2934e9e12cddc7015ec8",
+      "size": 28672,
       "type": "file"
     },
     {
@@ -1371,6 +1395,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/integrations/anythingllm/frontend/AagTokenUsage.jsx",
+      "sha256": "ed7422ef862d9f3dd4c2c6aa0f514930f9bcd761081bc5420ec1dde552d6747c",
+      "size": 8308,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
       "sha256": "453d393a509a0d2357dbaf3c48b5d3547d3fc9c99218ae24541588e0a4fc99b1",
       "size": 1698,
@@ -1378,8 +1408,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/ImageGenerationCard/index.jsx",
-      "sha256": "e1128b8ec30783350e1271dd1b649a4271d75125f8672258fef59b7e6481a4f8",
-      "size": 10807,
+      "sha256": "ebf61918f81a0413aa0459ee075a4814cc12a6fff1a546f2c5401065618faa0c",
+      "size": 10866,
       "type": "file"
     },
     {
@@ -1402,8 +1432,14 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/aagComposerDock.css",
-      "sha256": "2f1716bac40694fc85cffab380232a98a09c8a6490a1bf20824fb3fdd19a5a34",
-      "size": 10417,
+      "sha256": "dfe27da22caafe1c305fd823837755242cc786a5d64e21b63e0864f0b862ca2b",
+      "size": 10704,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagComposerDraftStore.js",
+      "sha256": "2dab7f294e83ad710b21dfe3efccaee45faa251e1a930c1712b7d485d94f3b89",
+      "size": 2077,
       "type": "file"
     },
     {
@@ -1420,8 +1456,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/aagSidebar.css",
-      "sha256": "732e20cc0935669ee49a01e45a55eb93f22ebfe8b55173945f0800c33348f774",
-      "size": 1293,
+      "sha256": "b3853d8d5fc69c50a428547c0e3ad060c36fb9d5570bf4ebcd1c271f7705b2b5",
+      "size": 1297,
       "type": "file"
     },
     {
@@ -1434,6 +1470,18 @@
       "repository_path": "image-system/integrations/anythingllm/frontend/aagThreadOrder.js",
       "sha256": "8e1b4d0cd79d2b79952bb15af48c22e60a1e591fe0757f5c8ab8baeb0e48e448",
       "size": 1382,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagTokenUsage.css",
+      "sha256": "0718cb66ade485dc9f14444df4016ef794ba64d279c70aa5e847132706bd7300",
+      "size": 2086,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/anythingllm/frontend/aagTokenUsage.js",
+      "sha256": "7acaa1c9e30cdf537e5099873170bd681c06f4cb8480258b73bc74ff6d5a5997",
+      "size": 3827,
       "type": "file"
     },
     {
@@ -1450,8 +1498,8 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/frontend/useAagComposerDraft.js",
-      "sha256": "078c51d276a0d1d9592976929f1a75f242e5286f8808c6d4884484f5c4cb8649",
-      "size": 1049,
+      "sha256": "fe48d4a66e69d70bba0e7da7bcb0aa16f09dc5af7605d84c34ebdf879fd22849",
+      "size": 1207,
       "type": "file"
     },
     {
@@ -1474,26 +1522,26 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/generated-image-files.js",
-      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f",
-      "size": 33557,
+      "sha256": "e329c72700e311079dba5f5a8de07903f56d00756ce4727ecd60ae31ca662a5b",
+      "size": 35720,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/generated-image-server.js",
-      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281",
-      "size": 7715,
+      "sha256": "1558bdb3b908839559e2114f842272835c347622bd65d4d742d5a275fa5d322b",
+      "size": 7916,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/index.js",
-      "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164,
+      "sha256": "f170202975ac73d72dae2035639a6284c25446ecc477a63377525b14d63b8bf6",
+      "size": 6387,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/aibitat.js",
-      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c",
-      "size": 51570,
+      "sha256": "eb7024b11f6d1daa766cfe22cb5d7f236a42423eedbffacd45194a3c7a1099d1",
+      "size": 54600,
       "type": "file"
     },
     {
@@ -1504,38 +1552,38 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/anthropic.js",
-      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984",
-      "size": 18150,
+      "sha256": "1b9f318da7dda02edc8cc5e3a4ee1cca6a869f337f3a1404502ba7ddffc8974f",
+      "size": 18923,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/gemini.js",
-      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c",
-      "size": 15118,
+      "sha256": "22fb2c6d34e61645a947738afd396b9b201b121b2a3a6a60f730c97c9c4ab093",
+      "size": 16136,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/ollama.js",
-      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397",
-      "size": 18419,
+      "sha256": "5e491cc7088184a5f41a95386d66c611bf75151f768bc62f49ed0031201c411c",
+      "size": 19889,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/openai.js",
-      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61",
-      "size": 8646,
+      "sha256": "881e5428a0d04b46bbbf2d5e486c0310d920bf65178a56324e61e216e190d0b9",
+      "size": 6436,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/ordinary-anthropic.js",
-      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad",
-      "size": 13497,
+      "sha256": "3b9aeb6bd2e5eee75744a30bd00b7d79d7d7d0771a3a4a55f48ca503df2b5d95",
+      "size": 14486,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/provider-streaming/ordinary-openai.js",
-      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9",
-      "size": 9526,
+      "sha256": "36e688baa61d4a73f3bc0a5d404dd3411aa0f2c15b5cb6907dfcf5db2b6d6a34",
+      "size": 11780,
       "type": "file"
     },
     {
@@ -1552,20 +1600,20 @@
     },
     {
       "repository_path": "image-system/integrations/anythingllm/runtime-context-bridge/ephemeral.js",
-      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
-      "size": 30912,
+      "sha256": "595ee3a6c85ad386c2e7aed381aa13ff382e6e7eca1eb705a8f177243ef15311",
+      "size": 32353,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/runtime-context-bridge/index.js",
-      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
-      "size": 44091,
+      "sha256": "2533cf5188ad6cc35b6b0ac3b997ec4c04e4f9c3407ea8e9143abd511b9b10fe",
+      "size": 47339,
       "type": "file"
     },
     {
       "repository_path": "image-system/integrations/anythingllm/server-index.js",
-      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
-      "size": 6485,
+      "sha256": "cc2a6c1c54e1b76b69d559ec93c86ffbf628d6c72efc80453169ebfdeadfbebb",
+      "size": 7451,
       "type": "file"
     },
     {
@@ -1578,6 +1626,12 @@
       "repository_path": "image-system/integrations/launchers/aag-ai-start",
       "sha256": "26866bc20d59a48a1bcfb8f9bcf9087c95e3001df08306db66c69e2028e74772",
       "size": 1826,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/integrations/launchers/aag-image-release",
+      "sha256": "ccf13d5b1e9ed2ba3cd5108edbe229b3d0d4406d3793d13c8d5a690dbdecb32a",
+      "size": 251,
       "type": "file"
     },
     {
@@ -1661,14 +1715,14 @@
     },
     {
       "repository_path": "image-system/lifecycle/lifecycle.py",
-      "sha256": "a815dfac650315f9f7e6e23b4916abf2652397fa70645f29b702e94778b7cc79",
-      "size": 18346,
+      "sha256": "d6a2ec666d3620eea549ec2b931b5396382f293e2b045ad20bda1d943af2c68f",
+      "size": 22070,
       "type": "file"
     },
     {
       "repository_path": "image-system/lifecycle/release_candidate.py",
-      "sha256": "4a2de4110ff1cb84d4a0f7c73a7961df6b1f1362fb5b1b9ebdcde06906980618",
-      "size": 12557,
+      "sha256": "e1363e1049bf31379374ee5af143925f84d870598d083fd92b01f0097c58f34c",
+      "size": 12567,
       "type": "file"
     },
     {
@@ -1709,8 +1763,14 @@
     },
     {
       "repository_path": "image-system/lifecycle/test_lifecycle.py",
-      "sha256": "7106c800df460a69bdcfbe2cd7877c3489dfbae6ba68ed0838c0273a738d79c0",
-      "size": 5668,
+      "sha256": "ac37ee14ba10067bbf95cccdebd850135d59a9dd3736e0ec894ed6cb2e0f7272",
+      "size": 5866,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/lifecycle/test_release.py",
+      "sha256": "f30a307ce926716e66bac73bde17bca07e7d6c206ac21771b6de6e1cbe4d975f",
+      "size": 5548,
       "type": "file"
     },
     {
@@ -1744,6 +1804,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/registry/workflows-extensions.json",
+      "sha256": "111c8478e629233c500fd5627a1d7dd21f77c1f2ac990e44a3427b694dbb4e5c",
+      "size": 1888,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/registry/workflows.json",
       "sha256": "94ae85e1a42a9263a8363f54e6633dc7b215783a85cfda3415f266eecba9ca17",
       "size": 2396,
@@ -1763,8 +1829,8 @@
     },
     {
       "repository_path": "image-system/routing/toolReranker.js",
-      "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
-      "size": 10237,
+      "sha256": "efdfd46ecf0ed7eb2513ad4353ddc798c55ed45d140faf2e70359bb578440164",
+      "size": 9505,
       "type": "file"
     },
     {
@@ -1787,8 +1853,8 @@
     },
     {
       "repository_path": "image-system/schemas/provider-task.schema.json",
-      "sha256": "0c78dcdbe643b67bf7287bbc81074deed2be6189f8b2681accd85e85e085e755",
-      "size": 13661,
+      "sha256": "bb7e17819de57e2e7ff325d2a4555fa1ca0fcb81afbb9fd0739d9267a807403f",
+      "size": 15069,
       "type": "file"
     },
     {
@@ -2267,8 +2333,8 @@
     },
     {
       "repository_path": "image-system/skills/aag-image-task/plugin.json",
-      "sha256": "48b73bb1cb0e2f7982872a6cd2d014dc9b66b0f34e50dd8b60f882d55b53e24e",
-      "size": 6866,
+      "sha256": "9b2c96dfafbfa987bc01283025ef8798b93f42fe7e95c109bb17c2d6f3485bb2",
+      "size": 8073,
       "type": "file"
     },
     {
@@ -2351,8 +2417,8 @@
     },
     {
       "repository_path": "image-system/src/adapters.js",
-      "sha256": "c61a545f919ebc5c8146cb1b99b8257596f048b65a646cf11e14781ebf43e89a",
-      "size": 8193,
+      "sha256": "6b3482479690cda676b47c63f09995cfbc62b5c808f7ce444e48800533d88ece",
+      "size": 8749,
       "type": "file"
     },
     {
@@ -2362,9 +2428,21 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/src/colorize.js",
+      "sha256": "e4781daef524b7c8f50d0e1022a6d1784058251530c9206b0567d9eab35f048d",
+      "size": 5977,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/src/comfy.js",
-      "sha256": "7006f01e8bbf148722beb9446a2e7dba453765f30ba5052505b05147cb5917e5",
-      "size": 26662,
+      "sha256": "848320b2813c58253e5a1e13aa97e6182ac1e1685b65402f8332b2ec4d7269f5",
+      "size": 27941,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/endpoints.js",
+      "sha256": "2fdf4fdd9a519e53fb6dc34fc399e1e386aafd500cf0be8cc2586808570ba0d2",
+      "size": 2112,
       "type": "file"
     },
     {
@@ -2387,8 +2465,8 @@
     },
     {
       "repository_path": "image-system/src/generation-details-fields.json",
-      "sha256": "1c2b160c886c6a8f61fdf0e2339e4a2a68d1d362149d012f4c509c9d09932b97",
-      "size": 6088,
+      "sha256": "05400467076e7b71d476d762c6d36ff77331f80996c3936ba09cb66a8393cd7d",
+      "size": 7499,
       "type": "file"
     },
     {
@@ -2411,8 +2489,8 @@
     },
     {
       "repository_path": "image-system/src/identity.js",
-      "sha256": "0ef90a9ada51301fbce0e89ddddde19065f913cc0fe3119f1386050e8b6a0003",
-      "size": 9979,
+      "sha256": "c62fc664137a7173d6b80a7793f1af8dd0b333a308820f92e6687487aba38a05",
+      "size": 9960,
       "type": "file"
     },
     {
@@ -2447,8 +2525,8 @@
     },
     {
       "repository_path": "image-system/src/prompt-quality.js",
-      "sha256": "5af7c1eaa6ae437e8e62afb420c3478ffd174405c4c7769e894ba0fb0417541f",
-      "size": 9859,
+      "sha256": "0af5e2aa120af043330703f209d256de1d76e0d6a13a2f4c7ecf8fcd653ed028",
+      "size": 9978,
       "type": "file"
     },
     {
@@ -2459,8 +2537,14 @@
     },
     {
       "repository_path": "image-system/src/runtime.js",
-      "sha256": "36a99e080f1b500e64aa8443d8a009907e29d7a9b2082a1e7b5e468ea722c183",
-      "size": 30730,
+      "sha256": "12706c379ef1e7430c7ee17f318df51a9a579dba053b29e01510f57125578693",
+      "size": 33119,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/src/scaffold.js",
+      "sha256": "874e00ff3c4aa984577547a3383d17fd8f0182fa83e7089f703a6e2a01b0a7d0",
+      "size": 9507,
       "type": "file"
     },
     {
@@ -2471,8 +2555,8 @@
     },
     {
       "repository_path": "image-system/src/scheduler.js",
-      "sha256": "a6ae0dd5779247a33d7d3b3b183647c5d71f1fedc9872b27c387d212f5bf845d",
-      "size": 9888,
+      "sha256": "b46309b3c83fb0bfd4b8d62dac13f4d600bd64190576a08481f2da13b49274de",
+      "size": 9931,
       "type": "file"
     },
     {
@@ -2501,8 +2585,8 @@
     },
     {
       "repository_path": "image-system/tests/anthropic-hardening.test.js",
-      "sha256": "ec68fbdbcd73e5cf1a9287e28c8a52f601dce953dad695e04a5f4ce4c68f4f47",
-      "size": 10876,
+      "sha256": "769ef1e8a14ca0fad451dfa4fd52fcee93ebd034ebae189d4d572ed3a0947950",
+      "size": 11163,
       "type": "file"
     },
     {
@@ -2554,6 +2638,18 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/colorize.test.js",
+      "sha256": "aee6c5994010748d9fb1a4a37be5a9520246a8be1e876347eb06ff6784472dd3",
+      "size": 5997,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/composer-draft-handoff.test.js",
+      "sha256": "274613b78dc9457bffb4b0ee738431af74a7bf657eea6ba8e6a0af2a702c7d6a",
+      "size": 3389,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/composer-layout.test.js",
       "sha256": "4465625b749e011883cd82fe701c7fd0d3da7ac86ac9ea2edeba653ed14a51cb",
       "size": 2828,
@@ -2572,6 +2668,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/endpoints.test.js",
+      "sha256": "04edc187aa4ae25e0d5e2a86a3014274fa7e6d54bf2ef6dd5a5bb4d09bf9aa61",
+      "size": 2339,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/expert-prompt-preference.test.js",
       "sha256": "108e9616bf0ae5831af7f3dc7901cb3f963aa769e5ebac711d1a3ca6b2c54b8b",
       "size": 4370,
@@ -2585,8 +2687,8 @@
     },
     {
       "repository_path": "image-system/tests/expert-provider-neutral.test.js",
-      "sha256": "6378fbc82fba3a7840d5b30b9d5a3ab3beb4071a071a966eb61d77b47a39d450",
-      "size": 11355,
+      "sha256": "b0238ae7be76d54174aa681979a8b64ff5a8f2dce190d7902320c18644b2348c",
+      "size": 11579,
       "type": "file"
     },
     {
@@ -2596,9 +2698,15 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tests/expert-schema-repair.test.js",
+      "sha256": "140e66a45df9089393c0e5e8ef773cab1321846c7b7bf2c6706005388ff4f760",
+      "size": 6352,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tests/expert-self-contained.test.js",
-      "sha256": "1dee2c7ccb843f3e94bc5ac7f7af8e61e6515bee833b587279e9d57af5217d77",
-      "size": 13732,
+      "sha256": "8731466efaf0fccd13a1f7b92d814398580a8a6baf789a998f872d513f540c20",
+      "size": 13812,
       "type": "file"
     },
     {
@@ -2717,13 +2825,13 @@
     },
     {
       "repository_path": "image-system/tests/image-composer-mode.test.js",
-      "sha256": "7535b53f662dd7b0f0837095c8a9133a31a24c4eb56397943cccc4ee791efaa9",
-      "size": 5276,
+      "sha256": "5f7ed08e657ac31151dbfee38fb2efd5dbef4f5b5b782b3b7e843f2c004c74e6",
+      "size": 5271,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/inline-composer-integration.test.js",
-      "sha256": "9c059baa2bc39da1e90054886ef7426645fab74fd0889f20643ddeac733984dd",
+      "sha256": "229a63f46cd306baf97ed2194e0a7df3989c677fa1b2901a455b974c650bcde1",
       "size": 24266,
       "type": "file"
     },
@@ -2741,8 +2849,8 @@
     },
     {
       "repository_path": "image-system/tests/lifecycle.test.js",
-      "sha256": "8b8ef971afc3610909df93ddf5bc06c249a4eac5632b1390ced0e6d1fb03f100",
-      "size": 5790,
+      "sha256": "9b67abb8c0293430db57bdb00cac4a025614c024aba435f37f6213cc10447788",
+      "size": 7196,
       "type": "file"
     },
     {
@@ -2753,8 +2861,8 @@
     },
     {
       "repository_path": "image-system/tests/openai-responses-stream.test.js",
-      "sha256": "011bbdcdeb47d437a7b7e5615544e35c6730e05f887119e8200a2477db3acb3e",
-      "size": 11113,
+      "sha256": "0fee6b41466c6e4f14b82a80a94240d82b73359514e92abb7ef9723e60723107",
+      "size": 11195,
       "type": "file"
     },
     {
@@ -2765,8 +2873,8 @@
     },
     {
       "repository_path": "image-system/tests/ordinary-openai.test.js",
-      "sha256": "400d38b76dd85b1c18b8fb8fa72dec4dde9fd50200db167b109c2d8cefd6749d",
-      "size": 1350,
+      "sha256": "41aa1065965fdce2eab0cd99baf0bae5af4ab57e66476b7b65105d5a071848b9",
+      "size": 1420,
       "type": "file"
     },
     {
@@ -2795,20 +2903,26 @@
     },
     {
       "repository_path": "image-system/tests/provider-normalization.test.js",
-      "sha256": "299b7d326dd5b8b08efdf210472ec6a6f64cd9eee575289940511f8838029ce6",
-      "size": 9714,
+      "sha256": "8881f9d1c1d4aebf2f452436ea5a61197dd6445f59739690338cbffb634a30be",
+      "size": 10048,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/public-tool-schema.test.js",
-      "sha256": "bbd914168d970c37659e3bc3a577239804be88b52dfe73624763b1b03ff1b563",
-      "size": 16163,
+      "sha256": "746d5e5d01d3828a373eea3642b89ad23557a2e374e1ab004565ff1f3e7b1963",
+      "size": 16199,
       "type": "file"
     },
     {
       "repository_path": "image-system/tests/runtime.test.js",
       "sha256": "3c0126a2c07cb9d80b56f837f01996f656fe77ad5c3b773a48ff2352f7248068",
       "size": 50234,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/scaffold.test.js",
+      "sha256": "181d9953a85cfcaed666adf38a6638850c474c3d92c10562633ec705c32f5441",
+      "size": 8257,
       "type": "file"
     },
     {
@@ -2833,6 +2947,12 @@
       "repository_path": "image-system/tests/stall-recovery.test.js",
       "sha256": "07e1238790cd63fd4fdbb778a2fda2341963083ccb2d3ce2aa90c55ce8e1ecd6",
       "size": 9852,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tests/support/anythingllm-1.19-stubs.js",
+      "sha256": "5c18bee201532722a9ee0a4670b67b47544f175b23e6e103ae71576d2f879da7",
+      "size": 2962,
       "type": "file"
     },
     {
@@ -2933,14 +3053,14 @@
     },
     {
       "repository_path": "image-system/tools/build-anythingllm-frontend.js",
-      "sha256": "c0303a40dbae7102294888f80132a71a7c8e5a393713d36aed30990630d47bce",
-      "size": 29152,
+      "sha256": "1b13588caa6d4a6e373d2e602bf44ee74c8c2c4a082e46d2430865586d60294a",
+      "size": 29929,
       "type": "file"
     },
     {
       "repository_path": "image-system/tools/build.js",
-      "sha256": "43ec860999356b3959a5a53ad10e92e39722a4c8beb2af35f2b551939084d552",
-      "size": 18786,
+      "sha256": "5d0affa60bd52135017e68f61c6b2498b35ad5aa131046e5b5c41c125a3119dd",
+      "size": 19136,
       "type": "file"
     },
     {
@@ -2962,8 +3082,20 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/composer-dock-browser-acceptance.py",
+      "sha256": "1359565eb968ece5372de10a6a4a07c5a3169f6aa27e7fea403bb4eb9f7da7cf",
+      "size": 28775,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/composer-refinement-browser-acceptance.py",
+      "sha256": "2d2d0ad27643e0cf5918d989623aedf4c219a99fbee4bfe95b3ab9a20020ee35",
+      "size": 14249,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/doctor.js",
-      "sha256": "8e563dd686e7c5b5c0d353ab35cedec53ff159b4e06cc6cea9d369d8c8f1a8e2",
+      "sha256": "e147bd3bcf008dfdb42126b2f6938844c2c16f4f0b28e9a4606f38e24faa3ed1",
       "size": 63065,
       "type": "file"
     },
@@ -3004,6 +3136,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/live-artifact-browser-acceptance.py",
+      "sha256": "23203e6aac390a7ebdedd878774510d6785e5420bc0a990f144a5e8dcb6f6cab",
+      "size": 14500,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/live-routing-audit.js",
       "sha256": "0300bc6d7f5282fd82e8bdf7f7509eb293b6c1366ba6c1f21d5577f216fb83c2",
       "size": 6690,
@@ -3022,6 +3160,12 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/new-thread-composer-browser-acceptance.py",
+      "sha256": "7cbe687a95b727ee2538645dd46c26dce2ffe58e58b44508782183f4b6093344",
+      "size": 13326,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/patch-chat-presentation.js",
       "sha256": "d1fa1e77e54a94239f8071fa35dd2805d9f633f4be070e6230709fc879a22c2e",
       "size": 4572,
@@ -3029,14 +3173,20 @@
     },
     {
       "repository_path": "image-system/tools/patch-composer-dock.js",
-      "sha256": "183540febd7b0cf4bc6e076f69b59f5ef20efa420bf9d5cbb5da0d7e87b5f392",
-      "size": 3843,
+      "sha256": "cf23ccd00b61a06ff5a5175b38299ff60089a8e4f8ad9a02c6e6002a1aec576a",
+      "size": 3953,
       "type": "file"
     },
     {
       "repository_path": "image-system/tools/patch-live-artifacts.js",
       "sha256": "de1398bd8f2ab1deb5783c1087752cb68c4e276bbe680d9c29e9a16778b7b2f7",
       "size": 1287,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/patch-new-thread-composer.js",
+      "sha256": "b08e1ae376180c67613115b0ade8551319aaf40ed690ac9c3f1fb4c6e5d115f3",
+      "size": 5015,
       "type": "file"
     },
     {
@@ -3049,6 +3199,12 @@
       "repository_path": "image-system/tools/patch-thread-numbering.js",
       "sha256": "22e763e7f21e09e1db5c633094960fd221fb4ba05ad777aa3ffdfde67d145f31",
       "size": 2788,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/patch-token-usage.js",
+      "sha256": "6da131d26d165ef412b2eafec2f9109b6ff27c287b5315bb72bd241d1501fb4d",
+      "size": 1557,
       "type": "file"
     },
     {
@@ -3076,9 +3232,33 @@
       "type": "file"
     },
     {
+      "repository_path": "image-system/tools/sidebar-browser-acceptance.py",
+      "sha256": "e5f497558987a4ca58b5561457266d17e8b13f01974643af1a48d94a32125fbc",
+      "size": 14621,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/sidebar-ordinal-browser-acceptance.py",
+      "sha256": "b16bd545b8c60df0e9bd8ee193faf8c1f69e57fb70b42552380a1424db402da7",
+      "size": 17717,
+      "type": "file"
+    },
+    {
       "repository_path": "image-system/tools/test_browser_lifecycle.py",
       "sha256": "a80f655445efb05976bd68f86385ca3a72b7e20585d14f96e58a0a8939305d39",
       "size": 6701,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/thread-artifact-numbering-acceptance.py",
+      "sha256": "0e6f1a6f442f0c445820915679c35f343701579179d17c196d5c590767046569",
+      "size": 6526,
+      "type": "file"
+    },
+    {
+      "repository_path": "image-system/tools/thread-numbering-browser-acceptance.py",
+      "sha256": "8e20de3ceae6fd4046734e59e4ec8839993453db45211e51b2fb4b1319aae772",
+      "size": 6025,
       "type": "file"
     },
     {
@@ -3131,8 +3311,8 @@
     },
     {
       "repository_path": "install.sh",
-      "sha256": "b5ae4e96eafd9e7d9f5d3fb0ae824e95e51eedc2602b13a46f163cb3482cabeb",
-      "size": 8969,
+      "sha256": "8036b6f93b4250990fa05d237da9e9e7de54705ae86c5f6704835756484d6d12",
+      "size": 9287,
       "type": "file"
     },
     {
@@ -3155,14 +3335,14 @@
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/aag-model-compatibility.service",
-      "sha256": "509054c215ecbb5cf171e989c97e9d7c198cd94b4134c11c1138566472592693",
-      "size": 1231,
+      "sha256": "17168eea6786c14fc65b8181dd1987e862a9e2bf48c48662539a7a8d86e71b11",
+      "size": 1493,
       "type": "file"
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/compatibility.py",
-      "sha256": "d83f0a86c2db039a484f32f7ceaf0a217b160e8e79c683421981fc4bd9a2d60e",
-      "size": 80916,
+      "sha256": "7281d0b83bccd8ccb5318eb9e66c66817f27fe704a02d109674aecb85d7a7199",
+      "size": 85037,
       "type": "file"
     },
     {
@@ -3203,8 +3383,14 @@
     },
     {
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/server.py",
-      "sha256": "0cef215c04234f16e01bf61d29f1c1e1be6de780471d50b3392936f73857e3a4",
-      "size": 77377,
+      "sha256": "f28f51d764a623b5138ace138374bdfb93b7dd836af253314b47a19bde48022f",
+      "size": 80945,
+      "type": "file"
+    },
+    {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_audit_rotation.py",
+      "sha256": "cfa209495c03e7be8d8091257ca5a71ac1d669f0b5db9159e39d72e65db728ae",
+      "size": 2246,
       "type": "file"
     },
     {
@@ -3217,6 +3403,12 @@
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_composer_canonical.py",
       "sha256": "22d60b3ac4e16f20035bea70630c9d02e3a5b6ad5d18a178d0ce26d2e335527f",
       "size": 7630,
+      "type": "file"
+    },
+    {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_composer_colorize.py",
+      "sha256": "a4c8787c8866630b25a99f57ed16312e2f49e094c1db7bc5916badacfebb982c",
+      "size": 4601,
       "type": "file"
     },
     {
@@ -3241,6 +3433,12 @@
       "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_streaming.py",
       "sha256": "985f0c69a6ee0f14ca19020ef03f5460411c8c0d1a36f2463b8315b391437bfd",
       "size": 15715,
+      "type": "file"
+    },
+    {
+      "repository_path": "integrations/anythingllm/model-neutral-compatibility/test_tool_keepalive.py",
+      "sha256": "7b04d865839179ba4c287cf479b78413f19ade68c419512f79cbd59c2ddb394d",
+      "size": 4799,
       "type": "file"
     },
     {
@@ -4177,8 +4375,8 @@
     },
     {
       "repository_path": "manifests/AAG-BUILD-PROVENANCE.json",
-      "sha256": "f5c8d3ca7d5bc024ce9430425e53f0c51d6b278244d8764093d6dbd71f792838",
-      "size": 2513,
+      "sha256": "61e27316be741aa62e3ae3a66247b82a6dff3a1885460d54d596d8f9b2672c99",
+      "size": 2631,
       "type": "file"
     },
     {
@@ -4213,8 +4411,8 @@
     },
     {
       "repository_path": "manifests/GOLDEN-INSTALL-MAP.json",
-      "sha256": "3260322d0fe4855b95c5f5c25eb579433249822507c360cdd978126dc5f25dbb",
-      "size": 26817,
+      "sha256": "a2132d0968ccb9350f2336a6a2c4a24a7f9338d67889de90e760bb848cfdc029",
+      "size": 28278,
       "type": "file"
     },
     {
@@ -4375,8 +4573,8 @@
     },
     {
       "repository_path": "patches/anythingllm/aagComposerProxy.js",
-      "sha256": "7fcc59833c1e06866ca346578dc9288c657fac7d4f840323786965dc96034529",
-      "size": 12827,
+      "sha256": "55124a12dbb1670af39731cb72a97566e4cdf1457d41e24e28482d5f27d58aaa",
+      "size": 14879,
       "type": "file"
     },
     {
@@ -4417,80 +4615,80 @@
     },
     {
       "repository_path": "patches/anythingllm/agentFileServer.js",
-      "sha256": "c2a1a733d8f13b0913502b534bacdfa84b2ff1e26d1d9a65976ab39928214281",
-      "size": 7715,
+      "sha256": "1558bdb3b908839559e2114f842272835c347622bd65d4d742d5a275fa5d322b",
+      "size": 7916,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-ephemeral.js",
-      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
-      "size": 30912,
+      "sha256": "595ee3a6c85ad386c2e7aed381aa13ff382e6e7eca1eb705a8f177243ef15311",
+      "size": 32353,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/agents-index.js",
-      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
-      "size": 44091,
+      "sha256": "2533cf5188ad6cc35b6b0ac3b997ec4c04e4f9c3407ea8e9143abd511b9b10fe",
+      "size": 47339,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/apiChatHandler.js",
-      "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268,
+      "sha256": "e78ba6c4ec2f08919b9dad7fe561ee67cde3a71e6c77f30def404d7a34f8f29b",
+      "size": 30945,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/chat-apiChatHandler.js",
-      "sha256": "690633a0de3c2a5bf9bdd3630b7454c990cc11ace813fd23a16094ca6f37d789",
-      "size": 29268,
+      "sha256": "e78ba6c4ec2f08919b9dad7fe561ee67cde3a71e6c77f30def404d7a34f8f29b",
+      "size": 30945,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/chats-index.js",
-      "sha256": "288a2bb84712a19d809c151b584a11494334866d0db031110e7a7899c04a556b",
-      "size": 5164,
+      "sha256": "f170202975ac73d72dae2035639a6284c25446ecc477a63377525b14d63b8bf6",
+      "size": 6387,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/context-window-finder.offline.js",
-      "sha256": "f3a5dca1618bd13595b8c28fcb8658b4c1210e7cd436d59932cc828e6d8e8b17",
-      "size": 9286,
+      "sha256": "2b0cd965c31121d235b9f58bda5ad2b1735475e07fc90026e730951ff6927756",
+      "size": 9327,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/ephemeral.js",
-      "sha256": "b25597cd69bc6edf618c7cf6283bd33752bc453ea9d669565f9b340006c2170a",
-      "size": 30912,
+      "sha256": "595ee3a6c85ad386c2e7aed381aa13ff382e6e7eca1eb705a8f177243ef15311",
+      "size": 32353,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/ChatContainer-index.jsx",
-      "sha256": "db6956cef5cba385ed06ab622b5e2ddf7d673cbe9271cdef0f4d0d13a484b1b7",
-      "size": 22828,
+      "sha256": "405f84ee8eff0f05907cbb9d81bc27c0f5e3e5630ed46e50d07858c14e7fea31",
+      "size": 24246,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/PromptInput-index.jsx",
-      "sha256": "312b1efd872119818da96350207b4471283d51a3b8bea41ed3c90de4abae8c0b",
-      "size": 20420,
+      "sha256": "6e44254bd518bd64a3bef7d7988499fefe2638eef1602ab66d9a7eaef2547df4",
+      "size": 21661,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/ThreadContainer-index.jsx",
-      "sha256": "21423ce6023626240e2d570b87fb8ab1c1f3dad1ceb4f076fd9cba783c77fc99",
-      "size": 7894,
+      "sha256": "5796fbdff8e381b24506ddb87429f1bc8f2c12d0f6d54bce4489f881c897398f",
+      "size": 9202,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem/index.jsx",
-      "sha256": "88d167ff7ec8b1ef6202c96adb890ff3e1a835920109a09d2d6c0e9da4b88c90",
-      "size": 9357,
+      "sha256": "5805998401a10182c48d37505a8591e2a1fa3355a1a9c35d605086ac9f3c4c5d",
+      "size": 9491,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/Sidebar/ActiveWorkspaces/index.jsx",
-      "sha256": "fe8103e7b1f1939c56e3bf6b210f907f4e2314f5e996d1427696d85bc0139ddd",
-      "size": 11051,
+      "sha256": "a629064f6f888307d848818d6690b557be975f68cb5f2773cc9876c09cb0cd22",
+      "size": 11467,
       "type": "file"
     },
     {
@@ -4501,20 +4699,20 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/Sidebar/index.jsx",
-      "sha256": "92a861b5dfd51469f5d3d66a07eeef757cd9060d8261a99a47f6bc6b9dcef56f",
-      "size": 8907,
+      "sha256": "479ddb6b073c5877861a01f155527dadbb7e1168f8efa5fe33925271714115ff",
+      "size": 9006,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/index.jsx",
-      "sha256": "c381e0f44a8af36bb925c9e27742b868f0cf8d0c4ec35b0c35ee6608ee7e981b",
-      "size": 12042,
+      "sha256": "1f909bf936ff5b05ed1112846c1096129bf1d0d084c4be18b16399ec5e21ee2f",
+      "size": 12058,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/ChatHistory/index.jsx",
-      "sha256": "0f369409785aafc5c7f0e03ba263703865624cde293182df456d86f8eecd0f6b",
-      "size": 11072,
+      "sha256": "b56cbcd4a9356063485e06671d0465220d80d47b134c5b119d38fc85ec6075bd",
+      "size": 14783,
       "type": "file"
     },
     {
@@ -4525,8 +4723,26 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/DnDWrapper/index.jsx",
-      "sha256": "c2f5ad86f94889ad649d936fb579820b421e147fa48030085725a40dd3c7ce5d",
-      "size": 15493,
+      "sha256": "95c0591eeb60c944d97c21cdbcdd765ed22b9ab9e0507040416228021e55a5c8",
+      "size": 19200,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/AagTokenUsage.jsx",
+      "sha256": "ed7422ef862d9f3dd4c2c6aa0f514930f9bcd761081bc5420ec1dde552d6747c",
+      "size": 8308,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/aagTokenUsage.css",
+      "sha256": "0718cb66ade485dc9f14444df4016ef794ba64d279c70aa5e847132706bd7300",
+      "size": 2086,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/aagTokenUsage.js",
+      "sha256": "7acaa1c9e30cdf537e5099873170bd681c06f4cb8480258b73bc74ff6d5a5997",
+      "size": 3827,
       "type": "file"
     },
     {
@@ -4537,26 +4753,38 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/hooks/usePromptInputStorage.js",
-      "sha256": "da4936cfe2f852147a016e46ed1c5af4c75ac300a3625ddab784141491d8c794",
-      "size": 2575,
+      "sha256": "0694b8ec15127a81288d2cc1d7252e47fe2621a06d215c1779fd29ad61bf48bb",
+      "size": 5372,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/models/workspace.js",
-      "sha256": "665839e411a307ba732dad9d8b05fb23b0f3f64aa3db335fac798cc02663ddfe",
-      "size": 17592,
+      "sha256": "e3b620cd538b622b8061ea8fc5ca9e7fdede5ce472af0adb4a5c31b00bc40fa4",
+      "size": 19191,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/models/workspaceThread.js",
-      "sha256": "9a82338d2bf2d353bdd0ab4d0d22b6adc34d6593a966d6bc51ce48dac83c6761",
-      "size": 6353,
+      "sha256": "f097b1b25b7f183ee991fbea4b20cadc211c3c933a9a6267635df42f834323be",
+      "size": 6654,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/pages/Main/Home/index.jsx",
+      "sha256": "ddaa9dc9dc5001b9e702c8b9b4bb49950ae7c713eefbc43efd05d4c2812e39ab",
+      "size": 14076,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
       "sha256": "146a3025010fc947695d312eaf96a636632b0a06b88219b2d115905915a0a917",
       "size": 4476,
+      "type": "file"
+    },
+    {
+      "repository_path": "patches/anythingllm/frontend/golden/src/utils/aagComposerDraftStore.js",
+      "sha256": "1090179644a13a505c593853570c0d7b5987b10a5cb00bc207542d0f501b0158",
+      "size": 2067,
       "type": "file"
     },
     {
@@ -4585,8 +4813,8 @@
     },
     {
       "repository_path": "patches/anythingllm/frontend/golden/src/utils/chat/agent.js",
-      "sha256": "1e93d0a0bf1144d3ad44d48c00ada7cac5069fbc8661f2042a86ae08faf9f98a",
-      "size": 16839,
+      "sha256": "508c3aebece5a6c7124a3013c1030a417fc3236025ec61b1f488f516d36aeb20",
+      "size": 18029,
       "type": "file"
     },
     {
@@ -4603,26 +4831,26 @@
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/anthropic/index.js",
-      "sha256": "d6913664402d34c4a8b8a576479c25669bcff74e6c8f0cacc2d4e53e4b07a3ad",
-      "size": 13497,
+      "sha256": "3b9aeb6bd2e5eee75744a30bd00b7d79d7d7d0771a3a4a55f48ca503df2b5d95",
+      "size": 14486,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/genericOpenAi/index.js",
-      "sha256": "436badcf5e29b50a271581235c02b5fcb1711aa94f61bf6f830195ff422b325d",
-      "size": 18127,
+      "sha256": "34904e3e5ef6bb9ef40dcab2f3113bd9d635e35ccbcfdf722773e423bf33cc96",
+      "size": 18757,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/AiProviders/openAi/index.js",
-      "sha256": "99e5fb9cb951b975c1e41da4bcd469eba1ca210e654a685a613d40f501e5a6e9",
-      "size": 9526,
+      "sha256": "36e688baa61d4a73f3bc0a5d404dd3411aa0f2c15b5cb6907dfcf5db2b6d6a34",
+      "size": 11780,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/index.js",
-      "sha256": "4e9187b2fe31ee9f61b8d4a4804f8395cacd694b791c666579dcf9a22d4bec6c",
-      "size": 51570,
+      "sha256": "eb7024b11f6d1daa766cfe22cb5d7f236a42423eedbffacd45194a3c7a1099d1",
+      "size": 54600,
       "type": "file"
     },
     {
@@ -4633,26 +4861,26 @@
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/anthropic.js",
-      "sha256": "cd7b26a6349fb7a381e62c01deff402337b832eea8885a755ecb4cc1e6dfe984",
-      "size": 18150,
+      "sha256": "1b9f318da7dda02edc8cc5e3a4ee1cca6a869f337f3a1404502ba7ddffc8974f",
+      "size": 18923,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/gemini.js",
-      "sha256": "545acdebacf75578dbfe4ed1c74a9fc09e6dc339af41d624468c8a89509e411c",
-      "size": 15118,
+      "sha256": "22fb2c6d34e61645a947738afd396b9b201b121b2a3a6a60f730c97c9c4ab093",
+      "size": 16136,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/ollama.js",
-      "sha256": "2838816b31f7510ad1c7e1a34484b8c33e4c22f8cb84ce9d469d3672544dc397",
-      "size": 18419,
+      "sha256": "5e491cc7088184a5f41a95386d66c611bf75151f768bc62f49ed0031201c411c",
+      "size": 19889,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/agents/aibitat/providers/openai.js",
-      "sha256": "229d803044ed4c3fb80206874e85c51923efe61d22d2c3504753ca7c64cadf61",
-      "size": 8646,
+      "sha256": "881e5428a0d04b46bbbf2d5e486c0310d920bf65178a56324e61e216e190d0b9",
+      "size": 6436,
       "type": "file"
     },
     {
@@ -4681,32 +4909,212 @@
     },
     {
       "repository_path": "patches/anythingllm/golden/server/utils/files/index.js",
-      "sha256": "4992d776492b2de76972decf3b0c8f4dbdc9fafdea1446d6271b8fc11d55966f",
-      "size": 33557,
+      "sha256": "e329c72700e311079dba5f5a8de07903f56d00756ce4727ecd60ae31ca662a5b",
+      "size": 35720,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/index.js",
-      "sha256": "39f692dd8632ca3cbd21aca99f217c5434703d694452df7fa1bcf0635b34b0a3",
-      "size": 44091,
+      "sha256": "2533cf5188ad6cc35b6b0ac3b997ec4c04e4f9c3407ea8e9143abd511b9b10fe",
+      "size": 47339,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/server-index.js",
-      "sha256": "ba968b89be9aaee4036f2e2778b797a40ee5a256033167a9590c1fb95a77e7ad",
-      "size": 6485,
+      "sha256": "cc2a6c1c54e1b76b69d559ec93c86ffbf628d6c72efc80453169ebfdeadfbebb",
+      "size": 7451,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/toolReranker.js",
-      "sha256": "9a25887a251ce2c618728f2dbe4fac9923026e57497d231e04bcf5dd14f427d1",
-      "size": 10237,
+      "sha256": "efdfd46ecf0ed7eb2513ad4353ddc798c55ed45d140faf2e70359bb578440164",
+      "size": 9505,
       "type": "file"
     },
     {
       "repository_path": "patches/anythingllm/workspaceToolPolicy.js",
       "sha256": "f99c1cdf52e7ebe14caded22cbca0a3221fc8e5e4c5ac1db6f9fcf4dd62ace18",
       "size": 18400,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/PORT-FILES.json",
+      "sha256": "962e711039abfb946fa5859577c4e26b620a0a24871faaf6d37096319f5a380a",
+      "size": 5441,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/PORT-NOTES.md",
+      "sha256": "84f64ae1c175b490b8c080f6406e533d608f68e8c7b0978f6d3bf2db75135779",
+      "size": 5569,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/endpoints/aagArtifactExport.js",
+      "sha256": "9faa5dcc0c356efe069209fa7919fba0edeab5b3a17d0f6113194a06512c727b",
+      "size": 19556,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/endpoints/aagArtifactFormat.js",
+      "sha256": "6bd9d49519abf8fce786890951b592e4c1a11ffa367fee8ea49de0afe68060b4",
+      "size": 2253,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/endpoints/aagComposerProxy.js",
+      "sha256": "55124a12dbb1670af39731cb72a97566e4cdf1457d41e24e28482d5f27d58aaa",
+      "size": 14879,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/endpoints/aagPdfAssembler.js",
+      "sha256": "9ed609eed4ab4fafc4ab68469b3eb562227a834b165a8970eab0be918d7d20ca",
+      "size": 12612,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/endpoints/agentFileServer.js",
+      "sha256": "1558bdb3b908839559e2114f842272835c347622bd65d4d742d5a275fa5d322b",
+      "size": 7916,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/index.js",
+      "sha256": "cc2a6c1c54e1b76b69d559ec93c86ffbf628d6c72efc80453169ebfdeadfbebb",
+      "size": 7451,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/jobs/aagGeneratedImageCleanup.js",
+      "sha256": "b23e34c32d680c146891be4df644dbb7ba70b90c2245de8ce813975908fb5192",
+      "size": 10691,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/jobs/cleanup-generated-images.js",
+      "sha256": "ee86c7c4b68d32688cc99f77d0843875a86245d4376e90bdfdfa22098981bd2c",
+      "size": 1362,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/AiProviders/anthropic/index.js",
+      "sha256": "3b9aeb6bd2e5eee75744a30bd00b7d79d7d7d0771a3a4a55f48ca503df2b5d95",
+      "size": 14486,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/AiProviders/genericOpenAi/index.js",
+      "sha256": "34904e3e5ef6bb9ef40dcab2f3113bd9d635e35ccbcfdf722773e423bf33cc96",
+      "size": 18757,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/AiProviders/modelMap/index.js",
+      "sha256": "2b0cd965c31121d235b9f58bda5ad2b1735475e07fc90026e730951ff6927756",
+      "size": 9327,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/AiProviders/openAi/index.js",
+      "sha256": "36e688baa61d4a73f3bc0a5d404dd3411aa0f2c15b5cb6907dfcf5db2b6d6a34",
+      "size": 11780,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/index.js",
+      "sha256": "eb7024b11f6d1daa766cfe22cb5d7f236a42423eedbffacd45194a3c7a1099d1",
+      "size": 54600,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "sha256": "6d21ff8ff5784031fb927946713ba07f4954523443f956e8d19b26418a36dd76",
+      "size": 6875,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/anthropic.js",
+      "sha256": "1b9f318da7dda02edc8cc5e3a4ee1cca6a869f337f3a1404502ba7ddffc8974f",
+      "size": 18923,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/gemini.js",
+      "sha256": "22fb2c6d34e61645a947738afd396b9b201b121b2a3a6a60f730c97c9c4ab093",
+      "size": 16136,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/ollama.js",
+      "sha256": "5e491cc7088184a5f41a95386d66c611bf75151f768bc62f49ed0031201c411c",
+      "size": 19889,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/openai.js",
+      "sha256": "881e5428a0d04b46bbbf2d5e486c0310d920bf65178a56324e61e216e190d0b9",
+      "size": 6436,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/responses-stream.js",
+      "sha256": "972100c4d5ec607ba9b9fdcce66b143c1844e7753c6b1b35373ef1d76cd9509d",
+      "size": 16511,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/tool-contract.js",
+      "sha256": "a78976ad5fd3ee620a3ef7af140a73d802e7ccaf7949cc7133c3be50c48604ee",
+      "size": 3474,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/utils/toolReranker.js",
+      "sha256": "efdfd46ecf0ed7eb2513ad4353ddc798c55ed45d140faf2e70359bb578440164",
+      "size": 9505,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/ephemeral.js",
+      "sha256": "595ee3a6c85ad386c2e7aed381aa13ff382e6e7eca1eb705a8f177243ef15311",
+      "size": 32353,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/agents/index.js",
+      "sha256": "2533cf5188ad6cc35b6b0ac3b997ec4c04e4f9c3407ea8e9143abd511b9b10fe",
+      "size": 47339,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/chats/apiChatHandler.js",
+      "sha256": "e78ba6c4ec2f08919b9dad7fe561ee67cde3a71e6c77f30def404d7a34f8f29b",
+      "size": 30945,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/chats/commands/aagIdentity.js",
+      "sha256": "66c11476afc7159039c68741986a2d6ed416bfae585aa8cfc693af2787a0b13a",
+      "size": 6662,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/chats/commands/aagOrdinary.js",
+      "sha256": "bbac20e9a3b2a0a904410ad4ca0a5a1102dbd77220f7bd1c6c083ff0220101f2",
+      "size": 9779,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/chats/index.js",
+      "sha256": "f170202975ac73d72dae2035639a6284c25446ecc477a63377525b14d63b8bf6",
+      "size": 6387,
+      "type": "file"
+    },
+    {
+      "repository_path": "ports/anythingllm-1.19.0/server/utils/files/index.js",
+      "sha256": "e329c72700e311079dba5f5a8de07903f56d00756ce4727ecd60ae31ca662a5b",
+      "size": 35720,
       "type": "file"
     },
     {
@@ -4777,7 +5185,7 @@
     },
     {
       "repository_path": "tools/build-release-metadata.py",
-      "sha256": "fe909263f5fbe3365a21c7620a0a36896e0905d3ba25e0a26672a93783e369ca",
+      "sha256": "89adfa780b3b5f209b30f1d5a9f63db7fd98aab1c6a99e5cbb39b47601d94582",
       "size": 9087,
       "type": "file"
     },
@@ -4872,6 +5280,6 @@
       "type": "file"
     }
   ],
-  "generated_utc": "2026-10-06",
+  "generated_utc": "2026-10-05",
   "schema_version": 1
 }

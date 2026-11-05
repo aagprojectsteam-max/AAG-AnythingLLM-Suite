@@ -7,11 +7,16 @@ const {
   formatChatHistory,
   writeResponseChunk,
   clientAbortedHandler,
+  extractReasoningContent,
 } = require("../../helpers/chat/responses");
 const { v4: uuidv4 } = require("uuid");
 const { toValidNumber } = require("../../http");
 const { getAnythingLLMUserAgent } = require("../../../endpoints/utils");
 const { attachmentToContentBlock } = require("../../helpers/attachments");
+const {
+  maxTokensParam,
+  temperatureParam,
+} = require("../../agents/aibitat/providers/helpers/tooled.js");
 
 class GenericOpenAiLLM {
   constructor(embedder = null, modelPreference = null) {
@@ -46,7 +51,6 @@ class GenericOpenAiLLM {
     };
 
     this.embedder = embedder ?? new NativeEmbedder();
-    this.defaultTemp = 0.7;
     this.log(`Inference API: ${this.basePath} Model: ${this.model}`);
   }
 
@@ -59,6 +63,16 @@ class GenericOpenAiLLM {
    * Format: "Header-Name:value,Another-Header:value2"
    * @returns {Object} Object with header key-value pairs
    */
+  /**
+   * Request field name for the output token budget. Defaults to `max_tokens`;
+   * set GENERIC_OPEN_AI_MODEL_MAX_TOKEN_KEY for backends that expect a
+   * different field (eg: `max_completion_tokens`).
+   * @returns {string}
+   */
+  static maxTokensKey() {
+    return process.env.GENERIC_OPEN_AI_MODEL_MAX_TOKEN_KEY || "max_tokens";
+  }
+
   static parseCustomHeaders() {
     const customHeadersEnv = process.env.GENERIC_OPEN_AI_CUSTOM_HEADERS;
     if (!customHeadersEnv) return {};
@@ -199,11 +213,9 @@ class GenericOpenAiLLM {
    */
   #parseReasoningFromResponse({ message }) {
     let textResponse = message?.content;
-    if (
-      !!message?.reasoning_content &&
-      message.reasoning_content.trim().length > 0
-    )
-      textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
+    const reasoning = extractReasoningContent(message);
+    if (reasoning && reasoning.trim().length > 0)
+      textResponse = `<think>${reasoning}</think>${textResponse}`;
     return textResponse;
   }
 
@@ -223,14 +235,17 @@ class GenericOpenAiLLM {
     };
   }
 
-  async getChatCompletion(messages = null, { temperature = 0.7 }) {
+  async getChatCompletion(
+    messages = null,
+    { temperature = this.temperature } = {}
+  ) {
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
         .create({
           model: this.model,
           messages,
-          temperature,
-          max_tokens: this.maxTokens,
+          ...temperatureParam(temperature),
+          ...maxTokensParam(this.maxTokens, GenericOpenAiLLM.maxTokensKey()),
         })
         .catch((e) => {
           throw new Error(e.message);
@@ -263,14 +278,17 @@ class GenericOpenAiLLM {
     };
   }
 
-  async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
+  async streamGetChatCompletion(
+    messages = null,
+    { temperature = this.temperature } = {}
+  ) {
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
       func: this.openai.chat.completions.create({
         model: this.model,
         stream: true,
         messages,
-        temperature,
-        max_tokens: this.maxTokens,
+        ...temperatureParam(temperature),
+        ...maxTokensParam(this.maxTokens, GenericOpenAiLLM.maxTokensKey()),
         ...this.#includeStreamOptionsUsage(),
       }),
       messages,
@@ -309,7 +327,7 @@ class GenericOpenAiLLM {
         for await (const chunk of stream) {
           const message = chunk?.choices?.[0];
           const token = message?.delta?.content;
-          const reasoningToken = message?.delta?.reasoning_content;
+          const reasoningToken = extractReasoningContent(message?.delta);
 
           if (
             chunk.hasOwnProperty("usage") && // exists

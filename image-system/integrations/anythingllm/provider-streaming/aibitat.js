@@ -3,6 +3,7 @@ const { normalizeCompletion, claimToolCall } = require("./providers/tool-contrac
 const { EventEmitter, setMaxListeners } = require("events");
 const { APIError } = require("./error.js");
 const Providers = require("./providers/index.js");
+const { resolveTemperature } = require("../../helpers");
 const { Telemetry } = require("../../../models/telemetry.js");
 const { v4 } = require("uuid");
 const { ToolReranker } = require("./utils/toolReranker.js");
@@ -101,6 +102,7 @@ class AIbitat {
    * @param {number} props.maxRounds - [default: 100] The maximum number of rounds for the AIbitat instance.
    * @param {number} props.maxToolCalls - [default: AIbitat.defaultMaxToolCalls()] The maximum number of tools an agent can chain for a single response.
    * @param {string} props.provider - [default: "openai"] The provider for the AIbitat instance.
+   * @param {number|string|null} props.temperature - Sampling temperature applied to provider requests. Omitted from requests when unset.
    * @param {Object} props.handlerProps - The handler properties for the AIbitat instance.
    * @param {Object} rest - The rest of the properties for the AIbitat instance.
    */
@@ -890,6 +892,9 @@ ${this.getHistory({ to: route.to })
   async reply(route) {
     const fromConfig = this.getAgentConfig(route.from);
     const chatHistory = this.getOrFormatNodeChatHistory(route);
+    // Captured before document injection below - skill reranking and model
+    // routing must run on what the user asked, not on attached file contents.
+    const userPrompt = this.#extractUserPrompt(chatHistory);
 
     // Fetch fresh parsed file context and inject into the last user message
     if (this.fetchParsedFileContext) {
@@ -924,7 +929,6 @@ ${this.getHistory({ to: route.to })
     // Rerank tools based on user prompt if enabled
     if (ToolReranker.isEnabled() && functions?.length) {
       const toolReranker = new ToolReranker();
-      const userPrompt = this.#extractUserPrompt(messages);
       if (userPrompt)
         functions = await toolReranker.rerank(userPrompt, functions);
     } else {
@@ -944,16 +948,9 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
     // Re-evaluate model router before each turn if a resolver is attached.
     // This ensures routing rules are applied per-message, not just at initialization.
     if (this.resolveRoute) {
-      const userPrompt =
-        this.#extractUserPrompt(messages) || route.content || "";
-      const resolved = await this.resolveRoute(userPrompt);
-      if (resolved) {
-        this.defaultProvider = {
-          ...this.defaultProvider,
-          provider: resolved.provider,
-          model: resolved.model,
-        };
-      }
+      this.applyResolvedRoute(
+        await this.resolveRoute(userPrompt || route.content || "")
+      );
     }
 
     const activeConfig = {...this.defaultProvider, ...fromConfig};
@@ -1020,6 +1017,21 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
   }
 
   /**
+   * Local inference servers can take a long time to load a model into memory,
+   * so tell the user when the upcoming completion will have to wait on that.
+   */
+  async #reportModelLoading() {
+    try {
+      if (await this.providerInstance.isModelLoaded()) return;
+    } catch {
+      return;
+    }
+    this?.introspect?.(
+      `Loading ${this.providerInstance.model} into memory, this may take a moment.`
+    );
+  }
+
+  /**
    * Handle the async (streaming) execution of the provider
    * with tool calls. Reads the provider from this.providerInstance.
    *
@@ -1042,7 +1054,12 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
     };
 
     // Emit routing notification before the first completion so it appears above the response
-    if (depth === 0) this?.flushRoutingMetadata?.(v4());
+    // and reset the usage accumulator so metrics only cover this run's completions.
+    if (depth === 0) {
+      this?.flushRoutingMetadata?.(v4());
+      this.providerInstance.resetCumulativeUsage();
+      await this.#reportModelLoading();
+    }
 
     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
     const completionStream = await this.#safeProviderCall(() =>
@@ -1129,7 +1146,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
         eventHandler?.("reportStreamEvent", {
           type: "usageMetrics",
           uuid: directOutputUUID,
-          metrics: this.providerInstance.getUsage(),
+          metrics: this.providerInstance.getCumulativeUsage(),
         });
         this?.flushCitations?.(directOutputUUID);
         this?.emitChatId?.(directOutputUUID);
@@ -1170,7 +1187,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
     eventHandler?.("reportStreamEvent", {
       type: "usageMetrics",
       uuid: responseUuid,
-      metrics: this.providerInstance.getUsage(),
+      metrics: this.providerInstance.getCumulativeUsage(),
     });
     this?.flushCitations?.(responseUuid);
     this?.emitChatId?.(responseUuid);
@@ -1205,7 +1222,12 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
     };
 
     // Emit routing notification before the first completion so it appears above the response
-    if (depth === 0) this?.flushRoutingMetadata?.(msgUUID);
+    // and reset the usage accumulator so metrics only cover this run's completions.
+    if (depth === 0) {
+      this?.flushRoutingMetadata?.(msgUUID);
+      this.providerInstance.resetCumulativeUsage();
+      await this.#reportModelLoading();
+    }
 
     // get the chat completion
     const completion = await this.#safeProviderCall(() =>
@@ -1281,7 +1303,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
         eventHandler?.("reportStreamEvent", {
           type: "usageMetrics",
           uuid: msgUUID,
-          metrics: this.providerInstance.getUsage(),
+          metrics: this.providerInstance.getCumulativeUsage(),
         });
         this?.flushCitations?.(msgUUID);
         return result;
@@ -1321,7 +1343,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
     eventHandler?.("reportStreamEvent", {
       type: "usageMetrics",
       uuid: msgUUID,
-      metrics: this.providerInstance.getUsage(),
+      metrics: this.providerInstance.getCumulativeUsage(),
     });
     this?.flushCitations?.(msgUUID);
     this?.emitChatId?.(msgUUID);
@@ -1420,6 +1442,22 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
   }
 
   /**
+   * Switches the default provider to a route the model router resolved. The
+   * route's reasoning effort replaces the previous one, since an effort is
+   * only validated for the model it was resolved against.
+   * @param {{provider: string, model: string, reasoningEffort?: string|null}|null} resolved
+   */
+  applyResolvedRoute(resolved) {
+    if (!resolved) return;
+    this.defaultProvider = {
+      ...this.defaultProvider,
+      provider: resolved.provider,
+      model: resolved.model,
+      reasoningEffort: resolved.reasoningEffort ?? null,
+    };
+  }
+
+  /**
    * Get provider based on configurations with the session abort signal bound to it,
    * so aborting the session cancels whatever requests that provider has in flight.
    *
@@ -1428,6 +1466,16 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
    */
   getProviderForConfig(config) {
     const provider = this.#buildProviderForConfig(config);
+    // Record the slug the instance was built from so usage metrics can be
+    // priced - pre-built instances (config.provider as an object) keep theirs.
+    if (typeof config?.provider === "string") {
+      provider.providerSlug ??= config.provider;
+      provider.temperature = resolveTemperature(
+        config.provider,
+        provider.model,
+        config.temperature
+      );
+    }
     provider.attachAbortSignal?.(this.abortController.signal);
     return provider;
   }
@@ -1441,16 +1489,35 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
    */
   #buildProviderForConfig(config) {
     if (typeof config.provider === "object") return config.provider;
+    // The effort was validated for the default provider + model only - any
+    // other provider or model this config points at gets no reasoning params.
+    const reasoningEffort =
+      config.provider === this.defaultProvider?.provider &&
+      config.model === this.defaultProvider?.model
+        ? config.reasoningEffort ?? null
+        : null;
 
     switch (config.provider) {
       case "openai":
-        return new Providers.OpenAIProvider({ model: config.model });
+        return new Providers.OpenAIProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "anthropic":
-        return new Providers.AnthropicProvider({ model: config.model });
+        return new Providers.AnthropicProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "lmstudio":
-        return new Providers.LMStudioProvider({ model: config.model });
+        return new Providers.LMStudioProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "ollama":
-        return new Providers.OllamaProvider({ model: config.model });
+        return new Providers.OllamaProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "groq":
         return new Providers.GroqProvider({ model: config.model });
       case "togetherai":
@@ -1462,9 +1529,15 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
       case "localai":
         return new Providers.LocalAIProvider({ model: config.model });
       case "openrouter":
-        return new Providers.OpenRouterProvider({ model: config.model });
+        return new Providers.OpenRouterProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "mistral":
-        return new Providers.MistralProvider({ model: config.model });
+        return new Providers.MistralProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "generic-openai":
         return new Providers.GenericOpenAiProvider({ model: config.model });
       case "perplexity":
@@ -1480,7 +1553,10 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
       case "moonshotai":
         return new Providers.MoonshotAiProvider({ model: config.model });
       case "deepseek":
-        return new Providers.DeepSeekProvider({ model: config.model });
+        return new Providers.DeepSeekProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "litellm":
         return new Providers.LiteLLMProvider({ model: config.model });
       case "apipie":
@@ -1494,7 +1570,10 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
       case "ppio":
         return new Providers.PPIOProvider({ model: config.model });
       case "gemini":
-        return new Providers.GeminiProvider({ model: config.model });
+        return new Providers.GeminiProvider({
+          model: config.model,
+          reasoningEffort,
+        });
       case "cometapi":
         return new Providers.CometApiProvider({ model: config.model });
       case "foundry":
@@ -1503,20 +1582,32 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
         return new Providers.GiteeAIProvider({ model: config.model });
       case "cohere":
         return new Providers.CohereProvider({ model: config.model });
-      case "docker-model-runner":
-        return new Providers.DockerModelRunnerProvider({ model: config.model });
+      case "llmman":
+        return new Providers.LlmmanProvider({ model: config.model });
       case "privatemode":
         return new Providers.PrivatemodeProvider({ model: config.model });
       case "sambanova":
         return new Providers.SambaNovaProvider({ model: config.model });
       case "lemonade":
-        return new Providers.LemonadeProvider({ model: config.model });
+        return new Providers.LemonadeProvider({
+          model: config.model,
+          reasoningEffort,
+        });
+      case "embedded_lemonade": {
+        const EmbeddedLemonadeProvider = require("../../AiProviders/embeddedLemonade/agentProvider");
+        return new EmbeddedLemonadeProvider({
+          model: config.model,
+          reasoningEffort,
+        });
+      }
       case "omlx":
         return new Providers.OMLXProvider({ model: config.model });
       case "minimax":
         return new Providers.MinimaxProvider({ model: config.model });
       case "cerebras":
         return new Providers.CerebrasProvider({ model: config.model });
+      case "vertex":
+        return new Providers.VertexProvider({ model: config.model });
       default:
         throw new Error(
           `Unknown provider: ${config.provider}. Please use a valid provider.`

@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const { DocumentManager } = require("../DocumentManager");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { getVectorDbClass, resolveProviderConnector } = require("../helpers");
+const { addChatCostToMetrics } = require("../helpers/modelPricing");
 const { writeResponseChunk } = require("../helpers/chat/responses");
 const { abortConnectorOnClientDisconnect } = require("../helpers/abortSignals");
 const {
@@ -110,6 +111,27 @@ async function processDocumentAttachments(attachments = []) {
 }
 
 /**
+ * Generated images are registered as pending agent outputs and are never
+ * streamed as text, so the packed message outputs alone would omit them from
+ * the API response entirely. Returns those image outputs with the developer
+ * API URL the caller fetches to get the image blob back.
+ * @param {import("../agents/ephemeral").EphemeralAgentHandler} agentHandler
+ * @returns {Array<{type: string, payload: object}>}
+ */
+function generatedImageOutputs(agentHandler) {
+  return agentHandler
+    .getPendingOutputs()
+    .filter((output) => output?.type === "imageGenerationCard")
+    .map((output) => ({
+      ...output,
+      payload: {
+        ...output.payload,
+        url: `/v1/document/generated-files/${output.payload.storageFilename}`,
+      },
+    }));
+}
+
+/**
  * Handle synchronous chats with your workspace via the developer API endpoint
  * @param {{
  *  workspace: import("@prisma/client").workspaces,
@@ -170,7 +192,7 @@ async function chatSync({
     await WorkspaceChats.markThreadHistoryInvalidV2({
       workspaceId: workspace.id,
       user_id: user?.id,
-      thread_id: thread?.id,
+      thread_id: thread?.id ?? null, // an undefined thread_id would match (and reset) every thread in the workspace
       api_session_id: sessionId,
     });
     if (!message?.length) {
@@ -191,6 +213,12 @@ async function chatSync({
   const processedMessage = await grepAllSlashCommands(message);
   message = processedMessage;
 
+  // Document attachments are parsed to text up front so agent and normal chats
+  // both receive their contents as context, leaving only images as attachments.
+  const { parsedDocuments, imageAttachments } =
+    await processDocumentAttachments(attachments);
+  attachments = imageAttachments;
+
   if (
     await EphemeralAgentHandler.isAgentInvocation({
       message,
@@ -210,6 +238,7 @@ async function chatSync({
       threadId: thread?.id || null,
       sessionId,
       attachments,
+      parsedDocuments,
     });
 
     // Establish event listener that emulates websocket calls
@@ -242,8 +271,10 @@ async function chatSync({
             outputs: allOutputs,
             metrics,
           },
-          include: false,
+          include: true,
+          threadId: thread?.id || null,
           apiSessionId: sessionId,
+          user,
         });
         return {
           id: uuid,
@@ -253,20 +284,21 @@ async function chatSync({
           error: null,
           textResponse,
           thoughts,
-          outputs,
+          outputs: [...outputs, ...generatedImageOutputs(agentHandler)],
           metrics,
         };
       });
   }
 
-  const { connector: LLMConnector } = await resolveProviderConnector({
-    workspace,
-    prompt: message,
-    user,
-    thread,
-    attachments,
-    apiSessionId: sessionId,
-  });
+  const { connector: LLMConnector, routingMetadata } =
+    await resolveProviderConnector({
+      workspace,
+      prompt: message,
+      user,
+      thread,
+      attachments,
+      apiSessionId: sessionId,
+    });
 
   const VectorDb = getVectorDbClass();
   const messageLimit = workspace?.openAiHistory || 20;
@@ -290,8 +322,10 @@ async function chatSync({
         type: chatMode,
         metrics: {},
       },
+      threadId: thread?.id || null,
       include: false,
       apiSessionId: sessionId,
+      user,
     });
 
     return {
@@ -338,10 +372,7 @@ async function chatSync({
       });
     });
 
-  const processedAttachments = await processDocumentAttachments(attachments);
-  const parsedAttachments = processedAttachments.parsedDocuments;
-  attachments = processedAttachments.imageAttachments;
-  parsedAttachments.forEach((doc) => {
+  parsedDocuments.forEach((doc) => {
     if (doc.pageContent) {
       contextTexts.push(doc.pageContent);
       const { pageContent, ...metadata } = doc;
@@ -453,11 +484,15 @@ async function chatSync({
   );
 
   // Send the text completion.
-  const { textResponse, metrics: performanceMetrics } =
+  const { textResponse, metrics: completionMetrics } =
     await LLMConnector.getChatCompletion(messages, {
-      temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
       user: user,
     });
+  const performanceMetrics = addChatCostToMetrics(completionMetrics, {
+    routingMetadata,
+    workspace,
+    connector: LLMConnector,
+  });
 
   if (!textResponse) {
     return {
@@ -560,7 +595,7 @@ async function streamChat({
     await WorkspaceChats.markThreadHistoryInvalidV2({
       workspaceId: workspace.id,
       user_id: user?.id,
-      thread_id: thread?.id,
+      thread_id: thread?.id ?? null, // an undefined thread_id would match (and reset) every thread in the workspace
       api_session_id: sessionId,
     });
     if (!message?.length) {
@@ -583,6 +618,12 @@ async function streamChat({
   const processedMessage = await grepAllSlashCommands(message);
   message = processedMessage;
 
+  // Document attachments are parsed to text up front so agent and normal chats
+  // both receive their contents as context, leaving only images as attachments.
+  const { parsedDocuments, imageAttachments } =
+    await processDocumentAttachments(attachments);
+  attachments = imageAttachments;
+
   if (
     await EphemeralAgentHandler.isAgentInvocation({
       message,
@@ -602,6 +643,7 @@ async function streamChat({
       threadId: thread?.id || null,
       sessionId,
       attachments,
+      parsedDocuments,
     });
 
     // Establish event listener that emulates websocket calls
@@ -637,13 +679,14 @@ async function streamChat({
           include: true,
           threadId: thread?.id || null,
           apiSessionId: sessionId,
+          user,
         });
         writeResponseChunk(response, {
           uuid,
           type: "finalizeResponseStream",
           textResponse,
           thoughts,
-          outputs,
+          outputs: [...outputs, ...generatedImageOutputs(agentHandler)],
           sources: citations,
           close: true,
           error: false,
@@ -652,14 +695,15 @@ async function streamChat({
       });
   }
 
-  const { connector: LLMConnector } = await resolveProviderConnector({
-    workspace,
-    prompt: message,
-    user,
-    thread,
-    attachments,
-    apiSessionId: sessionId,
-  });
+  const { connector: LLMConnector, routingMetadata } =
+    await resolveProviderConnector({
+      workspace,
+      prompt: message,
+      user,
+      thread,
+      attachments,
+      apiSessionId: sessionId,
+    });
 
   // A disconnected client (aborted request, closed connection) should stop the
   // provider generating too, not just stop us reading the response.
@@ -745,10 +789,7 @@ async function streamChat({
       });
     });
 
-  const processedAttachments = await processDocumentAttachments(attachments);
-  const parsedAttachments = processedAttachments.parsedDocuments;
-  attachments = processedAttachments.imageAttachments;
-  parsedAttachments.forEach((doc) => {
+  parsedDocuments.forEach((doc) => {
     if (doc.pageContent) {
       contextTexts.push(doc.pageContent);
       const { pageContent, ...metadata } = doc;
@@ -868,11 +909,14 @@ async function streamChat({
     );
     const { textResponse, metrics: performanceMetrics } =
       await LLMConnector.getChatCompletion(messages, {
-        temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
         user: user,
       });
     completeText = textResponse;
-    metrics = performanceMetrics;
+    metrics = addChatCostToMetrics(performanceMetrics, {
+      routingMetadata,
+      workspace,
+      connector: LLMConnector,
+    });
     writeResponseChunk(response, {
       uuid,
       sources,
@@ -884,11 +928,14 @@ async function streamChat({
     });
   } else {
     const stream = await LLMConnector.streamGetChatCompletion(messages, {
-      temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
       user: user,
     });
     completeText = await LLMConnector.handleStream(response, stream, { uuid });
-    metrics = stream.metrics;
+    metrics = addChatCostToMetrics(stream.metrics, {
+      routingMetadata,
+      workspace,
+      connector: LLMConnector,
+    });
   }
 
   if (completeText?.length > 0) {

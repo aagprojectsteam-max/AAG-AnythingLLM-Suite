@@ -1,6 +1,6 @@
 {
   "schema": "aag.file-ownership-map.v1",
-  "upstream_commit": "07bd65f80b3d9ba3031ed7afb8786627326bd134",
+  "upstream_commit": "9b1fcab141000eaba9f78ed131151de04904454b",
   "classifications": [
     "AAG_OWNED",
     "UPSTREAM_ANYTHINGLLM",
@@ -768,6 +768,16 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/docs/COLORIZE.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/COMPOSER-SIDE-PANEL.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/docs/GENERATED-IMAGE-CLEANUP.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -799,6 +809,16 @@
     },
     {
       "path": "image-system/docs/SECURITY.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/STRUCTURAL-SCAFFOLD.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/docs/TOKEN-USAGE.md",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -1158,6 +1178,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/AagTokenUsage.jsx",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/HistoricalOutputs/index.jsx",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
@@ -1188,6 +1213,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/anythingllm/frontend/aagComposerDraftStore.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/anythingllm/frontend/aagComposerLayout.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1209,6 +1239,16 @@
     },
     {
       "path": "image-system/integrations/anythingllm/frontend/aagThreadOrder.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagTokenUsage.css",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/integrations/anythingllm/frontend/aagTokenUsage.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -1333,6 +1373,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/integrations/launchers/aag-image-release",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/integrations/launchers/aag-image-start",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1443,6 +1488,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/lifecycle/test_release.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/lifecycle/test_release_closure.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -1464,6 +1514,11 @@
     },
     {
       "path": "image-system/package.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/registry/workflows-extensions.json",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -1983,7 +2038,17 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/src/colorize.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/src/comfy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/src/endpoints.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2068,6 +2133,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/src/scaffold.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/src/scene-identity.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2143,6 +2213,16 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/colorize.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/composer-draft-handoff.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tests/composer-layout.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2154,6 +2234,11 @@
     },
     {
       "path": "image-system/tests/context-window-finder.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/endpoints.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2174,6 +2259,11 @@
     },
     {
       "path": "image-system/tests/expert-review-format.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/expert-schema-repair.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2358,6 +2448,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tests/scaffold.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tests/scheduler.test.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2374,6 +2469,11 @@
     },
     {
       "path": "image-system/tests/stall-recovery.test.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tests/support/anythingllm-1.19-stubs.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2483,6 +2583,16 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/composer-dock-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/composer-refinement-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/doctor.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2518,6 +2628,11 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/live-artifact-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/live-routing-audit.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
@@ -2529,6 +2644,11 @@
     },
     {
       "path": "image-system/tools/multi-image-registration-audit.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/new-thread-composer-browser-acceptance.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2548,12 +2668,22 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/patch-new-thread-composer.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/patch-sidebar-presentation.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
       "path": "image-system/tools/patch-thread-numbering.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/patch-token-usage.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2578,7 +2708,27 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "image-system/tools/sidebar-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/sidebar-ordinal-browser-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "image-system/tools/test_browser_lifecycle.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/thread-artifact-numbering-acceptance.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "image-system/tools/thread-numbering-browser-acceptance.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2688,12 +2838,22 @@
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_audit_rotation.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
       "path": "integrations/anythingllm/model-neutral-compatibility/test_compatibility.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
     {
       "path": "integrations/anythingllm/model-neutral-compatibility/test_composer_canonical.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_composer_colorize.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -2714,6 +2874,11 @@
     },
     {
       "path": "integrations/anythingllm/model-neutral-compatibility/test_streaming.py",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "integrations/anythingllm/model-neutral-compatibility/test_tool_keepalive.py",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },
@@ -3788,6 +3953,21 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/AagTokenUsage.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/aagTokenUsage.css",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/PromptInput/aagTokenUsage.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker/index.jsx",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
@@ -3808,7 +3988,17 @@
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
     {
+      "path": "patches/anythingllm/frontend/golden/src/pages/Main/Home/index.jsx",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
       "path": "patches/anythingllm/frontend/golden/src/utils/aagArtifactText.js",
+      "classification": "UPSTREAM_ANYTHINGLLM",
+      "basis": "modified or derived from pinned MIT upstream stock source"
+    },
+    {
+      "path": "patches/anythingllm/frontend/golden/src/utils/aagComposerDraftStore.js",
       "classification": "UPSTREAM_ANYTHINGLLM",
       "basis": "modified or derived from pinned MIT upstream stock source"
     },
@@ -3934,6 +4124,156 @@
     },
     {
       "path": "patches/anythingllm/workspaceToolPolicy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/PORT-FILES.json",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/PORT-NOTES.md",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/endpoints/aagArtifactExport.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/endpoints/aagArtifactFormat.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/endpoints/aagComposerProxy.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/endpoints/aagPdfAssembler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/endpoints/agentFileServer.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/jobs/aagGeneratedImageCleanup.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/jobs/cleanup-generated-images.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/AiProviders/anthropic/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/AiProviders/genericOpenAi/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/AiProviders/modelMap/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/AiProviders/openAi/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/anthropic-transport.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/anthropic.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/gemini.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/ollama.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/openai.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/responses-stream.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/providers/tool-contract.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/aibitat/utils/toolReranker.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/ephemeral.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/agents/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/chats/apiChatHandler.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/chats/commands/aagIdentity.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/chats/commands/aagOrdinary.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/chats/index.js",
+      "classification": "AAG_OWNED",
+      "basis": "repository-authored code, tests, installer, configuration, or documentation"
+    },
+    {
+      "path": "ports/anythingllm-1.19.0/server/utils/files/index.js",
       "classification": "AAG_OWNED",
       "basis": "repository-authored code, tests, installer, configuration, or documentation"
     },

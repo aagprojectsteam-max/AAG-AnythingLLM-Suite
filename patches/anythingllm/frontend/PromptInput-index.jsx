@@ -1,3 +1,4 @@
+import AagTokenUsage from "./AagTokenUsage";
 import AagComposerDock from "./AagComposerDock";
 import useAagComposerDraft from "@/utils/useAagComposerDraft";
 import { useState, useRef, useEffect } from "react";
@@ -8,6 +9,7 @@ import SpeechToText from "./SpeechToText";
 import { Tooltip } from "react-tooltip";
 import AttachmentManager from "./Attachments";
 import AttachItem from "./AttachItem";
+import ReasoningEffortButton from "./ReasoningEffortButton";
 import {
   ATTACHMENTS_PROCESSED_EVENT,
   ATTACHMENTS_PROCESSING_EVENT,
@@ -25,6 +27,7 @@ import AagImageComposerPanel from "./AagImageComposerPanel";
 import AagImageProgress from "./AagImageProgress";
 import { ensureArtifactSerials } from "@/utils/aagArtifactSerials";
 import showToast from "@/utils/toast";
+import { isMobile } from "react-device-detect";
 
 export const PROMPT_INPUT_ID = "primary-prompt-input";
 export const PROMPT_INPUT_EVENT = "set_prompt_input";
@@ -39,6 +42,7 @@ const MAX_EDIT_STACK_SIZE = 100;
  * @param {boolean} [props.centered] - renders in centered layout mode (for home page)
  * @param {string} [props.workspaceSlug] - workspace slug for home page context
  * @param {string} [props.threadSlug] - thread slug for home page context
+ * @param {string} [props.reasoningSessionSlug] - session the reasoning effort picker reads and writes, when it differs from threadSlug
  */
 export default function PromptInput({
   workspace = {},
@@ -49,6 +53,7 @@ export default function PromptInput({
   centered = false,
   workspaceSlug = null,
   threadSlug = null,
+  reasoningSessionSlug = null,
   history = [],
 }) {
   const { t } = useTranslation();
@@ -69,7 +74,10 @@ export default function PromptInput({
   const [_, setFocused] = useState(false);
   const undoStack = useRef([]);
   const redoStack = useRef([]);
-  const { textSizeClass } = useTextSize();
+  const { textSize, textSizeClass } = useTextSize();
+  // iOS Safari zooms into inputs under 16px on focus, so mobile devices get at least 16px.
+  const inputTextSizeClass =
+    isMobile && textSize !== "large" ? "text-[16px]" : textSizeClass;
   const [searchParams] = useSearchParams();
 
   // Synchronizes prompt input value with localStorage, scoped to the current thread.
@@ -123,6 +131,9 @@ export default function PromptInput({
    * @param {number} adjustment
    */
   function saveCurrentState(adjustment = 0) {
+    // The debounced call can land after this instance unmounted (eg: the
+    // empty->chat transition remounts PromptInput mid-debounce).
+    if (!textareaRef.current) return;
     if (undoStack.current.length >= MAX_EDIT_STACK_SIZE)
       undoStack.current.shift();
     undoStack.current.push({
@@ -376,6 +387,7 @@ export default function PromptInput({
                 disabled={isStreaming || isDisabled}
               />
             )}
+            <AagTokenUsage workspaceSlug={activeWorkspaceSlug} threadSlug={threadSlug} history={history} prompt={promptInput} systemPrompt={workspace?.openAiPrompt || ""} streaming={isStreaming || agentSessionActive} agent={agentSessionActive} hasAttachments={attachments.length > 0} />
             <ToolsMenu
               workspace={workspace}
               showing={showTools}
@@ -405,7 +417,7 @@ export default function PromptInput({
                   }}
                   value={promptInput}
                   spellCheck={Appearance.get("enableSpellCheck")}
-                  className={`border-none cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] pt-[20px] w-full leading-5 text-white light:text-slate-600 bg-transparent placeholder:text-white/60 light:placeholder:text-slate-400 resize-none active:outline-none focus:outline-none flex-grow pwa:!text-[16px] ${textSizeClass}`}
+                  className={`border-none cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] pt-[20px] w-full leading-5 text-white light:text-slate-600 bg-transparent placeholder:text-white/60 light:placeholder:text-slate-400 resize-none active:outline-none focus:outline-none flex-grow pwa:!text-[16px] ${inputTextSizeClass}`}
                   placeholder={t("chat_window.send_message")}
                 />
               </div>
@@ -421,6 +433,11 @@ export default function PromptInput({
                       promptInput={promptInput}
                       textareaRef={textareaRef}
                       visible={!agentSessionActive & showAgentCommand}
+                    />
+                    <ReasoningEffortButton
+                      workspaceSlug={workspaceSlug ?? workspace?.slug}
+                      threadSlug={reasoningSessionSlug ?? threadSlug}
+                      centered={centered}
                     />
                   </div>
                   <ToolsButton

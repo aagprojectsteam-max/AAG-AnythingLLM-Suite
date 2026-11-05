@@ -79,7 +79,7 @@ test("builder preserves Composer state and sidebar while removing the floating c
 
 test("pinned upstream reconstruction succeeds and every mutation uses fail-closed anchors", () => {
   const source = fs.readFileSync(builderPath, "utf8");
-  assert.match(source, /07bd65f80b3d9ba3031ed7afb8786627326bd134/);
+  assert.match(source, /9b1fcab141000eaba9f78ed131151de04904454b/);
   assert.match(source, /source\.indexOf\(expected, first \+ expected\.length\) >= 0/);
   const upstream = process.env.AAG_TEST_ANYTHINGLLM_SOURCE_DIR;
   if (!upstream) return console.log("PINNED_RECONSTRUCTION=SKIP(no local source configured)");
@@ -102,7 +102,7 @@ test("pinned upstream reconstruction succeeds and every mutation uses fail-close
       "utf8"
     );
     assert.ok(threadContainer.includes("{threads.map((thread, i) => ("));
-    assert.ok(threadContainer.includes("<NewThreadButton workspace={workspace} />"));
+    assert.match(threadContainer, /<NewThreadButton\s+workspace=\{workspace\}/);
     console.log("REAL_THREADS_UNCHANGED=PASS");
     console.log("NEW_THREAD_UNCHANGED=PASS");
     console.log("PINNED_UPSTREAM_PROVENANCE=PASS");

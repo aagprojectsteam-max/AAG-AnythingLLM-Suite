@@ -5,7 +5,6 @@ const {
   NativeEmbeddingReranker,
 } = require("../../../EmbeddingRerankers/native");
 
-const CHUNK_SIZE = 25;
 const MAX_TEXT_LENGTH = 1000;
 const INTENT_WEIGHT = 4;
 const DEFAULT_METADATA_PATH = path.resolve(
@@ -176,37 +175,11 @@ class ToolReranker {
     return this.reranker;
   }
 
-  async #chunkedRerank(query, documents) {
-    const reranker = await this.#getReranker();
-    if (documents.length <= CHUNK_SIZE)
-      return await reranker.rerank(query, documents, {
-        topK: documents.length,
-      });
-
-    this.log(
-      `Processing ${documents.length} documents in chunks of ${CHUNK_SIZE}...`
-    );
-    const allScored = [];
-    for (let offset = 0; offset < documents.length; offset += CHUNK_SIZE) {
-      const chunk = documents.slice(offset, offset + CHUNK_SIZE);
-      const chunkNumber = Math.floor(offset / CHUNK_SIZE) + 1;
-      const totalChunks = Math.ceil(documents.length / CHUNK_SIZE);
-      this.log(
-        `Processing chunk ${chunkNumber}/${totalChunks} (${chunk.length} docs)...`
-      );
-      const chunkResults = await reranker.rerank(query, chunk, {
-        topK: chunk.length,
-      });
-      for (const result of chunkResults) {
-        allScored.push({
-          ...result,
-          rerank_corpus_id: result.rerank_corpus_id + offset,
-        });
-      }
-    }
-    return allScored;
-  }
-
+  /**
+   * Convert a tool/function definition to a text representation for reranking.
+   * @param {Object} tool - The tool definition object
+   * @returns {{text: string, toolName: string, tool: Object, tokens: number}}
+   */
   #toolToDocument(tool) {
     const parts = [];
     if (!tool?.name)
@@ -268,9 +241,11 @@ class ToolReranker {
       }));
 
       const started = Date.now();
-      const semanticResults = await this.#chunkedRerank(
-        userPrompt,
-        rerankDocuments
+      const reranker = await this.#getReranker();
+      const semanticResults = await reranker.rerank(
+        this.#truncateText(userPrompt),
+        rerankDocuments,
+        { topK: rerankDocuments.length }
       );
       const scored = semanticResults
         .map((result) => {

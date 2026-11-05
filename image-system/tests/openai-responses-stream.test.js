@@ -50,9 +50,9 @@ test('wrong content type rejects',async()=>{const r=response('');r.headers=new H
 function adapter(result){
  const calls=[];class SDK{constructor(){this.responses={create:(req)=>{calls.push(req);return req.stream?{asResponse:async()=>response(result)}:Promise.resolve(result);}};}};
  for(const name of ['AuthenticationError','RateLimitError','InternalServerError','APIError'])SDK[name]=class extends Error{};
- class Base{constructor(client){this.client=client;}providerLog(){}resetUsage(){this.usage=null;}recordUsage(v){this.usage=v;}getUsage(){return this.usage;}}
+ class Base{constructor(client){this.client=client;}watchTokenLimit(){}providerLog(){}resetUsage(){this.usage=null;}recordUsage(v){this.usage=v;}getUsage(){return this.usage;}}
  const module={exports:{}};const source=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming/openai.js'),'utf8');
- vm.runInNewContext(source,{module,process:{env:{}},require:name=>({'openai':SDK,'./ai-provider.js':Base,'../error.js':{RetryError:class extends Error{}},uuid:{v4:()=> 'uuid'},'./responses-stream.js':require('../integrations/anythingllm/provider-streaming/responses-stream')})[name]});
+ vm.runInNewContext(source,{module,process:{env:{}},require:name=>({...require('./support/anythingllm-1.19-stubs').agentProvider(),'openai':SDK,'./ai-provider.js':Base,'../error.js':{RetryError:class extends Error{}},uuid:{v4:()=> 'uuid'},'./responses-stream.js':require('../integrations/anythingllm/provider-streaming/responses-stream')})[name]});
  return {provider:new module.exports({model:'selected-model'}),calls};
 }
 test('native adapter preserves selected model, tool schema, UI streaming and serial contract',async()=>{const {provider,calls}=adapter([added(),done(),completed()].map(frame).join(''));const events=[];const r=await provider.stream([{role:'user',content:'request'}],[{name:'aag-image-task',parameters:{type:'object'}}],(...x)=>events.push(x));assert.equal(r.functionCall.arguments.prompt,'red cube');assert.equal(calls[0].model,'selected-model');assert.equal(calls[0].parallel_tool_calls,false);assert.equal(calls[0].store,false);assert.equal(calls[0].tools[0].strict,false);assert.ok(events.length);});

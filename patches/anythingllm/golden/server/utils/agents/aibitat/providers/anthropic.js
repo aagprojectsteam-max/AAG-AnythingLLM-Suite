@@ -1,5 +1,6 @@
 const { classifyError, requestSummary, StreamTrace, decodeAnthropic } = require('./anthropic-transport.js');
 const { SerialToolAssembly, requireProtocol, argumentsObject } = require("./tool-contract.js");
+const { reasoningParams } = require("../../../helpers/reasoningEffort");
 const Anthropic = require("@anthropic-ai/sdk");
 const { AnthropicLLM } = require("../../../AiProviders/anthropic");
 const { RetryError } = require("../error.js");
@@ -26,6 +27,7 @@ class AnthropicProvider extends Provider {
         },
       },
       model = "claude-sonnet-4-6",
+      reasoningEffort = null,
     } = config;
 
     const client = new Anthropic(options);
@@ -33,6 +35,16 @@ class AnthropicProvider extends Provider {
     super(client);
     this.providerTag = "anthropic";
     this.model = model;
+    this.reasoningEffort = reasoningEffort;
+  }
+
+  /**
+   * The reasoning portion of the request body. The effort is validated against
+   * the model before the provider is built, so it only needs mapping here.
+   * @returns {object}
+   */
+  get reasoningConfig() {
+    return reasoningParams("anthropic", this.reasoningEffort, this.model);
   }
 
   /**
@@ -219,12 +231,12 @@ class AnthropicProvider extends Provider {
   // so that the call can run correctly.
   #formatFunctions(functions = []) {
     return functions.map((func) => {
-      const { name, description, parameters, required } = func;
+      const { name, description, parameters } = func;
       // Some MCP tools (e.g. Pydantic v2 nested models) describe their parameters
       // with `$ref`/`$defs`. Anthropic's `input_schema` does not resolve local
       // references, so we inline them here - otherwise the dangling pointer crashes
       // the tool call. Flat schemas are left unchanged. See issue #3938.
-      const { type, properties } = dereferenceSchema(parameters);
+      const { type, properties, required } = dereferenceSchema(parameters);
       return {
         name,
         description,
@@ -263,12 +275,15 @@ class AnthropicProvider extends Provider {
           messages: chats,
           stream: true,
           ...(Array.isArray(functions) && functions?.length > 0
-            ? { tools: this.#formatFunctions(functions) }
+            ? {
+                tools: this.#formatFunctions(functions),
+                tool_choice: { type: "auto", disable_parallel_tool_use: true },
+              }
             : {}),
+          ...this.reasoningConfig,
         },
         { headers: { "anthropic-beta": "tools-2024-04-04" } } // Required to we can use tools.
       );
-
       const response = await pending.asResponse();
       const tools = new SerialToolAssembly();
       const openBlocks = new Set();
@@ -363,11 +378,16 @@ class AnthropicProvider extends Provider {
           messages: chats,
           stream: false,
           ...(Array.isArray(functions) && functions?.length > 0
-            ? { tools: this.#formatFunctions(functions) }
+            ? {
+                tools: this.#formatFunctions(functions),
+                tool_choice: { type: "auto", disable_parallel_tool_use: true },
+              }
             : {}),
+          ...this.reasoningConfig,
         },
         { headers: { "anthropic-beta": "tools-2024-04-04" } } // Required to we can use tools.
       );
+      this.watchTokenLimit(response);
 
       // Record usage from response (Anthropic uses input_tokens/output_tokens)
       if (response.usage) this.recordUsage(response.usage);

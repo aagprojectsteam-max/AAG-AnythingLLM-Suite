@@ -143,87 +143,101 @@ const Workspace = {
     prompt,
     chatHandler,
     attachments = [],
+    reasoningEffort = null,
   }) {
     if (!!threadSlug)
       return this.threads.streamChat(
         { workspaceSlug, threadSlug },
         prompt,
         chatHandler,
-        attachments
+        attachments,
+        reasoningEffort
       );
     return this.streamChat(
       { slug: workspaceSlug },
       prompt,
       chatHandler,
-      attachments
+      attachments,
+      reasoningEffort
     );
   },
-  streamChat: async function ({ slug }, message, handleChat, attachments = []) {
+  streamChat: async function (
+    { slug },
+    message,
+    handleChat,
+    attachments = [],
+    reasoningEffort = null
+  ) {
     const ctrl = new AbortController();
 
     // Listen for the ABORT_STREAM_EVENT key to be emitted by the client
     // to early abort the streaming response. On abort we send a special `stopGeneration`
     // event to be handled which resets the UI for us to be able to send another message.
     // The backend response abort handling is done in each LLM's handleStreamResponse.
-    window.addEventListener(ABORT_STREAM_EVENT, () => {
+    const onAbortStream = () => {
       ctrl.abort();
       handleChat({ id: v4(), type: "stopGeneration" });
-    });
+    };
+    window.addEventListener(ABORT_STREAM_EVENT, onAbortStream);
 
-    await fetchEventSource(`${API_BASE}/workspace/${slug}/stream-chat`, {
-      method: "POST",
-      body: JSON.stringify({ message, attachments }),
-      headers: baseHeaders(),
-      signal: ctrl.signal,
-      openWhenHidden: true,
-      async onopen(response) {
-        if (response.ok) {
-          return; // everything's good
-        } else if (
-          response.status >= 400 &&
-          response.status < 500 &&
-          response.status !== 429
-        ) {
+    try {
+      await fetchEventSource(`${API_BASE}/workspace/${slug}/stream-chat`, {
+        method: "POST",
+        body: JSON.stringify({ message, attachments, reasoningEffort }),
+        headers: baseHeaders(),
+        signal: ctrl.signal,
+        openWhenHidden: true,
+        async onopen(response) {
+          if (response.ok) {
+            return; // everything's good
+          } else if (
+            response.status >= 400 &&
+            response.status < 500 &&
+            response.status !== 429
+          ) {
+            handleChat({
+              id: v4(),
+              type: "abort",
+              textResponse: null,
+              sources: [],
+              close: true,
+              error: `An error occurred while streaming response. Code ${response.status}`,
+            });
+            ctrl.abort();
+            throw new Error("Invalid Status code response.");
+          } else {
+            handleChat({
+              id: v4(),
+              type: "abort",
+              textResponse: null,
+              sources: [],
+              close: true,
+              error: `An error occurred while streaming response. Unknown Error.`,
+            });
+            ctrl.abort();
+            throw new Error("Unknown error");
+          }
+        },
+        async onmessage(msg) {
+          const chatResult = safeJsonParse(msg.data, null);
+          if (chatResult) handleChat(chatResult);
+        },
+        onerror(err) {
           handleChat({
             id: v4(),
             type: "abort",
             textResponse: null,
             sources: [],
             close: true,
-            error: `An error occurred while streaming response. Code ${response.status}`,
+            error: `An error occurred while streaming response. ${err.message}`,
           });
           ctrl.abort();
-          throw new Error("Invalid Status code response.");
-        } else {
-          handleChat({
-            id: v4(),
-            type: "abort",
-            textResponse: null,
-            sources: [],
-            close: true,
-            error: `An error occurred while streaming response. Unknown Error.`,
-          });
-          ctrl.abort();
-          throw new Error("Unknown error");
-        }
-      },
-      async onmessage(msg) {
-        const chatResult = safeJsonParse(msg.data, null);
-        if (chatResult) handleChat(chatResult);
-      },
-      onerror(err) {
-        handleChat({
-          id: v4(),
-          type: "abort",
-          textResponse: null,
-          sources: [],
-          close: true,
-          error: `An error occurred while streaming response. ${err.message}`,
-        });
-        ctrl.abort();
-        throw new Error();
-      },
-    });
+          throw new Error();
+        },
+      });
+    } finally {
+      window.removeEventListener(ABORT_STREAM_EVENT, onAbortStream);
+    }
   },
   all: async function () {
     const workspaces = await fetch(`${API_BASE}/workspaces`, {
@@ -244,6 +258,21 @@ const Workspace = {
       .then((res) => res.workspace)
       .catch(() => null);
     return workspace;
+  },
+  /**
+   * Fetches the capabilities of the workspace's current LLM model.
+   * @param {string} slug - Workspace slug
+   * @returns {Promise<{reasoning: 'unknown' | boolean, reasoningOptions: string[]}>}
+   */
+  llmCapabilities: async function (slug = "") {
+    const capabilities = await fetch(
+      `${API_BASE}/workspace/${slug}/llm-capabilities`,
+      { headers: baseHeaders() }
+    )
+      .then((res) => res.json())
+      .then((res) => res.capabilities)
+      .catch(() => null);
+    return capabilities ?? { reasoning: "unknown", reasoningOptions: [] };
   },
   delete: async function (slug) {
     const result = await fetch(`${API_BASE}/workspace/${slug}`, {
@@ -476,6 +505,22 @@ const Workspace = {
 
     const data = await response.json();
     return { response, data };
+  },
+
+  /**
+   * Moves parsed files into custom-documents so they can be queued for embedding.
+   * @param {string} slug - workspace slug
+   * @param {number[]} fileIds - parsed file ids
+   * @returns {Promise<{locations: (string|null)[]}>} document locations index-aligned with fileIds, null if the move failed
+   */
+  moveParsedFiles: async function (slug, fileIds = []) {
+    return fetch(`${API_BASE}/workspace/${slug}/move-parsed-files`, {
+      method: "POST",
+      body: JSON.stringify({ fileIds }),
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch(() => ({ locations: fileIds.map(() => null) }));
   },
 
   /**

@@ -1,6 +1,8 @@
 const { SerialToolAssembly, requireProtocol, argumentsObject } = require("./tool-contract.js");
+const { reasoningParams } = require("../../../helpers/reasoningEffort");
 const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
+const { temperatureParam } = require("./helpers/tooled.js");
 const { RetryError } = require("../error.js");
 const { safeJsonParse } = require("../../../http");
 const { v4 } = require("uuid");
@@ -13,7 +15,7 @@ class GeminiProvider extends Provider {
   model;
 
   constructor(config = {}) {
-    const { model = "gemini-2.0-flash-lite" } = config;
+    const { model = "gemini-2.0-flash-lite", reasoningEffort = null } = config;
     super();
     this.providerTag = "gemini";
     this.className = "GeminiProvider";
@@ -43,11 +45,21 @@ class GeminiProvider extends Provider {
 
     this._client = client;
     this.model = model;
+    this.reasoningEffort = reasoningEffort;
     this.verbose = true;
   }
 
   get client() {
     return this._client;
+  }
+
+  /**
+   * The reasoning portion of the request body. The effort is validated against
+   * the model before the provider is built, so it only needs mapping here.
+   * @returns {object}
+   */
+  get reasoningConfig() {
+    return reasoningParams("gemini", this.reasoningEffort, this.model);
   }
 
   /**
@@ -255,9 +267,11 @@ class GeminiProvider extends Provider {
       /** @type {OpenAI.OpenAI.Chat.ChatCompletion} */
       const response = await this.client.chat.completions.create({
         model: this.model,
+        ...temperatureParam(this.temperature),
         messages: this.#formatMessages(messages),
         stream: true,
         stream_options: { include_usage: true },
+        ...this.reasoningConfig,
         ...(Array.isArray(functions) && functions?.length > 0
           ? {
               tools: this.#formatFunctions(functions),
@@ -268,12 +282,17 @@ class GeminiProvider extends Provider {
             }
           : {}),
       });
+      this.watchTokenLimit(response);
 
       const tools = new SerialToolAssembly();
       let content = "", finished = false;
+      // Gemini can attach usage to more than one chunk, so capture the latest
+      // and record exactly once after the stream ends - recordUsage accumulates
+      // into run totals, so calling it per-chunk would inflate them.
+      let usage = null;
       for await (const chunk of response) {
         requireProtocol(!chunk.error, "PROVIDER_ERROR", chunk.error?.message || "Provider stream error.");
-        if (chunk.usage) this.recordUsage(chunk.usage);
+        if (chunk.usage) usage = chunk.usage;
         const choice = chunk.choices?.[0];
         if (!choice) continue;
         const value = choice.delta || {};
@@ -304,6 +323,7 @@ class GeminiProvider extends Provider {
           finished=true;
         }
       }
+      if (usage) this.recordUsage(usage);
       return {textResponse:content,functionCall:tools.finish(finished),cost:this.getCost(),uuid:msgUUID};
     } catch (error) {
       this.#logAPIError(error);
@@ -340,8 +360,10 @@ class GeminiProvider extends Provider {
     try {
       const response = await this.client.chat.completions.create({
         model: this.model,
+        ...temperatureParam(this.temperature),
         stream: false,
         messages: this.#formatMessages(messages),
+        ...this.reasoningConfig,
         ...(Array.isArray(functions) && functions?.length > 0
           ? {
               tools: this.#formatFunctions(functions),
@@ -352,6 +374,7 @@ class GeminiProvider extends Provider {
             }
           : {}),
       });
+      this.watchTokenLimit(response);
 
       if (response.usage) this.recordUsage(response.usage);
 

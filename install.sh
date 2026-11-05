@@ -7,7 +7,7 @@ while (($#)); do case "$1" in
  --profile) profile=$2; shift 2;; --anythingllm-root) ANYTHINGLLM_ROOT=$2; export ANYTHINGLLM_ROOT; shift 2;; --storage) ANYTHINGLLM_STORAGE=$2; export ANYTHINGLLM_STORAGE; shift 2;; --install-root) AAG_INSTALL_ROOT=$2; export AAG_INSTALL_ROOT; shift 2;; --atlas-source) AAG_ATLAS_SOURCE=$2; shift 2;; --dry-run) dry=1; shift;; --skip-tests) skip_tests=1; shift;; -h|--help) echo 'Usage: ./install.sh [--profile core|pdf|chess|image|local-llm|full] [--anythingllm-root PATH] [--storage PATH] [--install-root PATH] [--atlas-source PATH] [--dry-run]'; exit 0;; *) echo "Unknown argument: $1" >&2; exit 2;; esac; done
 case "$profile" in core|pdf|chess|image|local-llm|full) ;; *) echo "Invalid profile: $profile" >&2; exit 2;; esac
 aag_detect_anythingllm || { echo 'AnythingLLM source checkout not found. Pass --anythingllm-root.' >&2; exit 1; }; aag_resolve_storage
-expected=07bd65f80b3d9ba3031ed7afb8786627326bd134; actual=$(git -C "$ANYTHINGLLM_ROOT" rev-parse HEAD 2>/dev/null || true)
+expected=9b1fcab141000eaba9f78ed131151de04904454b; actual=$(git -C "$ANYTHINGLLM_ROOT" rev-parse HEAD 2>/dev/null || true)
 [[ $actual == "$expected" ]] || { echo "INCOMPATIBLE_ANYTHINGLLM expected=$expected actual=${actual:-unknown}" >&2; exit 1; }
 python3 "$ROOT/tools/verify-upstream.py" "$ANYTHINGLLM_ROOT" "$ROOT/config/compatibility.json"
 (( skip_tests )) || "$ROOT/doctor.sh" --package --profile "$profile"
@@ -53,7 +53,11 @@ if [[ $profile == chess || $profile == full ]]; then add "$unit_stage/aag-chess-
 if [[ $profile == local-llm || $profile == full ]]; then add "$unit_stage/aag-model-compatibility.service" "$SYSTEMD_USER_DIR/aag-model-compatibility.service"; fi
 mkdir -p "$backup" "$AAG_INSTALL_ROOT" "$AAG_STATE_ROOT" "$AAG_CONFIG_ROOT" "$ANYTHINGLLM_STORAGE/plugins/agent-skills"; : > "$manifest"
 rollback(){ "$ROOT/rollback.sh" "$backup" || true; }; trap rollback ERR INT TERM
-for e in "${maps[@]}"; do src=${e%%|*}; dst=${e#*|}; mkdir -p "$(dirname "$dst")"; if [[ -e $dst || -L $dst ]]; then rel=${dst#/}; mkdir -p "$backup/files/$(dirname "$rel")"; cp -a "$dst" "$backup/files/$rel"; printf 'RESTORE\t%s\n' "$dst" >> "$manifest"; else printf 'REMOVE\t%s\n' "$dst" >> "$manifest"; fi; stage=${dst}.aag-stage-$stamp; cp -a "$src" "$stage"; mv "$stage" "$dst"; done
+# Record the whole pre-install state before the first write. A target can be mapped twice or sit
+# inside a mapped directory, and either would otherwise be backed up in its patched state.
+declare -A backed_up=()
+for e in "${maps[@]}"; do dst=${e#*|}; [[ -z ${backed_up[$dst]:-} ]] || continue; backed_up[$dst]=1; if [[ -e $dst || -L $dst ]]; then rel=${dst#/}; mkdir -p "$backup/files/$(dirname "$rel")"; cp -a "$dst" "$backup/files/$rel"; printf 'RESTORE\t%s\n' "$dst" >> "$manifest"; else printf 'REMOVE\t%s\n' "$dst" >> "$manifest"; fi; done
+for e in "${maps[@]}"; do src=${e%%|*}; dst=${e#*|}; mkdir -p "$(dirname "$dst")"; stage=${dst}.aag-stage-$stamp; cp -a "$src" "$stage"; mv "$stage" "$dst"; done
 if [[ -n ${AAG_ATLAS_SOURCE:-} && ($profile == image || $profile == full) ]]; then "$ROOT/tools/atlas-assets.py" install --source "$AAG_ATLAS_SOURCE" --target "$AAG_ATLAS_ROOT"; fi
 [[ -f $AAG_USER_CONFIG ]] || { mkdir -p "$(dirname "$AAG_USER_CONFIG")"; cp "$ROOT/config/defaults.env" "$AAG_USER_CONFIG"; }
 cat > "$AAG_STATE_ROOT/install.env" <<EOF

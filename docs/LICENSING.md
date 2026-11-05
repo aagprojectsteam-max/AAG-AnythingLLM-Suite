@@ -8,7 +8,7 @@ Model weights, custom nodes, UpScayl binaries/models, fonts, icons, workflows, t
 
 Authoritative upstream references:
 
-- AnythingLLM license: https://github.com/Mintplex-Labs/anything-llm/blob/07bd65f80b3d9ba3031ed7afb8786627326bd134/LICENSE
+- AnythingLLM license: https://github.com/Mintplex-Labs/anything-llm/blob/9b1fcab141000eaba9f78ed131151de04904454b/LICENSE
 - ComfyUI license: https://github.com/Comfy-Org/ComfyUI/blob/master/LICENSE
 - llama.cpp license: https://github.com/ggml-org/llama.cpp/blob/master/LICENSE
 - Stockfish copying terms: https://github.com/official-stockfish/Stockfish/blob/master/Copying.txt

@@ -13,13 +13,15 @@ function provider(events,{error,frames=false}={}) {
  const requests=[],logs=[];
  class SDK{constructor(){this.messages={create:r=>{requests.push(r);return {asResponse:async()=>{if(error)throw error;return events;}};}};}}
  for(const k of ['AuthenticationError','RateLimitError','InternalServerError','APIError'])SDK[k]=class extends Error{};
- class Base{constructor(c){this.client=c;}resetUsage(){}recordUsage(){}getUsage(){return {};}providerLog(...v){logs.push(v);}}
+ class Base{constructor(c){this.client=c;}watchTokenLimit(){}resetCumulativeUsage(){}getCumulativeUsage(){return {};}resetUsage(){}recordUsage(){}getUsage(){return {};}providerLog(...v){logs.push(v);}}
  const deps={'./anthropic-transport.js':{...wire,decodeAnthropic:async function*(events,trace){for(const e of events)yield wire.decodeFrame(frames?e:{event:e.type,data:JSON.stringify(e)},trace);}},'./tool-contract.js':contract,'@anthropic-ai/sdk':SDK,'../../../AiProviders/anthropic':{AnthropicLLM:{fetchModelMaxTokens:async()=>4096}},'../error.js':{RetryError:class extends Error{}},'./ai-provider.js':Base,uuid:{v4:()=> 'id'},'../../../http':{},'../../../../endpoints/utils':{getAnythingLLMUserAgent:()=> 'test'},'./helpers/dereferenceSchema':{dereferenceSchema:x=>x}};
+ Object.assign(deps,require('./support/anythingllm-1.19-stubs').agentProvider(deps),require('./support/anythingllm-1.19-stubs').aibitat);
  const module={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(dir,'anthropic.js'),'utf8'),{module,process:{env:{}},console,require:n=>{assert.ok(n in deps,n);return deps[n];}});
  return {p:new module.exports({model:'selected-claude'}),requests,logs};
 }
 function agent(p){
  const module={exports:{}};const deps={'./providers/tool-contract.js':contract,events:require('events'),'./error.js':{APIError:class extends Error{}},'./providers/index.js':{},'../../../models/telemetry.js':{Telemetry:{sendTelemetry(){}}},uuid:{v4:()=> 'id'},'./utils/toolReranker.js':{ToolReranker:class{}}};
+ Object.assign(deps,require('./support/anythingllm-1.19-stubs').aibitat);
  vm.runInNewContext(fs.readFileSync(path.join(dir,'aibitat.js'),'utf8'),{module,process:{env:{}},console:{error(){}},AbortController,require:n=>deps[n]});const a=new module.exports();a.providerInstance=p;let count=0;
  a.functions.set('aag-image-task',{handler:async args=>{assert.equal(args.prompt,'cube');count++;a.skipHandleExecution=true;return 'stub-only';}});return {a,count:()=>count};
 }

@@ -11,7 +11,7 @@ This source distribution excludes production storage, active machine configurati
 ## Supported platform
 
 - Ubuntu Linux on `x86_64` is the tested release target.
-- AnythingLLM source commit `07bd65f80b3d9ba3031ed7afb8786627326bd134` is the only supported patch baseline for RC1.
+- AnythingLLM source commit `9b1fcab141000eaba9f78ed131151de04904454b` (v1.19.0) is the only supported patch baseline on this branch.
 - Docker may host AnythingLLM, but an exact source checkout is required to build/apply the overlay safely.
 - Core/PDF/Chess work without a GPU. Image features need a compatible ComfyUI installation and external models. The accepted accelerated local-LLM path is Intel GPU + Level Zero/SYCL; CPU llama.cpp is user-supplied. NVIDIA is detected but not claimed as an accepted AAG local-LLM backend.
 

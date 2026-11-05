@@ -7,10 +7,11 @@ function fixture(name,events,model){
  for(const n of ['AuthenticationError','RateLimitError','InternalServerError','APIError'])SDK[n]=class extends Error{};
  class Local{async chat(r){local++;requests.push(r);return stream();}}
  async function* stream(){for(const e of events)yield e;}
- class Base{constructor(c){this._client=c;}get client(){return this._client;}providerLog(){}resetUsage(){}recordUsage(){}getCost(){return 0;}optsOutOfNativeToolCallingViaEnv(){return false;}}
+ class Base{constructor(c){this._client=c;}watchTokenLimit(){}resetCumulativeUsage(){}getCumulativeUsage(){return {};}get client(){return this._client;}providerLog(){}resetUsage(){}recordUsage(){}getCost(){return 0;}optsOutOfNativeToolCallingViaEnv(){return false;}}
  class LocalMetadata{static cacheContextWindows(){}static applyOllamaFetch(){return ()=>{throw Error('unexpected network');};}static promptWindowLimit(){return 8192;}static maxContextWindow(){return 8192;}async getModelCapabilities(){return {tools:true};}}
  const module={exports:{}};const source=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming',name+'.js'),'utf8');
  const stubs={'./tool-contract.js':contract,'./anthropic-transport.js':{...require('../integrations/anythingllm/provider-streaming/anthropic-transport'),decodeAnthropic:async function*(response){yield* response;}},openai:SDK,'@anthropic-ai/sdk':SDK,'./ai-provider.js':Base,'../error.js':{RetryError:class extends Error{}},uuid:{v4:()=>String(++fixture.id)},'../../../http':{safeJsonParse:(v,d)=>{try{return JSON.parse(v);}catch{return d;}}},'../../../AiProviders/anthropic':{AnthropicLLM:{fetchModelMaxTokens:async()=>4096}},'../../../../endpoints/utils':{getAnythingLLMUserAgent:()=> 'test'},'./helpers/dereferenceSchema':{dereferenceSchema:x=>x},'./helpers/classes.js':()=>Base,'./helpers/untooled.js':class{},'./helpers/tooled.js':{formatFunctionsToTools:x=>x},'../../../AiProviders/ollama':{OllamaAILLM:LocalMetadata},ollama:{Ollama:Local}};
+ Object.assign(stubs,require('./support/anythingllm-1.19-stubs').agentProvider(stubs));
  vm.runInNewContext(source,{module,process:{env:{}},console,require:n=>{assert.ok(n in stubs,'Unexpected dependency '+n);return stubs[n];}});
  return {provider:new module.exports({model}),requests,counts:()=>({external,local})};
 }
@@ -35,16 +36,16 @@ test('Neutral completion validator preserves metadata but rejects malformed args
 function nativeAgent(){
  const module={exports:{}};const Providers={};
  for(const [key,tag] of [['OpenAIProvider','openai'],['GeminiProvider','gemini'],['AnthropicProvider','anthropic'],['OllamaProvider','ollama']])Providers[key]=class{constructor({model}){this.model=model;this.tag=tag;}attachAbortSignal(signal){this.signal=signal;}};
- vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming/aibitat.js'),'utf8'),{module,process:{env:{}},console,AbortController,require:n=>({'./providers/tool-contract.js':contract,events:require('node:events'),'./error.js':{APIError:class extends Error{}},'./providers/index.js':Providers,'../../../models/telemetry.js':{Telemetry:{sendTelemetry(){}}},uuid:{v4:()=> 'uuid'},'./utils/toolReranker.js':{ToolReranker:class{}}})[n]});return new module.exports();
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/provider-streaming/aibitat.js'),'utf8'),{module,process:{env:{}},console,AbortController,require:n=>({...require('./support/anythingllm-1.19-stubs').aibitat,'./providers/tool-contract.js':contract,events:require('node:events'),'./error.js':{APIError:class extends Error{}},'./providers/index.js':Providers,'../../../models/telemetry.js':{Telemetry:{sendTelemetry(){}}},uuid:{v4:()=> 'uuid'},'./utils/toolReranker.js':{ToolReranker:class{}}})[n]});return new module.exports();
 }
 test('real AIbitat factory follows each selected provider/model and preserves abort signal',()=>{
  const a=nativeAgent();for(const provider of ['openai','gemini','anthropic','ollama']){const p=a.getProviderForConfig({provider,model:'active-'+provider});assert.equal(p.tag,provider);assert.equal(p.model,'active-'+provider);assert.equal(p.signal,a.abortController.signal);}
 });
 test('real AIbitat executes once, rejects a repeated call ID and then accepts a new sequential call',async()=>{
- const a=nativeAgent();let executions=0,id='first';a.functions.set('aag-image-task',{handler:async args=>{assert.equal(args.prompt,'cube');executions++;a.skipHandleExecution=true;return 'boundary received';}});a.providerInstance={stream:async()=>({functionCall:{id,name:'aag-image-task',arguments:{prompt:'cube'}},uuid:'m'}),getUsage:()=>({})};
+ const a=nativeAgent();let executions=0,id='first';a.functions.set('aag-image-task',{handler:async args=>{assert.equal(args.prompt,'cube');executions++;a.skipHandleExecution=true;return 'boundary received';}});a.providerInstance={resetCumulativeUsage(){},getCumulativeUsage(){return {};},stream:async()=>({functionCall:{id,name:'aag-image-task',arguments:{prompt:'cube'}},uuid:'m'}),getUsage:()=>({})};
  assert.equal(await a.handleAsyncExecution(),'boundary received');assert.equal(executions,1);
  await assert.rejects(a.handleAsyncExecution(),{code:'DUPLICATE_TOOL_CALL'});assert.equal(executions,1);id='second';await a.handleAsyncExecution();assert.equal(executions,2);
 });
 test('real AIbitat never dispatches malformed normalized arguments',async()=>{
- const a=nativeAgent();let executions=0;a.functions.set('tool',{handler:()=>executions++});a.providerInstance={stream:async()=>({functionCall:{id:'x',name:'tool',arguments:'{'}})};await assert.rejects(a.handleAsyncExecution(),/malformed/);assert.equal(executions,0);
+ const a=nativeAgent();let executions=0;a.functions.set('tool',{handler:()=>executions++});a.providerInstance={resetCumulativeUsage(){},getCumulativeUsage(){return {};},stream:async()=>({functionCall:{id:'x',name:'tool',arguments:'{'}})};await assert.rejects(a.handleAsyncExecution(),/malformed/);assert.equal(executions,0);
 });

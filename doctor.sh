@@ -14,10 +14,13 @@ if command -v docker >/dev/null 2>&1; then
 else
  line Docker 'OPTIONAL/MISSING — required only by Docker-backed image services'
 fi
-if aag_detect_anythingllm; then aag_resolve_storage; rev=$(git -C "$ANYTHINGLLM_ROOT" rev-parse HEAD 2>/dev/null || echo unknown); [[ $rev == 07bd65f80b3d9ba3031ed7afb8786627326bd134 ]] && line AnythingLLM 'PASS compatible commit' || { line AnythingLLM "FAIL incompatible commit $rev"; fail=1; }; else line AnythingLLM 'FAIL source checkout not detected'; [[ $mode == --installed ]] && fail=1; fi
+if aag_detect_anythingllm; then aag_resolve_storage; rev=$(git -C "$ANYTHINGLLM_ROOT" rev-parse HEAD 2>/dev/null || echo unknown); [[ $rev == 9b1fcab141000eaba9f78ed131151de04904454b ]] && line AnythingLLM 'PASS compatible commit' || { line AnythingLLM "FAIL incompatible commit $rev"; fail=1; }; else line AnythingLLM 'FAIL source checkout not detected'; [[ $mode == --installed ]] && fail=1; fi
+# Node below 22 does not detect ES modules in .js files, so retry module syntax as .mjs.
+check_js(){ local file=$1 copy rc; node --check "$file" >/dev/null 2>&1 && return 0; grep -qE '^[[:space:]]*(import|export)[[:space:]{*]' "$file" || return 1; copy=$(mktemp --suffix=.mjs); cp "$file" "$copy"; node --check "$copy" >/dev/null 2>&1; rc=$?; rm -f -- "$copy"; return $rc; }
 if [[ $mode == --package ]]; then
  find "$ROOT" -type f -name '*.json' -not -path '*/.git/*' -print0 | xargs -0 -r -n1 python3 -m json.tool >/dev/null 2>&1 && line 'JSON/config' PASS || { line 'JSON/config' FAIL; fail=1; }
- find "$ROOT" -type f -name '*.js' -not -path '*/.git/*' -print0 | xargs -0 -r -n1 node --check >/dev/null 2>&1 && line 'JavaScript' PASS || { line JavaScript FAIL; fail=1; }
+ js_status=PASS; while IFS= read -r -d '' js; do check_js "$js" || js_status=FAIL; done < <(find "$ROOT" -type f -name '*.js' -not -path '*/.git/*' -print0)
+ line JavaScript "$js_status"; [[ $js_status == PASS ]] || fail=1
  "$ROOT/tools/sanitize.sh" "$ROOT" >/dev/null && line 'Secrets/config' PASS || { line 'Secrets/config' FAIL; fail=1; }
  [[ -d $ROOT/image-system/skills ]] && line 'AAG core' PASS || { line 'AAG core' FAIL; fail=1; }
  line 'Patches' "PASS exact baseline hashes in config/compatibility.json"

@@ -3,6 +3,14 @@ const Provider = require("./ai-provider.js");
 const { RetryError } = require("../error.js");
 const { v4 } = require("uuid");
 const { decodeResponses, ResponsesAssembly, singleCall, ResponsesTrace, classifyStreamError } = require("./responses-stream.js");
+const {
+  reasoningParams,
+  createWithReasoningSummaryFallback,
+} = require("../../../helpers/reasoningEffort");
+const {
+  formatToResponsesInput,
+  formatResponsesTools,
+} = require("./helpers/responsesTooled.js");
 
 /**
  * The agent provider for the OpenAI API.
@@ -16,6 +24,7 @@ class OpenAIProvider extends Provider {
         apiKey: process.env.OPEN_AI_KEY,
       },
       model = "gpt-4.1-nano",
+      reasoningEffort = null,
     } = config;
 
     const client = new OpenAI(options);
@@ -24,6 +33,16 @@ class OpenAIProvider extends Provider {
 
     this.providerTag = "openai";
     this.model = model;
+    this.reasoningEffort = reasoningEffort;
+  }
+
+  /**
+   * The reasoning portion of the request body. The effort is validated against
+   * the model before the provider is built, so it only needs mapping here.
+   * @returns {object}
+   */
+  get reasoningConfig() {
+    return reasoningParams("openai", this.reasoningEffort, this.model);
   }
 
   get supportsAgentStreaming() {
@@ -40,98 +59,7 @@ class OpenAIProvider extends Provider {
   }
 
   /**
-   * Format the messages to the OpenAI API Responses format.
-   * - If the message is our internal `function` type, then we need to map it to a function call + output format
-   * - Otherwise, map it to the input text format for user, system, and assistant messages
-   * - Handles attachments (images) for multimodal support
-   *
-   * @param {any[]} messages - The messages to format.
-   * @returns {OpenAI.OpenAI.Responses.ResponseInput[]} The formatted messages.
-   */
-  #formatToResponsesInput(messages) {
-    let formattedMessages = [];
-    messages.forEach((message) => {
-      if (message.role === "function") {
-        // If the message does not have an originalFunctionCall we cannot
-        // map it to a function call id and OpenAI will throw an error.
-        // so if this does not carry over - log and skip
-        if (!message.hasOwnProperty("originalFunctionCall")) {
-          this.providerLog(
-            "[OpenAI.#formatToResponsesInput]: message did not pass back the originalFunctionCall. We need this to map the function call to the correct id.",
-            { message: JSON.stringify(message, null, 2) }
-          );
-          return;
-        }
-
-        formattedMessages.push(
-          {
-            type: "function_call",
-            name: message.originalFunctionCall.name,
-            call_id: message.originalFunctionCall.id,
-            arguments: JSON.stringify(message.originalFunctionCall.arguments),
-          },
-          {
-            type: "function_call_output",
-            call_id: message.originalFunctionCall.id,
-            output: message.content,
-          }
-        );
-        return;
-      }
-
-      // Build content array with text and optional image attachments
-      const content = [
-        {
-          type: message.role === "assistant" ? "output_text" : "input_text",
-          text: message.content,
-        },
-      ];
-
-      // Add image attachments if present (for multimodal/vision support)
-      if (message.attachments && message.attachments.length > 0) {
-        for (const attachment of message.attachments) {
-          content.push({
-            type: "input_image",
-            image_url: attachment.contentString,
-          });
-        }
-      }
-
-      formattedMessages.push({
-        role: message.role,
-        content,
-      });
-    });
-
-    return formattedMessages;
-  }
-
-  /**
-   * Format the functions to the OpenAI API Responses format.
-   *
-   * @param {any[]} functions - The functions to format.
-   * @returns {{
-   *   type: "function",
-   *   name: string,
-   *   description: string,
-   *   parameters: object,
-   *   strict: boolean,
-   * }[]} The formatted functions.
-   */
-  #formatFunctions(functions) {
-    return functions.map((func) => ({
-      type: "function",
-      name: func.name,
-      description: func.description,
-      parameters: func.parameters,
-      strict: false,
-    }));
-  }
-
-  /**
-   * Stream a chat completion from the LLM with tool calling
-   * Note: This using the OpenAI API Responses SDK and its implementation is specific to OpenAI models.
-   * Do not re-use this code for providers that do not EXACTLY implement the OpenAI API Responses SDK.
+   * Stream a chat completion from the LLM with tool calling via the Responses API.
    *
    * @param {any[]} messages - The messages to send to the LLM.
    * @param {any[]} functions - The functions to use in the LLM.
@@ -150,15 +78,19 @@ class OpenAIProvider extends Provider {
 
       // Keep the SDK transport, credentials, retries and abort signal. Decode
       // Responses SSE here because SDK 4.95.1 dispatches event-only frames.
-      const response = await this.client.responses.create({
-        model: this.model,
-        input: this.#formatToResponsesInput(messages),
-        stream: true,
-        store: false,
-        parallel_tool_calls: false,
-        ...(Array.isArray(functions) && functions.length
-          ? { tools: this.#formatFunctions(functions) } : {}),
-      }).asResponse();
+      const response = await createWithReasoningSummaryFallback(
+        (body) => this.client.responses.create(body).asResponse(),
+        {
+          model: this.model,
+          input: formatToResponsesInput(messages, this),
+          stream: true,
+          store: false,
+          parallel_tool_calls: false,
+          ...this.reasoningConfig,
+          ...(Array.isArray(functions) && functions.length
+            ? { tools: formatResponsesTools(functions) } : {}),
+        }
+      );
       responseStatus = response.status;
       const assembly = new ResponsesAssembly({
         onText: (delta) => eventHandler?.("reportStreamEvent", {
@@ -198,7 +130,7 @@ class OpenAIProvider extends Provider {
   }
 
   /**
-   * Create a completion based on the received messages.
+   * Create a completion based on the received messages via the Responses API.
    *
    * @param messages A list of messages to send to the OpenAI API.
    * @param functions
@@ -209,15 +141,19 @@ class OpenAIProvider extends Provider {
     this.resetUsage();
 
     try {
-      const response = await this.client.responses.create({
-        model: this.model,
-        stream: false,
-        store: false,
-        parallel_tool_calls: false,
-        input: this.#formatToResponsesInput(messages),
-        ...(Array.isArray(functions) && functions.length
-          ? { tools: this.#formatFunctions(functions) } : {}),
-      });
+      const response = await createWithReasoningSummaryFallback(
+        (body) => this.client.responses.create(body),
+        {
+          model: this.model,
+          stream: false,
+          store: false,
+          parallel_tool_calls: false,
+          ...this.reasoningConfig,
+          input: formatToResponsesInput(messages, this),
+          ...(Array.isArray(functions) && functions.length
+            ? { tools: formatResponsesTools(functions) } : {}),
+        }
+      );
       const assembly = new ResponsesAssembly();
       assembly.push({ type: "response.completed", response });
       const result = assembly.finish();

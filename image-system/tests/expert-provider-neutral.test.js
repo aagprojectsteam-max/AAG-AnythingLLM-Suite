@@ -27,8 +27,8 @@ test("private Expert state resets between turns; provider fields are never copie
 test("existing native routing follows current chat selection for Expert, across provider changes", async () => {
  for (const name of ["index.js","ephemeral.js"]) {
   const source=fs.readFileSync(path.join(__dirname,"../integrations/anythingllm/runtime-context-bridge",name),"utf8");
-  const start=source.indexOf("  async #providerSetupAndCheck() {");const end=source.indexOf("\n  async #resolveRouterProvider",start);
-  let method=source.slice(start,end).replace("async #providerSetupAndCheck()", "async function setup()").replaceAll("this.#","this.");
+  const start=source.indexOf("  async #providerSetupAndCheck(");const end=source.indexOf("\n  async #resolveRouterProvider",start);
+  let method=source.slice(start,end).replace(/async #providerSetupAndCheck\([^)]*\)/, "async function setup(prompt = null)").replaceAll("this.#","this.");
   const setup=Function("composerInvocationPrompt",`return (${method.trim()});`)(composerInvocationPrompt);
   const workspace={chatProvider:"external-a",chatModel:"model-a",agentProvider:"unrelated-agent",agentModel:"unrelated-model"};
   const obj={workspace,invocation:{workspace,prompt:envelope()},prompt:envelope(),invocationUUID:"test",getFallbackProvider(){return {provider:workspace.chatProvider,model:workspace.chatModel};},fetchModel(){return workspace.agentModel;},log(){},checkSetup(){},resolveRouterProvider(){throw Error("unexpected router call");}};
@@ -36,6 +36,7 @@ test("existing native routing follows current chat selection for Expert, across 
    Object.assign(workspace,{chatProvider:provider,chatModel:model});await setup.call(obj);assert.equal(obj.provider,provider);assert.equal(obj.model,model);
   }
   obj.prompt="ordinary";obj.invocation.prompt="ordinary";await setup.call(obj);assert.equal(obj.provider,"unrelated-agent");assert.equal(obj.model,"unrelated-model");
+  if(name==="index.js"){obj.invocation.prompt=envelope();await setup.call(obj,"ordinary later turn");assert.equal(obj.provider,"unrelated-agent");assert.equal(obj.model,"unrelated-model");}
  }
 });
 test("Expert modules have no independent provider client, selector or provider allow-list", () => {
@@ -104,8 +105,8 @@ test('both native AAG entry points use workspace scope and current chat selectio
  for(const name of ['index.js','ephemeral.js']){
   const source=fs.readFileSync(path.join(__dirname,'../integrations/anythingllm/runtime-context-bridge',name),'utf8');
   if(name==='ephemeral.js')assert.ok(source.includes('followActiveModel: this.#workspace?.slug === "image-generator"'));
-  const start=source.indexOf('  async #providerSetupAndCheck() {'),end=source.indexOf('\n  async #resolveRouterProvider',start);
-  const method=source.slice(start,end).replace('async #providerSetupAndCheck()','async function setup()').replaceAll('this.#','this.');
+  const start=source.indexOf('  async #providerSetupAndCheck('),end=source.indexOf('\n  async #resolveRouterProvider',start);
+  const method=source.slice(start,end).replace(/async #providerSetupAndCheck\([^)]*\)/,'async function setup(prompt = null)').replaceAll('this.#','this.');
   const setup=Function('composerInvocationPrompt',`return (${method.trim()});`)(composerInvocationPrompt);
   const workspace={slug:'image-generator',agentProvider:'stale-agent',agentModel:'stale-model',chatProvider:'local-selected',chatModel:'local-one'};
   const state={workspace,invocation:{workspace,prompt:'ordinary image request'},prompt:'ordinary image request',getFallbackProvider(){return {provider:workspace.chatProvider,model:workspace.chatModel};},fetchModel(){return workspace.agentModel;},log(){},checkSetup(){},resolveRouterProvider(){throw Error('Unexpected reroute');}};
