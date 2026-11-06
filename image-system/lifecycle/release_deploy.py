@@ -7,7 +7,7 @@ import fcntl,json,os,shutil,stat,subprocess,sys,time,urllib.request
 from release_gate import P,BASE,sha,load,require,verify_manifest,verify
 from release_candidate import PUBLIC,atomic
 from lifecycle import Host,STATE
-from release_mounts import plan_mounts,recreate
+from release_mounts import plan_mounts,recreate,deployed
 
 def run(args):subprocess.run(args,check=True,timeout=180)
 def install(source,target,mode):
@@ -83,7 +83,7 @@ def deploy(release):
   run(['systemctl','--user','enable','--now','aag-image-lifecycle.service'])
   if compose:
    require(sha(Path(compose['path']))==compose['sha256'],'Compose changed since backup')
-   staged=backup/'compose.updated.yaml';staged.write_text(compose['updated']);staged.chmod(0o600);install(staged,Path(compose['path']),compose['mode']);recreate(compose)
+   staged=backup/'compose.updated.yaml';staged.write_text(compose['updated']);staged.chmod(0o600);install(staged,Path(compose['path']),compose['mode']);recreate(deployed(compose))
   else:run(['docker','start','anythingllm'])
   for _ in range(90):
    try:

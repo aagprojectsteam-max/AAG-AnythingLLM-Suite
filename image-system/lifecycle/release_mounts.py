@@ -39,11 +39,23 @@ def add_mounts(text,rows):
  require(yaml.safe_load(updated)==expected,'Compose edit changed unrelated settings')
  return updated
 
+def set_image(text,current,target):
+ require(text.count(current)==1,'Compose image reference is not unique')
+ updated=text.replace(current,target)
+ expected=yaml.safe_load(text);expected['services']['anythingllm']['image']=target
+ require(yaml.safe_load(updated)==expected,'Compose edit changed unrelated settings')
+ return updated
+
+def deployed(plan):
+ # Rollback keeps the original image and image_id; only the forward path uses the target.
+ return {**plan,'image':plan['target_image'],'image_id':plan['target_image_id']} if plan.get('target_image') else plan
+
 def plan_mounts(manifest):
  inspected=json.loads(subprocess.check_output(['docker','inspect','anythingllm'],text=True))[0]
  live={(m['Source'],m['Destination'],m['RW']) for m in inspected['Mounts']}
  missing=[r for r in manifest['bridge_mounts'] if (r['source'],r['destination'],False) not in live]
- if not missing:return None
+ target=os.environ.get('AAG_ANYTHINGLLM_TARGET_IMAGE')
+ if not missing and not target:return None
  for row in missing:
   require('sha256' in row and any(d['target']==row['source'] for d in manifest['deployments']),'New mount must be a sealed file deployment')
  labels=inspected['Config']['Labels'];files=labels.get('com.docker.compose.project.config_files','').split(',')
@@ -52,7 +64,12 @@ def plan_mounts(manifest):
  original=config.read_text();updated=add_mounts(original,missing)
  image=yaml.safe_load(original)['services']['anythingllm']['image']
  require(subprocess.check_output(['docker','image','inspect',image,'--format','{{.Id}}'],text=True).strip()==inspected['Image'],'Compose image tag no longer identifies the running image')
- return {'path':str(config),'sha256':sha(config),'mode':stat.S_IMODE(config.stat().st_mode),'project':labels['com.docker.compose.project'],'image_id':inspected['Image'],'image':image,'updated':updated}
+ plan={'path':str(config),'sha256':sha(config),'mode':stat.S_IMODE(config.stat().st_mode),'project':labels['com.docker.compose.project'],'image_id':inspected['Image'],'image':image,'updated':updated}
+ if target and target!=image:
+  plan['updated']=set_image(updated,image,target);plan['target_image']=target
+  plan['target_image_id']=subprocess.check_output(['docker','image','inspect',target,'--format','{{.Id}}'],text=True).strip()
+ elif not missing:return None
+ return plan
 
 def recreate(plan):
  # Fail closed if the mutable tag moved; --pull never preserves the local image.

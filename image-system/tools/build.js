@@ -109,6 +109,26 @@ const integrations = [
     targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/multi-image-export/server/index.js"],
   },
   {
+    source: "integrations/anythingllm/apiChatHandler.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/final-system-completion/apiChatHandler.js"],
+    container_target: "/app/server/utils/chats/apiChatHandler.js",
+  },
+  {
+    source: "integrations/anythingllm/index.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/final-system-completion/index.js"],
+    container_target: "/app/server/utils/chats/index.js",
+  },
+  {
+    source: "integrations/anythingllm/genericOpenAi.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/phase-d-fast-text/genericOpenAi.js"],
+    container_target: "/app/server/utils/AiProviders/genericOpenAi/index.js",
+  },
+  {
+    source: "routing/toolReranker.js",
+    targets: ["/mnt/data/AI/Apps/AnythingLLM/storage/aag-image-agent-integration/routing-correction/toolReranker.js"],
+    container_target: "/app/server/utils/agents/aibitat/utils/toolReranker.js",
+  },
+  {
     source: "integrations/upscale-engine/upscale-server.py",
     targets: ["/mnt/data/AI/Apps/AnythingLLM/AAG-Upscale-Engine/service/upscale-server.py"],
   },
